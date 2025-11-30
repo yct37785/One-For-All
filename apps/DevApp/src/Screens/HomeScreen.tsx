@@ -1,132 +1,268 @@
-import React, { memo, useState } from 'react';
-import { StyleSheet, View, TextInput, ScrollView } from 'react-native';
-import { Screen } from 'framework';
-import { Text } from 'react-native-paper';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
-import { StatusBar } from 'expo-status-bar';
+import React, { memo } from 'react';
+import { Screen, Manager, UI } from 'framework';
+import { screenRoutes } from './ScreenRegistry';
 
 /******************************************************************************************************************
- * Home screen
+ * Home screen – UI demo hub
  ******************************************************************************************************************/
-const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [notes, setNotes] = useState('');
-  const [bottomInput, setBottomInput] = useState('');
+const HomeScreen: Screen.ScreenType = ({ navigation }) => {
+  const { user } = Manager.useAuth();
+  const isAnon = !!user?.isAnonymous || !user;
+  const uid = user?.uid;
+  const email = user?.email ?? '';
+
+  /******************************************************************************************************************
+   * Auth status text
+   ******************************************************************************************************************/
+  const statusText = !user
+    ? 'Setting up session…'
+    : isAnon
+    ? `Anonymous session\nuid: ${uid?.slice(0, 10)}…`
+    : `Signed in with Google\nuid: ${uid?.slice(0, 10)}…\nEmail: ${email}`;
+
+  /******************************************************************************************************************
+   * Menu options per section (values are route names)
+   ******************************************************************************************************************/
+  const testOptions = [
+    {
+      value: screenRoutes.testbed,
+      text: 'Testbed playground'
+    },
+  ];
+
+  const containerOptions = [
+    { value: screenRoutes.box, text: 'Box' },
+    { value: screenRoutes.collapsibles, text: 'Collapsibles' },
+    { value: screenRoutes.tabs, text: 'Tabs' },
+  ];
+
+  const dataOptions = [
+    { value: screenRoutes.list, text: 'List' },
+  ];
+
+  const inputOptions = [
+    { value: screenRoutes.input, text: 'Input' },
+  ];
+
+  const interactiveOptions = [
+    { value: screenRoutes.interactives, text: 'Interactive controls' },
+  ];
+
+  const layoutOptions = [
+    { value: screenRoutes.layouts, text: 'Layouts' },
+  ];
+
+  const menuOptions = [
+    { value: screenRoutes.menu, text: 'Menus & popups' },
+  ];
+
+  const miscOptions = [
+    { value: screenRoutes.misc, text: 'Misc components' },
+  ];
+
+  const modalOptions = [
+    { value: screenRoutes.modals, text: 'Dialogs & popups' },
+  ];
+
+  const optionsOptions = [
+    { value: screenRoutes.options, text: 'Base/Check/Chip options' },
+  ];
+
+  const selectionsOptions = [
+    { value: screenRoutes.selections, text: 'Pickers & selections' },
+  ];
+
+  const textOptions = [
+    { value: screenRoutes.text, text: 'Text, HighlightText, Icon' },
+  ];
+
+  const visualsOptions = [
+    { value: screenRoutes.visuals, text: 'Avatar, Divider, etc.' },
+  ];
+
+  /******************************************************************************************************************
+   * Unified navigation handler
+   ******************************************************************************************************************/
+  const handleSelect = (routeName: string) => {
+    navigation.navigate(routeName, { paramText: 'hello from home' });
+  };
+
+  /******************************************************************************************************************
+   * Accordion headers
+   ******************************************************************************************************************/
+  const SECTIONS = [
+    { text: 'Test', icon: 'flask' },
+    { text: 'Container', icon: 'crop-square' },
+    { text: 'Data', icon: 'view-list' },
+    { text: 'Input', icon: 'form-textbox' },
+    { text: 'Interactive', icon: 'gesture-tap' },
+    { text: 'Layout', icon: 'view-grid-plus' },
+    { text: 'Menu / Navigation', icon: 'dots-vertical' },
+    { text: 'Misc', icon: 'dots-horizontal-circle' },
+    { text: 'Modal', icon: 'message-draw' },
+    { text: 'Options', icon: 'tune' },
+    { text: 'Selections', icon: 'checkbox-multiple-marked' },
+    { text: 'Text / Icon', icon: 'format-text' },
+    { text: 'Visuals', icon: 'palette' },
+  ];
 
   return (
     <Screen.ScreenLayout>
-      <View style={styles.root}>
-        <StatusBar style='auto' />
-        <KeyboardAwareScrollView ScrollViewComponent={ScrollView}
-          style={styles.flex}
-          contentContainerStyle={styles.scrollContent}
-          keyboardShouldPersistTaps='handled'
-        >
-          <Text style={styles.title}>Keyboard Avoiding Demo</Text>
-          <Text style={styles.subtitle}>
-            Focus the fields below and check if the keyboard pushes content up.
-          </Text>
+      <UI.VerticalLayout constraint='scroll' gap={2}>
+        {/* Hero / intro */}
+        <UI.Box mb={1}>
+          <UI.Text variant='titleLarge'>UI Component Gallery</UI.Text>
+          <UI.Text variant='bodySmall'>
+            Browse all UI demo screens grouped by category. Tap any row to jump
+            straight into a live example.
+          </UI.Text>
+        </UI.Box>
 
-          {/* Top inputs */}
-          <View style={styles.section}>
-            <Text style={styles.label}>Name</Text>
-            <TextInput
-              style={styles.input}
-              value={name}
-              placeholder='Enter your name'
-              onChangeText={setName}
+        {/* Auth status card */}
+        <UI.Box mv={1}>
+          <UI.VerticalLayout bgColor='#F5F5F5' gap={1}>
+            <UI.Text variant='labelSmall' color='label' bold>
+              Session
+            </UI.Text>
+            <UI.Text variant='bodySmall'>{statusText}</UI.Text>
+          </UI.VerticalLayout>
+        </UI.Box>
+
+        {/* Sectioned navigation using Accordion + MenuList */}
+        <UI.AccordionContainer sections={SECTIONS}>
+          {/* Test */}
+          <UI.VerticalLayout>
+            <UI.MenuList
+              options={testOptions}
+              onSelect={handleSelect}
+              showDividers
+              align='center'
             />
-          </View>
+          </UI.VerticalLayout>
 
-          <View style={styles.section}>
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-              style={styles.input}
-              value={email}
-              placeholder='you@example.com'
-              onChangeText={setEmail}
-              keyboardType='email-address'
-              autoCapitalize='none'
+          {/* Container */}
+          <UI.VerticalLayout>
+            <UI.MenuList
+              options={containerOptions}
+              onSelect={handleSelect}
+              showDividers
+              align='center'
             />
-          </View>
+          </UI.VerticalLayout>
 
-          {/* Multiline notes */}
-          <View style={styles.section}>
-            <Text style={styles.label}>Notes (multiline)</Text>
-            <TextInput
-              style={[styles.input, styles.multilineInput]}
-              value={notes}
-              placeholder='Write some notes...'
-              onChangeText={setNotes}
-              multiline
-              numberOfLines={4}
-              textAlignVertical='top' // top-left for multiline
+          {/* Data */}
+          <UI.VerticalLayout>
+            <UI.MenuList
+              options={dataOptions}
+              onSelect={handleSelect}
+              showDividers
+              align='center'
             />
-          </View>
+          </UI.VerticalLayout>
 
-          {/* Spacer so last input is clearly near bottom */}
-          <View style={{ height: 200 }} />
-
-          {/* Bottom input to test keyboard overlap */}
-          <View style={styles.section}>
-            <Text style={styles.label}>Bottom input</Text>
-            <TextInput
-              style={styles.input}
-              value={bottomInput}
-              placeholder='Focus me near the bottom'
-              onChangeText={setBottomInput}
+          {/* Input */}
+          <UI.VerticalLayout>
+            <UI.MenuList
+              options={inputOptions}
+              onSelect={handleSelect}
+              showDividers
+              align='center'
             />
-          </View>
-        </KeyboardAwareScrollView>
-      </View>
+          </UI.VerticalLayout>
+
+          {/* Interactive */}
+          <UI.VerticalLayout>
+            <UI.MenuList
+              options={interactiveOptions}
+              onSelect={handleSelect}
+              showDividers
+              align='center'
+            />
+          </UI.VerticalLayout>
+
+          {/* Layout */}
+          <UI.VerticalLayout>
+            <UI.MenuList
+              options={layoutOptions}
+              onSelect={handleSelect}
+              showDividers
+              align='center'
+            />
+          </UI.VerticalLayout>
+
+          {/* Menu / Navigation */}
+          <UI.VerticalLayout>
+            <UI.MenuList
+              options={menuOptions}
+              onSelect={handleSelect}
+              showDividers
+              align='center'
+            />
+          </UI.VerticalLayout>
+
+          {/* Misc */}
+          <UI.VerticalLayout>
+            <UI.MenuList
+              options={miscOptions}
+              onSelect={handleSelect}
+              showDividers
+              align='center'
+            />
+          </UI.VerticalLayout>
+
+          {/* Modal */}
+          <UI.VerticalLayout>
+            <UI.MenuList
+              options={modalOptions}
+              onSelect={handleSelect}
+              showDividers
+              align='center'
+            />
+          </UI.VerticalLayout>
+
+          {/* Options */}
+          <UI.VerticalLayout>
+            <UI.MenuList
+              options={optionsOptions}
+              onSelect={handleSelect}
+              showDividers
+              align='center'
+            />
+          </UI.VerticalLayout>
+
+          {/* Selections */}
+          <UI.VerticalLayout>
+            <UI.MenuList
+              options={selectionsOptions}
+              onSelect={handleSelect}
+              showDividers
+              align='center'
+            />
+          </UI.VerticalLayout>
+
+          {/* Text */}
+          <UI.VerticalLayout>
+            <UI.MenuList
+              options={textOptions}
+              onSelect={handleSelect}
+              showDividers
+              align='center'
+            />
+          </UI.VerticalLayout>
+
+          {/* Visuals */}
+          <UI.VerticalLayout>
+            <UI.MenuList
+              options={visualsOptions}
+              onSelect={handleSelect}
+              showDividers
+              align='center'
+            />
+          </UI.VerticalLayout>
+        </UI.AccordionContainer>
+      </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );
 };
-
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: '#F8FAFF',
-  },
-  flex: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingHorizontal: 16,
-    paddingTop: 40,
-    paddingBottom: 40,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  subtitle: {
-    fontSize: 14,
-    color: '#555',
-    marginBottom: 16,
-  },
-  section: {
-    marginBottom: 16,
-  },
-  label: {
-    fontSize: 13,
-    color: '#555',
-    marginBottom: 4,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#CCC',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    fontSize: 16,
-    backgroundColor: '#FFF',
-  },
-  multilineInput: {
-    minHeight: 100,
-  },
-});
 
 export default memo(HomeScreen);

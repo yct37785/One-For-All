@@ -1,7 +1,9 @@
 import React, { useState, useEffect, memo } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
-import { Screen, UI, Const } from 'framework';
+import { Screen, UI } from 'framework';
 import { faker } from '@faker-js/faker';
+
+const padSize = 4;
 
 const ListTypes = {
   flashlist: UI.ListImplementationType.flashlist,
@@ -283,30 +285,30 @@ const ListScreen: Screen.ScreenType = () => {
 const styles = StyleSheet.create({
   rowContainer: {
     flex: 1,
-    paddingHorizontal: Const.padSize,
-    paddingVertical: Const.padSize,
+    paddingHorizontal: padSize,
+    paddingVertical: padSize,
   },
   imageContainer: {
     width: 90,
     height: 90,
-    borderRadius: Const.padSize,
+    borderRadius: padSize,
     overflow: 'hidden',
-    marginRight: Const.padSize,
+    marginRight: padSize,
   },
   img: {
     width: '100%',
     height: '100%',
   },
   pill: {
-    borderRadius: Const.padSize,
-    paddingHorizontal: Const.padSize,
-    paddingVertical: Const.padSize / 3,
+    borderRadius: padSize,
+    paddingHorizontal: padSize,
+    paddingVertical: padSize / 3,
   },
   description: {
-    marginTop: Const.padSize / 2,
+    marginTop: padSize / 2,
   },
   emptyContainer: {
-    paddingVertical: Const.padSize2,
+    paddingVertical: padSize * 2,
   },
 });
 

@@ -2,6 +2,7 @@ import { Root } from 'framework';
 import { Screen } from 'framework';
 // screens
 import HomeScreen from './Screens/HomeScreen';
+import { screenRegistry } from './Screens/ScreenRegistry';
 // layout
 import { DefaultLeftContent, DefaultRightContent } from './ScreenLayout';
 
@@ -9,7 +10,8 @@ import { DefaultLeftContent, DefaultRightContent } from './ScreenLayout';
  * Screen mapper
  ******************************************************************************************************************/
 export const screenMap: Screen.ScreenMap = {
-  home: HomeScreen
+  home: HomeScreen,
+  ...screenRegistry,
 };
 
 /******************************************************************************************************************
