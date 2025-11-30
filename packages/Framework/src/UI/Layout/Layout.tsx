@@ -24,7 +24,8 @@ const lockWhenFixedHeight = (height?: number) =>
  * @property reverse?         - Whether to render children in reverse order
  * @property constraint?      - Layout constraint mode
  * @property flex?            - Flex grow/shrink value for container
- * @property gap?             - Spacing between and around children
+ * @property padding?         - Spacing around children
+ * @property gap?             - Spacing between children
  * @property height?          - Fixed height for the container
  * @property bgColor?         - Background color
  * @property children         - Elements rendered inside
@@ -34,6 +35,7 @@ export type LayoutProps = {
   reverse?: boolean;
   constraint?: 'wrap' | 'scroll' | 'none';
   flex?: number;
+  padding?: PadSpacingValue;
   gap?: PadSpacingValue;
   height?: number;
   bgColor?: string;
@@ -54,6 +56,7 @@ const Layout: React.FC<LayoutProps> = ({
   reverse = false,
   constraint = 'none',
   flex = 1,
+  padding = 1,
   gap = 1,
   height,
   bgColor = 'transparent',
@@ -88,8 +91,8 @@ const Layout: React.FC<LayoutProps> = ({
     justifyContent: 'flex-start',
     alignItems: isWrap ? 'flex-start' : 'stretch', // items within a row
     alignContent: alignContentValue,               // how rows stack
+    padding: padding * Const.padSize,
     gap: gap * Const.padSize,
-    padding: gap * Const.padSize,
     backgroundColor: bgColor,
   };
 

@@ -22,38 +22,42 @@ import { Screen, UI } from 'framework';
 const BoxScreen: Screen.ScreenType = () => {
   return (
     <Screen.ScreenLayout showTitle>
-      <UI.VerticalLayout constraint='scroll'>
+      <UI.VerticalLayout constraint='scroll' padding={2}>
+
         {/* Header */}
-        <UI.Text variant='titleLarge'>Box</UI.Text>
-        <UI.Text variant='bodySmall'>Box is a drawable container that wraps content and applies flex layout, alignment, and spacing. It
-          doesn&apos;t decide how siblings are arranged; instead, it acts as a flexible building block.
+        <UI.Text variant='bodyMedium'>
+          Box is a drawable container that wraps content and applies flex layout, alignment, and spacing. It
+          doesn't decide how siblings are arranged; instead, it acts as a flexible building block.
         </UI.Text>
 
+        {/* Basic usage */}
         <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>Basic usage</UI.Text>
 
-        {/* Section 1: Basic usage */}
-        <UI.Text variant='titleMedium'>1. Basic usage</UI.Text>
-        <UI.Text variant='bodySmall' color='label'>
-          Use Box wherever you would normally use a View, but with convenient shorthands for padding/margin.
+        <UI.Text variant='labelMedium' color='label'>
+          Drop-in replacement of View.
         </UI.Text>
-
         <UI.Box bgColor='#2eb82e' p={1} m={1}>
           <UI.Text color='surface'>Use Box like a View</UI.Text>
         </UI.Box>
 
-        {/* Section 2: PadSpacingValue (spacing scale) */}
-        <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>2. Spacing scale (PadSpacingValue)</UI.Text>
-        <UI.Text variant='bodySmall'>
-          Spacing props accept a{' '}
-          <UI.Text variant='bodySmall' color='label'>
-            PadSpacingValue
-          </UI.Text>{' '}
-          of <UI.Text color='label'>0 | 1 | 2 | 3 | 4</UI.Text>, which the framework multiplies by a base
-          spacing constant.
+        <UI.Text variant='labelMedium' color='label'>
+          As a tiny wrapper around a single element just to add spacing, without
+          changing layout flow.
         </UI.Text>
+        <UI.Box m={1}>
+          <UI.Box bgColor='#e0f2f1' p={1}>
+            <UI.Text variant='labelSmall'>
+              This inner Box only adds padding and background around the text.
+            </UI.Text>
+          </UI.Box>
+        </UI.Box>
 
-        <UI.Box dir='row' mv={1}>
+        {/* Padding */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>Padding scale</UI.Text>
+
+        <UI.Box dir='row'>
           <UI.Box bgColor='#eeeeee' p={0} m={1}>
             <UI.Text variant='labelSmall'>p=0</UI.Text>
           </UI.Box>
@@ -71,11 +75,11 @@ const BoxScreen: Screen.ScreenType = () => {
           </UI.Box>
         </UI.Box>
 
-        {/* Section 3: Flex, direction, alignment */}
+        {/* Flex, direction, alignment */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>3. Flex, direction &amp; alignment</UI.Text>
+        <UI.Text variant='titleMedium'>Flex, direction & alignment</UI.Text>
 
-        <UI.Text variant='labelSmall' color='label'>
+        <UI.Text variant='labelMedium' color='label'>
           Row layout with different flex values
         </UI.Text>
         <UI.Box dir='row' bgColor='#f0f0f0' p={1} mv={1}>
@@ -90,8 +94,8 @@ const BoxScreen: Screen.ScreenType = () => {
           </UI.Box>
         </UI.Box>
 
-        <UI.Text variant='labelSmall' color='label'>
-          Row · justify=&quot;space-between&quot;
+        <UI.Text variant='labelMedium' color='label'>
+          Row · justify="space-between"
         </UI.Text>
         <UI.Box dir='row' bgColor='#ffe0b2' p={1} justify='space-between' mv={1}>
           <UI.Text variant='labelSmall'>Item A</UI.Text>
@@ -99,8 +103,8 @@ const BoxScreen: Screen.ScreenType = () => {
           <UI.Text variant='labelSmall'>Item C</UI.Text>
         </UI.Box>
 
-        <UI.Text variant='labelSmall' color='label'>
-          Column · justify=&quot;center&quot; (vertical center) with fixed height
+        <UI.Text variant='labelMedium' color='label'>
+          Column · justify="center" (vertical center) with fixed height
         </UI.Text>
         <UI.Box
           dir='column'
@@ -115,8 +119,8 @@ const BoxScreen: Screen.ScreenType = () => {
           </UI.Text>
         </UI.Box>
 
-        <UI.Text variant='labelSmall' color='label'>
-          Row · align=&quot;center&quot; (cross-axis alignment)
+        <UI.Text variant='labelMedium' color='label'>
+          Row · align="center" (cross-axis alignment)
         </UI.Text>
         <UI.Box
           dir='row'
@@ -134,103 +138,6 @@ const BoxScreen: Screen.ScreenType = () => {
           </UI.Box>
         </UI.Box>
 
-        {/* Section 4: Padding & margin shorthands */}
-        <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>4. Padding &amp; margin shorthands</UI.Text>
-
-        <UI.Text variant='labelSmall' color='label'>
-          p / m (uniform)
-        </UI.Text>
-        <UI.Box bgColor='#212121' p={2} m={1}>
-          <UI.Text color='surface' variant='labelSmall'>
-            p=2, m=1
-          </UI.Text>
-        </UI.Box>
-
-        <UI.Text variant='labelSmall' color='label'>
-          pv / ph (vertical / horizontal)
-        </UI.Text>
-        <UI.Box bgColor='#424242' pv={1} ph={2} m={1}>
-          <UI.Text color='surface' variant='labelSmall'>
-            pv=1, ph=2
-          </UI.Text>
-        </UI.Box>
-
-        <UI.Text variant='labelSmall' color='label'>
-          Side-specific padding (pt / pr / pb / pl)
-        </UI.Text>
-        <UI.Box bgColor='#616161' pt={2} pr={1} pb={1} pl={3} m={1}>
-          <UI.Text color='surface' variant='labelSmall'>
-            pt=2, pr=1, pb=1, pl=3
-          </UI.Text>
-        </UI.Box>
-
-        <UI.Text variant='labelSmall' color='label'>
-          Side-specific margin (mt / mr / mb / ml)
-        </UI.Text>
-        <UI.Box bgColor='#9e9e9e' p={1} m={1}>
-          <UI.Box bgColor='#212121' mt={1} mr={2} mb={1} ml={3}>
-            <UI.Text color='surface' variant='labelSmall'>
-              mt=1, mr=2, mb=1, ml=3
-            </UI.Text>
-          </UI.Box>
-        </UI.Box>
-
-        {/* Section 5: Example “Card” layout */}
-        <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>5. Putting it together: a card layout</UI.Text>
-        <UI.Text variant='bodySmall' color='label'>
-          This card UI is built entirely with Box for layout and spacing.
-        </UI.Text>
-
-        <UI.Box bgColor='#eeeeee' p={1} m={1}>
-          <UI.Box bgColor='#ffffff' p={2}>
-            {/* header row */}
-            <UI.Box dir='row' align='center' mb={1}>
-              <UI.Avatar label='JD' size='sm' />
-              <UI.Box ml={1}>
-                <UI.Text variant='labelMedium'>Jane Doe</UI.Text>
-                <UI.Text variant='labelSmall' color='secondary'>
-                  Product Designer
-                </UI.Text>
-              </UI.Box>
-            </UI.Box>
-
-            {/* body */}
-            <UI.Text variant='bodySmall'>
-              This is an example of using Box to compose a simple card layout with avatar, text, and
-              actions.
-            </UI.Text>
-
-            {/* actions */}
-            <UI.Box dir='row' justify='flex-end' mt={2}>
-              <UI.Button mode='text' onPress={() => {}}>
-                Cancel
-              </UI.Button>
-              <UI.Box ml={1}>
-                <UI.Button mode='contained' onPress={() => {}}>
-                  Save
-                </UI.Button>
-              </UI.Box>
-            </UI.Box>
-          </UI.Box>
-        </UI.Box>
-
-        {/* Section 6: Box as a small layout wrapper */}
-        <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>6. Box as a small wrapper</UI.Text>
-        <UI.Text variant='bodySmall'>
-          You can also use Box as a tiny wrapper around a single element just to add spacing, without
-          changing layout flow.
-        </UI.Text>
-
-        <UI.Box m={1}>
-          <UI.Box bgColor='#e0f2f1' p={1}>
-            <UI.Text variant='labelSmall'>
-              This inner Box only adds padding and background around the text.
-            </UI.Text>
-          </UI.Box>
-        </UI.Box>
       </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );

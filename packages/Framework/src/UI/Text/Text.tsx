@@ -1,5 +1,5 @@
 import React, { memo, ReactNode } from 'react';
-import { StyleProp, TextStyle } from 'react-native';
+import { TextStyle } from 'react-native';
 import { Text as PaperText, useTheme } from 'react-native-paper';
 import { resolveFontColor } from './Utils';
 
@@ -45,7 +45,7 @@ export type TextVariant =
  * @property customColor?     - Raw color string (overrides color prop)
  * @property bold?            - Bolded text
  * @property numberOfLines?   - Fixed num of lines if provided
- * @property style?           - Optional extra styles
+ * @property margin?          - Margin
  ******************************************************************************************************************/
 export interface TextProps {
   variant?: TextVariant;
@@ -53,7 +53,6 @@ export interface TextProps {
   customColor?: string;
   bold?: boolean;
   numberOfLines?: number;
-  style?: StyleProp<TextStyle>;
 }
 
 /******************************************************************************************************************
@@ -70,7 +69,7 @@ export interface TextProps {
  * ```
  ******************************************************************************************************************/
 export const Text: React.FC<TextProps & { children?: string | ReactNode }> = memo(
-  ({ variant = 'bodyMedium', color = 'default', customColor, bold, numberOfLines, style, children }) => {
+  ({ variant = 'bodyMedium', color = 'default', customColor, bold, numberOfLines, children }) => {
     const theme = useTheme();
     const resolvedColor = resolveFontColor(color, customColor, theme);
 
@@ -81,7 +80,7 @@ export const Text: React.FC<TextProps & { children?: string | ReactNode }> = mem
       <PaperText
         variant={variant}
         {...(numberOfLines !== undefined ? { numberOfLines } : {})}
-        style={[colorStyle, boldStyle, style]}
+        style={[colorStyle, boldStyle]}
       >
         {children}
       </PaperText>
