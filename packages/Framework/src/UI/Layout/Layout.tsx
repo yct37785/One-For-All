@@ -1,5 +1,6 @@
 import React, { memo, ReactNode } from 'react';
 import { View, ScrollView, ViewStyle, FlexStyle } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import * as Const from '../../Const';
 import { PadSpacingValue } from '../../Types';
 
@@ -94,7 +95,8 @@ const Layout: React.FC<LayoutProps> = ({
 
   if (isScroll) {
     return (
-      <ScrollView
+      <KeyboardAwareScrollView
+        ScrollViewComponent={ScrollView}
         horizontal={isRow}
         showsVerticalScrollIndicator={!isRow}
         showsHorizontalScrollIndicator={isRow}
@@ -102,7 +104,7 @@ const Layout: React.FC<LayoutProps> = ({
         contentContainerStyle={contentStyle}  // layout rules on inner content
       >
         {content}
-      </ScrollView>
+      </KeyboardAwareScrollView>
     );
   }
 
