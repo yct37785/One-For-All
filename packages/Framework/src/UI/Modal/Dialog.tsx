@@ -1,13 +1,50 @@
 import React, { memo } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Text, Modal, Button, Card, useTheme } from 'react-native-paper';
-import * as Const from '../../../Const';
-import { DialogType } from './Dialog.types';
+import * as Const from '../../Const';
 
 /******************************************************************************************************************
- * Dialog implementation.
+ * Dialog props.
+ * 
+ * @property title        - Title text displayed at the top
+ * @property subtitle     - Optional subtitle text displayed below the title
+ * @property children?    - Body content of the dialog
+ * @property isVisible    - Whether the dialog is visible
+ * @property onSubmit?    - Callback for confirm/submit action
+ * @property onClose?     - Callback for close/cancel action
+ * @property dismissable? - Whether tapping outside dismisses the dialog
+ * @property submitText?  - Custom text for the submit button (default: 'confirm')
+ * @property closeText?   - Custom text for the close button (default: 'close')
+ * @property style?       - Additional style for the modal container
  ******************************************************************************************************************/
-export const Dialog: DialogType = memo(
+export type DialogProps = {
+  title: string;
+  subtitle?: string;
+  children?: React.ReactNode;
+  isVisible: boolean;
+  onSubmit?: () => void;
+  onClose?: () => void;
+  dismissable?: boolean;
+  submitText?: string;
+  closeText?: string;
+  style?: StyleProp<ViewStyle>;
+};
+
+/******************************************************************************************************************
+ * A modal surface used for focused user interactions that require acknowledgment or decision.
+ *
+ * @usage
+ * ```tsx
+ * <Dialog
+ *   title='delete item'
+ *   subtitle='are you sure?'
+ *   isVisible={open}
+ *   onSubmit={handleDelete}
+ *   onClose={() => setOpen(false)}
+ * />
+ * ```
+ ******************************************************************************************************************/
+export const Dialog: React.FC<DialogProps> = memo(
   ({
     title,
     subtitle,
@@ -77,16 +114,16 @@ export const Dialog: DialogType = memo(
  ******************************************************************************************************************/
 const styles = StyleSheet.create({
   modal: {
-    marginHorizontal: Const.padSize4,
+    marginHorizontal: Const.padSize * 4,
   },
   container: {
     minHeight: 160,
   },
   title: {
-    padding: Const.padSize2,
+    padding: Const.padSize * 2,
   },
   subtitle: {
-    marginHorizontal: Const.padSize2,
+    marginHorizontal: Const.padSize * 2,
   },
   childrenFallback: {
     flex: 1,

@@ -1,8 +1,11 @@
-import React, { memo } from 'react';
+import React, { memo, ReactNode } from 'react';
 import { View, ScrollView, ViewStyle, FlexStyle } from 'react-native';
-import * as Const from '../../../Const';
-import { LayoutType, VerticalLayoutType, HorizontalLayoutType } from './Layout.types';
+import * as Const from '../../Const';
+import { PadSpacingValue } from '../../Types';
 
+/******************************************************************************************************************
+ * Utils and types.
+ ******************************************************************************************************************/
 type FlexWrap = 'wrap' | 'nowrap' | 'wrap-reverse';
 
 // lock flexgrow/shrink when flex = 0
@@ -14,11 +17,38 @@ const lockWhenFixedHeight = (height?: number) =>
   height != null ? { height, flexGrow: 0, flexShrink: 0 } : {};
 
 /******************************************************************************************************************
- * Layout implementation:
+ * Base layout props.
+ * 
+ * @property dir?             - Flex direction
+ * @property reverse?         - Whether to render children in reverse order
+ * @property constraint?      - Layout constraint mode
+ * @property flex?            - Flex grow/shrink value for container
+ * @property gap?             - Spacing between and around children
+ * @property height?          - Fixed height for the container
+ * @property bgColor?         - Background color
+ * @property children         - Elements rendered inside
+ ******************************************************************************************************************/
+export type LayoutProps = {
+  dir?: 'row' | 'column';
+  reverse?: boolean;
+  constraint?: 'wrap' | 'scroll' | 'none';
+  flex?: number;
+  gap?: PadSpacingValue;
+  height?: number;
+  bgColor?: string;
+  children: ReactNode;
+};
+
+/******************************************************************************************************************
+ * A flexible element grouping container that defines structure and spacing for contained elements.
+ *  - Does not support custom styling as that is out of scope for layout.
+ *  - Use to wrap multiple child UI components.
+ * 
+ * Notes:
  *  - If neither height nor flex is provided, the layout defaults to flex: 1 and fills available space.
  *  - If a fixed height is provided, the layout will no longer flex unless flex={...} is explicitly specified.
  ******************************************************************************************************************/
-const Layout: LayoutType = ({
+const Layout: React.FC<LayoutProps> = ({
   dir = 'column',
   reverse = false,
   constraint = 'none',
@@ -80,15 +110,31 @@ const Layout: LayoutType = ({
 };
 
 /******************************************************************************************************************
- * VerticalLayout implementation.
+ * Convenience wrapper for vertical stacking.
+ *
+ * @usage
+ * ```tsx
+ * <VerticalLayout gap={12}>
+ *   <BlockA />
+ *   <BlockB />
+ * </VerticalLayout>
+ * ```
  ******************************************************************************************************************/
-export const VerticalLayout: VerticalLayoutType = memo((props) => (
-  <Layout {...props} dir="column" />
+export const VerticalLayout: React.FC<Omit<LayoutProps, 'direction'>> = memo((props) => (
+  <Layout {...props} dir='column' />
 ));
 
 /******************************************************************************************************************
- * HorizontalLayout implementation.
+ * Convenience wrapper for horizontal stacking.
+ *
+ * @usage
+ * ```tsx
+ * <HorizontalLayout gap={6}>
+ *   <ButtonA />
+ *   <ButtonB />
+ * </HorizontalLayout>
+ * ```
  ******************************************************************************************************************/
-export const HorizontalLayout: HorizontalLayoutType = memo((props) => (
-  <Layout {...props} dir="row" />
+export const HorizontalLayout: React.FC<Omit<LayoutProps, 'direction'>> = memo((props) => (
+  <Layout {...props} dir='row' />
 ));

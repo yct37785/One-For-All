@@ -1,13 +1,33 @@
 import React, { memo, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { useTheme, Chip } from 'react-native-paper';
-import * as Const from '../../../Const';
-import { ChipOptionsType } from './ChipOptions.types';
+import * as Const from '../../Const';
 
 /******************************************************************************************************************
- * ChipOptions implementation.
+ * ChipOptions props.
+ * 
+ * @property schema       - Available chip labels
+ * @property onSelected   - Callback receiving updated selection
+ * @property style?       - Optional wrapper style
  ******************************************************************************************************************/
-export const ChipOptions: ChipOptionsType = memo(
+export type ChipOptionsProps = {
+  schema: Set<string>;
+  onSelected: (selectedValues: Set<string>) => void;
+  style?: StyleProp<ViewStyle>;
+};
+
+/******************************************************************************************************************
+ * A collection of selectable chips representing tags or quick filters.
+ * 
+ * @usage
+ * ```tsx
+ * <ChipOptions
+ *   schema={new Set(['Apples', 'Bananas', 'Cherries'])}
+ *   onSelected={(values) => console.log('Selected chips:', values)}
+ * />
+ * ```
+ ******************************************************************************************************************/
+export const ChipOptions: React.FC<ChipOptionsProps> = memo(
   ({ schema, onSelected, style }) => {
     const theme = useTheme();
     const [selectedSet, setSelectedSet] = useState<Set<string>>(

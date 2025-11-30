@@ -70,7 +70,7 @@ const safeParse = (value: string): any => {
 export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   
   /****************************************************************************************************************
-   * Sets a value in AsyncStorage.
+   * [ASYNC] Sets a value in AsyncStorage.
    *
    * @param key     - String key to set
    * @param value   - Value to store (will be JSON.stringified)
@@ -90,7 +90,7 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   /****************************************************************************************************************
-   * Retrieves a value from AsyncStorage.
+   * [ASYNC] Retrieves a value from AsyncStorage.
    * 
    * Behavior:
    * - Reads the value from AsyncStorage each time it is called.
@@ -140,7 +140,7 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   /****************************************************************************************************************
-   * Clears all data from AsyncStorage.
+   * [ASYNC] Clears all data from AsyncStorage.
    *
    * Behavior:
    * - Calls `AsyncStorage.clear()` to remove all keys.

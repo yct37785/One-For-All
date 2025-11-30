@@ -1,11 +1,11 @@
 import React, { memo } from 'react';
 import { StyleSheet } from 'react-native';
-import { Avatar } from '../../UI/Core/Misc/Avatar';
-import { Popup } from '../../UI/Core/Modal/Popup';
-import { MenuList } from '../../UI/Core/Menu/MenuList';
-import { VerticalLayout } from '../../UI/Core/Layout/Layout';
-import { useAuth } from '../../Managers/Firebase/FirebaseAuthManager';
-import type { MenuOption } from '../../UI/Core/Menu/MenuListItem.types';
+import { Avatar } from '../UI/Misc/Avatar';
+import { Popup } from '../UI/Modal/Popup';
+import { MenuList } from '../UI/Menu/MenuList';
+import { VerticalLayout } from '../UI/Layout/Layout';
+import { useAuth } from '../Manager/Firebase/FirebaseAuthManager';
+import type { MenuOption } from '../UI/Menu/MenuListItem';
 
 /******************************************************************************************************************
  * ProfileMenu: renders the authenticated user's avatar and dropdown menu of account actions.

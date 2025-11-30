@@ -1,21 +1,44 @@
-import React, { memo } from 'react';
+import React, { memo, ReactNode } from 'react';
 import type { TextStyle, StyleProp } from 'react-native';
-import { Text } from './Text';
-import * as Const from '../../../Const';
-import { HighlightTextType } from './HighlightText.types';
+import { Text, TextProps } from './Text';
 
 function escapeRegExp(s: string) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 const defaultHighlightStyle: TextStyle = {
-  backgroundColor: Const.highlightColor,
+  backgroundColor: 'yellow',
 };
 
 /******************************************************************************************************************
- * HighlightText implementation.
+ * Highlight text props.
+ * 
+ * @property query            - Substring to highlight
+ * @property caseSensitive?   - Match case (default: false)
+ * @property highlightStyle?  - Extra style for highlighted parts (e.g., { backgroundColor: 'yellow' })
  ******************************************************************************************************************/
-export const HighlightText: HighlightTextType = memo(
+export type HighlightTextProps = TextProps & {
+  query: string;
+  caseSensitive?: boolean;
+  highlightStyle?: StyleProp<TextStyle>;
+  children?: string | ReactNode;
+};
+
+/******************************************************************************************************************
+ * A text component that visually emphasizes substrings matching a search or filter query.
+ * 
+ * @usage
+ * ```tsx
+ * <TextHighlight
+      variant='body'
+      query='react'
+      highlightStyle={{ backgroundColor: t.colors.primary, color: t.colors.onPrimary }}
+    >
+      React Native makes mobile development easy with React.
+    </TextHighlight>
+ * ```
+ ******************************************************************************************************************/
+export const HighlightText: React.FC<HighlightTextProps> = memo(
   ({
     variant = 'bodyMedium',
     color,

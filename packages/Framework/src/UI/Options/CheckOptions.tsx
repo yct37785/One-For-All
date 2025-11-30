@@ -1,25 +1,35 @@
 import React, { memo } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Text, Checkbox } from 'react-native-paper';
-import * as Const from '../../../Const';
-import { OptionState, OptionProps } from './BaseOptions.types';
-import { CheckOptionsType } from './CheckOptions.types';
-import { BaseOptions } from './BaseOptions';
+import * as Const from '../../Const';
+import { BaseOptions, OptionState, OptionProps, OptionSchema } from './BaseOptions';
 
 /******************************************************************************************************************
- * Simple container for grouping child options (stable component type).
+ * CheckOptions props.
+ * 
+ * @property schema     - Current options tree
+ * @property setSchema  - State setter
+ * @property style?     - Optional wrapper style
  ******************************************************************************************************************/
-const OptionsContainer: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => <View>{children}</View>;
+export type CheckOptionCompProps = {
+  schema: OptionSchema;
+  setSchema: (updatedSchema: OptionSchema) => void;
+  style?: StyleProp<ViewStyle>;
+};
 
 /******************************************************************************************************************
- * CheckOptions implementation.
+ * Render a checkbox-based UI for the options tree powered by BaseOptions.
+ * Shows checked, unchecked, and indeterminate states with recursive nesting.
+ *
+ * @usage
+ * ```tsx
+ * <CheckOptions schema={schema} setSchema={setSchema} />
+ * ```
  ******************************************************************************************************************/
-export const CheckOptions: CheckOptionsType = memo(
+export const CheckOptions: React.FC<CheckOptionCompProps> = memo(
   ({ schema, setSchema, style }) => {
     /**
-     * renders a single checkbox option
+     * Renders a single checkbox option.
      */
     const renderCheckbox = ({
       option,
@@ -49,9 +59,9 @@ export const CheckOptions: CheckOptionsType = memo(
       <BaseOptions
         schema={schema}
         setSchema={setSchema}
-        optionsContainer={OptionsContainer}
+        optionsContainer={(children) => children}
         renderOption={renderCheckbox}
-        depthPadding={Const.padSize2}
+        depthPadding={Const.padSize * 2}
         style={style}
       />
     );
