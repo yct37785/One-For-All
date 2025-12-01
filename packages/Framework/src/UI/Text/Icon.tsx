@@ -24,7 +24,7 @@ type FontColor =
  ******************************************************************************************************************/
 export type IconVariant = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 // variant > size map
-const sizeMap: Record<IconVariant, number> = {
+export const iconVariantSizeMap: Record<IconVariant, number> = {
   xs: 14,
   sm: 18,
   md: 24,
@@ -57,7 +57,7 @@ export type IconProps = {
  * 
  * @usage
  * ```tsx
- * <Icon source="home" />                          // default md
+ * <Icon source="home" />
  * <Icon source="star" variant="lg" color="primary" />
  * <Icon source="bell" size={28} color="label" />
  * ```
@@ -68,7 +68,7 @@ export const Icon: React.FC<IconProps & { source?: string }> = memo(
     const resolvedColor = resolveFontColor(color, customColor, theme);
 
     // resolve numeric size
-    const pixel = sizeMap[variant];
+    const pixel = iconVariantSizeMap[variant];
 
     const wrapperStyle: StyleProp<ViewStyle> = [styles.wrapper, style];
 

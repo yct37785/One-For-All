@@ -3,7 +3,7 @@ import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import * as Const from '../../../Const';
 import { Text, TextProps } from '../../Text/Text';
-import { Icon, IconProps } from '../../Text/Icon';
+import { Icon, IconProps, iconVariantSizeMap } from '../../Text/Icon';
 
 /******************************************************************************************************************
  * Utility component that keeps its children mounted until a specified timeout elapses after becoming inactive.
@@ -63,18 +63,36 @@ export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
   ({ text, textOpts, icon, iconOpts, isCollapsed }) => {
     const theme = useTheme();
 
+    // determine icon size (default to 'md' if none provided)
+    const variant = iconOpts?.variant ?? 'md';
+    const pixel = iconVariantSizeMap[variant];
+
     return (
       <View style={styles.toggleHeaderRow}>
-        {icon ? (
-          <Icon
-            source={icon}
-            variant='md'
-            customColor={theme.colors.onSurface}
-            style={{ marginRight: Const.padSize * 2 }}
-            {...iconOpts}
-          />
-        ) : null}
 
+        {/* Fixed-width icon container */}
+        {icon ? (
+          <View
+            style={{
+              width: pixel,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginRight: Const.padSize * 2,
+            }}
+          >
+            <Icon
+              source={icon}
+              variant={variant}
+              customColor={theme.colors.onSurface}
+              {...iconOpts}
+            />
+          </View>
+        ) : (
+          // if no icon provided, alignment not preserved
+          null
+        )}
+
+        {/* Label */}
         {text ? (
           <Text variant='titleSmall' {...textOpts}>
             {text}
@@ -83,6 +101,7 @@ export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
 
         <View style={styles.flexSpacer} />
 
+        {/* Chevron - unchanged */}
         <Icon
           source={isCollapsed ? 'chevron-down' : 'chevron-up'}
           variant='md'
