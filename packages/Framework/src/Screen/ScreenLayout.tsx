@@ -24,9 +24,7 @@ export const ScreenLayoutContext = createContext<ScreenLayoutProps>({});
  * @property title?         - Title text for the AppBar (defaults to current route name) if showTitle is true
  * @property showBack?      - Show a back button
  * @property LeftContent?   - Optional component rendered in the AppBar’s left slot (after back button).
- *                            Receives { navigation, route } so it can call into screen logic.
  * @property RightContent?  - Optional component rendered in the AppBar’s right slot (after LeftContent).
- *                            Receives { navigation, route } so it can call into screen logic.
  * @property appbarBottomMargin?  - Margin below appbar
  * @property children?      - Screen content rendered below the AppBar inside a SafeAreaView
  ******************************************************************************************************************/
@@ -60,23 +58,63 @@ export const ScreenLayout: React.FC<ScreenLayoutProps> = memo((props) => {
   const navigation = useNavigation();
   const route = useRoute();
 
-  // merge strategy: screen props override app-wide defaults
-  const showTitle = props.showTitle ?? defaults.showTitle ?? false;
-  const title = props.title ?? defaults.title;
-  const LeftContent = props.LeftContent ?? defaults.LeftContent;
-  const RightContent = props.RightContent ?? defaults.RightContent;
-  const explicitShowBack = props.showBack ?? defaults.showBack;
+  /****************************************************************************************************************
+   * Merge strategy:
+   * - If a prop is explicitly provided (even null / empty string), use it.
+   * - Only fall back to defaults when the prop is strictly undefined.
+   ****************************************************************************************************************/
+  const showTitle =
+    props.showTitle !== undefined
+      ? props.showTitle
+      : defaults.showTitle !== undefined
+        ? defaults.showTitle
+        : false;
+
+  const title =
+    props.title !== undefined
+      ? props.title
+      : defaults.title !== undefined
+        ? defaults.title
+        : undefined;
+
+  const LeftContent =
+    props.LeftContent !== undefined
+      ? props.LeftContent
+      : defaults.LeftContent !== undefined
+        ? defaults.LeftContent
+        : undefined;
+
+  const RightContent =
+    props.RightContent !== undefined
+      ? props.RightContent
+      : defaults.RightContent !== undefined
+        ? defaults.RightContent
+        : undefined;
+
+  const explicitShowBack =
+    props.showBack !== undefined
+      ? props.showBack
+      : defaults.showBack !== undefined
+        ? defaults.showBack
+        : undefined;
+
   const appbarBottomMargin =
-    props.appbarBottomMargin ?? defaults.appbarBottomMargin ?? 2;
+    props.appbarBottomMargin !== undefined
+      ? props.appbarBottomMargin
+      : defaults.appbarBottomMargin !== undefined
+        ? defaults.appbarBottomMargin
+        : 2;
 
   const computedTitle =
-    title ?? route?.name?.replace(/^./, (c: string) => c.toUpperCase());
+    title !== undefined && title !== null
+      ? title
+      : route?.name?.replace(/^./, (c: string) => c.toUpperCase());
 
   const canGoBack =
     typeof (navigation as any).canGoBack === 'function'
       ? (navigation as any).canGoBack()
       : false;
-  const showBackFinal = explicitShowBack ?? canGoBack;
+  const showBackFinal = explicitShowBack !== undefined ? explicitShowBack : canGoBack;
 
   return (
     <KeyboardAvoidingView
