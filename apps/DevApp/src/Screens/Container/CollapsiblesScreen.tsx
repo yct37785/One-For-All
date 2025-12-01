@@ -51,7 +51,7 @@ const CollapsibleScreen: Screen.ScreenType = () => {
         <UI.Box mt={2}>
           <UI.CollapsibleContainer
             text='Notifications'
-            icon='notifications'
+            icon='bell'
             textOpts={{ variant: 'titleSmall', color: 'secondary' }}
             iconOpts={{ color: 'secondary' }}
           >

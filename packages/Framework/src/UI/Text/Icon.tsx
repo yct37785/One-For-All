@@ -51,6 +51,8 @@ export type IconProps = {
  * A theme-aware icon that uses TextColor tokens for color and supports prefixed size variants.
  * - The `variant` maps to pixel sizes; if `size` is provided, it takes precedence.
  * 
+ * Icon names here: https://pictogrammers.com/library/mdi/
+ * 
  * @property source - Icon source (dependent on icon source under the hood)
  * 
  * @usage
