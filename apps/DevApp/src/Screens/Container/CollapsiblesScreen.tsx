@@ -1,173 +1,160 @@
 import React, { memo } from 'react';
 import { Screen, UI } from 'framework';
 
-const BASIC_SECTIONS = [
-  { text: 'First section' },
-  { text: 'Second section' },
-  { text: 'Third section' },
-];
-
-const CUSTOM_SECTIONS: UI.AccordionSectionHeader[] = [
-  {
-    text: 'Overview',
-    icon: 'information-outline',
-    textOpts: { variant: 'labelMedium', color: 'primary' },
-    iconOpts: { color: 'primary' }, // blue
-  },
-  {
-    text: 'Details',
-    icon: 'file-document-outline',
-    textOpts: { variant: 'labelMedium', color: 'secondary' },
-    iconOpts: { customColor: '#388e3c' }, // green
-  },
-  {
-    text: 'Activity',
-    icon: 'history',
-    textOpts: { variant: 'labelMedium', color: 'error' },
-    iconOpts: { customColor: '#d32f2f' }, // red
-  },
-];
-
-const CollapsiblesScreen: Screen.ScreenType = () => {
+/******************************************************************************************************************
+ * Collapsible & Accordion demo
+ *
+ * This screen demonstrates:
+ * - UI.CollapsibleContainer: single header that toggles its body.
+ * - UI.AccordionContainer: multiple headers where one section is open at a time.
+ ******************************************************************************************************************/
+const CollapsibleScreen: Screen.ScreenType = () => {
   return (
     <Screen.ScreenLayout showTitle>
-      <UI.VerticalLayout constraint='scroll'>
+      <UI.VerticalLayout constraint='scroll' padding={2}>
+
         {/* Header */}
-        <UI.Text variant='titleLarge'>Collapsibles</UI.Text>
-        <UI.Text variant='bodySmall'>
-          This page demonstrates the CollapsibleContainer and AccordionContainer, including props for customizing headers.
+        <UI.Text variant='bodyMedium'>
+          CollapsibleContainer and AccordionContainer wrap content with tappable headers that expand or collapse
+          their children.
         </UI.Text>
 
+        {/* CollapsibleContainer · basic */}
         <UI.Divider spacing={1} />
-
-        {/* 1. CollapsibleContainer */}
-        <UI.Text variant='titleMedium'>1. CollapsibleContainer</UI.Text>
-        <UI.Text variant='bodySmall' color='label'>
-          A single header that toggles visibility of its content.
-        </UI.Text>
-
-        {/* 1.1 Basic collapsible (text only) */}
-        <UI.Box mv={1}>
-          <UI.Text variant='labelSmall' color='label'>
-            Basic collapsible
-          </UI.Text>
-        </UI.Box>
+        <UI.Text variant='titleMedium'>CollapsibleContainer · basic</UI.Text>
 
         <UI.CollapsibleContainer text='Tap to toggle'>
-          <UI.Box p={1}>
-            <UI.Text variant='bodySmall'>
-              Simple collapsible using{' '}
-              <UI.Text variant='bodySmall' color='label'>
-                text
-              </UI.Text>
-              .
-            </UI.Text>
+          <UI.Box bgColor='#e3f2fd' p={1}>
+            <UI.Text variant='bodySmall'>Simple collapsible content.</UI.Text>
           </UI.Box>
         </UI.CollapsibleContainer>
 
-        {/* 1.2 Collapsible with custom text + icon + custom colors */}
-        <UI.Box mt={2} mb={1}>
-          <UI.Text variant='labelSmall' color='label'>
-            Collapsible with custom header (color &amp; icon)
-          </UI.Text>
+        {/* CollapsibleContainer · icon & text (expanded colors) */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>CollapsibleContainer · colored headers</UI.Text>
+
+        {/* Primary */}
+        <UI.Box mt={2}>
+          <UI.CollapsibleContainer
+            text='Profile settings'
+            icon='account-circle'
+            textOpts={{ variant: 'titleSmall', color: 'primary' }}
+            iconOpts={{ color: 'primary' }}
+          >
+            <UI.Box bgColor='#fff3e0' p={1}>
+              <UI.Text variant='bodySmall'>Primary themed header.</UI.Text>
+            </UI.Box>
+          </UI.CollapsibleContainer>
         </UI.Box>
 
-        <UI.CollapsibleContainer
-          text='Advanced settings'
-          textOpts={{ variant: 'labelMedium', color: 'primary' }}
-          icon='tune'
-          iconOpts={{ variant: 'md', customColor: '#ff9800' }} // orange icon
-        >
-          <UI.Box p={1}>
-            <UI.Text variant='bodySmall'>
-              This header uses{' '}
-              <UI.Text variant='bodySmall' color='label'>
-                textOpts
-              </UI.Text>{' '}
-              to set the font variant and color, and an{' '}
-              <UI.Text variant='bodySmall' color='label'>
-                icon
-              </UI.Text>{' '}
-              with a custom color via{' '}
-              <UI.Text variant='bodySmall' color='label'>
-                iconOpts
-              </UI.Text>
-              .
-            </UI.Text>
-          </UI.Box>
-        </UI.CollapsibleContainer>
-
-        <UI.Divider spacing={2} />
-
-        {/* 2. AccordionContainer */}
-        <UI.Text variant='titleMedium'>2. AccordionContainer</UI.Text>
-        <UI.Text variant='bodySmall' color='label'>
-          Multiple collapsible sections where only one is open at a time.
-        </UI.Text>
-
-        {/* 2.1 Basic accordion (text only) */}
-        <UI.Box mt={1} mb={1}>
-          <UI.Text variant='labelSmall' color='label'>
-            Basic accordion
-          </UI.Text>
+        {/* Secondary */}
+        <UI.Box mt={2}>
+          <UI.CollapsibleContainer
+            text='Notifications'
+            icon='notifications'
+            textOpts={{ variant: 'titleSmall', color: 'secondary' }}
+            iconOpts={{ color: 'secondary' }}
+          >
+            <UI.Box bgColor='#e8eaf6' p={1}>
+              <UI.Text variant='bodySmall'>Secondary themed header.</UI.Text>
+            </UI.Box>
+          </UI.CollapsibleContainer>
         </UI.Box>
 
-        <UI.AccordionContainer sections={BASIC_SECTIONS}>
-          <UI.Box p={1}>
-            <UI.Text variant='bodySmall'>Content for the first section.</UI.Text>
-          </UI.Box>
-          <UI.Box p={1}>
-            <UI.Text variant='bodySmall'>Content for the second section.</UI.Text>
-          </UI.Box>
-          <UI.Box p={1}>
-            <UI.Text variant='bodySmall'>Content for the third section.</UI.Text>
-          </UI.Box>
-        </UI.AccordionContainer>
-
-        {/* 2.2 Accordion with custom textOpts & icon/iconOpts per section */}
-        <UI.Box mt={2} mb={1}>
-          <UI.Text variant='labelSmall' color='label'>
-            Accordion with custom headers (colors &amp; icons)
-          </UI.Text>
+        {/* Error */}
+        <UI.Box mt={2}>
+          <UI.CollapsibleContainer
+            text='Danger zone'
+            icon='alert'
+            textOpts={{ variant: 'titleSmall', color: 'error' }}
+            iconOpts={{ color: 'error' }}
+          >
+            <UI.Box bgColor='#ffebee' p={1}>
+              <UI.Text variant='bodySmall'>Error themed header.</UI.Text>
+            </UI.Box>
+          </UI.CollapsibleContainer>
         </UI.Box>
 
-        <UI.AccordionContainer sections={CUSTOM_SECTIONS}>
-          <UI.Box p={1}>
-            <UI.Text variant='bodySmall'>Overview content.</UI.Text>
-          </UI.Box>
-          <UI.Box p={1}>
-            <UI.Text variant='bodySmall'>Details content.</UI.Text>
-          </UI.Box>
-          <UI.Box p={1}>
-            <UI.Text variant='bodySmall'>Activity content.</UI.Text>
-          </UI.Box>
-        </UI.AccordionContainer>
+        {/* Custom colored header */}
+        <UI.Box mt={2}>
+          <UI.CollapsibleContainer
+            text='Custom color'
+            icon='palette'
+            textOpts={{ variant: 'titleSmall', customColor: '#8e24aa' }}
+            iconOpts={{ customColor: '#8e24aa' }}
+          >
+            <UI.Box bgColor='#f3e5f5' p={1}>
+              <UI.Text variant='bodySmall'>Header using custom hex color.</UI.Text>
+            </UI.Box>
+          </UI.CollapsibleContainer>
+        </UI.Box>
 
-        {/* Usage notes */}
-        <UI.Divider spacing={0} />
+        {/* AccordionContainer · basic */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>AccordionContainer · basic</UI.Text>
 
-        <UI.Text variant='titleMedium'>Usage notes</UI.Text>
+        <UI.Box mt={2}>
+          <UI.AccordionContainer
+            sections={[
+              { text: 'First' },
+              { text: 'Second' },
+              { text: 'Third' },
+            ]}
+          >
+            <UI.Box bgColor='#e0f7fa' p={1}>
+              <UI.Text variant='bodySmall'>First section content.</UI.Text>
+            </UI.Box>
+            <UI.Box bgColor='#fff9c4' p={1}>
+              <UI.Text variant='bodySmall'>Second section content.</UI.Text>
+            </UI.Box>
+            <UI.Box bgColor='#f1f8e9' p={1}>
+              <UI.Text variant='bodySmall'>Third section content.</UI.Text>
+            </UI.Box>
+          </UI.AccordionContainer>
+        </UI.Box>
 
-        <UI.Text variant='bodySmall' color='label'>
-          • Use <UI.Text variant='bodySmall' color='label' bold>textOpts</UI.Text> to adjust typography
-          (variant, color, etc.).
-        </UI.Text>
+        {/* AccordionContainer · styled headers */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>AccordionContainer · styled headers</UI.Text>
 
-        <UI.Text variant='bodySmall' color='label'>
-          • Use <UI.Text variant='bodySmall' color='label' bold>icon</UI.Text> and{' '}
-          <UI.Text variant='bodySmall' color='label' bold>iconOpts</UI.Text> to add and style a leading
-          icon, including custom colors.
-        </UI.Text>
-
-        <UI.Text variant='bodySmall' color='label'>
-          • For <UI.Text variant='bodySmall' color='label' bold>AccordionContainer</UI.Text>, the{' '}
-          <UI.Text variant='bodySmall' color='label'>sections</UI.Text> array must have the same
-          length as the children.
-        </UI.Text>
+        <UI.Box mt={2} mb={4}>
+          <UI.AccordionContainer
+            sections={[
+              {
+                text: 'Info',
+                icon: 'information-outline',
+                textOpts: { variant: 'titleSmall', color: 'primary' },   // primary
+                iconOpts: { color: 'primary' },
+              },
+              {
+                text: 'Warning',
+                icon: 'alert-outline',
+                textOpts: { variant: 'titleSmall', customColor: '#fb8c00' }, // custom orange
+                iconOpts: { customColor: '#fb8c00' },
+              },
+              {
+                text: 'Success',
+                icon: 'check-circle-outline',
+                textOpts: { variant: 'titleSmall', customColor: '#2e7d32' }, // custom green
+                iconOpts: { customColor: '#2e7d32' },
+              },
+            ]}
+          >
+            <UI.Box bgColor='#e3f2fd' p={1}>
+              <UI.Text variant='bodySmall'>Info content.</UI.Text>
+            </UI.Box>
+            <UI.Box bgColor='#fff3e0' p={1}>
+              <UI.Text variant='bodySmall'>Warning content.</UI.Text>
+            </UI.Box>
+            <UI.Box bgColor='#e8f5e9' p={1}>
+              <UI.Text variant='bodySmall'>Success content.</UI.Text>
+            </UI.Box>
+          </UI.AccordionContainer>
+        </UI.Box>
 
       </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );
 };
 
-export default memo(CollapsiblesScreen);
+export default memo(CollapsibleScreen);
