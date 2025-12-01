@@ -117,7 +117,7 @@ const CollapsibleScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>AccordionContainer · styled headers</UI.Text>
 
-        <UI.Box mt={2} mb={4}>
+        <UI.Box mt={2}>
           <UI.AccordionContainer
             sections={[
               {

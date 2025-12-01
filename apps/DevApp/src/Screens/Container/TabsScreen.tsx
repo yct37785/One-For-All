@@ -1,171 +1,147 @@
 import React, { memo, useState } from 'react';
 import { Screen, UI } from 'framework';
 
-/******************************************************************************************************************
- * Tab route definitions
- ******************************************************************************************************************/
-export const TAB_ROUTES_WITH_ICONS: UI.TabRouteProps[] = [
-  { title: 'Scene 1', key: 's1', icon: 'google-street-view' },
-  { title: 'Scene 2', key: 's2', icon: 'camera' },
-  { title: 'Scene 3', key: 's3', icon: 'palm-tree' },
-];
-
-export const TAB_ROUTES_TEXT_ONLY: UI.TabRouteProps[] = [
-  { title: 'Overview', key: 't1' },
-  { title: 'Details', key: 't2' },
-  { title: 'Activity', key: 't3' },
-];
+const TAB_CONTENT_HEIGHT = 120;
 
 /******************************************************************************************************************
- * Tab scenes with colored backgrounds to make sections visually clear
+ * Tabs demo
+ *
+ * This screen demonstrates:
+ * - UI.TabsContainer: tabbed navigation where the active tab controls which scene is shown.
  ******************************************************************************************************************/
-const TabScene1 = memo(() => (
-  <UI.Box flex={1} bgColor='#e3f2fd' p={2}>
-    <UI.Text variant='titleMedium'>Scene 1</UI.Text>
-    <UI.Text variant='bodySmall' color='label'>
-      This scene is shown when the first tab is active.
-    </UI.Text>
-  </UI.Box>
-));
 
-const TabScene2 = memo(() => (
-  <UI.Box flex={1} bgColor='#fff3e0' p={2}>
-    <UI.Text variant='titleMedium'>Scene 2</UI.Text>
-    <UI.Text variant='bodySmall' color='label'>
-      Use this area for secondary content, lists, etc.
-    </UI.Text>
+// simple tab scenes for demos
+const BasicFirstTab = () => (
+  <UI.Box p={2} bgColor='#e3f2fd' flex={1}>
+    <UI.Text variant='bodySmall'>Basic first tab content.</UI.Text>
   </UI.Box>
-));
+);
 
-const TabScene3 = memo(() => (
-  <UI.Box flex={1} bgColor='#e8f5e9' p={2}>
-    <UI.Text variant='titleMedium'>Scene 3</UI.Text>
-    <UI.Text variant='bodySmall' color='label'>
-      A third scene for additional information.
-    </UI.Text>
+const BasicSecondTab = () => (
+  <UI.Box p={2} bgColor='#f1f8e9' flex={1}>
+    <UI.Text variant='bodySmall'>Basic second tab content.</UI.Text>
   </UI.Box>
-));
+);
 
-const TopTabsOverviewScene = memo(() => (
-  <UI.Box flex={1} bgColor='#e1f5fe' p={2}>
-    <UI.Text variant='titleMedium'>Overview</UI.Text>
-    <UI.Text variant='bodySmall' color='label'>
-      Basic overview content.
-    </UI.Text>
+const IconHomeTab = () => (
+  <UI.Box p={2} bgColor='#fff3e0' flex={1}>
+    <UI.Text variant='bodySmall'>Home tab with icon.</UI.Text>
   </UI.Box>
-));
+);
 
-const TopTabsDetailsScene = memo(() => (
-  <UI.Box flex={1} bgColor='#fce4ec' p={2}>
-    <UI.Text variant='titleMedium'>Details</UI.Text>
-    <UI.Text variant='bodySmall' color='label'>
-      Put detailed content here.
-    </UI.Text>
+const IconSearchTab = () => (
+  <UI.Box p={2} bgColor='#e8eaf6' flex={1}>
+    <UI.Text variant='bodySmall'>Search tab with icon.</UI.Text>
   </UI.Box>
-));
+);
 
-const TopTabsActivityScene = memo(() => (
-  <UI.Box flex={1} bgColor='#f3e5f5' p={2}>
-    <UI.Text variant='titleMedium'>Activity</UI.Text>
-    <UI.Text variant='bodySmall' color='label'>
-      Timeline, logs, or recent actions can go here.
-    </UI.Text>
+const IconProfileTab = () => (
+  <UI.Box p={2} bgColor='#e0f7fa' flex={1}>
+    <UI.Text variant='bodySmall'>Profile tab with icon.</UI.Text>
   </UI.Box>
-));
+);
 
-/******************************************************************************************************************
- * Tabs demo screen
- ******************************************************************************************************************/
+const BottomFirstTab = () => (
+  <UI.Box p={2} bgColor='#fce4ec' flex={1}>
+    <UI.Text variant='bodySmall'>Bottom tabs · first tab.</UI.Text>
+  </UI.Box>
+);
+
+const BottomSecondTab = () => (
+  <UI.Box p={2} bgColor='#ede7f6' flex={1}>
+    <UI.Text variant='bodySmall'>Bottom tabs · second tab.</UI.Text>
+  </UI.Box>
+);
+
 const TabsScreen: Screen.ScreenType = () => {
-  const [topTabIndex, setTopTabIndex] = useState(0);
-  const [bottomTabIndex, setBottomTabIndex] = useState(0);
+  // controlled tab indices for each example
+  const [basicIndex, setBasicIndex] = useState(0);
+  const [iconIndex, setIconIndex] = useState(0);
+  const [bottomIndex, setBottomIndex] = useState(0);
 
-  const iconSceneMap: UI.TabsSceneMap = {
-    s1: TabScene1,
-    s2: TabScene2,
-    s3: TabScene3,
+  // basic tabs (top)
+  const basicRoutes = [
+    { key: 'basicFirst', title: 'First' },
+    { key: 'basicSecond', title: 'Second' },
+  ];
+  const basicSceneMap = {
+    basicFirst: BasicFirstTab,
+    basicSecond: BasicSecondTab,
   };
 
-  const textSceneMap: UI.TabsSceneMap = {
-    t1: TopTabsOverviewScene,
-    t2: TopTabsDetailsScene,
-    t3: TopTabsActivityScene,
+  // tabs with icons (top)
+  const iconRoutes = [
+    { key: 'home', title: 'Home', icon: 'home' },
+    { key: 'search', title: 'Search', icon: 'magnify' },
+    { key: 'profile', title: 'Profile', icon: 'account' },
+  ];
+  const iconSceneMap = {
+    home: IconHomeTab,
+    search: IconSearchTab,
+    profile: IconProfileTab,
+  };
+
+  // bottom-positioned tabs
+  const bottomRoutes = [
+    { key: 'bottomFirst', title: 'First', icon: 'view-dashboard' },
+    { key: 'bottomSecond', title: 'Second', icon: 'format-list-bulleted' },
+  ];
+  const bottomSceneMap = {
+    bottomFirst: BottomFirstTab,
+    bottomSecond: BottomSecondTab,
   };
 
   return (
     <Screen.ScreenLayout showTitle>
-      <UI.VerticalLayout constraint='scroll'>
-        {/* Header / introduction */}
-        <UI.Text variant='titleLarge'>Tabs</UI.Text>
-        <UI.Text variant='bodySmall'>
-          Tabs let you switch between multiple scenes inside a single container.
-          You can tap on a tab, or swipe horizontally to move between scenes.
+      <UI.VerticalLayout constraint='scroll' padding={2}>
+
+        {/* Header */}
+        <UI.Text variant='bodyMedium'>
+          TabsContainer manages tabbed content where the active tab determines which scene is rendered.
         </UI.Text>
 
+        {/* TabsContainer · basic (top) */}
         <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>TabsContainer · basic (top)</UI.Text>
 
-        {/* Example 1: Top tabs */}
-        <UI.Text variant='titleMedium'>1. Top tabs</UI.Text>
-        <UI.Text variant='bodySmall' color='label'>
-          Tabs positioned at the top, each with a title and optional icon.
-        </UI.Text>
-
-        <UI.Box mt={1} mb={2} style={{ height: 220 }}>
+        <UI.Box mt={2} style={{ height: TAB_CONTENT_HEIGHT }}>
           <UI.TabsContainer
-            routes={TAB_ROUTES_WITH_ICONS}
-            tabIndex={topTabIndex}
-            onTabIdxChange={setTopTabIndex}
+            routes={basicRoutes}
+            sceneMap={basicSceneMap}
+            tabIndex={basicIndex}
+            onTabIdxChange={setBasicIndex}
             position='top'
-            sceneMap={iconSceneMap}
           />
         </UI.Box>
 
-        <UI.Divider spacing={2} />
+        {/* TabsContainer · with icons (top) */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>TabsContainer · with icons</UI.Text>
 
-        {/* Example 2: Bottom tabs */}
-        <UI.Text variant='titleMedium'>2. Bottom tabs</UI.Text>
-        <UI.Text variant='bodySmall' color='label'>
-          Tabs positioned at the bottom with text labels only.
-        </UI.Text>
-
-        <UI.Box mt={1} mb={2} style={{ height: 220 }}>
+        <UI.Box mt={2} style={{ height: TAB_CONTENT_HEIGHT }}>
           <UI.TabsContainer
-            routes={TAB_ROUTES_TEXT_ONLY}
-            tabIndex={bottomTabIndex}
-            onTabIdxChange={setBottomTabIndex}
-            position='bottom'
-            sceneMap={textSceneMap}
+            routes={iconRoutes}
+            sceneMap={iconSceneMap}
+            tabIndex={iconIndex}
+            onTabIdxChange={setIconIndex}
+            position='top'
           />
         </UI.Box>
 
-        {/* Usage notes */}
-        <UI.Divider spacing={0} />
-        <UI.Text variant='titleMedium'>Usage notes</UI.Text>
-        <UI.Text variant='bodySmall' color='label'>
-          • Each route must have a unique{' '}
-          <UI.Text variant='bodySmall' color='label'>
-            key
-          </UI.Text>
-          .
-        </UI.Text>
-        <UI.Text variant='bodySmall' color='label'>
-          • The{' '}
-          <UI.Text variant='bodySmall' color='label' bold>
-            sceneMap
-          </UI.Text>{' '}
-          should map each route key to a component.
-        </UI.Text>
-        <UI.Text variant='bodySmall' color='label'>
-          • Control the active tab index via{' '}
-          <UI.Text variant='bodySmall' color='label' bold>
-            tabIndex
-          </UI.Text>{' '}
-          and{' '}
-          <UI.Text variant='bodySmall' color='label' bold>
-            onTabIdxChange
-          </UI.Text>{' '}
-          for predictable navigation.
-        </UI.Text>
+        {/* TabsContainer · bottom tab bar */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>TabsContainer · bottom</UI.Text>
+
+        <UI.Box mt={2} style={{ height: TAB_CONTENT_HEIGHT }}>
+          <UI.TabsContainer
+            routes={bottomRoutes}
+            sceneMap={bottomSceneMap}
+            tabIndex={bottomIndex}
+            onTabIdxChange={setBottomIndex}
+            position='bottom'
+          />
+        </UI.Box>
+
       </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );
