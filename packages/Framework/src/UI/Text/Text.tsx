@@ -46,7 +46,6 @@ export type TextVariant =
  * @property highlightColor?  - Raw color string
  * @property bold?            - Bolded text
  * @property numberOfLines?   - Fixed num of lines if provided
- * @property margin?          - Margin
  ******************************************************************************************************************/
 export interface TextProps {
   variant?: TextVariant;

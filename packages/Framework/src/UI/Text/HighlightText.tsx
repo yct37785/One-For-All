@@ -11,14 +11,16 @@ const defaultHighlightColor = 'yellow';
 /******************************************************************************************************************
  * Highlight text props.
  * 
- * @property query            - Substring to highlight
- * @property caseSensitive?   - Match case (default: false)
- * @property highlightStyle?  - Extra style for highlighted parts (e.g., { backgroundColor: 'yellow' })
+ * @property query                - Substring to highlight
+ * @property caseSensitive?       - Match case (default: false)
+ * @property queryColor?          - Queried text color
+ * @property queryHighlightColor? - Queried text highlight color
  ******************************************************************************************************************/
-export type HighlightTextProps = TextProps & {
+export interface HighlightTextProps extends TextProps {
   query: string;
   caseSensitive?: boolean;
-  highlightStyle?: StyleProp<TextStyle>;
+  queryColor?: string;
+  queryHighlightColor?: string;
   children?: string | ReactNode;
 };
 
@@ -38,40 +40,53 @@ export type HighlightTextProps = TextProps & {
  ******************************************************************************************************************/
 export const HighlightText: React.FC<HighlightTextProps> = memo(
   ({
+    numberOfLines,
     query,
     caseSensitive = false,
+    queryColor,
+    queryHighlightColor,
     children,
     ...rest
   }) => {
-    // only operate on plain strings, otherwise fall back to a single node
+    // fallback: no highlighting needed
     if (typeof children !== 'string' || !query) {
       return (
-        <Text {...rest}>
-          {children}
-        </Text>
+        <Text numberOfLines={numberOfLines} {...rest}>{children}</Text>
       );
     }
 
-    const flags = caseSensitive ? 'g' : 'gi';
     const safe = escapeRegExp(query);
+    const flags = caseSensitive ? 'g' : 'gi';
     const re = new RegExp(`(${safe})`, flags);
     const parts = children.split(re);
 
     const normalizedQuery = caseSensitive ? query : query.toLowerCase();
 
     return (
-      <Text {...rest}>
+      <Text numberOfLines={numberOfLines} {...rest}>
         {parts.map((part, i) => {
           const match = caseSensitive
             ? part === normalizedQuery
             : part.toLowerCase() === normalizedQuery;
 
-          return match ? (
-            <Text key={`h-${i}`} highlightColor={defaultHighlightColor}>
+          if (!match) {
+            return <React.Fragment key={`t-${i}`}>{part}</React.Fragment>;
+          }
+
+          // build inner <Text> props (override only color + highlight)
+          const innerProps: TextProps = {
+            ...rest,
+
+            ...(queryColor !== undefined ? { customColor: queryColor } : {}),
+
+            highlightColor:
+              queryHighlightColor ?? defaultHighlightColor,
+          };
+
+          return (
+            <Text key={`h-${i}`} {...innerProps}>
               {part}
             </Text>
-          ) : (
-            <React.Fragment key={`t-${i}`}>{part}</React.Fragment>
           );
         })}
       </Text>

@@ -84,7 +84,7 @@ type Section = {
   content: React.ReactNode;
 };
 
-const GRP_SIZE = 3;
+const grpSize = 3;
 
 /******************************************************************************************************************
  * AccordionOption:
@@ -201,8 +201,8 @@ export const AccordionContainer: React.FC<AccordionContainerProps> = memo(
     }));
 
     const groups: Section[][] = [];
-    for (let i = 0; i < mergedSections.length; i += GRP_SIZE) {
-      groups.push(mergedSections.slice(i, i + GRP_SIZE));
+    for (let i = 0; i < mergedSections.length; i += grpSize) {
+      groups.push(mergedSections.slice(i, i + grpSize));
     }
 
     // Accordion triggers
