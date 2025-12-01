@@ -1,314 +1,157 @@
-import React, { useState, useEffect, memo } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import React, { memo, useMemo, useState } from 'react';
+import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { Screen, UI } from 'framework';
 import { faker } from '@faker-js/faker';
 
-const padSize = 4;
+type DemoListItem = {
+  searchable: Record<string, string>;
+  filterable: Record<string, string>;
+  none: Record<string, string>;
+};
 
-const ListTypes = {
-  flashlist: UI.ListImplementationType.flashlist,
-  flatlist: UI.ListImplementationType.flatlist,
-} as const;
+const CATEGORIES = ['Electronics', 'Clothing', 'Home', 'Books', 'Sports', 'Toys', 'Outdoors'];
 
 /******************************************************************************************************************
  * List demo
  *
- * - Search bar in the app bar
- * - Filter section using ChipOptions + ListFilterMap
- * - Switch between FlashList / FlatList
- * - Material-style, non-elevated rows separated by dividers
+ * This screen demonstrates:
+ * - UI.List: searchable + filterable list (FlashList under the hood).
+ * - UI.TextInput: search bar in the custom header.
+ * - UI.ChipOptions: category filters in a horizontal scroll row.
+ * - UI.HighlightText: inline highlighting of the search term within each list item.
  ******************************************************************************************************************/
 const ListScreen: Screen.ScreenType = () => {
-  const [listType, setListType] = useState<UI.ListImplementationType>(
-    UI.ListImplementationType.flashlist
-  );
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [productList, setProductList] = useState<UI.ListItem[]>([]);
-  const [matChipsSchema, setMatChipsSchema] = useState<Set<string>>(new Set());
-  const [filterMap, setFilterMap] = useState<UI.ListFilterMap>({
-    material: new Set(),
-  });
+  const [query, setQuery] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState<Set<string>>(() => new Set());
 
-  useEffect(() => {
-    const fakeData = faker.helpers.multiple(createRandomProduct, { count: 200 });
+  // generate a large dataset once using Faker
+  const items: DemoListItem[] = useMemo(() => {
+    const arr: DemoListItem[] = [];
+    for (let i = 0; i < 1200; i++) {
+      const category = faker.helpers.arrayElement(CATEGORIES);
+      const name = faker.commerce.productName();
+      const desc = faker.commerce.productDescription();
+      const price = faker.commerce.price({ min: 10, max: 500 });
+      const imageUrl = faker.image.url(); // generic image URL
 
-    const matNext: Set<string> = new Set();
-    fakeData.forEach((item) => {
-      matNext.add(item.filterable.material);
-    });
-
-    setMatChipsSchema(matNext);
-    setProductList(fakeData);
+      arr.push({
+        searchable: {
+          id: String(i + 1),
+          name,
+          desc,
+        },
+        filterable: {
+          category,
+        },
+        none: {
+          price,
+          imageUrl,
+        },
+      });
+    }
+    return arr;
   }, []);
 
-  /**
-   * Create a random product item.
-   * Keep the data aligned with ListItem types: strings only in searchable/filterable/none.
-   */
-  const createRandomProduct = (): UI.ListItem => {
-    return {
-      searchable: {
-        id: faker.string.uuid(),
-        name: faker.commerce.productName(),
-        desc: faker.commerce.productDescription(),
-        category: faker.commerce.department(),
-      },
-      filterable: {
-        material: faker.commerce.productMaterial().toLowerCase(),
-      },
-      none: {
-        img: faker.image.urlPicsumPhotos(),
-      },
-    };
+  const onCategorySelected = (values: Set<string>) => {
+    setSelectedCategories(values);
   };
 
-  /**
-   * Handle selection of material chips
-   */
-  function onChipsSelected(selectedValues: Set<string>) {
-    filterMap.material = selectedValues;
-    setFilterMap({ ...filterMap });
-  }
+  const filterMap = {
+    category: selectedCategories,
+  };
 
-  /**
-   * Card-style (but non-elevated) list item renderer.
-   * We derive price/rating/inStock from the index so we don't modify the ListItem type.
-   */
-  const renderItem: UI.renderListItemFunc = (item, index) => {
-    const { name, desc, category } = item.searchable as any;
-    const { material } = item.filterable as any;
-    const { img } = item.none as any;
+  // row renderer for List (with image + highlighted text)
+  const renderItem = (item: DemoListItem, index: number) => {
+    const { name, desc } = item.searchable;
+    const { category } = item.filterable;
+    const { price, imageUrl } = item.none;
 
-    // Derived fields for visual richness (not stored in ListItem)
-    const price = 19 + (index % 80); // 19–98
-    const rating = 3 + ((index * 7) % 20) / 10; // 3.0–4.9
-    const inStock = index % 4 !== 0;
+    const bg = index % 2 === 0 ? '#ffffff' : '#fafafa';
 
     return (
-      <View>
-        <UI.Box style={styles.rowContainer} bgColor='#FFFFFF'>
-          <UI.HorizontalLayout gap={1}>
-            {/* Image */}
-            <View style={styles.imageContainer}>
-              <Image
-                style={styles.img}
-                source={{ uri: img }}
-                resizeMode='cover'
-              />
-            </View>
+      <UI.Box bgColor={bg} p={1}>
+        <View style={styles.itemRow}>
+          {/* Thumbnail */}
+          <Image source={{ uri: imageUrl }} style={styles.thumbnail} />
 
-            {/* Text content */}
-            <UI.VerticalLayout flex={1} gap={1}>
-              {/* Title + category/material */}
-              <UI.VerticalLayout gap={0}>
-                <UI.HighlightText query={searchQuery} variant='titleSmall'>
-                  {name}
-                </UI.HighlightText>
-                <UI.Text variant='labelSmall' color='label'>
-                  {category} • {material}
-                </UI.Text>
-              </UI.VerticalLayout>
+          {/* Text block */}
+          <View style={styles.itemText}>
+            <UI.HighlightText variant='bodyMedium' bold query={query}>
+              {name}
+            </UI.HighlightText>
 
-              {/* Price + rating + stock as 'pills' */}
-              <UI.HorizontalLayout gap={1}>
-                <UI.Box
-                  bgColor='#E3F2FD'
-                  align='center'
-                  justify='center'
-                  style={styles.pill}
-                >
-                  <UI.Text variant='labelSmall' color='primary' bold>
-                    ${price}
-                  </UI.Text>
-                </UI.Box>
+            <UI.HighlightText variant='labelSmall' query={query}>
+              {category} · ${price}
+            </UI.HighlightText>
 
-                <UI.Box
-                  bgColor='#FFF3E0'
-                  align='center'
-                  justify='center'
-                  style={styles.pill}
-                >
-                  <UI.Text variant='labelSmall' color='label'>
-                    ⭐ {rating.toFixed(1)}
-                  </UI.Text>
-                </UI.Box>
-
-                <UI.Box
-                  bgColor={inStock ? '#E8F5E9' : '#FFEBEE'}
-                  align='center'
-                  justify='center'
-                  style={styles.pill}
-                >
-                  <UI.Text
-                    variant='labelSmall'
-                    color={inStock ? 'primary' : 'error'}
-                  >
-                    {inStock ? 'In stock' : 'Out of stock'}
-                  </UI.Text>
-                </UI.Box>
-              </UI.HorizontalLayout>
-
-              {/* Description */}
-              <UI.HighlightText
-                query={searchQuery}
-                variant='bodySmall'
-                numberOfLines={2}
-                style={styles.description}
-              >
-                {desc}
-              </UI.HighlightText>
-            </UI.VerticalLayout>
-          </UI.HorizontalLayout>
-        </UI.Box>
-
-        {/* Divider between items */}
-        <UI.Divider spacing={0} />
-      </View>
+            <UI.HighlightText variant='bodySmall' numberOfLines={2} query={query}>
+              {desc}
+            </UI.HighlightText>
+          </View>
+        </View>
+      </UI.Box>
     );
   };
 
-  /**
-   * LeftContent for ScreenLayout: search bar in the app bar
-   */
-  const leftContent = (
-    <View>
+  // custom header: description + search bar + horizontal chips
+  const LeftContent = (
+    <UI.Box p={2}>
       <UI.TextInput
         type='search'
-        value={searchQuery}
-        onChange={setSearchQuery}
-        placeholder='Search'
+        variant='outline'
+        value={query}
+        placeholder='Search...'
+        onChange={setQuery}
       />
-    </View>
-  );
-
-  /**
-   * Empty state for List when no items match query + filters.
-   */
-  const emptyComponent = (
-    <UI.Box align='center' justify='center' style={styles.emptyContainer}>
-      <UI.Text variant='titleSmall'>No results</UI.Text>
-      <UI.Text variant='bodySmall' color='label'>
-        Try changing your search or clearing filters.
-      </UI.Text>
     </UI.Box>
   );
 
   return (
-    <Screen.ScreenLayout LeftContent={leftContent} showTitle={false}>
-      {/* Main content area – List is primary, no outer scroll to avoid nested scrolling */}
-      <UI.VerticalLayout gap={1}>
-        {/* Intro / header */}
-        <UI.Box>
-          <UI.Text variant='titleLarge'>List</UI.Text>
-          <UI.Text variant='bodySmall' color='label'>
-            List renders large data sets with built-in search and filters. You
-            define the row layout, and List handles matching and efficient rendering
-            with FlashList or FlatList.
-          </UI.Text>
-        </UI.Box>
+    <Screen.ScreenLayout showTitle={false} LeftContent={LeftContent} RightContent={null}>
 
-        {/* Filter (collapsible) */}
-        <UI.CollapsibleContainer text='Filter' icon='tune'>
-          <UI.Box mt={1}>
-            <UI.Text variant='bodySmall' color='label'>
-              This example filters by{' '}
-              <UI.Text variant='bodySmall' color='label'>
-                material
-              </UI.Text>
-              . Selected chip values are stored in{' '}
-              <UI.Text variant='bodySmall' color='label'>
-                ListFilterMap
-              </UI.Text>{' '}
-              and applied before rendering.
-            </UI.Text>
-
-            <UI.HorizontalLayout constraint='scroll' flex={0}>
-              <UI.ChipOptions
-                schema={matChipsSchema}
-                onSelected={onChipsSelected}
-                style={{ width: 700 }}
-              />
-            </UI.HorizontalLayout>
-          </UI.Box>
-        </UI.CollapsibleContainer>
-
-        {/* List implementation (collapsible) */}
-        <UI.CollapsibleContainer
-          text='List implementation'
-          icon='swap-vertical'
+      {/* Header */}
+      <UI.Box ph={2}>
+        <UI.Text variant='bodyMedium'>
+          List renders large datasets with text search, category filters, and inline highlighting.
+        </UI.Text>
+      </UI.Box>
+      
+      {/* Chips filter */}
+      <UI.Box p={1}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.chipScrollContent}
         >
-          <UI.Box mt={1}>
-            <UI.Text variant='bodySmall' color='label'>
-              Choose which list engine to use:
-            </UI.Text>
-            <UI.Text variant='bodySmall' color='label'>
-              •{' '}
-              <UI.Text variant='bodySmall' color='label'>
-                FlashList
-              </UI.Text>{' '}
-              – optimized for large, high-performance lists (default).
-            </UI.Text>
-            <UI.Text variant='bodySmall' color='label'>
-              •{' '}
-              <UI.Text variant='bodySmall' color='label'>
-                FlatList
-              </UI.Text>{' '}
-              – standard React Native list component.
-            </UI.Text>
+          <UI.ChipOptions schema={new Set(CATEGORIES)} onSelected={onCategorySelected} />
+        </ScrollView>
+      </UI.Box>
 
-            <UI.RadioGroup
-              options={ListTypes}
-              value={listType}
-              onValueChange={(s: string) =>
-                setListType(s as UI.ListImplementationType)
-              }
-            />
-          </UI.Box>
-        </UI.CollapsibleContainer>
+      {/* List as the main scrollable content */}
+      <UI.Box flex={1} mt={2}>
+        <UI.List dataArr={items} query={query} filterMap={filterMap} renderItem={renderItem} />
+      </UI.Box>
 
-        {/* List itself */}
-        <UI.Box flex={1}>
-          <UI.List
-            dataArr={productList}
-            query={searchQuery}
-            filterMap={filterMap}
-            renderItem={renderItem}
-            listImplementationType={listType}
-            emptyComponent={emptyComponent}
-          />
-        </UI.Box>
-      </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );
 };
 
 const styles = StyleSheet.create({
-  rowContainer: {
+  itemRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  thumbnail: {
+    width: 52,
+    height: 52,
+    borderRadius: 6,
+    marginRight: 8,
+  },
+  itemText: {
     flex: 1,
-    paddingHorizontal: padSize,
-    paddingVertical: padSize,
   },
-  imageContainer: {
-    width: 90,
-    height: 90,
-    borderRadius: padSize,
-    overflow: 'hidden',
-    marginRight: padSize,
-  },
-  img: {
-    width: '100%',
-    height: '100%',
-  },
-  pill: {
-    borderRadius: padSize,
-    paddingHorizontal: padSize,
-    paddingVertical: padSize / 3,
-  },
-  description: {
-    marginTop: padSize / 2,
-  },
-  emptyContainer: {
-    paddingVertical: padSize * 2,
+  chipScrollContent: {
+    paddingRight: 16,
   },
 });
 

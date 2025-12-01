@@ -6,9 +6,7 @@ function escapeRegExp(s: string) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-const defaultHighlightStyle: TextStyle = {
-  backgroundColor: 'yellow',
-};
+const defaultHighlightColor = 'yellow';
 
 /******************************************************************************************************************
  * Highlight text props.
@@ -40,19 +38,15 @@ export type HighlightTextProps = TextProps & {
  ******************************************************************************************************************/
 export const HighlightText: React.FC<HighlightTextProps> = memo(
   ({
-    variant = 'bodyMedium',
-    color,
-    style,
     query,
     caseSensitive = false,
-    highlightStyle,
     children,
     ...rest
   }) => {
     // only operate on plain strings, otherwise fall back to a single node
     if (typeof children !== 'string' || !query) {
       return (
-        <Text variant={variant} color={color} style={style} {...rest}>
+        <Text {...rest}>
           {children}
         </Text>
       );
@@ -63,20 +57,17 @@ export const HighlightText: React.FC<HighlightTextProps> = memo(
     const re = new RegExp(`(${safe})`, flags);
     const parts = children.split(re);
 
-    const resolvedHighlightStyle: StyleProp<TextStyle> =
-      highlightStyle ?? defaultHighlightStyle;
-
     const normalizedQuery = caseSensitive ? query : query.toLowerCase();
 
     return (
-      <Text variant={variant} color={color} style={style} {...rest}>
+      <Text {...rest}>
         {parts.map((part, i) => {
           const match = caseSensitive
             ? part === normalizedQuery
             : part.toLowerCase() === normalizedQuery;
 
           return match ? (
-            <Text key={`h-${i}`} variant={variant} style={resolvedHighlightStyle}>
+            <Text key={`h-${i}`} highlightColor={defaultHighlightColor}>
               {part}
             </Text>
           ) : (

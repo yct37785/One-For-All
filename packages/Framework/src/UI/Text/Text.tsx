@@ -43,6 +43,7 @@ export type TextVariant =
  * @property variant          - MD3 text role; defaults to 'bodyMedium'
  * @property color?           - Font color
  * @property customColor?     - Raw color string (overrides color prop)
+ * @property highlightColor?  - Raw color string
  * @property bold?            - Bolded text
  * @property numberOfLines?   - Fixed num of lines if provided
  * @property margin?          - Margin
@@ -51,6 +52,7 @@ export interface TextProps {
   variant?: TextVariant;
   color?: FontColor;
   customColor?: string;
+  highlightColor?: string;
   bold?: boolean;
   numberOfLines?: number;
 }
@@ -69,11 +71,22 @@ export interface TextProps {
  * ```
  ******************************************************************************************************************/
 export const Text: React.FC<TextProps & { children?: string | ReactNode }> = memo(
-  ({ variant = 'bodyMedium', color = 'default', customColor, bold, numberOfLines, children }) => {
+  ({
+    variant = 'bodyMedium',
+    color = 'default',
+    customColor,
+    highlightColor,
+    bold,
+    numberOfLines,
+    children
+  }) => {
     const theme = useTheme();
     const resolvedColor = resolveFontColor(color, customColor, theme);
 
-    const colorStyle = { color: resolvedColor };
+    const colorStyle = {
+      color: resolvedColor,
+      ...(highlightColor !== undefined && { backgroundColor: highlightColor }),
+    };
     const boldStyle: TextStyle = { fontWeight: bold ? 'bold' : 'normal' };
 
     return (
