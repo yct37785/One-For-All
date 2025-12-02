@@ -6,39 +6,51 @@ import { Screen, UI } from 'framework';
  *
  * This screen demonstrates:
  * - UI.TextInput: flat and outline variants
- * - Different types: text, email, password, search, numeric, phone
+ * - Required fields with '*' indicator and built-in blur validation
+ * - Custom validation using error / errorText (e.g. email format)
  ******************************************************************************************************************/
 const TextInputScreen: Screen.ScreenType = () => {
   const [name, setName] = useState('');
   const [outlineName, setOutlineName] = useState('');
   const [email, setEmail] = useState('');
+  const [emailTouched, setEmailTouched] = useState(false);
   const [password, setPassword] = useState('');
   const [search, setSearch] = useState('');
   const [amount, setAmount] = useState('');
   const [phone, setPhone] = useState('');
   const [disabledValue] = useState('Read-only value');
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailHasValue = email.trim().length > 0;
+  const emailFormatInvalid = emailTouched && emailHasValue && !emailRegex.test(email);
+
   return (
     <Screen.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
         {/* Header */}
         <UI.Text variant='bodyMedium'>
-          TextInput provides a themed input field with support for flat and outline variants, keyboard types, and
-          optional leading and trailing icons.
+          TextInput supports flat and outline variants, required indicators, helper text, and simple error styling.
+          To see validation in action:
         </UI.Text>
 
-        {/* TextInput · flat */}
+        {/* TextInput · flat (required) */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>TextInput · flat</UI.Text>
+        <UI.Text variant='titleMedium'>TextInput · flat (required)</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Text variant='bodySmall'>
+        Leave required fields blank and tap elsewhere to trigger the required error.
+        </UI.Text>
+
+        <UI.Box mt={1}>
           <UI.TextInput
             type='text'
             variant='flat'
             label='Name'
+            required
             placeholder='Enter your name'
             value={name}
             onChange={setName}
+            helperText='This will be shown on your profile.'
           />
         </UI.Box>
 
@@ -57,18 +69,31 @@ const TextInputScreen: Screen.ScreenType = () => {
           />
         </UI.Box>
 
-        {/* TextInput · email & password */}
+        {/* TextInput · email & password (with helper/error) */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>TextInput · email & password</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Text variant='bodySmall'>
+        For email, type an invalid address (e.g. 'abc') and blur the field to see a format error.
+        </UI.Text>
+
+        <UI.Box mt={1}>
           <UI.TextInput
             type='email'
             variant='outline'
             label='Email'
+            required
             placeholder='name@example.com'
             value={email}
             onChange={setEmail}
+            onBlur={() => setEmailTouched(true)}
+            error={emailFormatInvalid}
+            errorText={
+              emailFormatInvalid
+                ? 'Please enter a valid email (e.g. name@example.com).'
+                : undefined
+            }
+            helperText='We’ll use this to contact you.'
           />
         </UI.Box>
 
@@ -80,6 +105,7 @@ const TextInputScreen: Screen.ScreenType = () => {
             placeholder='Enter your password'
             value={password}
             onChange={setPassword}
+            helperText='Use at least 8 characters for a strong password.'
           />
         </UI.Box>
 
@@ -92,9 +118,10 @@ const TextInputScreen: Screen.ScreenType = () => {
             type='search'
             variant='flat'
             label='Search'
-            placeholder='Search…'
+            placeholder='Search...'
             value={search}
             onChange={setSearch}
+            helperText='Type to filter results.'
           />
         </UI.Box>
 
@@ -121,6 +148,7 @@ const TextInputScreen: Screen.ScreenType = () => {
             placeholder='+65 1234 5678'
             value={phone}
             onChange={setPhone}
+            helperText='Include country code.'
           />
         </UI.Box>
 
@@ -135,6 +163,7 @@ const TextInputScreen: Screen.ScreenType = () => {
             label='Disabled'
             value={disabledValue}
             editable={false}
+            helperText='This field cannot be edited.'
           />
         </UI.Box>
       </UI.VerticalLayout>
