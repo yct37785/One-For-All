@@ -14,7 +14,7 @@ import InteractivesScreen from './Interactive/InteractivesScreen';
 // layout
 import LayoutsScreen from './Layout/LayoutsScreen';
 // menu
-import MenuScreen from './Menu/MenuScreen';
+import MenuListScreen from './Menu/MenuListScreen';
 // misc
 import MiscScreen from './Misc/MiscScreen';
 // modal
@@ -40,7 +40,7 @@ export const screenRoutes = {
   input: 'input',
   interactives: 'interactives',
   layouts: 'layouts',
-  menu: 'menu',
+  menulist: 'menulist',
   misc: 'misc',
   modals: 'modals',
   options: 'options',
@@ -61,7 +61,7 @@ export const screenRegistry: Screen.ScreenMap = {
   [screenRoutes.input]: InputScreen,
   [screenRoutes.interactives]: InteractivesScreen,
   [screenRoutes.layouts]: LayoutsScreen,
-  [screenRoutes.menu]: MenuScreen,
+  [screenRoutes.menulist]: MenuListScreen,
   [screenRoutes.misc]: MiscScreen,
   [screenRoutes.modals]: ModalsScreen,
   [screenRoutes.options]: OptionsScreen,

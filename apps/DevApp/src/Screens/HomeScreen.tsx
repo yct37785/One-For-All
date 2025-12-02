@@ -53,7 +53,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
   ];
 
   const menuOptions = [
-    { value: screenRoutes.menu, text: 'Menus & popups' },
+    { value: screenRoutes.menulist, text: 'Menu List' },
   ];
 
   const miscOptions = [
