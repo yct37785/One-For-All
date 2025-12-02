@@ -2,267 +2,144 @@ import React, { memo, useState } from 'react';
 import { Screen, UI } from 'framework';
 
 /******************************************************************************************************************
- * InputScreen
+ * TextInput demo
  *
- * Demonstrates usage of UI.TextInput:
- * - label + variant ("flat" / "outline")
- * - different input types (text, numeric, password, search, email, phone)
- * - leading and trailing icons
- * - multiline and disabled states
+ * This screen demonstrates:
+ * - UI.TextInput: flat and outline variants
+ * - Different types: text, email, password, search, numeric, phone
  ******************************************************************************************************************/
-const InputScreen: Screen.ScreenType = () => {
-  const [name, setName] = useState<string>('');
-  const [age, setAge] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [phone, setPhone] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [notes, setNotes] = useState<string>('This note is editable.');
-
-  const fruits = ['Apple', 'Banana', 'Cherry', 'Durian', 'Elderberry', 'Fig', 'Grape'];
-  const filteredFruits = fruits.filter((f) =>
-    f.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+const TextInputScreen: Screen.ScreenType = () => {
+  const [name, setName] = useState('');
+  const [outlineName, setOutlineName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [search, setSearch] = useState('');
+  const [amount, setAmount] = useState('');
+  const [phone, setPhone] = useState('');
+  const [disabledValue] = useState('Read-only value');
 
   return (
     <Screen.ScreenLayout showTitle>
-      <UI.VerticalLayout constraint='scroll' gap={1}>
-        {/* Title + Intro */}
-        <UI.Box>
-          <UI.Text variant='titleLarge'>Inputs</UI.Text>
-          <UI.Text variant='bodySmall' color='label'>
-            TextInput is a controlled field for user input. The{' '}
-            <UI.Text variant='bodySmall' color='label'>type</UI.Text>{' '}
-            prop selects the keyboard and behaviours, while{' '}
-            <UI.Text variant='bodySmall' color='label'>label</UI.Text>{' '}
-            and{' '}
-            <UI.Text variant='bodySmall' color='label'>variant</UI.Text>{' '}
-            control presentation.
-          </UI.Text>
+      <UI.VerticalLayout constraint='scroll' padding={2}>
+        {/* Header */}
+        <UI.Text variant='bodyMedium'>
+          TextInput provides a themed input field with support for flat and outline variants, keyboard types, and
+          optional leading and trailing icons.
+        </UI.Text>
+
+        {/* TextInput · flat */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>TextInput · flat</UI.Text>
+
+        <UI.Box mt={2}>
+          <UI.TextInput
+            type='text'
+            variant='flat'
+            label='Name'
+            placeholder='Enter your name'
+            value={name}
+            onChange={setName}
+          />
         </UI.Box>
 
+        {/* TextInput · outline */}
         <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>TextInput · outline</UI.Text>
 
-        {/* Section 1: Basic text (flat) */}
-        <UI.Box>
-          <UI.Text variant='titleMedium'>1. Basic text input</UI.Text>
-          <UI.Text variant='bodySmall' color='label'>
-            Use <UI.Text variant='bodySmall' color='label'>type="text"</UI.Text> for general
-            single-line text. The field is controlled via{' '}
-            <UI.Text variant='bodySmall' color='label'>value</UI.Text> and{' '}
-            <UI.Text variant='bodySmall' color='label'>onChange</UI.Text>.
-          </UI.Text>
-
-          <UI.Box mt={1}>
-            <UI.TextInput
-              type='text'
-              label='Name'
-              variant='flat'
-              value={name}
-              placeholder='Your full name'
-              onChange={setName}
-            />
-            <UI.Text variant='bodySmall' color='label'>
-              Current: {name || '<empty>'}
-            </UI.Text>
-          </UI.Box>
+        <UI.Box mt={2}>
+          <UI.TextInput
+            type='text'
+            variant='outline'
+            label='Name (outline)'
+            placeholder='Enter your name'
+            value={outlineName}
+            onChange={setOutlineName}
+          />
         </UI.Box>
 
+        {/* TextInput · email & password */}
         <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>TextInput · email & password</UI.Text>
 
-        {/* Section 2: Variants (flat vs outline) */}
-        <UI.Box>
-          <UI.Text variant='titleMedium'>2. Variants</UI.Text>
-          <UI.Text variant='bodySmall' color='label'>
-            Choose between a subtle{' '}
-            <UI.Text variant='bodySmall' color='label'>flat</UI.Text> background or an{' '}
-            <UI.Text variant='bodySmall' color='label'>outline</UI.Text> with borders.
-          </UI.Text>
-
-          <UI.Box mt={1}>
-            <UI.Text variant='labelSmall' color='label'>
-              Flat variant
-            </UI.Text>
-            <UI.TextInput
-              type='text'
-              label='Project title'
-              variant='flat'
-              value={name}
-              placeholder='My next big idea'
-              onChange={setName}
-            />
-          </UI.Box>
-
-          <UI.Box mt={1}>
-            <UI.Text variant='labelSmall' color='label'>
-              Outline variant
-            </UI.Text>
-            <UI.TextInput
-              type='text'
-              label='Project title'
-              variant='outline'
-              value={name}
-              placeholder='My next big idea'
-              onChange={setName}
-            />
-          </UI.Box>
+        <UI.Box mt={2}>
+          <UI.TextInput
+            type='email'
+            variant='outline'
+            label='Email'
+            placeholder='name@example.com'
+            value={email}
+            onChange={setEmail}
+          />
         </UI.Box>
 
-        <UI.Divider spacing={1} />
-
-        {/* Section 3: Numeric, email, phone */}
-        <UI.Box>
-          <UI.Text variant='titleMedium'>3. Numeric, email &amp; phone</UI.Text>
-          <UI.Text variant='bodySmall' color='label'>
-            The <UI.Text variant='bodySmall' color='label'>type</UI.Text> sets a suitable
-            keyboard: <UI.Text variant='bodySmall' color='label'>numeric</UI.Text> for numbers,
-            <UI.Text variant='bodySmall' color='label'>email</UI.Text> for email addresses and{' '}
-            <UI.Text variant='bodySmall' color='label'>phone</UI.Text> for phone numbers.
-          </UI.Text>
-
-          <UI.Box mt={1}>
-            <UI.TextInput
-              type='numeric'
-              label='Age'
-              variant='outline'
-              value={age}
-              placeholder='e.g. 21'
-              onChange={setAge}
-              maxLength={3}
-            />
-          </UI.Box>
-
-          <UI.Box mt={1}>
-            <UI.TextInput
-              type='email'
-              label='Email'
-              variant='outline'
-              value={email}
-              placeholder='you@example.com'
-              onChange={setEmail}
-            />
-          </UI.Box>
-
-          <UI.Box mt={1}>
-            <UI.TextInput
-              type='phone'
-              label='Phone'
-              variant='outline'
-              value={phone}
-              placeholder='e.g. +65 1234 5678'
-              onChange={setPhone}
-            />
-          </UI.Box>
+        <UI.Box mt={2}>
+          <UI.TextInput
+            type='password'
+            variant='outline'
+            label='Password'
+            placeholder='Enter your password'
+            value={password}
+            onChange={setPassword}
+          />
         </UI.Box>
 
+        {/* TextInput · search */}
         <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>TextInput · search</UI.Text>
 
-        {/* Section 4: Password with trailing eye icon */}
-        <UI.Box>
-          <UI.Text variant='titleMedium'>4. Password with toggle</UI.Text>
-          <UI.Text variant='bodySmall' color='label'>
-            <UI.Text variant='bodySmall' color='label'>type="password"</UI.Text> hides the
-            characters and shows an eye icon to toggle visibility. Clearing is still available
-            when a custom trailing icon is not provided.
-          </UI.Text>
-
-          <UI.Box mt={1}>
-            <UI.TextInput
-              type='password'
-              label='Password'
-              variant='outline'
-              value={password}
-              placeholder='Enter a secure password'
-              onChange={setPassword}
-            />
-          </UI.Box>
+        <UI.Box mt={2}>
+          <UI.TextInput
+            type='search'
+            variant='flat'
+            label='Search'
+            placeholder='Search…'
+            value={search}
+            onChange={setSearch}
+          />
         </UI.Box>
 
+        {/* TextInput · numeric & phone */}
         <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>TextInput · numeric & phone</UI.Text>
 
-        {/* Section 5: Search with leading + trailing icons */}
-        <UI.Box>
-          <UI.Text variant='titleMedium'>5. Search with icons</UI.Text>
-          <UI.Text variant='bodySmall' color='label'>
-            <UI.Text variant='bodySmall' color='label'>type="search"</UI.Text> defaults to a
-            search icon on the left. When there is text, a clear icon appears on the right.
-          </UI.Text>
-
-          <UI.Box mt={1}>
-            <UI.TextInput
-              type='search'
-              label='Search fruits'
-              variant='flat'
-              value={searchQuery}
-              placeholder='Start typing to filter...'
-              onChange={setSearchQuery}
-            />
-
-            <UI.Box mt={1}>
-              {filteredFruits.length === 0 ? (
-                <UI.Text variant='bodySmall' color='label'>
-                  No matches found.
-                </UI.Text>
-              ) : (
-                filteredFruits.map((fruit) => (
-                  <UI.Box key={fruit} mv={1}>
-                    <UI.Text variant='bodySmall'>{fruit}</UI.Text>
-                  </UI.Box>
-                ))
-              )}
-            </UI.Box>
-          </UI.Box>
+        <UI.Box mt={2}>
+          <UI.TextInput
+            type='numeric'
+            variant='outline'
+            label='Amount'
+            placeholder='0.00'
+            value={amount}
+            onChange={setAmount}
+          />
         </UI.Box>
 
-        <UI.Divider spacing={1} />
-
-        {/* Section 6: Multiline */}
-        <UI.Box>
-          <UI.Text variant='titleMedium'>6. Multiline notes</UI.Text>
-          <UI.Text variant='bodySmall' color='label'>
-            Enable <UI.Text variant='bodySmall' color='label'>multiline</UI.Text> and{' '}
-            <UI.Text variant='bodySmall' color='label'>numberOfLines</UI.Text> for comments or
-            short descriptions.
-          </UI.Text>
-
-          <UI.Box mt={1}>
-            <UI.TextInput
-              type='text'
-              label='Notes'
-              variant='flat'
-              value={notes}
-              placeholder='Write a short note...'
-              onChange={setNotes}
-              multiline
-              numberOfLines={4}
-              style={{ minHeight: 80 }}
-            />
-          </UI.Box>
+        <UI.Box mt={2}>
+          <UI.TextInput
+            type='phone'
+            variant='outline'
+            label='Phone'
+            placeholder='+65 1234 5678'
+            value={phone}
+            onChange={setPhone}
+          />
         </UI.Box>
 
+        {/* TextInput · disabled */}
         <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>TextInput · disabled</UI.Text>
 
-        {/* Section 7: Disabled input */}
-        <UI.Box mb={4}>
-          <UI.Text variant='titleMedium'>7. Disabled state</UI.Text>
-          <UI.Text variant='bodySmall' color='label'>
-            Set <UI.Text variant='bodySmall' color='label'>editable=false</UI.Text> to make the
-            input read-only while preserving its visual style.
-          </UI.Text>
-
-          <UI.Box mt={1}>
-            <UI.TextInput
-              type='text'
-              label='Read-only'
-              variant='outline'
-              value='This field is disabled'
-              editable={false}
-            />
-          </UI.Box>
+        <UI.Box mt={2} mb={4}>
+          <UI.TextInput
+            type='text'
+            variant='flat'
+            label='Disabled'
+            value={disabledValue}
+            editable={false}
+          />
         </UI.Box>
       </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );
 };
 
-export default memo(InputScreen);
+export default memo(TextInputScreen);

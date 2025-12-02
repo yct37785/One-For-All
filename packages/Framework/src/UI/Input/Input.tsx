@@ -1,57 +1,72 @@
 import React, { useEffect, useRef, useState, memo } from 'react';
-import { View, Text, TextInput as RNTextInput, Keyboard, TouchableOpacity, StyleSheet, StyleProp, ViewStyle, TextStyle } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput as RNPTextInput,
+  Keyboard,
+  TouchableOpacity,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
+} from 'react-native';
+import { useTheme } from 'react-native-paper';
 import { Icon } from '../Text/Icon';
 
 /******************************************************************************************************************
  * Types.
  ******************************************************************************************************************/
-export type InputKind =
-  | 'text'
-  | 'numeric'
-  | 'password'
-  | 'search'
-  | 'email'
-  | 'phone';
-
+export type InputKind = 'text' | 'numeric' | 'password' | 'search' | 'email' | 'phone';
 export type InputVariant = 'flat' | 'outline';
 
-// keyboard + secure entry mapping
-const getKeyboardTypeForType = (
-  type: InputKind
-): React.ComponentProps<typeof RNTextInput>['keyboardType'] => {
+type KeyboardType = React.ComponentProps<typeof RNPTextInput>['keyboardType'];
+type AutoCapitalize = React.ComponentProps<typeof RNPTextInput>['autoCapitalize'];
+
+/******************************************************************************************************************
+ * Helpers.
+ ******************************************************************************************************************/
+const getKeyboardTypeForType = (type: InputKind): KeyboardType => {
   switch (type) {
     case 'numeric':
-    case 'password':
       return 'number-pad';
     case 'email':
       return 'email-address';
     case 'phone':
       return 'phone-pad';
+    case 'password':
+    case 'search':
+    case 'text':
     default:
       return 'default';
   }
 };
 
+const getAutoCapitalizeForType = (type: InputKind): AutoCapitalize => {
+  switch (type) {
+    case 'email':
+    case 'password':
+    case 'search':
+      return 'none';
+    default:
+      return 'sentences';
+  }
+};
+
+const getAutoCorrectForType = (type: InputKind): boolean => {
+  switch (type) {
+    case 'email':
+    case 'password':
+    case 'search':
+    case 'numeric':
+    case 'phone':
+      return false;
+    default:
+      return true;
+  }
+};
+
 /******************************************************************************************************************
  * TextInput props.
- *
- * @property type?                 - Input mode ('text', 'numeric', 'password', 'search', 'email', 'phone')
- * @property label?                - Optional text label displayed above the input
- * @property variant?              - Visual style ('flat' | 'outline')
- * @property value?                - Current input value
- * @property placeholder?          - Placeholder text
- * @property onChange?             - Called when value changes
- * @property onFocus?              - Called when input gains focus
- * @property onBlur?               - Called when input loses focus
- * @property style?                - Optional custom styling (ViewStyle or TextStyle)
- * @property autoFocus?            - Auto focus on mount
- * @property maxLength?            - Character limit
- * @property multiline?            - Whether the field allows multiple lines
- * @property numberOfLines?        - Number of lines when multiline is enabled
- * @property editable?             - Whether user can modify input
- * @property leadingIcon?          - Optional left icon (e.g. 'magnify' for search)
- * @property trailingIcon?         - Optional right icon (overrides default clear/password toggle)
- * @property onPressTrailingIcon?  - Custom handler when trailing icon is pressed
  ******************************************************************************************************************/
 export type TextInputProps = {
   type?: InputKind;
@@ -75,19 +90,6 @@ export type TextInputProps = {
 
 /******************************************************************************************************************
  * A controlled text field for user input.
- *
- * @usage
- * ```tsx
- * <TextInput
- *   type='search'
- *   label='Search'
- *   variant='outline'
- *   leadingIcon='magnify'
- *   value={query}
- *   placeholder='Search items'
- *   onChange={setQuery}
- * />
- * ```
  ******************************************************************************************************************/
 export const TextInput: React.FC<TextInputProps> = memo(
   ({
@@ -109,8 +111,10 @@ export const TextInput: React.FC<TextInputProps> = memo(
     trailingIcon,
     onPressTrailingIcon,
   }) => {
-    const inputRef = useRef<RNTextInput | null>(null);
+    const theme = useTheme();
+    const inputRef = useRef<RNPTextInput | null>(null);
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
 
     /******************************************************************************************************************
      * Auto-blur when keyboard hides (preserves your older behaviour)
@@ -143,54 +147,92 @@ export const TextInput: React.FC<TextInputProps> = memo(
       }
     };
 
-    // default icon = magnifying
+    // default leading icon for search
     let resolvedLeading = leadingIcon;
     if (!resolvedLeading && type === 'search') {
       resolvedLeading = 'magnify';
     }
 
+    // default trailing icon for password / clear
     let resolvedTrailing = trailingIcon;
     if (!resolvedTrailing) {
-      if (type === 'password') resolvedTrailing = passwordVisible ? 'eye-off' : 'eye';
-      else if (value.length > 0) resolvedTrailing = 'close';
+      if (type === 'password') {
+        resolvedTrailing = passwordVisible ? 'eye-off' : 'eye';
+      } else if (value.length > 0) {
+        resolvedTrailing = 'close';
+      }
     }
 
     const secureTextEntry = type === 'password' && !passwordVisible;
     const keyboardType = getKeyboardTypeForType(type);
+    const autoCapitalize = getAutoCapitalizeForType(type);
+    const autoCorrect = getAutoCorrectForType(type);
 
     /******************************************************************************************************************
-     * Variant (flat | outline)
+     * Variant (flat | outline) + focus styling
      ******************************************************************************************************************/
-    const containerStyle: StyleProp<ViewStyle> = [
+    const containerBase: StyleProp<ViewStyle> = [
       styles.containerBase,
-      variant === 'outline' ? styles.outline : styles.flat,
+      variant === 'outline'
+        ? {
+            borderWidth: 1,
+            borderRadius: 8,
+            borderColor: isFocused ? theme.colors.primary : theme.colors.outline,
+            backgroundColor: theme.colors.surface,
+          }
+        : {
+            borderRadius: 8,
+            backgroundColor: theme.colors.surfaceVariant,
+          },
       style as ViewStyle,
     ];
+
+    const labelStyle: TextStyle = {
+      marginBottom: 4,
+      color: theme.colors.onSurfaceVariant,
+      fontSize: 12,
+    };
+
+    const inputStyle: TextStyle = {
+      flex: 1,
+      paddingVertical: 6,
+      fontSize: 16,
+      color: theme.colors.onSurface,
+    };
+
+    const placeholderColor = theme.colors.onSurfaceVariant;
 
     /******************************************************************************************************************
      * Render
      ******************************************************************************************************************/
     return (
       <View>
-        {label ? <Text style={styles.label}>{label}</Text> : null}
+        {label ? <Text style={labelStyle}>{label}</Text> : null}
 
-        <View style={containerStyle}>
+        <View style={containerBase}>
           {/* Leading icon */}
           {resolvedLeading ? (
             <View style={styles.icon}>
-              <Icon source={resolvedLeading} variant='sm' />
+              <Icon source={resolvedLeading} variant="sm" />
             </View>
           ) : null}
 
           {/* Main input */}
-          <RNTextInput
+          <RNPTextInput
             ref={inputRef}
-            style={styles.input}
+            style={inputStyle}
             value={value}
             placeholder={placeholder}
+            placeholderTextColor={placeholderColor}
             onChangeText={onChange}
-            onFocus={onFocus}
-            onBlur={onBlur}
+            onFocus={() => {
+              setIsFocused(true);
+              onFocus();
+            }}
+            onBlur={() => {
+              setIsFocused(false);
+              onBlur();
+            }}
             editable={editable}
             autoFocus={autoFocus}
             maxLength={maxLength}
@@ -198,12 +240,14 @@ export const TextInput: React.FC<TextInputProps> = memo(
             numberOfLines={numberOfLines}
             keyboardType={keyboardType}
             secureTextEntry={secureTextEntry}
+            autoCapitalize={autoCapitalize}
+            autoCorrect={autoCorrect}
           />
 
           {/* Trailing icon */}
           {resolvedTrailing ? (
             <TouchableOpacity style={styles.icon} onPress={handleTrailingPress}>
-              <Icon source={resolvedTrailing} variant='sm' />
+              <Icon source={resolvedTrailing} variant="sm" />
             </TouchableOpacity>
           ) : null}
         </View>
@@ -216,32 +260,13 @@ export const TextInput: React.FC<TextInputProps> = memo(
  * Styles
  ******************************************************************************************************************/
 const styles = StyleSheet.create({
-  label: {
-    marginBottom: 4,
-    color: '#555',
-    fontSize: 12,
-  },
   containerBase: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 10,
-    borderRadius: 8,
     minHeight: 44,
-  },
-  flat: {
-    backgroundColor: '#F4F4F4',
-  },
-  outline: {
-    borderWidth: 1,
-    borderColor: '#CCC',
-    backgroundColor: '#FFF',
   },
   icon: {
     marginHorizontal: 6,
-  },
-  input: {
-    flex: 1,
-    paddingVertical: 6,
-    fontSize: 16,
   },
 });
