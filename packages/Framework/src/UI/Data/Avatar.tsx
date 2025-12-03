@@ -3,40 +3,65 @@ import { Image, View, StyleSheet, ViewStyle, ImageStyle, StyleProp } from 'react
 import { useTheme } from 'react-native-paper';
 import { TextVariant } from '../Text/Text';
 import { Text } from '../Text/Text';
+import { Touchable } from '../Interactive/Touchable';
 
 /******************************************************************************************************************
  * Avatar props.
  *
- * @property uri?          - Remote/local image URI
- * @property label?        - Fallback text (e.g., initials) when no image is available
- * @property size          - Pixel size OR preset token ('sm' | 'md' | 'lg'), default: 'md'
- * @property shape         - 'circle' | 'rounded', default: 'circle'
- * @property style?        - Extra style(s) for the outer container
- * @property imageStyle?   - Extra style(s) for the Image element
- * @property badgeColor?   - Optional small status dot color
+ * @property uri?           - Remote/local image URI
+ * @property label?         - Fallback text (e.g., initials) when no image is available
+ * @property size?          - Pixel size OR preset token ('sm' | 'md' | 'lg'), default: 'md'
+ * @property shape?         - 'circle' | 'rounded', default: 'circle'
+ * @property bgColor?       - Custom background color for label avatars (overrides theme surface)
+ * @property textColor?     - Custom text color for label avatars
+ * @property badgeColor?    - Optional small status dot color
+ * @property badgeSize?     - Radius of the status badge (defaults to size-based)
+ * @property badgePosition? - Badge anchor position: 'top-right' | 'bottom-right' (default: 'bottom-right')
+ * @property style?         - Extra style(s) for the outer container
+ * @property imageStyle?    - Extra style(s) for the Image element
+ * @property onPress?       - Optional press handler to make the avatar interactive
  ******************************************************************************************************************/
 export type AvatarProps = {
   uri?: string;
   label?: string;
   size?: number | 'sm' | 'md' | 'lg';
   shape?: 'circle' | 'rounded';
+  bgColor?: string;
+  textColor?: string;
   badgeColor?: string;
+  badgeSize?: number;
+  badgePosition?: 'top-right' | 'bottom-right';
   style?: StyleProp<ViewStyle>;
   imageStyle?: StyleProp<ImageStyle>;
+  onPress?: () => void;
 };
 
 /******************************************************************************************************************
  * A circular image or label representing a user or entity, typically used in lists or headers.
- * 
+ *
  * @usage
  * ```tsx
  * <Avatar uri={user.photoURL} />
  * <Avatar label="JS" size="lg" />
  * <Avatar label="A" badgeColor="#2E7D32" />
+ * <Avatar label="AB" bgColor="#1e88e5" textColor="#fff" onPress={...} />
  * ```
  ******************************************************************************************************************/
 export const Avatar: React.FC<AvatarProps> = memo(
-  ({ uri, label, size = 'md', shape = 'circle', style, imageStyle, badgeColor }) => {
+  ({
+    uri,
+    label,
+    size = 'md',
+    shape = 'circle',
+    bgColor,
+    textColor,
+    badgeColor,
+    badgeSize,
+    badgePosition = 'bottom-right',
+    style,
+    imageStyle,
+    onPress,
+  }) => {
     const theme = useTheme();
 
     // px: avatar size in pixels
@@ -56,17 +81,22 @@ export const Avatar: React.FC<AvatarProps> = memo(
       width: px,
       height: px,
       borderRadius: radius,
-      backgroundColor: theme.colors.surface,
+      backgroundColor: bgColor ?? theme.colors.surface,
       borderColor: theme.colors.outline,
     };
 
     const textVariant: TextVariant =
       px >= 44 ? 'bodySmall' : px >= 36 ? 'labelMedium' : 'labelSmall';
 
-    const badgeSize = Math.max(8, Math.round(px * 0.25));
+    const computedBadgeSize = badgeSize ?? Math.max(8, Math.round(px * 0.25));
 
-    return (
-      <View style={[styles.containerBase, containerStyle, style]}>
+    const badgePositionStyle =
+      badgePosition === 'top-right'
+        ? { top: 0, right: 0 }
+        : { bottom: 0, right: 0 };
+
+    const content = (
+      <>
         {uri ? (
           <Image
             source={{ uri }}
@@ -77,24 +107,44 @@ export const Avatar: React.FC<AvatarProps> = memo(
             ]}
           />
         ) : (
-          !!label && <Text variant={textVariant}>{label}</Text>
+          !!label && (
+            <Text
+              variant={textVariant}
+              {...(textColor ? { customColor: textColor } : {})}
+            >
+              {label}
+            </Text>
+          )
         )}
 
         {badgeColor ? (
           <View
             style={[
               styles.badgeBase,
+              badgePositionStyle,
               {
-                width: badgeSize,
-                height: badgeSize,
+                width: computedBadgeSize,
+                height: computedBadgeSize,
                 backgroundColor: badgeColor,
                 borderColor: theme.colors.surface,
               },
             ]}
           />
         ) : null}
-      </View>
+      </>
     );
+
+    const outerStyle = [styles.containerBase, containerStyle, style];
+
+    if (onPress) {
+      return (
+        <Touchable onPress={onPress} style={outerStyle}>
+          {content}
+        </Touchable>
+      );
+    }
+
+    return <View style={outerStyle}>{content}</View>;
   }
 );
 
@@ -110,8 +160,6 @@ const styles = StyleSheet.create({
   },
   badgeBase: {
     position: 'absolute',
-    right: 0,
-    bottom: 0,
     borderRadius: 99,
     borderWidth: 2,
   },

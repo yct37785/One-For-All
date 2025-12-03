@@ -37,6 +37,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
   ];
 
   const dataOptions = [
+    { value: screenRoutes.avatar, text: 'Avatar' },
     { value: screenRoutes.list, text: 'List' },
   ];
 
@@ -54,10 +55,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
 
   const menuOptions = [
     { value: screenRoutes.menulist, text: 'Menu List' },
-  ];
-
-  const miscOptions = [
-    { value: screenRoutes.misc, text: 'Misc components' },
   ];
 
   const modalOptions = [
@@ -98,7 +95,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
     { text: 'Interactive', icon: 'gesture-tap' },
     { text: 'Layout', icon: 'view-grid-plus' },
     { text: 'Menu / Navigation', icon: 'dots-vertical' },
-    { text: 'Misc', icon: 'dots-horizontal-circle' },
     { text: 'Modal', icon: 'message-draw' },
     { text: 'Options', icon: 'tune' },
     { text: 'Selections', icon: 'checkbox-multiple-marked' },
@@ -194,16 +190,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
           <UI.VerticalLayout>
             <UI.MenuList
               options={menuOptions}
-              onSelect={handleSelect}
-              showDividers
-              align='center'
-            />
-          </UI.VerticalLayout>
-
-          {/* Misc */}
-          <UI.VerticalLayout>
-            <UI.MenuList
-              options={miscOptions}
               onSelect={handleSelect}
               showDividers
               align='center'

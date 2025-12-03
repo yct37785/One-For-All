@@ -1,6 +1,7 @@
 export * from '../UI/Container/Box';
 export * from '../UI/Container/Collapsible/Collapsible';
 export * from '../UI/Container/Tabs';
+export * from '../UI/Data/Avatar';
 export * from '../UI/Data/List';
 export * from '../UI/Input/Input';
 export * from '../UI/Interactive/Button';
@@ -8,7 +9,6 @@ export * from '../UI/Interactive/Touchable';
 export * from '../UI/Layout/Layout';
 export * from '../UI/Menu/MenuList';
 export * from '../UI/Menu/MenuListItem';
-export * from '../UI/Misc/Avatar';
 export * from '../UI/Modal/Dialog';
 export * from '../UI/Modal/Popup';
 export * from '../UI/Options/BaseOptions';

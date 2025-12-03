@@ -6,6 +6,7 @@ import BoxScreen from './Container/BoxScreen';
 import CollapsiblesScreen from './Container/CollapsiblesScreen';
 import TabsScreen from './Container/TabsScreen';
 // data
+import AvatarScreen from './Data/AvatarScreen';
 import ListScreen from './Data/ListScreen';
 // input
 import InputScreen from './Input/InputScreen';
@@ -15,8 +16,6 @@ import InteractivesScreen from './Interactive/InteractivesScreen';
 import LayoutsScreen from './Layout/LayoutsScreen';
 // menu
 import MenuListScreen from './Menu/MenuListScreen';
-// misc
-import MiscScreen from './Misc/MiscScreen';
 // modal
 import ModalsScreen from './Modal/ModalsScreen';
 // options
@@ -36,12 +35,12 @@ export const screenRoutes = {
   box: 'box',
   collapsibles: 'collapsibles',
   tabs: 'tabs',
+  avatar: 'avatar',
   list: 'list',
   input: 'input',
   interactives: 'interactives',
   layouts: 'layouts',
   menulist: 'menulist',
-  misc: 'misc',
   modals: 'modals',
   options: 'options',
   selections: 'selections',
@@ -57,12 +56,12 @@ export const screenRegistry: Screen.ScreenMap = {
   [screenRoutes.box]: BoxScreen,
   [screenRoutes.collapsibles]: CollapsiblesScreen,
   [screenRoutes.tabs]: TabsScreen,
+  [screenRoutes.avatar]: AvatarScreen,
   [screenRoutes.list]: ListScreen,
   [screenRoutes.input]: InputScreen,
   [screenRoutes.interactives]: InteractivesScreen,
   [screenRoutes.layouts]: LayoutsScreen,
   [screenRoutes.menulist]: MenuListScreen,
-  [screenRoutes.misc]: MiscScreen,
   [screenRoutes.modals]: ModalsScreen,
   [screenRoutes.options]: OptionsScreen,
   [screenRoutes.selections]: SelectionsScreen,
