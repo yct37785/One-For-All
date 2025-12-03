@@ -37,7 +37,7 @@ const MenuListScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>MenuList · basic</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.MenuList
             options={[
               { value: 'new', text: 'New' },
@@ -46,6 +46,7 @@ const MenuListScreen: Screen.ScreenType = () => {
               { value: 'delete', text: 'Delete', disabled: true },
             ]}
             onSelect={handleSelect}
+            showDividers
           />
         </UI.Box>
 
@@ -53,7 +54,7 @@ const MenuListScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>MenuList · with icons</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.MenuList
             options={[
               {
@@ -81,7 +82,7 @@ const MenuListScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>MenuList · styled text & icons</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.MenuList
             options={[
               {
@@ -126,7 +127,7 @@ const MenuListScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>MenuList · dense</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.MenuList
             options={[
               { value: 'redo', text: 'Redo', icon: 'redo' },
@@ -141,33 +142,29 @@ const MenuListScreen: Screen.ScreenType = () => {
           />
         </UI.Box>
 
-        {/* MenuList · centered items */}
+        {/* MenuList · custom alignment */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>MenuList · centered items</UI.Text>
+        <UI.Text variant='titleMedium'>MenuList · custom alignment</UI.Text>
+        <UI.Box mt={1}>
+          <UI.Text variant='bodySmall'>
+            Centered align and no dividers.
+          </UI.Text>
+        </UI.Box>
 
-        <UI.Box mt={2} mb={4}>
+        <UI.Box mt={1}>
           <UI.MenuList
             options={[
               {
                 value: 'share',
-                text: 'Share',
-                icon: 'share-variant',
-                textOpts: { variant: 'labelMedium' },
-                iconOpts: { variant: 'md' },
+                text: 'Share'
               },
               {
                 value: 'favorite',
-                text: 'Favorite',
-                icon: 'heart-outline',
-                textOpts: { variant: 'labelMedium' },
-                iconOpts: { variant: 'md' },
+                text: 'Favorite'
               },
               {
                 value: 'download',
-                text: 'Download',
-                icon: 'download',
-                textOpts: { variant: 'labelMedium' },
-                iconOpts: { variant: 'md' },
+                text: 'Download'
               },
             ]}
             onSelect={handleSelect}

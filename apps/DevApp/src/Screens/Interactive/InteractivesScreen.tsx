@@ -10,11 +10,9 @@ import { Screen, UI } from 'framework';
  ******************************************************************************************************************/
 const InteractiveScreen: Screen.ScreenType = () => {
   const [btnClicks, setBtnClicks] = useState(0);
-  const [iconClicks, setIconClicks] = useState(0);
   const [touchableClicks, setTouchableClicks] = useState(0);
 
   const onBtnClick = () => setBtnClicks(c => c + 1);
-  const onIconClick = () => setIconClicks(c => c + 1);
   const onTouchableClick = () => setTouchableClicks(c => c + 1);
 
   return (
@@ -109,7 +107,7 @@ const InteractiveScreen: Screen.ScreenType = () => {
         <UI.Box mt={2}>
           <UI.Button
             mode='contained'
-            onPress={onIconClick}
+            onPress={onBtnClick}
             contentStyle={{ flexDirection: 'row', alignItems: 'center' }}
           >
             <UI.Icon source='star' variant='sm' />
@@ -121,7 +119,7 @@ const InteractiveScreen: Screen.ScreenType = () => {
 
         <UI.Box mt={1}>
           <UI.Text variant='labelSmall' color='label'>
-            Icon button presses: {iconClicks}
+            Button clicks: {btnClicks}
           </UI.Text>
         </UI.Box>
 
@@ -155,6 +153,7 @@ const InteractiveScreen: Screen.ScreenType = () => {
 
         <UI.Box mt={2}>
           <UI.Touchable
+            onPress={onTouchableClick}
             style={{
               paddingVertical: 10,
               paddingHorizontal: 16,
@@ -183,6 +182,7 @@ const InteractiveScreen: Screen.ScreenType = () => {
 
         <UI.Box mt={2}>
           <UI.Touchable
+            onPress={onTouchableClick}
             feedback='none'
             style={{
               paddingVertical: 10,
@@ -193,6 +193,12 @@ const InteractiveScreen: Screen.ScreenType = () => {
           >
             <UI.Text variant='bodyMedium'>No visual feedback</UI.Text>
           </UI.Touchable>
+        </UI.Box>
+
+        <UI.Box mt={1}>
+          <UI.Text variant='labelSmall' color='label'>
+            Touchable taps: {touchableClicks}
+          </UI.Text>
         </UI.Box>
 
       </UI.VerticalLayout>
