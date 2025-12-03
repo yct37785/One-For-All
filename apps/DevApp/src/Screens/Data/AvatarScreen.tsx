@@ -128,8 +128,7 @@ const AvatarScreen: Screen.ScreenType = () => {
         <UI.Text variant='titleMedium'>Avatar · interactive</UI.Text>
 
         <UI.Box mt={2}>
-          {/* <UI.HorizontalLayout gap={2} align='center'> */}
-          <UI.HorizontalLayout gap={2}>
+          <UI.HorizontalLayout gap={2} align='center'>
             <UI.Avatar
               label='ME'
               size='lg'

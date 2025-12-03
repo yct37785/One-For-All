@@ -71,6 +71,25 @@ const LayoutScreen: Screen.ScreenType = () => {
           <BlockBox i={3} width={small} height={small} />
         </UI.VerticalLayout>
 
+        {/* Align */}
+        <UI.Divider spacing={2} />
+        <UI.Text variant='titleMedium'>Align</UI.Text>
+
+        <UI.Box mt={1}>
+          <UI.Text variant='bodySmall'>
+            align controls cross-axis alignment of children (e.g. vertical alignment in a horizontal layout).
+          </UI.Text>
+        </UI.Box>
+
+        <UI.Box mt={1}>
+          <UI.Text variant='labelMedium' color='label'>HorizontalLayout (align = 'center')</UI.Text>
+        </UI.Box>
+        <UI.HorizontalLayout bgColor={tier1} gap={1} height={100} align='center'>
+          <BlockBox i={1} width={small} height={small} />
+          <BlockBox i={2} width={small} height={big} />
+          <BlockBox i={3} width={small} height={small} />
+        </UI.HorizontalLayout>
+
         {/* Constraint='wrap' */}
         <UI.Divider spacing={2} />
         <UI.Text variant='titleMedium'>Constraint wrap</UI.Text>

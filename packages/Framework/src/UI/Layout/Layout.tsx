@@ -28,6 +28,7 @@ const lockWhenFixedHeight = (height?: number) =>
  * @property gap?             - Spacing between children
  * @property height?          - Fixed height for the container
  * @property bgColor?         - Background color
+ * @property align?           - Cross-axis alignment
  * @property children         - Elements rendered inside
  ******************************************************************************************************************/
 export type LayoutProps = {
@@ -39,6 +40,7 @@ export type LayoutProps = {
   gap?: PadSpacingValue;
   height?: number;
   bgColor?: string;
+  align?: 'start' | 'center' | 'end' | 'stretch';
   children: ReactNode;
 };
 
@@ -60,6 +62,7 @@ const Layout: React.FC<LayoutProps> = ({
   gap = 1,
   height,
   bgColor = 'transparent',
+  align,
   children,
 }) => {
   // reverse children if requested
@@ -85,12 +88,20 @@ const Layout: React.FC<LayoutProps> = ({
     ? 'flex-start'
     : undefined;
 
+  const alignItemsValue: FlexStyle['alignItems'] = (() => {
+    if (align === 'start') return 'flex-start';
+    if (align === 'center') return 'center';
+    if (align === 'end') return 'flex-end';
+    if (align === 'stretch') return 'stretch';
+    return isWrap ? 'flex-start' : 'stretch';
+  })();
+
   const contentStyle: ViewStyle = {
     flexWrap,
     flexDirection: dir,
     justifyContent: 'flex-start',
-    alignItems: isWrap ? 'flex-start' : 'stretch', // items within a row
-    alignContent: alignContentValue,               // how rows stack
+    alignItems: alignItemsValue,      // cross-axis alignment
+    alignContent: alignContentValue,  // how rows stack (wrap)
     padding: padding * Const.padSize,
     gap: gap * Const.padSize,
     backgroundColor: bgColor,
