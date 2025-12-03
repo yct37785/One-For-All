@@ -17,8 +17,8 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
   const statusText = !user
     ? 'Setting up session…'
     : isAnon
-    ? `Anonymous session\nuid: ${uid?.slice(0, 10)}…`
-    : `Signed in with Google\nuid: ${uid?.slice(0, 10)}…\nEmail: ${email}`;
+      ? `Anonymous session\nuid: ${uid?.slice(0, 10)}…`
+      : `Signed in with Google\nuid: ${uid?.slice(0, 10)}…\nEmail: ${email}`;
 
   /******************************************************************************************************************
    * Menu options per section (values are route names)
@@ -127,125 +127,102 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
         {/* Sectioned navigation using Accordion + MenuList */}
         <UI.AccordionContainer sections={SECTIONS}>
           {/* Test */}
-          <UI.VerticalLayout>
-            <UI.MenuList
-              options={testOptions}
-              onSelect={handleSelect}
-              showDividers
-              align='center'
-            />
-          </UI.VerticalLayout>
+          <UI.MenuList
+            options={testOptions}
+            onSelect={handleSelect}
+            showDividers
+            align='center'
+          />
 
           {/* Container */}
-          <UI.VerticalLayout>
-            <UI.MenuList
-              options={containerOptions}
-              onSelect={handleSelect}
-              showDividers
-              align='center'
-            />
-          </UI.VerticalLayout>
+          <UI.MenuList
+            options={containerOptions}
+            onSelect={handleSelect}
+            showDividers
+            align='center'
+          />
 
           {/* Data */}
-          <UI.VerticalLayout>
-            <UI.MenuList
-              options={dataOptions}
-              onSelect={handleSelect}
-              showDividers
-              align='center'
-            />
-          </UI.VerticalLayout>
+          <UI.MenuList
+            options={dataOptions}
+            onSelect={handleSelect}
+            showDividers
+            align='center'
+          />
 
           {/* Input */}
-          <UI.VerticalLayout>
-            <UI.MenuList
-              options={inputOptions}
-              onSelect={handleSelect}
-              showDividers
-              align='center'
-            />
-          </UI.VerticalLayout>
+          <UI.MenuList
+            options={inputOptions}
+            onSelect={handleSelect}
+            showDividers
+            align='center'
+          />
 
           {/* Interactive */}
-          <UI.VerticalLayout>
-            <UI.MenuList
-              options={interactiveOptions}
-              onSelect={handleSelect}
-              showDividers
-              align='center'
-            />
-          </UI.VerticalLayout>
+          <UI.MenuList
+            options={interactiveOptions}
+            onSelect={handleSelect}
+            showDividers
+            align='center'
+          />
 
           {/* Layout */}
-          <UI.VerticalLayout>
-            <UI.MenuList
-              options={layoutOptions}
-              onSelect={handleSelect}
-              showDividers
-              align='center'
-            />
-          </UI.VerticalLayout>
+          <UI.MenuList
+            options={layoutOptions}
+            onSelect={handleSelect}
+            showDividers
+            align='center'
+          />
 
           {/* Menu / Navigation */}
-          <UI.VerticalLayout>
-            <UI.MenuList
-              options={menuOptions}
-              onSelect={handleSelect}
-              showDividers
-              align='center'
-            />
-          </UI.VerticalLayout>
+          <UI.MenuList
+            options={menuOptions}
+            onSelect={handleSelect}
+            showDividers
+            align='center'
+          />
 
           {/* Modal */}
-          <UI.VerticalLayout>
-            <UI.MenuList
-              options={modalOptions}
-              onSelect={handleSelect}
-              showDividers
-              align='center'
-            />
-          </UI.VerticalLayout>
+          <UI.MenuList
+            options={modalOptions}
+            onSelect={handleSelect}
+            showDividers
+            align='center'
+          />
 
           {/* Options */}
-          <UI.VerticalLayout>
-            <UI.MenuList
-              options={optionsOptions}
-              onSelect={handleSelect}
-              showDividers
-              align='center'
-            />
-          </UI.VerticalLayout>
+          <UI.MenuList
+            options={optionsOptions}
+            onSelect={handleSelect}
+            showDividers
+            align='center'
+          />
 
           {/* Selections */}
-          <UI.VerticalLayout>
-            <UI.MenuList
-              options={selectionsOptions}
-              onSelect={handleSelect}
-              showDividers
-              align='center'
-            />
-          </UI.VerticalLayout>
+          <UI.MenuList
+            options={selectionsOptions}
+            onSelect={handleSelect}
+            showDividers
+            align='center'
+          />
 
           {/* Text */}
-          <UI.VerticalLayout>
-            <UI.MenuList
-              options={textOptions}
-              onSelect={handleSelect}
-              showDividers
-              align='center'
-            />
-          </UI.VerticalLayout>
+          <UI.MenuList
+            options={textOptions}
+            onSelect={handleSelect}
+            showDividers
+            align='center'
+          />
 
           {/* Visuals */}
-          <UI.VerticalLayout>
-            <UI.MenuList
-              options={visualsOptions}
-              onSelect={handleSelect}
-              showDividers
-              align='center'
-            />
-          </UI.VerticalLayout>
+          <UI.MenuList
+            options={visualsOptions}
+            onSelect={handleSelect}
+            showDividers
+            align='center'
+          />
         </UI.AccordionContainer>
+
       </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );
