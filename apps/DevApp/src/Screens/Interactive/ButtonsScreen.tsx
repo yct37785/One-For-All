@@ -22,8 +22,10 @@ const ButtonScreen: Screen.ScreenType = () => {
       <UI.VerticalLayout constraint='scroll' padding={2}>
         {/* Header */}
         <UI.Text variant='bodyMedium'>
-          Buttons provide primary actions in the UI. Use Button for labeled actions and IconButton for compact
-          icon-only actions or toggles.
+          Buttons represent the primary actions in the UI. Use Button for standard actions
+          with predefined layouts and typography. IconButton provides compact icon-only
+          actions. TextButton is a lightweight alternative that behaves like a button but
+          inherits full Text props.
         </UI.Text>
 
         {/* Button · basic modes */}
@@ -60,7 +62,7 @@ const ButtonScreen: Screen.ScreenType = () => {
           </UI.Button>
         </UI.Box>
 
-        <UI.Box mt={1}>
+        <UI.Box mt={2}>
           <UI.Text variant='labelSmall' color='label'>
             Button clicks: {btnClicks}
           </UI.Text>
@@ -147,7 +149,7 @@ const ButtonScreen: Screen.ScreenType = () => {
           </UI.HorizontalLayout>
         </UI.Box>
 
-        <UI.Box mt={1}>
+        <UI.Box mt={2}>
           <UI.Text variant='labelSmall' color='label'>
             Button clicks: {btnClicks}
           </UI.Text>
@@ -235,6 +237,41 @@ const ButtonScreen: Screen.ScreenType = () => {
             <UI.IconButton icon='plus' size='xl' onPress={onIconClick} />
           </UI.HorizontalLayout>
         </UI.Box>
+
+        {/* TextButton · lightweight text-only button */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>TextButton</UI.Text>
+        <UI.Text variant='bodySmall'>
+          A text-forward button alternative. Unlike Button mode="text", which has a fixed
+          visual style, TextButton fully inherits Text props.
+        </UI.Text>
+
+        <UI.Box mt={2}>
+          <UI.TextButton label='Text button' onPress={onBtnClick} />
+        </UI.Box>
+
+        <UI.Box mt={1}>
+          <UI.TextButton
+            onPress={onBtnClick}
+            textProps={{ variant: 'labelLarge', bold: true }}
+          >
+            Bold large text
+          </UI.TextButton>
+        </UI.Box>
+
+        <UI.Box mt={1}>
+          <UI.TextButton
+            disabled
+            label='Disabled text button'
+          />
+        </UI.Box>
+
+        <UI.Box mt={2}>
+          <UI.Text variant='labelSmall' color='label'>
+            Button clicks: {btnClicks}
+          </UI.Text>
+        </UI.Box>
+
       </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );

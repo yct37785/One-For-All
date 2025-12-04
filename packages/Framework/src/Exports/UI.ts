@@ -7,6 +7,7 @@ export * from '../UI/Data/List';
 export * from '../UI/Input/Input';
 export * from '../UI/Interactive/Button';
 export * from '../UI/Interactive/IconButton';
+export * from '../UI/Interactive/TextButton';
 export * from '../UI/Interactive/Touchable';
 export * from '../UI/Layout/Layout';
 export * from '../UI/Menu/MenuList';

@@ -5,6 +5,10 @@ export const padSize025 = 3;
 export const padSize05 = 4;
 export const padSize = 8;
 
+export const radiusSmall = 4;
+export const radiusMedium = 8;
+export const radiusLarge = 12;
+
 export const rippleColorForLight = 'rgba(0,0,0,0.26)';
 export const rippleColorForDark = 'rgba(255,255,255,0.26)';
 
