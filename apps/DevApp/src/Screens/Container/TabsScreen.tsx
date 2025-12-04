@@ -104,7 +104,7 @@ const TabsScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>TabsContainer · basic (top)</UI.Text>
 
-        <UI.Box mt={2} style={{ height: TAB_CONTENT_HEIGHT }}>
+        <UI.Box mt={1} style={{ height: TAB_CONTENT_HEIGHT }}>
           <UI.TabsContainer
             routes={basicRoutes}
             sceneMap={basicSceneMap}
@@ -118,7 +118,7 @@ const TabsScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>TabsContainer · with icons</UI.Text>
 
-        <UI.Box mt={2} style={{ height: TAB_CONTENT_HEIGHT }}>
+        <UI.Box mt={1} style={{ height: TAB_CONTENT_HEIGHT }}>
           <UI.TabsContainer
             routes={iconRoutes}
             sceneMap={iconSceneMap}
@@ -132,7 +132,7 @@ const TabsScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>TabsContainer · bottom</UI.Text>
 
-        <UI.Box mt={2} style={{ height: TAB_CONTENT_HEIGHT }}>
+        <UI.Box mt={1} style={{ height: TAB_CONTENT_HEIGHT }}>
           <UI.TabsContainer
             routes={bottomRoutes}
             sceneMap={bottomSceneMap}

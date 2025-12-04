@@ -23,7 +23,7 @@ const AvatarScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Avatar · basic</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.HorizontalLayout gap={2}>
             <UI.Avatar label='AB' />
             <UI.Avatar label='CD' />
@@ -35,7 +35,7 @@ const AvatarScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Avatar · sizes</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.HorizontalLayout gap={2}>
             <UI.Avatar label='SM' size='sm' />
             <UI.Avatar label='MD' size='md' />
@@ -48,7 +48,7 @@ const AvatarScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Avatar · shapes</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.HorizontalLayout gap={2}>
             <UI.Avatar label='C' size='lg' shape='circle' />
             <UI.Avatar label='R' size='lg' shape='rounded' />
@@ -59,7 +59,7 @@ const AvatarScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Avatar · with image</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.HorizontalLayout gap={2}>
             <UI.Avatar uri='https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg' size='lg' />
             <UI.Avatar uri='https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg' size='lg' />
@@ -71,7 +71,7 @@ const AvatarScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Avatar · badges</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.HorizontalLayout gap={2}>
             <UI.Avatar label='ON' size='lg' badgeColor='#2e7d32' />
             <UI.Avatar label='ID' size='lg' badgeColor='#fb8c00' />
@@ -79,7 +79,7 @@ const AvatarScreen: Screen.ScreenType = () => {
           </UI.HorizontalLayout>
         </UI.Box>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.HorizontalLayout gap={2}>
             <UI.Avatar
               label='TR'
@@ -100,7 +100,7 @@ const AvatarScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Avatar · custom colors</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.HorizontalLayout gap={2}>
             <UI.Avatar
               label='A'
@@ -127,7 +127,7 @@ const AvatarScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Avatar · interactive</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.HorizontalLayout gap={2} align='center'>
             <UI.Avatar
               label='ME'

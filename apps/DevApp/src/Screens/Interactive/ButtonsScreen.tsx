@@ -139,7 +139,7 @@ const ButtonScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>IconButton · basic</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.HorizontalLayout gap={2}>
             <UI.IconButton icon='dots-vertical' onPress={onIconClick} />
             <UI.IconButton icon='cog' onPress={onIconClick} />
@@ -157,7 +157,7 @@ const ButtonScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>IconButton · modes & colors</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.HorizontalLayout gap={2}>
             <UI.IconButton icon='heart-outline' mode='outlined' onPress={onIconClick} />
             <UI.IconButton
@@ -181,7 +181,7 @@ const ButtonScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>IconButton · disabled</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.HorizontalLayout gap={2}>
             <UI.IconButton icon='share-variant' disabled />
             <UI.IconButton icon='content-copy' disabled />
@@ -192,7 +192,7 @@ const ButtonScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>IconButton · toggle</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.HorizontalLayout gap={2} align='center'>
             <UI.IconButton
               icon={favorite ? 'heart' : 'heart-outline'}
@@ -226,7 +226,7 @@ const ButtonScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>IconButton · sizes</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.HorizontalLayout gap={2} constraint='wrap'>
             <UI.IconButton icon='plus' size='xs' onPress={onIconClick} />
             <UI.IconButton icon='plus' size='sm' onPress={onIconClick} />
