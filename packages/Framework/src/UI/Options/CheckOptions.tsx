@@ -1,21 +1,37 @@
-import React, { memo } from 'react';
+import React, { memo, ReactNode } from 'react';
 import { View, TouchableOpacity, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Text, Checkbox } from 'react-native-paper';
 import * as Const from '../../Const';
-import { BaseOptions, OptionState, OptionProps, OptionSchema } from './BaseOptions';
+import {
+  BaseOptions,
+  OptionState,
+  OptionProps,
+  OptionSchema,
+  OptionValue,
+} from './BaseOptions';
 
 /******************************************************************************************************************
  * CheckOptions props.
  * 
- * @property schema     - Current options tree
- * @property setSchema  - State setter
+ * @property schema     - Immutable options tree (labels + hierarchy)
+ * @property value      - Mutable option state tree (mirrors schema structure)
+ * @property setValue   - State setter
  * @property style?     - Optional wrapper style
  ******************************************************************************************************************/
 export type CheckOptionCompProps = {
   schema: OptionSchema;
-  setSchema: (updatedSchema: OptionSchema) => void;
+  value: OptionValue;
+  setValue: (updatedValue: OptionValue) => void;
   style?: StyleProp<ViewStyle>;
 };
+
+/******************************************************************************************************************
+ * Simple container that just renders its children.
+ * BaseOptions uses this as <OptionsContainer>{children}</OptionsContainer>.
+ ******************************************************************************************************************/
+const OptionsContainer: React.FC<{ children: ReactNode }> = ({ children }) => (
+  <>{children}</>
+);
 
 /******************************************************************************************************************
  * CheckOptions
@@ -23,10 +39,10 @@ export type CheckOptionCompProps = {
  * Renders a nested tree of checkbox options backed by BaseOptions.
  ******************************************************************************************************************/
 export const CheckOptions: React.FC<CheckOptionCompProps> = memo(
-  ({ schema, setSchema, style }) => {
-    /**
+  ({ schema, value, setValue, style }) => {
+    /**************************************************************************************************************
      * Renders a single checkbox option row.
-     */
+     **************************************************************************************************************/
     const renderCheckbox = ({
       option,
       onPress,
@@ -51,18 +67,11 @@ export const CheckOptions: React.FC<CheckOptionCompProps> = memo(
       );
     };
 
-    /**
-     * Simple container that just renders its children.
-     * BaseOptions uses this as <OptionsContainer>{children}</OptionsContainer>.
-     */
-    const OptionsContainer: React.FC<{ children: React.ReactNode }> = ({
-      children,
-    }) => <>{children}</>;
-
     return (
       <BaseOptions
         schema={schema}
-        setSchema={setSchema}
+        value={value}
+        setValue={setValue}
         optionsContainer={OptionsContainer}
         renderOption={renderCheckbox}
         depthPadding={Const.padSize * 2}

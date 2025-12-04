@@ -4,63 +4,89 @@ import { Screen, UI } from 'framework';
 /******************************************************************************************************************
  * Initial nested options schema.
  ******************************************************************************************************************/
-const INITIAL_OPTIONS = {
+const INITIAL_SCHEMA: UI.OptionSchema = {
   colors: {
     label: 'Colors',
-    state: UI.OptionState.Unselected,
     children: {
-      red: { label: 'Red', state: UI.OptionState.Unselected },
-      blue: { label: 'Blue', state: UI.OptionState.Unselected },
-      green: { label: 'Green', state: UI.OptionState.Unselected },
+      red: { label: 'Red' },
+      blue: { label: 'Blue' },
+      green: { label: 'Green' },
     },
   },
   class: {
     label: 'Class',
-    state: UI.OptionState.Unselected,
     children: {
       mammals: {
         label: 'Mammals',
-        state: UI.OptionState.Unselected,
         children: {
-          cat: { label: 'Cat', state: UI.OptionState.Unselected },
-          dog: { label: 'Dog', state: UI.OptionState.Unselected },
+          cat: { label: 'Cat' },
+          dog: { label: 'Dog' },
         },
       },
       reptiles: {
         label: 'Reptiles',
-        state: UI.OptionState.Unselected,
         children: {
-          turtle: { label: 'Turtle', state: UI.OptionState.Unselected },
-          frog: { label: 'Frog', state: UI.OptionState.Unselected },
-          lizard: { label: 'Lizard', state: UI.OptionState.Unselected },
+          turtle: { label: 'Turtle' },
+          frog: { label: 'Frog' },
+          lizard: { label: 'Lizard' },
         },
       },
     },
   },
-} as UI.OptionSchema;
+};
+
+/******************************************************************************************************************
+ * Helper: build initial value tree from schema.
+ * 
+ * All nodes are initialised to Unselected and mirror the structure of the schema.
+ ******************************************************************************************************************/
+const buildInitialValueFromSchema = (
+  schema: UI.OptionSchema,
+  initialState: UI.OptionState = UI.OptionState.Unselected
+): UI.OptionValue => {
+  const value: UI.OptionValue = {};
+
+  Object.entries(schema).forEach(([key, node]) => {
+    value[key] = {
+      state: initialState,
+      ...(node.children
+        ? { children: buildInitialValueFromSchema(node.children, initialState) }
+        : {}),
+    };
+  });
+
+  return value;
+};
 
 /******************************************************************************************************************
  * Helper: collect labels of selected leaf options (no children).
  ******************************************************************************************************************/
-const collectSelectedLeafLabels = (schema: UI.OptionSchema): string[] => {
+const collectSelectedLeafLabels = (
+  schema: UI.OptionSchema,
+  value: UI.OptionValue
+): string[] => {
   const acc: string[] = [];
 
-  const walk = (node: UI.OptionSchema) => {
-    Object.values(node).forEach(option => {
-      const hasChildren =
-        !!option.children && Object.keys(option.children).length > 0;
+  const walk = (schemaNodeMap: UI.OptionSchema, valueNodeMap: UI.OptionValue) => {
+    Object.entries(schemaNodeMap).forEach(([key, schemaNode]) => {
+      const valueNode = valueNodeMap[key];
+      const state = valueNode ? valueNode.state : UI.OptionState.Unselected;
 
-      if (option.children) {
-        walk(option.children);
+      const hasChildren =
+        !!schemaNode.children && !!valueNode && !!valueNode.children &&
+        Object.keys(schemaNode.children).length > 0;
+
+      if (schemaNode.children && valueNode && valueNode.children) {
+        walk(schemaNode.children, valueNode.children);
       }
 
-      if (!hasChildren && option.state === UI.OptionState.Selected) {
-        acc.push(option.label);
+      if (!hasChildren && state === UI.OptionState.Selected) {
+        acc.push(schemaNode.label);
       }
     });
   };
 
-  walk(schema);
+  walk(schema, value);
   return acc;
 };
 
@@ -71,8 +97,11 @@ const collectSelectedLeafLabels = (schema: UI.OptionSchema): string[] => {
  * - UI.CheckOptions: checkbox-based nested options built on BaseOptions.
  ******************************************************************************************************************/
 const NestedOptionsScreen: Screen.ScreenType = () => {
-  const [schema, setSchema] = useState<UI.OptionSchema>(INITIAL_OPTIONS);
-  const selectedLeafLabels = collectSelectedLeafLabels(schema);
+  const [value, setValue] = useState<UI.OptionValue>(() =>
+    buildInitialValueFromSchema(INITIAL_SCHEMA)
+  );
+
+  const selectedLeafLabels = collectSelectedLeafLabels(INITIAL_SCHEMA, value);
 
   return (
     <Screen.ScreenLayout showTitle>
@@ -87,11 +116,15 @@ const NestedOptionsScreen: Screen.ScreenType = () => {
         <UI.Text variant='titleMedium'>CheckOptions</UI.Text>
 
         <UI.Box mt={2}>
-          <UI.CheckOptions schema={schema} setSchema={setSchema} />
+          <UI.CheckOptions
+            schema={INITIAL_SCHEMA}
+            value={value}
+            setValue={setValue}
+          />
         </UI.Box>
 
         {/* Selection summary */}
-        <UI.Box mt={2}>
+        <UI.Box mt={2} mb={4}>
           <UI.Text variant='labelSmall' color='label'>
             Selected leaf options:{' '}
             {selectedLeafLabels.length > 0
