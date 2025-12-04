@@ -1,12 +1,6 @@
 import React, { memo, useState } from 'react';
-import {
-  View,
-  StyleSheet,
-  StyleProp,
-  ViewStyle,
-  TouchableOpacity,
-} from 'react-native';
-import { useTheme, Text } from 'react-native-paper';
+import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import { Chip } from '../Data/Chip';
 import * as Const from '../../Const';
 
 /******************************************************************************************************************
@@ -23,8 +17,9 @@ export type ChipOptionsProps = {
 };
 
 /******************************************************************************************************************
- * A collection of selectable chips representing tags or quick filters.
- * 
+ * A collection of selectable chips representing tags or quick filters:
+ * - Maintains local selection state and notifies parent of updates.
+ *
  * @usage
  * ```tsx
  * <ChipOptions
@@ -35,7 +30,6 @@ export type ChipOptionsProps = {
  ******************************************************************************************************************/
 export const ChipOptions: React.FC<ChipOptionsProps> = memo(
   ({ schema, onSelected, style }) => {
-    const theme = useTheme();
     const [selectedSet, setSelectedSet] = useState<Set<string>>(
       () => new Set()
     );
@@ -53,6 +47,7 @@ export const ChipOptions: React.FC<ChipOptionsProps> = memo(
       } else {
         updatedSet.add(value);
       }
+
       setSelectedSet(updatedSet);
       onSelected(updatedSet);
     }
@@ -62,38 +57,14 @@ export const ChipOptions: React.FC<ChipOptionsProps> = memo(
         {Array.from(schema).map((value) => {
           const isSelected = selectedSet.has(value);
 
-          const chipBackground = isSelected
-            ? theme.colors.primaryContainer
-            : theme.colors.surfaceVariant;
-
-          const chipBorderColor = isSelected
-            ? theme.colors.primary
-            : theme.colors.outlineVariant ?? theme.colors.outline;
-
-          const chipTextColor = isSelected
-            ? theme.colors.onPrimaryContainer
-            : theme.colors.onSurface;
-
           return (
-            <TouchableOpacity
-              key={value}
-              onPress={() => onChipSelected(value)}
-              style={[
-                styles.chip,
-                {
-                  backgroundColor: chipBackground,
-                  borderColor: chipBorderColor,
-                },
-              ]}
-              activeOpacity={0.7}
-            >
-              <Text
-                variant="labelMedium"
-                style={{ color: chipTextColor }}
-              >
-                {value}
-              </Text>
-            </TouchableOpacity>
+            <View key={value} style={styles.chipWrapper}>
+              <Chip
+                label={value}
+                selected={isSelected}
+                onPress={() => onChipSelected(value)}
+              />
+            </View>
           );
         })}
       </View>
@@ -109,13 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-  chip: {
+  chipWrapper: {
     margin: Const.padSize05,
-    paddingHorizontal: Const.padSize * 1.5,
-    paddingVertical: Const.padSize * 0.5,
-    borderRadius: 999,
-    borderWidth: StyleSheet.hairlineWidth,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
