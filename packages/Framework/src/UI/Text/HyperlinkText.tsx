@@ -3,51 +3,43 @@ import { StyleSheet } from 'react-native';
 import { Text, TextProps } from './Text';
 import { Touchable } from '../Interactive/Touchable';
 
+// always force hyperlink styling
+const hyperlinkProps: Partial<TextProps> = {
+  color: 'primary',
+  underline: true,
+};
+
 /******************************************************************************************************************
- * ClickableText props.
+ * HyperlinkText props.
  * 
  * @property onPress        - Callback fired when text is pressed
- * @property hyperlink?     - Whether to show hyperlink styling (primary color + underline)
  * @property children       - Text or nodes
  ******************************************************************************************************************/
-export interface ClickableTextProps extends TextProps {
+export interface HyperlinkTextProps extends TextProps {
   onPress?: () => void;
-  hyperlink?: boolean;
   children?: string | ReactNode;
 }
 
 /******************************************************************************************************************
- * ClickableText
+ * HyperlinkText
  * 
- * A clickable text element:
- * - Wrapped in Touchable for proper press feedback (opacity/ripple)
+ * A dedicated hyperlink component:
+ * - Always appears as a hyperlink (primary color + underline)
+ * - Wrapped in Touchable for press feedback (opacity / ripple)
  * - Uses the Text UI component internally for variants/colors
- * - If hyperlink is true, applies hyperlink styling:
- *     - color: primary
- *     - underline: true
  *
  * @usage
  * ```tsx
- * <ClickableText onPress={openTerms}>Terms of Service</ClickableText>
- * <ClickableText hyperlink={false} onPress={onTap}>Tap here</ClickableText>
+ * <HyperlinkText onPress={openTerms}>Terms of Service</HyperlinkText>
+ * <HyperlinkText onPress={openPrivacy}>Privacy Policy</HyperlinkText>
  * ```
  ******************************************************************************************************************/
-export const ClickableText: React.FC<ClickableTextProps> = memo(
+export const HyperlinkText: React.FC<HyperlinkTextProps> = memo(
   ({
     onPress,
-    hyperlink = true,
     children,
-    color,
     ...rest
   }) => {
-    // hyperlink mode: force primary text + underline
-    const hyperlinkProps: Partial<TextProps> = hyperlink
-      ? {
-        color: 'primary',
-        underline: true,
-      }
-      : {};
-
     const content = (
       <Text
         {...rest}
@@ -57,7 +49,7 @@ export const ClickableText: React.FC<ClickableTextProps> = memo(
       </Text>
     );
 
-    // no onPress → behave like normal text
+    // no onPress = behave like a normal styled hyperlink
     if (!onPress) return content;
 
     return (
@@ -73,6 +65,6 @@ export const ClickableText: React.FC<ClickableTextProps> = memo(
  ******************************************************************************************************************/
 const styles = StyleSheet.create({
   touchContainer: {
-    alignSelf: 'flex-start',
+    alignSelf: 'flex-start', // keeps it inline-friendly
   },
 });
