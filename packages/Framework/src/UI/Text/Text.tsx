@@ -1,5 +1,5 @@
 import React, { memo, ReactNode } from 'react';
-import { TextStyle } from 'react-native';
+import { TextStyle, StyleSheet } from 'react-native';
 import { Text as PaperText, useTheme } from 'react-native-paper';
 import { resolveFontColor } from './Utils';
 
@@ -46,6 +46,7 @@ export type TextVariant =
  * @property highlightColor?  - Raw color string
  * @property bold?            - Bolded text
  * @property numberOfLines?   - Fixed num of lines if provided
+ * @property underline?       - Underline the text
  ******************************************************************************************************************/
 export interface TextProps {
   variant?: TextVariant;
@@ -54,6 +55,7 @@ export interface TextProps {
   highlightColor?: string;
   bold?: boolean;
   numberOfLines?: number;
+  underline?: boolean;
 }
 
 /******************************************************************************************************************
@@ -65,7 +67,7 @@ export interface TextProps {
  * ```tsx
  * <Text variant='h1'>Page Title</Text>
  * <Text variant='subtitle'>Section</Text>
- * <Text variant='body'>Body copy…</Text>
+ * <Text variant='body'>Body copy...</Text>
  * <Text variant='label2' color={t.colors.muted}>Secondary label</Text>
  * ```
  ******************************************************************************************************************/
@@ -77,6 +79,7 @@ export const Text: React.FC<TextProps & { children?: string | ReactNode }> = mem
     highlightColor,
     bold,
     numberOfLines,
+    underline = false,
     children
   }) => {
     const theme = useTheme();
@@ -92,10 +95,19 @@ export const Text: React.FC<TextProps & { children?: string | ReactNode }> = mem
       <PaperText
         variant={variant}
         {...(numberOfLines !== undefined ? { numberOfLines } : {})}
-        style={[colorStyle, boldStyle]}
+        style={[colorStyle, boldStyle, underline && styles.underline]}
       >
         {children}
       </PaperText>
     );
   }
 );
+
+/******************************************************************************************************************
+ * Styles
+ ******************************************************************************************************************/
+const styles = StyleSheet.create({
+  underline: {
+    textDecorationLine: 'underline',
+  },
+});
