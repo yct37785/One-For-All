@@ -18,18 +18,14 @@ export type CheckOptionCompProps = {
 };
 
 /******************************************************************************************************************
- * Render a checkbox-based UI for the options tree powered by BaseOptions.
- * Shows checked, unchecked, and indeterminate states with recursive nesting.
+ * CheckOptions
  *
- * @usage
- * ```tsx
- * <CheckOptions schema={schema} setSchema={setSchema} />
- * ```
+ * Renders a nested tree of checkbox options backed by BaseOptions.
  ******************************************************************************************************************/
 export const CheckOptions: React.FC<CheckOptionCompProps> = memo(
   ({ schema, setSchema, style }) => {
     /**
-     * Renders a single checkbox option.
+     * Renders a single checkbox option row.
      */
     const renderCheckbox = ({
       option,
@@ -38,12 +34,12 @@ export const CheckOptions: React.FC<CheckOptionCompProps> = memo(
       option: OptionProps;
       onPress: () => void;
     }) => {
-      const status =
+      const status: 'checked' | 'unchecked' | 'indeterminate' =
         option.state === OptionState.Selected
           ? 'checked'
-          : option.state === OptionState.Unselected
-          ? 'unchecked'
-          : 'indeterminate';
+          : option.state === OptionState.Indeterminate
+          ? 'indeterminate'
+          : 'unchecked';
 
       return (
         <TouchableOpacity onPress={onPress}>
@@ -55,11 +51,19 @@ export const CheckOptions: React.FC<CheckOptionCompProps> = memo(
       );
     };
 
+    /**
+     * Simple container that just renders its children.
+     * BaseOptions uses this as <OptionsContainer>{children}</OptionsContainer>.
+     */
+    const OptionsContainer: React.FC<{ children: React.ReactNode }> = ({
+      children,
+    }) => <>{children}</>;
+
     return (
       <BaseOptions
         schema={schema}
         setSchema={setSchema}
-        optionsContainer={(children) => children}
+        optionsContainer={OptionsContainer}
         renderOption={renderCheckbox}
         depthPadding={Const.padSize * 2}
         style={style}

@@ -20,7 +20,7 @@ import MenuListScreen from './Menu/MenuListScreen';
 // modal
 import ModalsScreen from './Modal/ModalsScreen';
 // options
-import OptionsScreen from './Options/OptionsScreen';
+import NestedOptionsScreen from './Options/NestedOptionsScreen';
 // selections
 import SelectionsScreen from './Selections/SelectionsScreen';
 // text
@@ -44,7 +44,7 @@ export const screenRoutes = {
   layouts: 'layouts',
   menulist: 'menulist',
   modals: 'modals',
-  options: 'options',
+  nestedOptions: 'nestedOptions',
   selections: 'selections',
   text: 'text',
   visuals: 'visuals',
@@ -66,7 +66,7 @@ export const screenRegistry: Screen.ScreenMap = {
   [screenRoutes.layouts]: LayoutsScreen,
   [screenRoutes.menulist]: MenuListScreen,
   [screenRoutes.modals]: ModalsScreen,
-  [screenRoutes.options]: OptionsScreen,
+  [screenRoutes.nestedOptions]: NestedOptionsScreen,
   [screenRoutes.selections]: SelectionsScreen,
   [screenRoutes.text]: TextScreen,
   [screenRoutes.visuals]: VisualsScreen,

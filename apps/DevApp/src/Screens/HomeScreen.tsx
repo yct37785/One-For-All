@@ -63,7 +63,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
   ];
 
   const optionsOptions = [
-    { value: screenRoutes.options, text: 'Base/Check/Chip options' },
+    { value: screenRoutes.nestedOptions, text: 'Nested options' },
   ];
 
   const selectionsOptions = [
