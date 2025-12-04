@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo } from 'react';
 import { View, StyleProp, ViewStyle, FlexStyle } from 'react-native';
 import { PadSpacingValue } from '../../Types';
 import * as Const from '../../Const';
@@ -12,6 +12,7 @@ const spacing = (units?: number) =>
  * @property dir?      - Flex direction
  * @property align?    - Align items
  * @property justify?  - Justify content
+ * @property self?     - Align self (cross-axis alignment)
  * 
  * @property p?   - Uniform padding
  * @property m?   - Uniform margin
@@ -40,6 +41,7 @@ export type BoxProps = {
   dir?: FlexStyle['flexDirection'];
   align?: ViewStyle['alignItems'];
   justify?: ViewStyle['justifyContent'];
+  self?: ViewStyle['alignSelf'];
 
   p?: PadSpacingValue;
   m?: PadSpacingValue;
@@ -58,7 +60,7 @@ export type BoxProps = {
   mr?: PadSpacingValue;
   mb?: PadSpacingValue;
   ml?: PadSpacingValue;
-  
+
   style?: StyleProp<ViewStyle>;
   children?: React.ReactNode;
 };
@@ -82,6 +84,7 @@ export const Box: React.FC<BoxProps> = memo(
     dir,
     align,
     justify,
+    self,
     p, m,
     pv, ph, mv, mh,
     pt, pr, pb, pl,
@@ -96,6 +99,7 @@ export const Box: React.FC<BoxProps> = memo(
         flexDirection: dir,
         alignItems: align,
         justifyContent: justify,
+        alignSelf: self,
 
         // padding
         padding: spacing(p),
@@ -121,5 +125,3 @@ export const Box: React.FC<BoxProps> = memo(
     return <View style={resolvedStyle}>{children}</View>;
   }
 );
-
-Box.displayName = 'Box';

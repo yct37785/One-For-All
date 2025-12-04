@@ -137,7 +137,7 @@ const ListScreen: Screen.ScreenType = () => {
         </ScrollView>
 
         {/* Reset filters */}
-        <UI.Box mt={1} flex={0}>
+        <UI.Box mt={1} self='flex-start'>
           <UI.TextButton
             onPress={onResetFilters}
             disabled={selectedCategories.size === 0}

@@ -10,6 +10,7 @@ import { Screen, UI } from 'framework';
  * - dir: 'row' | 'column'
  * - align: alignItems
  * - justify: justifyContent
+ * - self: alignSelf
  * - p, m, ph, pv, pt, pr, pb, pl, mh, mv, mt, mr, mb, ml: PadSpacingValue (0–4)
  *
  * PadSpacingValue is a scaled spacing unit:
@@ -135,6 +136,30 @@ const BoxScreen: Screen.ScreenType = () => {
           </UI.Box>
           <UI.Box bgColor='#ba68c8' p={2} ml={1}>
             <UI.Text variant='labelSmall'>taller item</UI.Text>
+          </UI.Box>
+        </UI.Box>
+
+        {/* Self alignment */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>Self alignment</UI.Text>
+
+        <UI.Text variant='labelMedium' color='label'>
+          A child can control its own cross-axis alignment. This also fixes
+          cases where a component stretches full width by default, self lets it size to
+          content instead.
+        </UI.Text>
+
+        <UI.Box bgColor='#e0f7fa' p={1} mv={1} style={{ height: 140 }}>
+          <UI.Box bgColor='#4dd0e1' p={1} self='flex-start' mt={1}>
+            <UI.Text variant='labelSmall'>self="flex-start"</UI.Text>
+          </UI.Box>
+
+          <UI.Box bgColor='#26c6da' p={1} self='center' mt={1}>
+            <UI.Text variant='labelSmall'>self="center"</UI.Text>
+          </UI.Box>
+
+          <UI.Box bgColor='#00acc1' p={1} self='flex-end' mt={1}>
+            <UI.Text variant='labelSmall'>self="flex-end"</UI.Text>
           </UI.Box>
         </UI.Box>
 
