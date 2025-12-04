@@ -15,13 +15,13 @@ import {
  * 
  * @property schema     - Immutable options tree (labels + hierarchy)
  * @property value      - Mutable option state tree (mirrors schema structure)
- * @property setValue   - State setter
+ * @property onChange   - State setter
  * @property style?     - Optional wrapper style
  ******************************************************************************************************************/
 export type CheckOptionCompProps = {
   schema: OptionSchema;
   value: OptionValue;
-  setValue: (updatedValue: OptionValue) => void;
+  onChange: (updatedValue: OptionValue) => void;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -39,7 +39,7 @@ const OptionsContainer: React.FC<{ children: ReactNode }> = ({ children }) => (
  * Renders a nested tree of checkbox options backed by BaseOptions.
  ******************************************************************************************************************/
 export const CheckOptions: React.FC<CheckOptionCompProps> = memo(
-  ({ schema, value, setValue, style }) => {
+  ({ schema, value, onChange, style }) => {
     /**************************************************************************************************************
      * Renders a single checkbox option row.
      **************************************************************************************************************/
@@ -71,7 +71,7 @@ export const CheckOptions: React.FC<CheckOptionCompProps> = memo(
       <BaseOptions
         schema={schema}
         value={value}
-        setValue={setValue}
+        onChange={onChange}
         optionsContainer={OptionsContainer}
         renderOption={renderCheckbox}
         depthPadding={Const.padSize * 2}

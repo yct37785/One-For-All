@@ -36,29 +36,6 @@ const INITIAL_SCHEMA: UI.OptionSchema = {
 };
 
 /******************************************************************************************************************
- * Helper: build initial value tree from schema.
- * 
- * All nodes are initialised to Unselected and mirror the structure of the schema.
- ******************************************************************************************************************/
-const buildInitialValueFromSchema = (
-  schema: UI.OptionSchema,
-  initialState: UI.OptionState = UI.OptionState.Unselected
-): UI.OptionValue => {
-  const value: UI.OptionValue = {};
-
-  Object.entries(schema).forEach(([key, node]) => {
-    value[key] = {
-      state: initialState,
-      ...(node.children
-        ? { children: buildInitialValueFromSchema(node.children, initialState) }
-        : {}),
-    };
-  });
-
-  return value;
-};
-
-/******************************************************************************************************************
  * Helper: collect labels of selected leaf options (no children).
  ******************************************************************************************************************/
 const collectSelectedLeafLabels = (
@@ -98,7 +75,7 @@ const collectSelectedLeafLabels = (
  ******************************************************************************************************************/
 const NestedOptionsScreen: Screen.ScreenType = () => {
   const [value, setValue] = useState<UI.OptionValue>(() =>
-    buildInitialValueFromSchema(INITIAL_SCHEMA)
+    UI.buildOptionsValueFromSchema(INITIAL_SCHEMA)
   );
 
   const selectedLeafLabels = collectSelectedLeafLabels(INITIAL_SCHEMA, value);
@@ -119,7 +96,7 @@ const NestedOptionsScreen: Screen.ScreenType = () => {
           <UI.CheckOptions
             schema={INITIAL_SCHEMA}
             value={value}
-            setValue={setValue}
+            onChange={setValue}
           />
         </UI.Box>
 

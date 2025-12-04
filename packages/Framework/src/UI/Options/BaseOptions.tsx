@@ -77,7 +77,7 @@ export type OptionProps = {
  * 
  * @property schema           - Immutable options tree describing labels and nesting
  * @property value            - Mutable state tree mirroring the schema structure
- * @property setValue         - State setter invoked after mutations
+ * @property onChange         - State setter invoked after mutations
  * @property optionsContainer - Wrapper component for child groups
  * @property renderOption     - Renderer for a single option row
  * @property depthPadding?    - Additional padding applied per hierarchy depth
@@ -86,7 +86,7 @@ export type OptionProps = {
 export type BaseOptionsProps = {
   schema: OptionSchema;
   value: OptionValue;
-  setValue: (updatedValue: OptionValue) => void;
+  onChange: (updatedValue: OptionValue) => void;
   optionsContainer: React.ComponentType<{ children: React.ReactNode }>;
   renderOption: (props: { option: OptionProps; onPress: () => void }) => JSX.Element;
   depthPadding?: number;
@@ -104,7 +104,7 @@ export type BaseOptionsProps = {
  * <BaseOptions
  *   schema={schema}
  *   value={value}
- *   setValue={setValue}
+ *   onChange={onChange}
  *   optionsContainer={({ children }) => <View>{children}</View>}
  *   renderOption={({ option, onPress }) => <MyOptionRow option={option} onPress={onPress} />}
  *   depthPadding={8}
@@ -115,7 +115,7 @@ export const BaseOptions: React.FC<BaseOptionsProps> = memo(
   ({
     schema,
     value,
-    setValue,
+    onChange,
     optionsContainer: OptionsContainer,
     renderOption,
     depthPadding = 0,
@@ -179,7 +179,7 @@ export const BaseOptions: React.FC<BaseOptionsProps> = memo(
       }
 
       // trigger re-render with updated value (shallow clone is sufficient at the root)
-      setValue({ ...value });
+      onChange({ ...value });
     };
 
     /**************************************************************************************************************
@@ -243,3 +243,30 @@ export const BaseOptions: React.FC<BaseOptionsProps> = memo(
     return <View style={style}>{renderChildrenOptions(schema, value)}</View>;
   }
 );
+
+/******************************************************************************************************************
+ * Helper: build initial value tree from schema:
+ * - All nodes are initialised to Unselected and mirror the structure of the schema.
+ * 
+ * @prop schema       - The schema defined
+ * @prop initialState - Intitial state of all options
+ * 
+ * @return - Option value with same tree structure as schema
+ ******************************************************************************************************************/
+export const buildOptionsValueFromSchema = (
+  schema: OptionSchema,
+  initialState: OptionState = OptionState.Unselected
+): OptionValue => {
+  const value: OptionValue = {};
+
+  Object.entries(schema).forEach(([key, node]) => {
+    value[key] = {
+      state: initialState,
+      ...(node.children
+        ? { children: buildOptionsValueFromSchema(node.children, initialState) }
+        : {}),
+    };
+  });
+
+  return value;
+};
