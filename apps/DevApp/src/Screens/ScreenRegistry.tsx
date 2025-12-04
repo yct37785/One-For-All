@@ -7,6 +7,7 @@ import CollapsiblesScreen from './Container/CollapsiblesScreen';
 import TabsScreen from './Container/TabsScreen';
 // data
 import AvatarScreen from './Data/AvatarScreen';
+import ChipScreen from './Data/ChipScreen';
 import ListScreen from './Data/ListScreen';
 // input
 import InputScreen from './Input/InputScreen';
@@ -37,6 +38,7 @@ export const screenRoutes = {
   collapsibles: 'collapsibles',
   tabs: 'tabs',
   avatar: 'avatar',
+  chip: 'chip',
   list: 'list',
   input: 'input',
   buttons: 'buttons',
@@ -59,6 +61,7 @@ export const screenRegistry: Screen.ScreenMap = {
   [screenRoutes.collapsibles]: CollapsiblesScreen,
   [screenRoutes.tabs]: TabsScreen,
   [screenRoutes.avatar]: AvatarScreen,
+  [screenRoutes.chip]: ChipScreen,
   [screenRoutes.list]: ListScreen,
   [screenRoutes.input]: InputScreen,
   [screenRoutes.buttons]: ButtonsScreen,

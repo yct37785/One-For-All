@@ -15,10 +15,10 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
    * Auth status text
    ******************************************************************************************************************/
   const statusText = !user
-    ? 'Setting up session…'
+    ? 'Setting up session...'
     : isAnon
-      ? `Anonymous session\nuid: ${uid?.slice(0, 10)}…`
-      : `Signed in with Google\nuid: ${uid?.slice(0, 10)}…\nEmail: ${email}`;
+      ? `Anonymous session\nuid: ${uid?.slice(0, 10)}...`
+      : `Signed in with Google\nuid: ${uid?.slice(0, 10)}...\nEmail: ${email}`;
 
   /******************************************************************************************************************
    * Menu options per section (values are route names)
@@ -38,6 +38,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
 
   const dataOptions = [
     { value: screenRoutes.avatar, text: 'Avatar' },
+    { value: screenRoutes.chip, text: 'Chip' },
     { value: screenRoutes.list, text: 'List' },
   ];
 

@@ -2,6 +2,7 @@ export * from '../UI/Container/Box';
 export * from '../UI/Container/Collapsible/Collapsible';
 export * from '../UI/Container/Tabs';
 export * from '../UI/Data/Avatar';
+export * from '../UI/Data/Chip';
 export * from '../UI/Data/List';
 export * from '../UI/Input/Input';
 export * from '../UI/Interactive/Button';

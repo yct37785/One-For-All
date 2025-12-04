@@ -1,0 +1,160 @@
+import React, { memo } from 'react';
+import {
+  View,
+  StyleSheet,
+  ViewStyle,
+  StyleProp,
+} from 'react-native';
+import { useTheme } from 'react-native-paper';
+import * as Const from '../../Const';
+import { Text } from '../Text/Text';
+import { Touchable } from '../Interactive/Touchable';
+import { Icon } from '../Text/Icon';
+
+/******************************************************************************************************************
+ * Chip props.
+ *
+ * @property label           - Text shown inside the chip
+ * @property selected?       - Selected state; affects colors
+ * @property disabled?       - Disabled state; prevents interaction and dims visuals
+ * @property leadingIcon?    - Optional leading icon name (e.g. 'tag', 'filter')
+ * @property onPress?        - Called when the chip body is pressed
+ * @property onClose?        - Called when trailing "X" is pressed; chip remains mounted, parent decides removal
+ * @property style?          - Extra style(s) for the chip container
+ ******************************************************************************************************************/
+export type ChipProps = {
+  label: string;
+  selected?: boolean;
+  disabled?: boolean;
+  leadingIcon?: string;
+  onPress?: () => void;
+  onClose?: () => void;
+  style?: StyleProp<ViewStyle>;
+};
+
+/******************************************************************************************************************
+ * A rounded rectangular chip for tags or filters, with optional leading icon and trailing close action.
+ *
+ * Visual states:
+ * - Unselected: outlined chip on surface background
+ * - Selected  : filled chip using primaryContainer
+ * - Disabled  : dimmed colors and disabled interaction
+ *
+ * @usage
+ * ```tsx
+ * <Chip label="All items" selected onPress={...} />
+ * <Chip label="Unread" leadingIcon="email" onPress={...} />
+ * <Chip label="Filter" onPress={...} onClose={() => removeFilter('filter')} />
+ * ```
+ ******************************************************************************************************************/
+export const Chip: React.FC<ChipProps> = memo(
+  ({
+    label,
+    selected = false,
+    disabled = false,
+    leadingIcon,
+    onPress,
+    onClose,
+    style,
+  }) => {
+    const theme = useTheme();
+
+    // base colors for different states
+    const isInteractive = !!onPress || !!onClose;
+
+    const bgColor = (() => {
+      if (disabled) return theme.colors.surfaceVariant;
+      if (selected) return theme.colors.primaryContainer;
+      return theme.colors.surface;
+    })();
+
+    const borderColor = (() => {
+      if (disabled) return theme.colors.outlineVariant ?? theme.colors.outline;
+      if (selected) return theme.colors.primary;
+      return theme.colors.outline;
+    })();
+
+    const textColor = (() => {
+      if (disabled) return theme.colors.onSurfaceDisabled ?? theme.colors.onSurface;
+      if (selected) return theme.colors.onPrimaryContainer;
+      return theme.colors.onSurface;
+    })();
+
+    const baseContainer: ViewStyle = {
+      backgroundColor: bgColor,
+      borderColor,
+    };
+
+    const content = (
+      <View style={styles.innerRow}>
+        {leadingIcon ? (
+          <View style={styles.leadingIconWrapper}>
+            <Icon source={leadingIcon} variant='sm' customColor={textColor} />
+          </View>
+        ) : null}
+
+        <Text variant='labelMedium' customColor={textColor} numberOfLines={1}>
+          {label}
+        </Text>
+
+        {onClose ? (
+          <Touchable
+            feedback='none'
+            onPress={onClose}
+            style={styles.closeWrapper}
+          >
+            <Icon
+              source='close'
+              variant='xs'
+              customColor={textColor}
+            />
+          </Touchable>
+        ) : null}
+      </View>
+    );
+
+    const outerStyle = [styles.containerBase, baseContainer, style];
+
+    if (isInteractive) {
+      return (
+        <Touchable
+          onPress={onPress}
+          disabled={disabled}
+          style={outerStyle}
+        >
+          {content}
+        </Touchable>
+      );
+    }
+
+    return <View style={outerStyle}>{content}</View>;
+  }
+);
+
+/******************************************************************************************************************
+ * Styles.
+ ******************************************************************************************************************/
+const styles = StyleSheet.create({
+  containerBase: {
+    minHeight: 32,
+    borderRadius: 999, // rounded pill shape
+    borderWidth: StyleSheet.hairlineWidth,
+    paddingHorizontal: Const.padSize * 1.5,
+    paddingVertical: Const.padSize * 0.5,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  innerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexShrink: 1,
+  },
+  leadingIconWrapper: {
+    marginRight: Const.padSize,
+  },
+  closeWrapper: {
+    marginLeft: Const.padSize,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
