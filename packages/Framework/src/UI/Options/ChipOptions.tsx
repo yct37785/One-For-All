@@ -1,6 +1,12 @@
 import React, { memo, useState } from 'react';
-import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { useTheme, Chip } from 'react-native-paper';
+import {
+  View,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  TouchableOpacity,
+} from 'react-native';
+import { useTheme, Text } from 'react-native-paper';
 import * as Const from '../../Const';
 
 /******************************************************************************************************************
@@ -35,9 +41,9 @@ export const ChipOptions: React.FC<ChipOptionsProps> = memo(
     );
 
     /**
-     * Handles chip toggle selection
-     * - If value already selected → remove it
-     * - If not selected → add it
+     * Handles chip toggle selection:
+     * - If value already selected > remove it
+     * - If not selected > add it
      * - Updates local state and triggers onSelected callback
      */
     function onChipSelected(value: string) {
@@ -55,24 +61,39 @@ export const ChipOptions: React.FC<ChipOptionsProps> = memo(
       <View style={[styles.container, style]}>
         {Array.from(schema).map((value) => {
           const isSelected = selectedSet.has(value);
+
+          const chipBackground = isSelected
+            ? theme.colors.primaryContainer
+            : theme.colors.surfaceVariant;
+
+          const chipBorderColor = isSelected
+            ? theme.colors.primary
+            : theme.colors.outlineVariant ?? theme.colors.outline;
+
+          const chipTextColor = isSelected
+            ? theme.colors.onPrimaryContainer
+            : theme.colors.onSurface;
+
           return (
-            <Chip
+            <TouchableOpacity
               key={value}
-              selected={isSelected}
-              showSelectedCheck={false}
-              mode="outlined"
+              onPress={() => onChipSelected(value)}
               style={[
                 styles.chip,
                 {
-                  backgroundColor: isSelected
-                    ? theme.colors.primaryContainer
-                    : theme.colors.backdrop,
+                  backgroundColor: chipBackground,
+                  borderColor: chipBorderColor,
                 },
               ]}
-              onPress={() => onChipSelected(value)}
+              activeOpacity={0.7}
             >
-              {value}
-            </Chip>
+              <Text
+                variant="labelMedium"
+                style={{ color: chipTextColor }}
+              >
+                {value}
+              </Text>
+            </TouchableOpacity>
           );
         })}
       </View>
@@ -90,5 +111,11 @@ const styles = StyleSheet.create({
   },
   chip: {
     margin: Const.padSize05,
+    paddingHorizontal: Const.padSize * 1.5,
+    paddingVertical: Const.padSize * 0.5,
+    borderRadius: 999,
+    borderWidth: StyleSheet.hairlineWidth,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
