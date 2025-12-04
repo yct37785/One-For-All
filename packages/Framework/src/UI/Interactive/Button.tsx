@@ -15,8 +15,6 @@ export type ButtonMode = 'text' | 'outlined' | 'contained' | 'elevated' | 'conta
 
 /******************************************************************************************************************
  * Button props.
- * 
- * TODO: icon
  *
  * @property mode?             - Visual style variant (MD3)
  * @property compact?          - Slightly reduce paddings/min-height for dense layouts
