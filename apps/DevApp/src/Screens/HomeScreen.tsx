@@ -46,7 +46,8 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
   ];
 
   const interactiveOptions = [
-    { value: screenRoutes.interactives, text: 'Interactive controls' },
+    { value: screenRoutes.buttons, text: 'Buttons' },
+    { value: screenRoutes.touchable, text: 'Touchable' },
   ];
 
   const layoutOptions = [

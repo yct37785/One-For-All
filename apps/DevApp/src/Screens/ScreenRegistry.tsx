@@ -11,7 +11,8 @@ import ListScreen from './Data/ListScreen';
 // input
 import InputScreen from './Input/InputScreen';
 // interactive
-import InteractivesScreen from './Interactive/InteractivesScreen';
+import ButtonsScreen from './Interactive/ButtonsScreen';
+import TouchableScreen from './Interactive/TouchableScreen';
 // layout
 import LayoutsScreen from './Layout/LayoutsScreen';
 // menu
@@ -38,7 +39,8 @@ export const screenRoutes = {
   avatar: 'avatar',
   list: 'list',
   input: 'input',
-  interactives: 'interactives',
+  buttons: 'buttons',
+  touchable: 'touchable',
   layouts: 'layouts',
   menulist: 'menulist',
   modals: 'modals',
@@ -59,7 +61,8 @@ export const screenRegistry: Screen.ScreenMap = {
   [screenRoutes.avatar]: AvatarScreen,
   [screenRoutes.list]: ListScreen,
   [screenRoutes.input]: InputScreen,
-  [screenRoutes.interactives]: InteractivesScreen,
+  [screenRoutes.buttons]: ButtonsScreen,
+  [screenRoutes.touchable]: TouchableScreen,
   [screenRoutes.layouts]: LayoutsScreen,
   [screenRoutes.menulist]: MenuListScreen,
   [screenRoutes.modals]: ModalsScreen,
