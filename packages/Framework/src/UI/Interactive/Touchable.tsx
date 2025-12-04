@@ -1,5 +1,14 @@
 import React, { useRef, useEffect, memo } from 'react';
-import { Pressable, PressableProps, ViewStyle, StyleProp, Platform, Animated, Easing } from 'react-native';
+import {
+  Pressable,
+  PressableProps,
+  ViewStyle,
+  StyleProp,
+  StyleSheet,
+  Platform,
+  Animated,
+  Easing,
+} from 'react-native';
 import * as Const from '../../Const';
 
 // predefined Android ripple configuration (shared instance)
@@ -50,6 +59,7 @@ export interface TouchableProps {
  * - Uses Animated.Value for opacity feedback (native driver).
  * - Avoids heavy hooks (no useMemo/useCallback) since work is cheap.
  * - Uses a shared ripple config instead of recreating it per render.
+ * - For Android ripple clipping, border radius is applied to the Pressable and overflow is set to 'hidden'.
  * 
  * @usage
  * ```tsx
@@ -114,6 +124,42 @@ export const Touchable: React.FC<TouchableProps> = memo(
     const ripple =
       Platform.OS === 'android' && isOpacity ? ANDROID_RIPPLE : undefined;
 
+    /**
+     * Split style:
+     * - pressableStyle    → border radius + overflow for ripple clipping
+     * - contentStyle      → remaining style applied to Animated.View
+     */
+    const flattened = StyleSheet.flatten(style) || {};
+    const {
+      borderRadius,
+      borderTopLeftRadius,
+      borderTopRightRadius,
+      borderBottomLeftRadius,
+      borderBottomRightRadius,
+      overflow: _overflowIgnored,
+      ...restStyle
+    } = flattened;
+
+    const hasAnyRadius =
+      borderRadius != null ||
+      borderTopLeftRadius != null ||
+      borderTopRightRadius != null ||
+      borderBottomLeftRadius != null ||
+      borderBottomRightRadius != null;
+
+    const pressableStyle: ViewStyle = {
+      borderRadius,
+      borderTopLeftRadius,
+      borderTopRightRadius,
+      borderBottomLeftRadius,
+      borderBottomRightRadius,
+      ...(hasAnyRadius ? { overflow: 'hidden' as const } : null),
+    };
+
+    const contentStyle: ViewStyle = {
+      ...restStyle,
+    };
+
     return (
       <Pressable
         disabled={disabled}
@@ -126,8 +172,9 @@ export const Touchable: React.FC<TouchableProps> = memo(
         android_disableSound={android_disableSound}
         hitSlop={hitSlop}
         pressRetentionOffset={pressRetentionOffset}
+        style={pressableStyle}
       >
-        <Animated.View style={[style as ViewStyle, { opacity }]}>
+        <Animated.View style={[contentStyle, { opacity }]}>
           {children}
         </Animated.View>
       </Pressable>
