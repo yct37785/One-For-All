@@ -23,6 +23,7 @@ const CATEGORIES = ['Electronics', 'Clothing', 'Home', 'Books', 'Sports', 'Toys'
 const ListScreen: Screen.ScreenType = () => {
   const [query, setQuery] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<Set<string>>(() => new Set());
+  const [chipResetSignal, setChipResetSignal] = useState(0);
 
   // generate a large dataset once using Faker
   const items: DemoListItem[] = useMemo(() => {
@@ -54,6 +55,11 @@ const ListScreen: Screen.ScreenType = () => {
 
   const onCategorySelected = (values: Set<string>) => {
     setSelectedCategories(values);
+  };
+
+  const onResetFilters = () => {
+    setSelectedCategories(new Set());
+    setChipResetSignal((prev) => prev + 1);
   };
 
   const filterMap = {
@@ -123,12 +129,27 @@ const ListScreen: Screen.ScreenType = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.chipScrollContent}
         >
-          <UI.ChipOptions schema={new Set(CATEGORIES)} onSelected={onCategorySelected} />
+          <UI.ChipOptions
+            schema={new Set(CATEGORIES)}
+            onSelected={onCategorySelected}
+            resetSignal={chipResetSignal}
+          />
         </ScrollView>
+
+        {/* Reset filters */}
+        <UI.Box mt={1} flex={0}>
+          <UI.TextButton
+            onPress={onResetFilters}
+            disabled={selectedCategories.size === 0}
+            textOpts={{ variant: 'labelSmall', color: 'label' }}
+          >
+            Reset filters
+          </UI.TextButton>
+        </UI.Box>
       </UI.Box>
 
       {/* List as the main scrollable content */}
-      <UI.Box flex={1} mt={2}>
+      <UI.Box flex={1} mt={0}>
         <UI.List dataArr={items} query={query} filterMap={filterMap} renderItem={renderItem} listType={UI.ListType.flashlist} />
       </UI.Box>
 
