@@ -32,6 +32,9 @@ export type ChipProps = {
   style?: StyleProp<ViewStyle>;
 };
 
+// pill radius used for both ripple clip (Touchable) and visible border (inner container)
+const CHIP_RADIUS = 999;
+
 /******************************************************************************************************************
  * A rounded rectangular chip for tags or filters, with optional leading icon and trailing close action.
  *
@@ -41,7 +44,7 @@ export type ChipProps = {
  * - Disabled  : dimmed colors and non-interactive
  *
  * Behaviour:
- * - If isClose is true, a trailing "X" is shown and pressing anywhere on the chip calls onPress
+ * - If isClose is true, a trailing "X" is shown and pressing anywhere on the chip calls onPress.
  *
  * @usage
  * ```tsx
@@ -83,50 +86,57 @@ export const Chip: React.FC<ChipProps> = memo(
       return theme.colors.onSurface;
     })();
 
-    const baseContainer: ViewStyle = {
+    // visible container (inside Touchable) – responsible for border + background
+    const innerContainerStyle: ViewStyle = {
       backgroundColor: bgColor,
       borderColor,
+      borderRadius: CHIP_RADIUS,
     };
 
     const content = (
-      <View style={styles.innerRow}>
-        {leadingIcon ? (
-          <View style={styles.leadingIconWrapper}>
-            <Icon source={leadingIcon} variant='sm' customColor={textColor} />
-          </View>
-        ) : null}
+      <View style={[styles.innerContainer, innerContainerStyle, style]}>
+        <View style={styles.innerRow}>
+          {leadingIcon ? (
+            <View style={styles.leadingIconWrapper}>
+              <Icon source={leadingIcon} variant='sm' customColor={textColor} />
+            </View>
+          ) : null}
 
-        <Text variant='labelMedium' customColor={textColor} numberOfLines={1}>
-          {label}
-        </Text>
+          <Text variant='labelMedium' customColor={textColor} numberOfLines={1}>
+            {label}
+          </Text>
 
-        {isClose ? (
-          <View style={styles.closeWrapper}>
-            <Icon
-              source='close'
-              variant='xs'
-              customColor={textColor}
-            />
-          </View>
-        ) : null}
+          {isClose ? (
+            <View style={styles.closeWrapper}>
+              <Icon
+                source='close'
+                variant='xs'
+                customColor={textColor}
+              />
+            </View>
+          ) : null}
+        </View>
       </View>
     );
 
-    const outerStyle = [styles.containerBase, baseContainer, style];
+    // Touchable only needs the radius for ripple clipping; border is handled by inner container
+    const touchableStyle: ViewStyle = {
+      borderRadius: CHIP_RADIUS,
+    };
 
     if (isInteractive) {
       return (
         <Touchable
           onPress={onPress}
           disabled={disabled}
-          style={outerStyle}
+          style={touchableStyle}
         >
           {content}
         </Touchable>
       );
     }
 
-    return <View style={outerStyle}>{content}</View>;
+    return <View style={touchableStyle}>{content}</View>;
   }
 );
 
@@ -134,10 +144,10 @@ export const Chip: React.FC<ChipProps> = memo(
  * Styles.
  ******************************************************************************************************************/
 const styles = StyleSheet.create({
-  containerBase: {
+  innerContainer: {
     minHeight: 32,
-    borderRadius: 999, // rounded pill shape
     borderWidth: StyleSheet.hairlineWidth,
+    borderStyle: 'solid',
     paddingHorizontal: Const.padSize * 1.5,
     paddingVertical: Const.padSize * 0.5,
     flexDirection: 'row',
