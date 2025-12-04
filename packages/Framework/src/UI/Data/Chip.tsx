@@ -18,8 +18,8 @@ import { Icon } from '../Text/Icon';
  * @property selected?       - Selected state; affects colors
  * @property disabled?       - Disabled state; prevents interaction and dims visuals
  * @property leadingIcon?    - Optional leading icon name (e.g. 'tag', 'filter')
- * @property onPress?        - Called when the chip body is pressed
- * @property onClose?        - Called when trailing "X" is pressed; chip remains mounted, parent decides removal
+ * @property isClose?        - If true, shows trailing "X" and treats onPress as a close/remove action
+ * @property onPress?        - Called when the chip is pressed (for close chips, this is the close logic)
  * @property style?          - Extra style(s) for the chip container
  ******************************************************************************************************************/
 export type ChipProps = {
@@ -27,8 +27,8 @@ export type ChipProps = {
   selected?: boolean;
   disabled?: boolean;
   leadingIcon?: string;
+  isClose?: boolean;
   onPress?: () => void;
-  onClose?: () => void;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -38,13 +38,16 @@ export type ChipProps = {
  * Visual states:
  * - Unselected: outlined chip on surface background
  * - Selected  : filled chip using primaryContainer
- * - Disabled  : dimmed colors and disabled interaction
+ * - Disabled  : dimmed colors and non-interactive
+ *
+ * Behaviour:
+ * - If isClose is true, a trailing "X" is shown and pressing anywhere on the chip calls onPress
  *
  * @usage
  * ```tsx
  * <Chip label="All items" selected onPress={...} />
  * <Chip label="Unread" leadingIcon="email" onPress={...} />
- * <Chip label="Filter" onPress={...} onClose={() => removeFilter('filter')} />
+ * <Chip label="Filter" isClose onPress={() => removeFilter('filter')} />
  * ```
  ******************************************************************************************************************/
 export const Chip: React.FC<ChipProps> = memo(
@@ -53,14 +56,14 @@ export const Chip: React.FC<ChipProps> = memo(
     selected = false,
     disabled = false,
     leadingIcon,
+    isClose = false,
     onPress,
-    onClose,
     style,
   }) => {
     const theme = useTheme();
 
     // base colors for different states
-    const isInteractive = !!onPress || !!onClose;
+    const isInteractive = !!onPress;
 
     const bgColor = (() => {
       if (disabled) return theme.colors.surfaceVariant;
@@ -97,18 +100,14 @@ export const Chip: React.FC<ChipProps> = memo(
           {label}
         </Text>
 
-        {onClose ? (
-          <Touchable
-            feedback='none'
-            onPress={onClose}
-            style={styles.closeWrapper}
-          >
+        {isClose ? (
+          <View style={styles.closeWrapper}>
             <Icon
               source='close'
               variant='xs'
               customColor={textColor}
             />
-          </Touchable>
+          </View>
         ) : null}
       </View>
     );
