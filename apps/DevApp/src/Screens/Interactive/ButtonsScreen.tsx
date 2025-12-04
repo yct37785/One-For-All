@@ -247,23 +247,24 @@ const ButtonScreen: Screen.ScreenType = () => {
         </UI.Text>
 
         <UI.Box mt={2}>
-          <UI.TextButton label='Text button' onPress={onBtnClick} />
+          <UI.TextButton onPress={onBtnClick}>
+            Text button
+          </UI.TextButton>
         </UI.Box>
 
         <UI.Box mt={1}>
           <UI.TextButton
             onPress={onBtnClick}
-            textProps={{ variant: 'labelLarge', bold: true }}
+            textOpts={{ variant: 'labelLarge', bold: true }}
           >
             Bold large text
           </UI.TextButton>
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.TextButton
-            disabled
-            label='Disabled text button'
-          />
+          <UI.TextButton disabled>
+            Disabled text button
+          </UI.TextButton>
         </UI.Box>
 
         <UI.Box mt={2}>

@@ -7,17 +7,15 @@ import * as Const from '../../Const';
 /******************************************************************************************************************
  * TextButton props.
  *
- * @property label?          - The button label (alternative to children)
- * @property children?       - Optional custom text nodes
- * @property textProps?      - Additional props passed to the internal Text component
+ * @property children?       - Button label/content
+ * @property textOpts?       - Additional props passed to the internal Text component
  * @property style?          - Style applied to the button container
  * @property disabled?       - Disable press handling
  * @property onPress?        - Press callback
  ******************************************************************************************************************/
 export interface TextButtonProps {
-  label?: string;
   children?: React.ReactNode;
-  textProps?: TextProps;
+  textOpts?: TextProps;
   style?: StyleProp<ViewStyle>;
   disabled?: boolean;
   onPress?: () => void;
@@ -34,21 +32,20 @@ export interface TextButtonProps {
  *
  * @usage
  * ```tsx
- * <TextButton label='Edit' onPress={onEdit} />
+ * <TextButton onPress={onEdit}>Edit</TextButton>
  *
- * <TextButton onPress={save} textProps={{ variant: 'titleSmall', bold: true }}>
+ * <TextButton onPress={save} textOpts={{ variant: 'titleSmall', bold: true }}>
  *   Save
  * </TextButton>
  * ```
  ******************************************************************************************************************/
 export const TextButton: React.FC<TextButtonProps> = memo(
   ({
-    label,
     children,
     onPress,
     disabled,
     style,
-    textProps,
+    textOpts,
   }) => {
     return (
       <Touchable
@@ -59,9 +56,9 @@ export const TextButton: React.FC<TextButtonProps> = memo(
         <Text
           variant='labelLarge'
           color={disabled ? 'disabled' : 'primary'}
-          {...textProps}
+          {...textOpts}
         >
-          {children || label}
+          {children}
         </Text>
       </Touchable>
     );
