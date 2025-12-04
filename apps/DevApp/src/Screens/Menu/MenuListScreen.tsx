@@ -25,13 +25,11 @@ const MenuListScreen: Screen.ScreenType = () => {
           action sheets.
         </UI.Text>
 
-        {lastSelected ? (
-          <UI.Box mt={1}>
-            <UI.Text variant='labelMedium' color='label'>
-              Last selected: {lastSelected}
-            </UI.Text>
-          </UI.Box>
-        ) : null}
+        <UI.Box mt={1}>
+          <UI.Text variant='labelMedium' color='label'>
+            Last selected: {lastSelected}
+          </UI.Text>
+        </UI.Box>
 
         {/* MenuList · basic */}
         <UI.Divider spacing={1} />
