@@ -129,7 +129,7 @@ const ListScreen: Screen.ScreenType = () => {
 
       {/* List as the main scrollable content */}
       <UI.Box flex={1} mt={2}>
-        <UI.List dataArr={items} query={query} filterMap={filterMap} renderItem={renderItem} />
+        <UI.List dataArr={items} query={query} filterMap={filterMap} renderItem={renderItem} listType={UI.ListType.flashlist} />
       </UI.Box>
 
     </Screen.ScreenLayout>

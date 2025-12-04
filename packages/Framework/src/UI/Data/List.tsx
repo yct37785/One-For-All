@@ -8,7 +8,7 @@ import { FlashList } from '@shopify/flash-list';
  * @property flashlist  - Uses @shopify/flash-list for improved performance with large datasets
  * @property flatlist   - Uses React Native's built-in FlatList
  ******************************************************************************************************************/
-export enum ListImplementationType {
+export enum ListType {
   flashlist = 'flashlist',
   flatlist = 'flatlist',
 }
@@ -65,20 +65,20 @@ export type renderListItemFunc = (item: ListItem, index: number) => React.ReactN
 /******************************************************************************************************************
  * List props.
  * 
- * @property dataArr        - Input dataset to render
- * @property query          - Case-insensitive search query applied to searchable values
- * @property filterMap      - Active filters applied to filterable keys
- * @property renderItem     - Function that renders a row for a given item
- * @property listType?      - Underlying list implementation (default flashlist)
- * @property emptyComponent - Custom view when no results
- * @property style?         - Optional wrapper style
+ * @property dataArr                - Input dataset to render
+ * @property query                  - Case-insensitive search query applied to searchable values
+ * @property filterMap              - Active filters applied to filterable keys
+ * @property renderItem             - Function that renders a row for a given item
+ * @property ListType               - Underlying list implementation (default flashlist)
+ * @property emptyComponent         - Custom view when no results
+ * @property style?                 - Optional wrapper style
  ******************************************************************************************************************/
 export type ListProps = {
   dataArr: ListItem[];
   query: string;
   filterMap: ListFilterMap;
   renderItem: renderListItemFunc;
-  listImplementationType?: ListImplementationType;
+  listType?: ListType;
   emptyComponent?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
 };
@@ -99,7 +99,7 @@ export type ListProps = {
  *   query={searchTerm}
  *   filterMap={{ material: new Set(['wood']) }}
  *   renderItem={(it) => <Text>{it.searchable.name}</Text>}
- *   listType={ListType.flashlist}
+ *   listImplementationType={ListImplementationType.flashlist}
  * />
  * ```
  ******************************************************************************************************************/
@@ -109,13 +109,13 @@ export const List: React.FC<ListProps> = memo(
     query = '',
     filterMap = {},
     renderItem,
-    listImplementationType = ListImplementationType.flashlist,
+    listType = ListType.flashlist,
     emptyComponent,
     style,
   }) => {
-    /**
+    /**************************************************************************************************************
      * Filters the dataset using both search and filter criteria.
-     */
+     **************************************************************************************************************/
     const filteredData = useMemo(() => {
       const hasQuery = query.trim().length > 0;
       const hasAnyFilters = Object.values(filterMap).some(
@@ -158,9 +158,24 @@ export const List: React.FC<ListProps> = memo(
       });
     }, [dataArr, query, filterMap]);
 
-    /**
+    /**************************************************************************************************************
+     * Derive a stable key for the list so FlashList/FlatList fully remounts when
+     * the result set shrinks/grows or filters change drastically.
+     **************************************************************************************************************/
+    const listKey = useMemo(() => {
+      const filterKey = Object.entries(filterMap)
+        .map(([category, set]) => {
+          const values = Array.from(set || []).sort().join(',');
+          return `${category}:${values}`;
+        })
+        .join('|');
+
+      return `${listType}-${filteredData.length}-${query}-${filterKey}`;
+    }, [listType, filteredData.length, query, filterMap]);
+
+    /**************************************************************************************************************
      * Adapter to wrap renderItem into FlatList/FlashList signature.
-     */
+     **************************************************************************************************************/
     const renderListItem = ({
       item,
       index,
@@ -171,10 +186,10 @@ export const List: React.FC<ListProps> = memo(
       <View style={styles.itemWrapper}>{renderItem(item, index)}</View>
     );
 
-    /**
+    /**************************************************************************************************************
      * Prefer a stable key if the item has an "id" in searchable.
      * Falls back to index as a last resort.
-     */
+     **************************************************************************************************************/
     const keyExtractor = (item: ListItem, index: number) => {
       const maybeId = (item.searchable as any)?.id;
       return typeof maybeId === 'string' && maybeId.length > 0
@@ -182,9 +197,9 @@ export const List: React.FC<ListProps> = memo(
         : index.toString();
     };
 
-    /**
+    /**************************************************************************************************************
      * Optional empty state component.
-     */
+     **************************************************************************************************************/
     const ListEmptyComponent = emptyComponent
       ? () => <>{emptyComponent}</>
       : undefined;
@@ -197,9 +212,10 @@ export const List: React.FC<ListProps> = memo(
     };
 
     const renderList = () => {
-      if (listImplementationType === ListImplementationType.flashlist) {
+      if (listType === ListType.flashlist) {
         return (
           <FlashList
+            key={listKey}
             {...sharedListProps}
           />
         );
@@ -207,14 +223,18 @@ export const List: React.FC<ListProps> = memo(
 
       return (
         <FlatList
+          key={listKey}
           {...sharedListProps}
-          // conservative default, keeps memory reasonable for large lists
           windowSize={5}
         />
       );
     };
 
-    return <View style={[styles.container, style as StyleProp<ViewStyle>]}>{renderList()}</View>;
+    return (
+      <View style={[styles.container, style as StyleProp<ViewStyle>]}>
+        {renderList()}
+      </View>
+    );
   }
 );
 
@@ -226,6 +246,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   itemWrapper: {
-    flex: 1,
+    // avoid flex: 1 here; let each row size itself naturally so virtualized layouts can measure correctly
   },
 });
