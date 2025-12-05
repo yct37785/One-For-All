@@ -25,6 +25,7 @@ import NestedOptionsScreen from './Options/NestedOptionsScreen';
 // selections
 import SelectionsScreen from './Selections/SelectionsScreen';
 // text
+import IconScreen from './Text/IconScreen';
 import TextScreen from './Text/TextScreen';
 // visuals
 import VisualsScreen from './Visuals/VisualsScreen';
@@ -48,6 +49,7 @@ export const screenRoutes = {
   modals: 'modals',
   nestedOptions: 'nestedOptions',
   selections: 'selections',
+  icon: 'icon',
   text: 'text',
   visuals: 'visuals',
 } as const;
@@ -71,6 +73,7 @@ export const screenRegistry: Screen.ScreenMap = {
   [screenRoutes.modals]: ModalsScreen,
   [screenRoutes.nestedOptions]: NestedOptionsScreen,
   [screenRoutes.selections]: SelectionsScreen,
+  [screenRoutes.icon]: IconScreen,
   [screenRoutes.text]: TextScreen,
   [screenRoutes.visuals]: VisualsScreen,
 };
