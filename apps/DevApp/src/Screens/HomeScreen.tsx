@@ -72,7 +72,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
   ];
 
   const textOptions = [
-    { value: screenRoutes.text, text: 'Text, HighlightText, Icon' },
+    { value: screenRoutes.text, text: 'Text' },
   ];
 
   const visualsOptions = [
