@@ -18,9 +18,7 @@ const TextVariantsScreen: Screen.ScreenType = () => {
 
         {/* Header */}
         <UI.Text variant='bodyMedium'>
-          This screen showcases variants of Text that add focused behavior:
-          HighlightText visually marks matched substrings, while HyperlinkText
-          renders clickable links with primary color and underline styling.
+          This screen showcases variants of Text that add focused behavior.
         </UI.Text>
 
         {/* HighlightText */}
