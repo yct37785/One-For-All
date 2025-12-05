@@ -74,9 +74,8 @@ const LayoutScreen: Screen.ScreenType = () => {
         {/* Align */}
         <UI.Divider spacing={2} />
         <UI.Text variant='titleMedium'>Align</UI.Text>
-
-        <UI.Box mt={1}>
-          <UI.Text variant='bodySmall'>
+        <UI.Box>
+          <UI.Text variant='labelMedium' color='label'>
             align controls cross-axis alignment of children (e.g. vertical alignment in a horizontal layout).
           </UI.Text>
         </UI.Box>
@@ -93,9 +92,8 @@ const LayoutScreen: Screen.ScreenType = () => {
         {/* Constraint='wrap' */}
         <UI.Divider spacing={2} />
         <UI.Text variant='titleMedium'>Constraint wrap</UI.Text>
-
-        <UI.Box mt={1}>
-          <UI.Text variant='bodySmall'>
+        <UI.Box>
+          <UI.Text variant='labelMedium' color='label'>
             Wrap lets children flow onto new rows or new columns when they run out of space.
           </UI.Text>
         </UI.Box>
@@ -145,9 +143,8 @@ const LayoutScreen: Screen.ScreenType = () => {
         {/* Gap */}
         <UI.Divider spacing={2} />
         <UI.Text variant='titleMedium'>Gap</UI.Text>
-
-        <UI.Box mt={1}>
-          <UI.Text variant='bodySmall'>
+        <UI.Box>
+          <UI.Text variant='labelMedium' color='label'>
             gap adds spacing between children.
           </UI.Text>
         </UI.Box>
@@ -164,9 +161,8 @@ const LayoutScreen: Screen.ScreenType = () => {
         {/* Nested layouts */}
         <UI.Divider spacing={2} />
         <UI.Text variant='titleMedium'>Nested layouts</UI.Text>
-
-        <UI.Box mt={1}>
-          <UI.Text variant='bodySmall'>
+        <UI.Box>
+          <UI.Text variant='labelMedium' color='label'>
             Combine horizontal and vertical layouts to create simple app structures like headers, sidebars, and
             content areas.
           </UI.Text>

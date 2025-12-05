@@ -36,12 +36,11 @@ const TextInputScreen: Screen.ScreenType = () => {
         {/* TextInput · flat (required) */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>TextInput · flat (required)</UI.Text>
-
-        <UI.Text variant='bodySmall'>
-        Leave required fields blank and tap elsewhere to trigger the required error.
+        <UI.Text variant='labelMedium' color='label'>
+          Leave required fields blank and tap elsewhere to trigger the required error.
         </UI.Text>
 
-        <UI.Box mt={1}>
+        <UI.Box mv={1}>
           <UI.TextInput
             type='text'
             variant='flat'
@@ -58,7 +57,7 @@ const TextInputScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>TextInput · outline</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mv={1}>
           <UI.TextInput
             type='text'
             variant='outline'
@@ -72,12 +71,11 @@ const TextInputScreen: Screen.ScreenType = () => {
         {/* TextInput · email & password (with helper/error) */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>TextInput · email & password</UI.Text>
-
-        <UI.Text variant='bodySmall'>
-        For email, type an invalid address (e.g. 'abc') and blur the field to see a format error.
+        <UI.Text variant='labelMedium' color='label'>
+          For email, type an invalid address (e.g. 'abc') and blur the field to see a format error.
         </UI.Text>
 
-        <UI.Box mt={1}>
+        <UI.Box mv={1}>
           <UI.TextInput
             type='email'
             variant='outline'
@@ -97,7 +95,7 @@ const TextInputScreen: Screen.ScreenType = () => {
           />
         </UI.Box>
 
-        <UI.Box mt={2}>
+        <UI.Box mv={1}>
           <UI.TextInput
             type='password'
             variant='outline'
@@ -113,7 +111,7 @@ const TextInputScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>TextInput · search</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mv={1}>
           <UI.TextInput
             type='search'
             variant='flat'
@@ -129,7 +127,7 @@ const TextInputScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>TextInput · numeric & phone</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mv={1}>
           <UI.TextInput
             type='numeric'
             variant='outline'
@@ -140,7 +138,7 @@ const TextInputScreen: Screen.ScreenType = () => {
           />
         </UI.Box>
 
-        <UI.Box mt={2}>
+        <UI.Box mv={1}>
           <UI.TextInput
             type='phone'
             variant='outline'
@@ -156,7 +154,7 @@ const TextInputScreen: Screen.ScreenType = () => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>TextInput · disabled</UI.Text>
 
-        <UI.Box mt={2} mb={4}>
+        <UI.Box mv={1}>
           <UI.TextInput
             type='text'
             variant='flat'

@@ -123,6 +123,7 @@ const ListScreen: Screen.ScreenType = () => {
       </UI.Box>
       
       {/* Chips filter */}
+      <UI.Divider spacing={1} />
       <UI.Box p={1}>
         <ScrollView
           horizontal

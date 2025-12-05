@@ -85,12 +85,16 @@ const NestedOptionsScreen: Screen.ScreenType = () => {
       <UI.VerticalLayout constraint='scroll' padding={2}>
         {/* Header */}
         <UI.Text variant='bodyMedium'>
-          CheckOptions renders nested checkbox trees with parent/child propagation and indeterminate states.
+          A generic nested option tree with parent-child propagation and
+          indeterminate states with a given static tree structure schema.
         </UI.Text>
 
         {/* CheckOptions */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>CheckOptions</UI.Text>
+        <UI.Text variant='labelMedium' color='label'>
+          Checkbox-based UI built on the generic nested option tree.
+        </UI.Text>
 
         <UI.Box mt={2}>
           <UI.CheckOptions

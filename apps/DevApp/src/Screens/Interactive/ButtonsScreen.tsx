@@ -241,7 +241,7 @@ const ButtonScreen: Screen.ScreenType = () => {
         {/* TextButton · lightweight text-only button */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>TextButton</UI.Text>
-        <UI.Text variant='bodySmall'>
+        <UI.Text variant='labelMedium' color='label'>
           A text-forward button alternative. Unlike Button mode="text", which has a fixed
           visual style, TextButton fully inherits Text props.
         </UI.Text>
