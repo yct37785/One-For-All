@@ -73,6 +73,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
 
   const textOptions = [
     { value: screenRoutes.text, text: 'Text' },
+    { value: screenRoutes.textVariants, text: 'Highlight / Hyperlink' },
     { value: screenRoutes.icon, text: 'Icon' },
   ];
 

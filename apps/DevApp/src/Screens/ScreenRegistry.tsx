@@ -27,6 +27,7 @@ import SelectionsScreen from './Selections/SelectionsScreen';
 // text
 import IconScreen from './Text/IconScreen';
 import TextScreen from './Text/TextScreen';
+import TextVariantsScreen from './Text/TextVariantsScreen';
 // visuals
 import VisualsScreen from './Visuals/VisualsScreen';
 
@@ -51,6 +52,7 @@ export const screenRoutes = {
   selections: 'selections',
   icon: 'icon',
   text: 'text',
+  textVariants: 'textVariants',
   visuals: 'visuals',
 } as const;
 
@@ -75,5 +77,6 @@ export const screenRegistry: Screen.ScreenMap = {
   [screenRoutes.selections]: SelectionsScreen,
   [screenRoutes.icon]: IconScreen,
   [screenRoutes.text]: TextScreen,
+  [screenRoutes.textVariants]: TextVariantsScreen,
   [screenRoutes.visuals]: VisualsScreen,
 };
