@@ -37,11 +37,15 @@ export interface HyperlinkTextProps extends TextProps {
 export const HyperlinkText: React.FC<HyperlinkTextProps> = memo(
   ({
     onPress,
+    color = 'primary',
+    underline = true,
     children,
     ...rest
   }) => {
     const content = (
       <Text
+        color={color}
+        underline={underline}
         {...rest}
         {...hyperlinkProps}
       >
