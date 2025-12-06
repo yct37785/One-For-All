@@ -36,10 +36,10 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-# ignore everything under /apps except TemplateApp
+# ignore everything under /apps except DevApp
 /apps/*
-!/apps/TemplateApp
-!/apps/TemplateApp/**
+!/apps/DevApp
+!/apps/DevApp/**
 
-# exclude build folder (TemplateApp only, actual apps will track their build folders)
-apps/TemplateApp/android/
+# exclude build folder (DevApp only, actual apps will track their build folders)
+apps/DevApp/android/

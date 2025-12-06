@@ -1,0 +1,171 @@
+import React, { memo } from 'react';
+import { Screen, UI } from 'framework';
+
+/******************************************************************************************************************
+ * Box demo & usage guide
+ *
+ * This screen demonstrates how to use UI.Box as a layout-friendly container.
+ * - bgColor: string (background color)
+ * - flex: number
+ * - dir: 'row' | 'column'
+ * - align: alignItems
+ * - justify: justifyContent
+ * - self: alignSelf
+ * - p, m, ph, pv, pt, pr, pb, pl, mh, mv, mt, mr, mb, ml: PadSpacingValue (0–4)
+ *
+ * PadSpacingValue is a scaled spacing unit:
+ *  0 = none
+ *  1 = 1x base spacing
+ *  2 = 2x base spacing
+ *  3 = 3x base spacing
+ *  4 = 4x base spacing
+ ******************************************************************************************************************/
+const BoxScreen: Screen.ScreenType = () => {
+  return (
+    <Screen.ScreenLayout showTitle>
+      <UI.VerticalLayout constraint='scroll' padding={2}>
+
+        {/* Header */}
+        <UI.Text variant='bodyMedium'>
+          Box is a drawable container that wraps content and applies flex layout, alignment, and spacing. It
+          doesn't decide how siblings are arranged; instead, it acts as a flexible building block.
+        </UI.Text>
+
+        {/* Basic usage */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>Basic usage</UI.Text>
+
+        <UI.Text variant='labelMedium' color='label'>
+          Drop-in replacement of View.
+        </UI.Text>
+        <UI.Box bgColor='#2eb82e' p={1} m={1}>
+          <UI.Text color='surface'>Use Box like a View</UI.Text>
+        </UI.Box>
+
+        <UI.Text variant='labelMedium' color='label'>
+          As a tiny wrapper around a single element just to add spacing, without
+          changing layout flow.
+        </UI.Text>
+        <UI.Box m={1}>
+          <UI.Box bgColor='#e0f2f1' p={1}>
+            <UI.Text variant='labelSmall'>
+              This inner Box only adds padding and background around the text.
+            </UI.Text>
+          </UI.Box>
+        </UI.Box>
+
+        {/* Padding */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>Padding scale</UI.Text>
+
+        <UI.Box dir='row'>
+          <UI.Box bgColor='#eeeeee' p={0} m={1}>
+            <UI.Text variant='labelSmall'>p=0</UI.Text>
+          </UI.Box>
+          <UI.Box bgColor='#eeeeee' p={1} m={1}>
+            <UI.Text variant='labelSmall'>p=1</UI.Text>
+          </UI.Box>
+          <UI.Box bgColor='#eeeeee' p={2} m={1}>
+            <UI.Text variant='labelSmall'>p=2</UI.Text>
+          </UI.Box>
+          <UI.Box bgColor='#eeeeee' p={3} m={1}>
+            <UI.Text variant='labelSmall'>p=3</UI.Text>
+          </UI.Box>
+          <UI.Box bgColor='#eeeeee' p={4} m={1}>
+            <UI.Text variant='labelSmall'>p=4</UI.Text>
+          </UI.Box>
+        </UI.Box>
+
+        {/* Flex, direction, alignment */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>Flex, direction & alignment</UI.Text>
+
+        <UI.Text variant='labelMedium' color='label'>
+          Row layout with different flex values
+        </UI.Text>
+        <UI.Box dir='row' bgColor='#f0f0f0' p={1} mv={1}>
+          <UI.Box flex={1} bgColor='#9de923'>
+            <UI.Text variant='labelSmall'>flex=1</UI.Text>
+          </UI.Box>
+          <UI.Box flex={2} bgColor='#ffdd55' ml={1}>
+            <UI.Text variant='labelSmall'>flex=2</UI.Text>
+          </UI.Box>
+          <UI.Box flex={0} bgColor='#ff9999' ml={1}>
+            <UI.Text variant='labelSmall'>flex=0 (no grow)</UI.Text>
+          </UI.Box>
+        </UI.Box>
+
+        <UI.Text variant='labelMedium' color='label'>
+          Row · justify="space-between"
+        </UI.Text>
+        <UI.Box dir='row' bgColor='#ffe0b2' p={1} justify='space-between' mv={1}>
+          <UI.Text variant='labelSmall'>Item A</UI.Text>
+          <UI.Text variant='labelSmall'>Item B</UI.Text>
+          <UI.Text variant='labelSmall'>Item C</UI.Text>
+        </UI.Box>
+
+        <UI.Text variant='labelMedium' color='label'>
+          Column · justify="center" (vertical center) with fixed height
+        </UI.Text>
+        <UI.Box
+          dir='column'
+          justify='center'
+          bgColor='#e1f5fe'
+          p={1}
+          mv={1}
+          style={{ height: 120 }}
+        >
+          <UI.Text variant='labelSmall' color='primary'>
+            content is vertically centered
+          </UI.Text>
+        </UI.Box>
+
+        <UI.Text variant='labelMedium' color='label'>
+          Row · align="center" (cross-axis alignment)
+        </UI.Text>
+        <UI.Box
+          dir='row'
+          align='center'
+          bgColor='#f3e5f5'
+          p={1}
+          mv={1}
+          style={{ height: 80 }}
+        >
+          <UI.Box bgColor='#ce93d8' p={1}>
+            <UI.Text variant='labelSmall'>short</UI.Text>
+          </UI.Box>
+          <UI.Box bgColor='#ba68c8' p={2} ml={1}>
+            <UI.Text variant='labelSmall'>taller item</UI.Text>
+          </UI.Box>
+        </UI.Box>
+
+        {/* Self alignment */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>Self alignment</UI.Text>
+
+        <UI.Text variant='labelMedium' color='label'>
+          A child can control its own cross-axis alignment. This also fixes
+          cases where a component stretches full width by default, self lets it size to
+          content instead.
+        </UI.Text>
+
+        <UI.Box bgColor='#e0f7fa' p={1} mv={1} style={{ height: 140 }}>
+          <UI.Box bgColor='#4dd0e1' p={1} self='flex-start' mt={1}>
+            <UI.Text variant='labelSmall'>self="flex-start"</UI.Text>
+          </UI.Box>
+
+          <UI.Box bgColor='#26c6da' p={1} self='center' mt={1}>
+            <UI.Text variant='labelSmall'>self="center"</UI.Text>
+          </UI.Box>
+
+          <UI.Box bgColor='#00acc1' p={1} self='flex-end' mt={1}>
+            <UI.Text variant='labelSmall'>self="flex-end"</UI.Text>
+          </UI.Box>
+        </UI.Box>
+
+      </UI.VerticalLayout>
+    </Screen.ScreenLayout>
+  );
+};
+
+export default memo(BoxScreen);

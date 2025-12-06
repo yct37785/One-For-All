@@ -1,10 +1,12 @@
 // deps
 import 'react-native-get-random-values';
 import 'react-native-gesture-handler';
+// screen typing and layout
+import { ScreenMap } from '../Screen/Screen';
+import { ScreenLayoutProps, ScreenLayoutContext } from '../Screen/ScreenLayout';
 // core
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { View, StatusBar, Platform, LogBox } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 // UI
 import {
   Provider as PaperProvider,
@@ -14,7 +16,8 @@ import {
 } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 import * as NavigationBar from 'expo-navigation-bar';
-import * as SystemUI from 'expo-system-ui';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 // nav
 import {
   NavigationContainer,
@@ -23,19 +26,13 @@ import {
   ParamListBase
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// screen layout
-import { ScreenLayoutContext } from '../Screen/ScreenLayout';
-// data
-import { useLocalData, LocalDataProvider } from '../Managers/LocalDataManager';
+// data storage
+import { useLocalData, LocalDataProvider } from '../Manager/LocalDataManager';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
-// auth
-import { AuthProvider, useAuth } from '../Managers/Firebase/FirebaseAuthManager';
 // utils
-import { doLog } from '../Utils/General';
+import { doLog } from '../Util/General';
 import { logColors } from '../Const';
-// type
-import { RootProps, RootType } from './Root.types';
 
 LogBox.ignoreAllLogs();
 
@@ -54,6 +51,19 @@ const { LightTheme: NavLight, DarkTheme: NavDark } = adaptNavigationTheme({
 const Stack = createNativeStackNavigator<ParamListBase>();
 
 /******************************************************************************************************************
+ * Root component props.
+ *
+ * @property DEFAULT_SCREEN   - Initial route name for the stack navigator
+ * @property screenMap        - Mapping of route names to screen components
+ * @property defaultScreenLayoutProps   - app wide screen layout (AppBar left content etc)
+ ******************************************************************************************************************/
+export type RootProps = {
+  DEFAULT_SCREEN: string;
+  screenMap: ScreenMap;
+  defaultScreenLayoutProps: ScreenLayoutProps;
+};
+
+/******************************************************************************************************************
  * RootApp
  *
  * Single gate that:
@@ -64,30 +74,39 @@ const Stack = createNativeStackNavigator<ParamListBase>();
  * NOTE:
  *  - Hooks are always called in the same order; we avoid early returns before hooks.
  *  - We gate effect work with `if (!isLoaded) return;` and gate UI via conditional JSX.
+ *  - Put all providers here.
  ******************************************************************************************************************/
-const RootApp: RootType = ({ DEFAULT_SCREEN, screenMap, defaultScreenLayoutProps }) => {
-  const { isLoaded, getItem } = useLocalData();
+const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap, defaultScreenLayoutProps }) => {
+  const { getItem } = useLocalData();
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // derive a safe value even when not loaded yet (avoid conditional hooks)
-  const isDarkMode = isLoaded ? !!getItem<boolean>('isDarkMode') : false;
-
-  // pick theme
-  const paperTheme = isDarkMode ? MD3DarkTheme : MD3LightTheme;
-  const navTheme = isDarkMode ? NavDark : NavLight;
-
-  // nav bar config
+  /**
+   * Load isDarkMode from storage on mount.
+   */
   useEffect(() => {
+    (async () => {
+      const stored = await getItem<boolean>('isDarkMode');
+      setIsDarkMode(!!stored);
+    })();
+  }, [getItem]);
+
+  /**
+   * Nav and status bar config.
+   */
+  useEffect(() => {
+    StatusBar.setBarStyle(isDarkMode ? 'light-content' : 'dark-content', true);
     if (Platform.OS === 'android') {
-      // bottom navigation bar background + icon contrast
       NavigationBar.setButtonStyleAsync(isDarkMode ? 'light' : 'dark');
-      // optional: keep nav bar visible
+      // optional:
       // NavigationBar.setVisibilityAsync('visible');
+      // StatusBar.setBackgroundColor(navTheme.colors.background);
     }
-  }, [isDarkMode, navTheme.colors.background]);
+  }, [isDarkMode]);
 
-  // Firebase pulse check (once we have LocalData)
+  /**
+   * Firebase pulse check.
+   */
   useEffect(() => {
-    if (!isLoaded) return;
     try {
       const firebaseApp = getApp();
       const { projectId } = firebaseApp.options;
@@ -95,40 +114,29 @@ const RootApp: RootType = ({ DEFAULT_SCREEN, screenMap, defaultScreenLayoutProps
     } catch (err) {
       doLog('root', 'Firebase pulse check', `NOT ready (native config missing?): ${String(err)}`);
     }
-  }, [isLoaded]);
+  }, []);
 
-  // status bar icons based on theme (NavContainer handles bar colors)
-  useEffect(() => {
-    const bar = isDarkMode ? 'light-content' : 'dark-content';
-    StatusBar.setBarStyle(bar, true);
-    if (Platform.OS === 'android') {
-      // Optionally: StatusBar.setBackgroundColor could be set to navTheme.colors.background
-      // if using custom fullscreen layout
-    }
-  }, [isDarkMode]);
+  // pick theme
+  const paperTheme = isDarkMode ? MD3DarkTheme : MD3LightTheme;
+  const navTheme = isDarkMode ? NavDark : NavLight;
 
   return (
     <SafeAreaProvider>
-      <PaperProvider theme={paperTheme}>
-        <AuthProvider>
+      <KeyboardProvider>
+        <PaperProvider theme={paperTheme}>
           <MenuProvider>
-            {/* gate the rendered tree, not the hooks */}
-            {!isLoaded ? (
-              <View style={{ flex: 1 }} />
-            ) : (
-              <ScreenLayoutContext.Provider value={defaultScreenLayoutProps}>
-                <NavigationContainer theme={navTheme}>
-                  <Stack.Navigator initialRouteName={DEFAULT_SCREEN} screenOptions={{ headerShown: false }}>
-                    {Object.entries(screenMap).map(([name, Component]) => (
-                      <Stack.Screen name={name} key={name} component={Component as any} />
-                    ))}
-                  </Stack.Navigator>
-                </NavigationContainer>
-              </ScreenLayoutContext.Provider>
-            )}
+            <ScreenLayoutContext.Provider value={defaultScreenLayoutProps}>
+              <NavigationContainer theme={navTheme}>
+                <Stack.Navigator initialRouteName={DEFAULT_SCREEN} screenOptions={{ headerShown: false }}>
+                  {Object.entries(screenMap).map(([name, Component]) => (
+                    <Stack.Screen name={name} key={name} component={Component as any} />
+                  ))}
+                </Stack.Navigator>
+              </NavigationContainer>
+            </ScreenLayoutContext.Provider>
           </MenuProvider>
-        </AuthProvider>
-      </PaperProvider>
+        </PaperProvider>
+      </KeyboardProvider>
     </SafeAreaProvider>
   );
 };
