@@ -47,6 +47,7 @@ export type TextVariant =
  * @property bold?            - Bolded text
  * @property numberOfLines?   - Fixed num of lines if provided
  * @property underline?       - Underline the text
+ * @property onPress?         - Press handler for clickable text
  ******************************************************************************************************************/
 export interface TextProps {
   variant?: TextVariant;
@@ -56,6 +57,7 @@ export interface TextProps {
   bold?: boolean;
   numberOfLines?: number;
   underline?: boolean;
+  onPress?: () => void;
 }
 
 /******************************************************************************************************************
@@ -80,6 +82,7 @@ export const Text: React.FC<TextProps & { children?: string | ReactNode }> = mem
     bold,
     numberOfLines,
     underline = false,
+    onPress,
     children
   }) => {
     const theme = useTheme();
@@ -95,6 +98,7 @@ export const Text: React.FC<TextProps & { children?: string | ReactNode }> = mem
       <PaperText
         variant={variant}
         {...(numberOfLines !== undefined ? { numberOfLines } : {})}
+        onPress={onPress}
         style={[colorStyle, boldStyle, underline && styles.underline]}
       >
         {children}

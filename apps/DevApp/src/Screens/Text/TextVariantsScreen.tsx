@@ -7,10 +7,12 @@ import { Screen, UI } from 'framework';
  * This screen demonstrates specialized variants built on top of the base Text
  * component:
  * - HighlightText: emphasizes substrings that match a query
- * - HyperlinkText: dedicated hyperlink styling with press feedback
+ * - HyperlinkText: dedicated hyperlink styling that calls onPress when tapped
  ******************************************************************************************************************/
 const TextVariantsScreen: Screen.ScreenType = () => {
   const [query, setQuery] = useState('hero');
+  const [tosClicks, setTosClicks] = useState(0);
+  const [privacyClicks, setPrivacyClicks] = useState(0);
 
   return (
     <Screen.ScreenLayout showTitle>
@@ -77,29 +79,26 @@ const TextVariantsScreen: Screen.ScreenType = () => {
 
         <UI.Text variant='labelMedium' color='label'>
           A dedicated hyperlink component that always uses primary color +
-          underline and wraps the text with touch feedback when onPress is
-          provided.
+          underline and calls onPress when tapped.
         </UI.Text>
 
-        {/* Standalone link */}
-        <UI.Box mt={2} align='flex-start'>
-          <UI.HyperlinkText onPress={() => {}}>
-            Open terms of service
-          </UI.HyperlinkText>
-        </UI.Box>
-
-        {/* Inline links */}
         <UI.Box mt={2}>
           <UI.Text variant='bodySmall'>
             By continuing, you agree to our{' '}
-            <UI.HyperlinkText onPress={() => {}}>
+            <UI.HyperlinkText onPress={() => setTosClicks(c => c + 1)}>
               Terms of Service
             </UI.HyperlinkText>{' '}
             and{' '}
-            <UI.HyperlinkText onPress={() => {}}>
+            <UI.HyperlinkText onPress={() => setPrivacyClicks(c => c + 1)}>
               Privacy Policy
             </UI.HyperlinkText>
             .
+          </UI.Text>
+        </UI.Box>
+
+        <UI.Box mt={1}>
+          <UI.Text variant='labelSmall' color='label'>
+            Terms clicked: {tosClicks} · Privacy clicked: {privacyClicks}
           </UI.Text>
         </UI.Box>
 
