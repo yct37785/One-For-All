@@ -41,6 +41,10 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
     { value: screenRoutes.chip, text: 'Chip' },
     { value: screenRoutes.list, text: 'List' },
   ];
+  
+  const decoratorsOptions = [
+    { value: screenRoutes.decorators, text: 'Divider etc.' },
+  ];
 
   const inputOptions = [
     { value: screenRoutes.input, text: 'Input' },
@@ -77,10 +81,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
     { value: screenRoutes.icon, text: 'Icon' },
   ];
 
-  const visualsOptions = [
-    { value: screenRoutes.visuals, text: 'Avatar, Divider, etc.' },
-  ];
-
   /******************************************************************************************************************
    * Unified navigation handler
    ******************************************************************************************************************/
@@ -95,6 +95,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
     { text: 'Test', icon: 'flask' },
     { text: 'Container', icon: 'crop-square' },
     { text: 'Data', icon: 'view-list' },
+    { text: 'Decorators', icon: 'palette' },
     { text: 'Input', icon: 'form-textbox' },
     { text: 'Interactive', icon: 'gesture-tap' },
     { text: 'Layout', icon: 'view-grid-plus' },
@@ -103,7 +104,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
     { text: 'Options', icon: 'tune' },
     { text: 'Selections', icon: 'checkbox-multiple-marked' },
     { text: 'Text / Icon', icon: 'format-text' },
-    { text: 'Visuals', icon: 'palette' },
   ];
 
   return (
@@ -149,6 +149,14 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
           {/* Data */}
           <UI.MenuList
             options={dataOptions}
+            onSelect={handleSelect}
+            showDividers
+            align='center'
+          />
+
+          {/* Decorators */}
+          <UI.MenuList
+            options={decoratorsOptions}
             onSelect={handleSelect}
             showDividers
             align='center'
@@ -213,14 +221,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
           {/* Text */}
           <UI.MenuList
             options={textOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Visuals */}
-          <UI.MenuList
-            options={visualsOptions}
             onSelect={handleSelect}
             showDividers
             align='center'

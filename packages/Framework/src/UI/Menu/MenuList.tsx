@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
 import { MenuOption, MenuListItem } from './MenuListItem';
-import { Divider } from '../Visuals/Divider';
+import { Divider } from '../Decorators/Divider';
 
 /******************************************************************************************************************
  * MenuList props.

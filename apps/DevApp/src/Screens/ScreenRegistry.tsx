@@ -9,6 +9,8 @@ import TabsScreen from './Container/TabsScreen';
 import AvatarScreen from './Data/AvatarScreen';
 import ChipScreen from './Data/ChipScreen';
 import ListScreen from './Data/ListScreen';
+// decorators
+import DecoratorsScreen from './Decorators/DecoratorsScreen';
 // input
 import InputScreen from './Input/InputScreen';
 // interactive
@@ -28,8 +30,6 @@ import SelectionsScreen from './Selections/SelectionsScreen';
 import IconScreen from './Text/IconScreen';
 import TextScreen from './Text/TextScreen';
 import TextVariantsScreen from './Text/TextVariantsScreen';
-// visuals
-import VisualsScreen from './Visuals/VisualsScreen';
 
 /******************************************************************************************************************
  * Screen routes
@@ -42,6 +42,7 @@ export const screenRoutes = {
   avatar: 'avatar',
   chip: 'chip',
   list: 'list',
+  decorators: 'decorators',
   input: 'input',
   buttons: 'buttons',
   touchable: 'touchable',
@@ -53,7 +54,6 @@ export const screenRoutes = {
   icon: 'icon',
   text: 'text',
   textVariants: 'textVariants',
-  visuals: 'visuals',
 } as const;
 
 /******************************************************************************************************************
@@ -67,6 +67,7 @@ export const screenRegistry: Screen.ScreenMap = {
   [screenRoutes.avatar]: AvatarScreen,
   [screenRoutes.chip]: ChipScreen,
   [screenRoutes.list]: ListScreen,
+  [screenRoutes.decorators]: DecoratorsScreen,
   [screenRoutes.input]: InputScreen,
   [screenRoutes.buttons]: ButtonsScreen,
   [screenRoutes.touchable]: TouchableScreen,
@@ -78,5 +79,4 @@ export const screenRegistry: Screen.ScreenMap = {
   [screenRoutes.icon]: IconScreen,
   [screenRoutes.text]: TextScreen,
   [screenRoutes.textVariants]: TextVariantsScreen,
-  [screenRoutes.visuals]: VisualsScreen,
 };
