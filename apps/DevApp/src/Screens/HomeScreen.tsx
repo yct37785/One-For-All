@@ -3,7 +3,12 @@ import { Screen, Manager, UI } from 'framework';
 import { screenRoutes } from './ScreenRegistry';
 
 /******************************************************************************************************************
- * Home screen – UI demo hub
+ * Home screen – Framework showcase
+ *
+ * Entry point to:
+ * - UI foundations (Framework/src/UI)
+ * - Components (Framework/src/Component)
+ * - Functionalities / managers (Framework/src/Manager)
  ******************************************************************************************************************/
 const HomeScreen: Screen.ScreenType = ({ navigation }) => {
   const { user } = Manager.useAuth();
@@ -21,12 +26,19 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
       : `Signed in with Google\nuid: ${uid?.slice(0, 10)}...\nEmail: ${email}`;
 
   /******************************************************************************************************************
-   * Menu options per section (values are route names)
+   * Unified navigation handler
+   ******************************************************************************************************************/
+  const handleSelect = (routeName: string) => {
+    navigation.navigate(routeName, { paramText: 'hello from home' });
+  };
+
+  /******************************************************************************************************************
+   * UI section (Framework/src/UI)
    ******************************************************************************************************************/
   const testOptions = [
     {
       value: screenRoutes.testbed,
-      text: 'Testbed playground'
+      text: 'Testbed playground',
     },
   ];
 
@@ -41,7 +53,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
     { value: screenRoutes.chip, text: 'Chip' },
     { value: screenRoutes.list, text: 'List' },
   ];
-  
+
   const decoratorsOptions = [
     { value: screenRoutes.decorators, text: 'Divider etc.' },
   ];
@@ -81,17 +93,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
     { value: screenRoutes.icon, text: 'Icon' },
   ];
 
-  /******************************************************************************************************************
-   * Unified navigation handler
-   ******************************************************************************************************************/
-  const handleSelect = (routeName: string) => {
-    navigation.navigate(routeName, { paramText: 'hello from home' });
-  };
-
-  /******************************************************************************************************************
-   * Accordion headers
-   ******************************************************************************************************************/
-  const SECTIONS = [
+  const UI_SECTIONS = [
     { text: 'Test', icon: 'flask' },
     { text: 'Container', icon: 'crop-square' },
     { text: 'Data', icon: 'view-list' },
@@ -106,30 +108,15 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
     { text: 'Text / Icon', icon: 'format-text' },
   ];
 
-  return (
-    <Screen.ScreenLayout>
-      <UI.VerticalLayout constraint='scroll' gap={2}>
-        {/* Hero / intro */}
-        <UI.Box mb={1}>
-          <UI.Text variant='titleLarge'>UI Component Gallery</UI.Text>
-          <UI.Text variant='bodySmall'>
-            Browse all UI demo screens grouped by category. Tap any row to jump
-            straight into a live example.
+  const RenderUISection = memo(
+    () => (
+      <UI.Box>
+        <UI.Box p={1}>
+          <UI.Text variant='bodyMedium'>
+            Reusable UI primitive elements, including layout, text, inputs etc.
           </UI.Text>
         </UI.Box>
-
-        {/* Auth status card */}
-        <UI.Box mv={1}>
-          <UI.VerticalLayout bgColor='#F5F5F5' gap={1}>
-            <UI.Text variant='labelSmall' color='label' bold>
-              Session
-            </UI.Text>
-            <UI.Text variant='bodySmall'>{statusText}</UI.Text>
-          </UI.VerticalLayout>
-        </UI.Box>
-
-        {/* Sectioned navigation using Accordion + MenuList */}
-        <UI.AccordionContainer sections={SECTIONS}>
+        <UI.AccordionContainer sections={UI_SECTIONS}>
           {/* Test */}
           <UI.MenuList
             options={testOptions}
@@ -218,7 +205,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
             align='center'
           />
 
-          {/* Text */}
+          {/* Text / Icon */}
           <UI.MenuList
             options={textOptions}
             onSelect={handleSelect}
@@ -226,6 +213,89 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
             align='center'
           />
         </UI.AccordionContainer>
+      </UI.Box>
+    )
+  );
+
+  /******************************************************************************************************************
+   * Components section (Framework/src/Component)
+   ******************************************************************************************************************/
+  const RenderCompsSection = memo(
+    () => (
+      <UI.Box>
+        <UI.Box p={1}>
+          <UI.Text variant='bodyMedium'>
+            Higher-level building blocks composed from UI
+            primitives, such as chat interfaces, message lists etc.
+          </UI.Text>
+        </UI.Box>
+      </UI.Box>
+    )
+  );
+
+  /******************************************************************************************************************
+   * Functionalities section (Framework/src/Manager)
+   ******************************************************************************************************************/
+  const RenderFuncsSection = memo(
+    () => (
+      <UI.Box>
+        <UI.Box p={1}>
+          <UI.Text variant='bodyMedium'>
+            Managers and application flows like
+            LocalDataManager, authentication, or synchronization logic etc.
+          </UI.Text>
+        </UI.Box>
+      </UI.Box>
+    )
+  );
+
+  /******************************************************************************************************************
+   * Render
+   ******************************************************************************************************************/
+  return (
+    <Screen.ScreenLayout>
+      <UI.VerticalLayout constraint='scroll' gap={1}>
+        {/* Hero / intro */}
+        <UI.Text variant='titleLarge'>Framework Showcase</UI.Text>
+        <UI.Text variant='bodyMedium'>
+          Explore foundational UI elements, composite components, and
+          underlying managers. Expand a section, then pick a screen to jump
+          into a live demo.
+        </UI.Text>
+
+        {/* Auth status card */}
+        <UI.Box mv={1}>
+          <UI.VerticalLayout bgColor='#F5F5F5' gap={1}>
+            <UI.Text variant='labelSmall' color='label' bold>
+              Session
+            </UI.Text>
+            <UI.Text variant='bodySmall'>{statusText}</UI.Text>
+          </UI.VerticalLayout>
+        </UI.Box>
+
+        {/* UI section */}
+        <UI.CollapsibleContainer
+          text='UI Foundations'
+          textOpts={{ variant: 'titleMedium' }}
+        >
+          <RenderUISection />
+        </UI.CollapsibleContainer>
+
+        {/* Components section */}
+        <UI.CollapsibleContainer
+          text='Components'
+          textOpts={{ variant: 'titleMedium' }}
+        >
+          <RenderCompsSection />
+        </UI.CollapsibleContainer>
+
+        {/* Functionalities section */}
+        <UI.CollapsibleContainer
+          text='Functionalities'
+          textOpts={{ variant: 'titleMedium' }}
+        >
+          <RenderFuncsSection />
+        </UI.CollapsibleContainer>
 
       </UI.VerticalLayout>
     </Screen.ScreenLayout>
