@@ -35,66 +35,58 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
   /******************************************************************************************************************
    * UI section (Framework/src/UI)
    ******************************************************************************************************************/
-  const testOptions = [
-    {
-      value: screenRoutes.testbed,
-      text: 'Testbed playground',
-    },
-  ];
-
   const containerOptions = [
-    { value: screenRoutes.box, text: 'Box' },
-    { value: screenRoutes.collapsibles, text: 'Collapsibles' },
-    { value: screenRoutes.tabs, text: 'Tabs' },
+    { value: screenRoutes.ui_box, text: 'Box' },
+    { value: screenRoutes.ui_collapsibles, text: 'Collapsibles' },
+    { value: screenRoutes.ui_tabs, text: 'Tabs' },
   ];
 
   const dataOptions = [
-    { value: screenRoutes.avatar, text: 'Avatar' },
-    { value: screenRoutes.chip, text: 'Chip' },
-    { value: screenRoutes.list, text: 'List' },
+    { value: screenRoutes.ui_avatar, text: 'Avatar' },
+    { value: screenRoutes.ui_chip, text: 'Chip' },
+    { value: screenRoutes.ui_list, text: 'List' },
   ];
 
   const decoratorsOptions = [
-    { value: screenRoutes.decorators, text: 'Divider etc.' },
+    { value: screenRoutes.ui_decorators, text: 'Divider etc.' },
   ];
 
   const inputOptions = [
-    { value: screenRoutes.input, text: 'Input' },
+    { value: screenRoutes.ui_input, text: 'Input' },
   ];
 
   const interactiveOptions = [
-    { value: screenRoutes.buttons, text: 'Buttons' },
-    { value: screenRoutes.touchable, text: 'Touchable' },
+    { value: screenRoutes.ui_buttons, text: 'Buttons' },
+    { value: screenRoutes.ui_touchable, text: 'Touchable' },
   ];
 
   const layoutOptions = [
-    { value: screenRoutes.layouts, text: 'Layouts' },
+    { value: screenRoutes.ui_layouts, text: 'Layouts' },
   ];
 
   const menuOptions = [
-    { value: screenRoutes.menulist, text: 'Menu List' },
+    { value: screenRoutes.ui_menulist, text: 'Menu List' },
   ];
 
   const modalOptions = [
-    { value: screenRoutes.modals, text: 'Dialogs & popups' },
+    { value: screenRoutes.ui_modals, text: 'Dialogs & popups' },
   ];
 
   const optionsOptions = [
-    { value: screenRoutes.nestedOptions, text: 'Nested options' },
+    { value: screenRoutes.ui_nestedOptions, text: 'Nested options' },
   ];
 
   const selectionsOptions = [
-    { value: screenRoutes.selections, text: 'Pickers & selections' },
+    { value: screenRoutes.ui_selections, text: 'Pickers & selections' },
   ];
 
   const textOptions = [
-    { value: screenRoutes.text, text: 'Text' },
-    { value: screenRoutes.textVariants, text: 'Highlight / Hyperlink' },
-    { value: screenRoutes.icon, text: 'Icon' },
+    { value: screenRoutes.ui_text, text: 'Text' },
+    { value: screenRoutes.ui_textVariants, text: 'Highlight / Hyperlink' },
+    { value: screenRoutes.ui_icon, text: 'Icon' },
   ];
 
   const UI_SECTIONS = [
-    { text: 'Test', icon: 'flask' },
     { text: 'Container', icon: 'crop-square' },
     { text: 'Data', icon: 'view-list' },
     { text: 'Decorators', icon: 'palette' },
@@ -117,13 +109,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
           </UI.Text>
         </UI.Box>
         <UI.AccordionContainer sections={UI_SECTIONS}>
-          {/* Test */}
-          <UI.MenuList
-            options={testOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
 
           {/* Container */}
           <UI.MenuList
@@ -272,6 +257,18 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
             <UI.Text variant='bodySmall'>{statusText}</UI.Text>
           </UI.VerticalLayout>
         </UI.Box>
+
+        {/* Test */}
+        <UI.MenuList
+          options={[{
+            value: screenRoutes.testbed,
+            text: 'Testbed playground',
+            icon: 'flask'
+          }]}
+          onSelect={handleSelect}
+          showDividers
+          align='start'
+        />
 
         {/* UI section */}
         <UI.CollapsibleContainer
