@@ -3,7 +3,12 @@ import { Screen, Manager, UI } from 'framework';
 import { screenRoutes } from './ScreenRegistry';
 
 /******************************************************************************************************************
- * Home screen – UI demo hub
+ * Home screen – Framework showcase
+ *
+ * Entry point to:
+ * - UI foundations (Framework/src/UI)
+ * - Components (Framework/src/Component)
+ * - Functionalities / managers (Framework/src/Manager)
  ******************************************************************************************************************/
 const HomeScreen: Screen.ScreenType = ({ navigation }) => {
   const { user } = Manager.useAuth();
@@ -21,67 +26,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
       : `Signed in with Google\nuid: ${uid?.slice(0, 10)}...\nEmail: ${email}`;
 
   /******************************************************************************************************************
-   * Menu options per section (values are route names)
-   ******************************************************************************************************************/
-  const testOptions = [
-    {
-      value: screenRoutes.testbed,
-      text: 'Testbed playground'
-    },
-  ];
-
-  const containerOptions = [
-    { value: screenRoutes.box, text: 'Box' },
-    { value: screenRoutes.collapsibles, text: 'Collapsibles' },
-    { value: screenRoutes.tabs, text: 'Tabs' },
-  ];
-
-  const dataOptions = [
-    { value: screenRoutes.avatar, text: 'Avatar' },
-    { value: screenRoutes.chip, text: 'Chip' },
-    { value: screenRoutes.list, text: 'List' },
-  ];
-  
-  const decoratorsOptions = [
-    { value: screenRoutes.decorators, text: 'Divider etc.' },
-  ];
-
-  const inputOptions = [
-    { value: screenRoutes.input, text: 'Input' },
-  ];
-
-  const interactiveOptions = [
-    { value: screenRoutes.buttons, text: 'Buttons' },
-    { value: screenRoutes.touchable, text: 'Touchable' },
-  ];
-
-  const layoutOptions = [
-    { value: screenRoutes.layouts, text: 'Layouts' },
-  ];
-
-  const menuOptions = [
-    { value: screenRoutes.menulist, text: 'Menu List' },
-  ];
-
-  const modalOptions = [
-    { value: screenRoutes.modals, text: 'Dialogs & popups' },
-  ];
-
-  const optionsOptions = [
-    { value: screenRoutes.nestedOptions, text: 'Nested options' },
-  ];
-
-  const selectionsOptions = [
-    { value: screenRoutes.selections, text: 'Pickers & selections' },
-  ];
-
-  const textOptions = [
-    { value: screenRoutes.text, text: 'Text' },
-    { value: screenRoutes.textVariants, text: 'Highlight / Hyperlink' },
-    { value: screenRoutes.icon, text: 'Icon' },
-  ];
-
-  /******************************************************************************************************************
    * Unified navigation handler
    ******************************************************************************************************************/
   const handleSelect = (routeName: string) => {
@@ -89,34 +33,173 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
   };
 
   /******************************************************************************************************************
-   * Accordion headers
+   * UI section (Framework/src/UI)
    ******************************************************************************************************************/
-  const SECTIONS = [
-    { text: 'Test', icon: 'flask' },
-    { text: 'Container', icon: 'crop-square' },
-    { text: 'Data', icon: 'view-list' },
-    { text: 'Decorators', icon: 'palette' },
-    { text: 'Input', icon: 'form-textbox' },
-    { text: 'Interactive', icon: 'gesture-tap' },
-    { text: 'Layout', icon: 'view-grid-plus' },
-    { text: 'Menu / Navigation', icon: 'dots-vertical' },
-    { text: 'Modal', icon: 'message-draw' },
-    { text: 'Options', icon: 'tune' },
-    { text: 'Selections', icon: 'checkbox-multiple-marked' },
-    { text: 'Text / Icon', icon: 'format-text' },
+  const UI_containerOptions = [
+    { value: screenRoutes.ui_box, text: 'Box' },
+    { value: screenRoutes.ui_collapsibles, text: 'Collapsibles' },
+    { value: screenRoutes.ui_tabs, text: 'Tabs' },
   ];
 
-  return (
-    <Screen.ScreenLayout>
-      <UI.VerticalLayout constraint='scroll' gap={2}>
-        {/* Hero / intro */}
-        <UI.Box mb={1}>
-          <UI.Text variant='titleLarge'>UI Component Gallery</UI.Text>
-          <UI.Text variant='bodySmall'>
-            Browse all UI demo screens grouped by category. Tap any row to jump
-            straight into a live example.
+  const UI_dataOptions = [
+    { value: screenRoutes.ui_avatar, text: 'Avatar' },
+    { value: screenRoutes.ui_chip, text: 'Chip' },
+    { value: screenRoutes.ui_list, text: 'List' },
+  ];
+
+  const UI_decoratorsOptions = [
+    { value: screenRoutes.ui_decorators, text: 'Divider etc.' },
+  ];
+
+  const UI_inputOptions = [
+    { value: screenRoutes.ui_input, text: 'Input' },
+  ];
+
+  const UI_interactiveOptions = [
+    { value: screenRoutes.ui_buttons, text: 'Buttons' },
+    { value: screenRoutes.ui_touchable, text: 'Touchable' },
+  ];
+
+  const UI_layoutOptions = [
+    { value: screenRoutes.ui_layouts, text: 'Layouts' },
+  ];
+
+  const UI_menuOptions = [
+    { value: screenRoutes.ui_menulist, text: 'Menu List' },
+  ];
+
+  const UI_modalOptions = [
+    { value: screenRoutes.ui_modals, text: 'Dialogs & popups' },
+  ];
+
+  const UI_optionsOptions = [
+    { value: screenRoutes.ui_nestedOptions, text: 'Nested options' },
+  ];
+
+  const UI_selectionsOptions = [
+    { value: screenRoutes.ui_selections, text: 'Pickers & selections' },
+  ];
+
+  const UI_textOptions = [
+    { value: screenRoutes.ui_text, text: 'Text' },
+    { value: screenRoutes.ui_textVariants, text: 'Highlight / Hyperlink' },
+    { value: screenRoutes.ui_icon, text: 'Icon' },
+  ];
+
+  /******************************************************************************************************************
+   * UI sections + mapped options
+   ******************************************************************************************************************/
+  const UI_SECTION_CONFIG = [
+    { header: { text: 'Container',      icon: 'crop-square' },                 options: UI_containerOptions },
+    { header: { text: 'Data',           icon: 'view-list' },                   options: UI_dataOptions },
+    { header: { text: 'Decorators',     icon: 'palette' },                     options: UI_decoratorsOptions },
+    { header: { text: 'Input',          icon: 'form-textbox' },                options: UI_inputOptions },
+    { header: { text: 'Interactive',    icon: 'gesture-tap' },                 options: UI_interactiveOptions },
+    { header: { text: 'Layout',         icon: 'view-grid-plus' },              options: UI_layoutOptions },
+    { header: { text: 'Menu / Navigation', icon: 'dots-vertical' },            options: UI_menuOptions },
+    { header: { text: 'Modal',          icon: 'message-draw' },                options: UI_modalOptions },
+    { header: { text: 'Options',        icon: 'tune' },                        options: UI_optionsOptions },
+    { header: { text: 'Selections',     icon: 'checkbox-multiple-marked' },    options: UI_selectionsOptions },
+    { header: { text: 'Text / Icon',    icon: 'format-text' },                 options: UI_textOptions },
+  ];
+
+  const UI_SECTIONS = UI_SECTION_CONFIG.map(s => s.header);
+
+  const RenderUISection = memo(
+    () => (
+      <UI.Box>
+        <UI.Box p={1}>
+          <UI.Text variant='bodyMedium'>
+            Reusable UI primitive elements, including layout, text, inputs etc.
           </UI.Text>
         </UI.Box>
+
+        <UI.AccordionContainer sections={UI_SECTIONS}>
+          {UI_SECTION_CONFIG.map((section, idx) => (
+            <UI.MenuList
+              key={section.header.text}
+              options={section.options}
+              onSelect={handleSelect}
+              showDividers
+              align='center'
+            />
+          ))}
+        </UI.AccordionContainer>
+      </UI.Box>
+    )
+  );
+
+  /******************************************************************************************************************
+   * Components section (Framework/src/Component)
+   ******************************************************************************************************************/
+  const RenderCompsSection = memo(
+    () => (
+      <UI.Box>
+        <UI.Box p={1}>
+          <UI.Text variant='bodyMedium'>
+            Higher-level building blocks composed from UI
+            primitives, such as chat interfaces, message lists etc.
+          </UI.Text>
+        </UI.Box>
+      </UI.Box>
+    )
+  );
+
+  /******************************************************************************************************************
+   * Functionalities section (Framework/src/Manager)
+   ******************************************************************************************************************/
+  const localDataOptions = [
+    { value: screenRoutes.f_localData, text: 'Local Data Manager' },
+  ];
+
+  const firebaseOptions = [
+    { value: screenRoutes.ui_avatar, text: 'Placeholder' },
+  ];
+
+  const FUNC_SECTION_CONFIG = [
+    { header: { text: 'Local Data', icon: 'database' },   options: localDataOptions },
+    { header: { text: 'Firebase',   icon: 'cloud-sync' }, options: firebaseOptions },
+  ];
+
+  const FUNC_SECTIONS = FUNC_SECTION_CONFIG.map(s => s.header);
+
+  const RenderFuncsSection = memo(
+    () => (
+      <UI.Box>
+        <UI.Box p={1}>
+          <UI.Text variant='bodyMedium'>
+            Managers and application flows like data storage, authentication, or synchronization logic etc.
+          </UI.Text>
+        </UI.Box>
+
+        <UI.AccordionContainer sections={FUNC_SECTIONS}>
+          {FUNC_SECTION_CONFIG.map(section => (
+            <UI.MenuList
+              key={section.header.text}
+              options={section.options}
+              onSelect={handleSelect}
+              showDividers
+              align='center'
+            />
+          ))}
+        </UI.AccordionContainer>
+      </UI.Box>
+    )
+  );
+
+  /******************************************************************************************************************
+   * Render
+   ******************************************************************************************************************/
+  return (
+    <Screen.ScreenLayout>
+      <UI.VerticalLayout constraint='scroll' gap={1}>
+        {/* Hero / intro */}
+        <UI.Text variant='titleLarge'>Framework Showcase</UI.Text>
+        <UI.Text variant='bodyMedium'>
+          Explore foundational UI elements, composite components, and
+          underlying managers. Expand a section, then pick a screen to jump
+          into a live demo.
+        </UI.Text>
 
         {/* Auth status card */}
         <UI.Box mv={1}>
@@ -128,104 +211,41 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
           </UI.VerticalLayout>
         </UI.Box>
 
-        {/* Sectioned navigation using Accordion + MenuList */}
-        <UI.AccordionContainer sections={SECTIONS}>
-          {/* Test */}
-          <UI.MenuList
-            options={testOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
+        {/* Test */}
+        <UI.MenuList
+          options={[{
+            value: screenRoutes.testbed,
+            text: 'Testbed playground',
+            icon: 'flask'
+          }]}
+          onSelect={handleSelect}
+          showDividers
+          align='start'
+        />
 
-          {/* Container */}
-          <UI.MenuList
-            options={containerOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
+        {/* UI section */}
+        <UI.CollapsibleContainer
+          text='UI Foundations'
+          textOpts={{ variant: 'titleMedium' }}
+        >
+          <RenderUISection />
+        </UI.CollapsibleContainer>
 
-          {/* Data */}
-          <UI.MenuList
-            options={dataOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
+        {/* Components section */}
+        <UI.CollapsibleContainer
+          text='Components'
+          textOpts={{ variant: 'titleMedium' }}
+        >
+          <RenderCompsSection />
+        </UI.CollapsibleContainer>
 
-          {/* Decorators */}
-          <UI.MenuList
-            options={decoratorsOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Input */}
-          <UI.MenuList
-            options={inputOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Interactive */}
-          <UI.MenuList
-            options={interactiveOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Layout */}
-          <UI.MenuList
-            options={layoutOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Menu / Navigation */}
-          <UI.MenuList
-            options={menuOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Modal */}
-          <UI.MenuList
-            options={modalOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Options */}
-          <UI.MenuList
-            options={optionsOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Selections */}
-          <UI.MenuList
-            options={selectionsOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Text */}
-          <UI.MenuList
-            options={textOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-        </UI.AccordionContainer>
+        {/* Functionalities section */}
+        <UI.CollapsibleContainer
+          text='Functionalities'
+          textOpts={{ variant: 'titleMedium' }}
+        >
+          <RenderFuncsSection />
+        </UI.CollapsibleContainer>
 
       </UI.VerticalLayout>
     </Screen.ScreenLayout>

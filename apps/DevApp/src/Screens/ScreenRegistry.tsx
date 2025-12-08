@@ -1,59 +1,67 @@
 import { Screen } from 'framework';
 // test bed
 import TestbedScreen from './TestbedScreen';
+/**
+ * UI
+ */
 // container
-import BoxScreen from './Container/BoxScreen';
-import CollapsiblesScreen from './Container/CollapsiblesScreen';
-import TabsScreen from './Container/TabsScreen';
+import BoxScreen from './UI/Container/BoxScreen';
+import CollapsiblesScreen from './UI/Container/CollapsiblesScreen';
+import TabsScreen from './UI/Container/TabsScreen';
 // data
-import AvatarScreen from './Data/AvatarScreen';
-import ChipScreen from './Data/ChipScreen';
-import ListScreen from './Data/ListScreen';
+import AvatarScreen from './UI/Data/AvatarScreen';
+import ChipScreen from './UI/Data/ChipScreen';
+import ListScreen from './UI/Data/ListScreen';
 // decorators
-import DecoratorsScreen from './Decorators/DecoratorsScreen';
+import DecoratorsScreen from './UI/Decorators/DecoratorsScreen';
 // input
-import InputScreen from './Input/InputScreen';
+import InputScreen from './UI/Input/InputScreen';
 // interactive
-import ButtonsScreen from './Interactive/ButtonsScreen';
-import TouchableScreen from './Interactive/TouchableScreen';
+import ButtonsScreen from './UI/Interactive/ButtonsScreen';
+import TouchableScreen from './UI/Interactive/TouchableScreen';
 // layout
-import LayoutsScreen from './Layout/LayoutsScreen';
+import LayoutsScreen from './UI/Layout/LayoutsScreen';
 // menu
-import MenuListScreen from './Menu/MenuListScreen';
+import MenuListScreen from './UI/Menu/MenuListScreen';
 // modal
-import ModalsScreen from './Modal/ModalsScreen';
+import ModalsScreen from './UI/Modal/ModalsScreen';
 // options
-import NestedOptionsScreen from './Options/NestedOptionsScreen';
+import NestedOptionsScreen from './UI/Options/NestedOptionsScreen';
 // selections
-import SelectionsScreen from './Selections/SelectionsScreen';
+import SelectionsScreen from './UI/Selections/SelectionsScreen';
 // text
-import IconScreen from './Text/IconScreen';
-import TextScreen from './Text/TextScreen';
-import TextVariantsScreen from './Text/TextVariantsScreen';
+import IconScreen from './UI/Text/IconScreen';
+import TextScreen from './UI/Text/TextScreen';
+import TextVariantsScreen from './UI/Text/TextVariantsScreen';
+/**
+ * Functionality
+ */
+import LocalDataManagerScreen from './Functionality/LocalDataManagerScreen';
 
 /******************************************************************************************************************
  * Screen routes
  ******************************************************************************************************************/
 export const screenRoutes = {
   testbed: 'testbed',
-  box: 'box',
-  collapsibles: 'collapsibles',
-  tabs: 'tabs',
-  avatar: 'avatar',
-  chip: 'chip',
-  list: 'list',
-  decorators: 'decorators',
-  input: 'input',
-  buttons: 'buttons',
-  touchable: 'touchable',
-  layouts: 'layouts',
-  menulist: 'menulist',
-  modals: 'modals',
-  nestedOptions: 'nestedOptions',
-  selections: 'selections',
-  icon: 'icon',
-  text: 'text',
-  textVariants: 'textVariants',
+  ui_box: 'ui_box',
+  ui_collapsibles: 'ui_collapsibles',
+  ui_tabs: 'ui_tabs',
+  ui_avatar: 'ui_avatar',
+  ui_chip: 'ui_chip',
+  ui_list: 'ui_list',
+  ui_decorators: 'ui_decorators',
+  ui_input: 'ui_input',
+  ui_buttons: 'ui_buttons',
+  ui_touchable: 'ui_touchable',
+  ui_layouts: 'ui_layouts',
+  ui_menulist: 'ui_menulist',
+  ui_modals: 'ui_modals',
+  ui_nestedOptions: 'ui_nestedOptions',
+  ui_selections: 'ui_selections',
+  ui_icon: 'ui_icon',
+  ui_text: 'ui_text',
+  ui_textVariants: 'ui_textVariants',
+  f_localData: 'f_localData',
 } as const;
 
 /******************************************************************************************************************
@@ -61,22 +69,23 @@ export const screenRoutes = {
  ******************************************************************************************************************/
 export const screenRegistry: Screen.ScreenMap = {
   [screenRoutes.testbed]: TestbedScreen,
-  [screenRoutes.box]: BoxScreen,
-  [screenRoutes.collapsibles]: CollapsiblesScreen,
-  [screenRoutes.tabs]: TabsScreen,
-  [screenRoutes.avatar]: AvatarScreen,
-  [screenRoutes.chip]: ChipScreen,
-  [screenRoutes.list]: ListScreen,
-  [screenRoutes.decorators]: DecoratorsScreen,
-  [screenRoutes.input]: InputScreen,
-  [screenRoutes.buttons]: ButtonsScreen,
-  [screenRoutes.touchable]: TouchableScreen,
-  [screenRoutes.layouts]: LayoutsScreen,
-  [screenRoutes.menulist]: MenuListScreen,
-  [screenRoutes.modals]: ModalsScreen,
-  [screenRoutes.nestedOptions]: NestedOptionsScreen,
-  [screenRoutes.selections]: SelectionsScreen,
-  [screenRoutes.icon]: IconScreen,
-  [screenRoutes.text]: TextScreen,
-  [screenRoutes.textVariants]: TextVariantsScreen,
+  [screenRoutes.ui_box]: BoxScreen,
+  [screenRoutes.ui_collapsibles]: CollapsiblesScreen,
+  [screenRoutes.ui_tabs]: TabsScreen,
+  [screenRoutes.ui_avatar]: AvatarScreen,
+  [screenRoutes.ui_chip]: ChipScreen,
+  [screenRoutes.ui_list]: ListScreen,
+  [screenRoutes.ui_decorators]: DecoratorsScreen,
+  [screenRoutes.ui_input]: InputScreen,
+  [screenRoutes.ui_buttons]: ButtonsScreen,
+  [screenRoutes.ui_touchable]: TouchableScreen,
+  [screenRoutes.ui_layouts]: LayoutsScreen,
+  [screenRoutes.ui_menulist]: MenuListScreen,
+  [screenRoutes.ui_modals]: ModalsScreen,
+  [screenRoutes.ui_nestedOptions]: NestedOptionsScreen,
+  [screenRoutes.ui_selections]: SelectionsScreen,
+  [screenRoutes.ui_icon]: IconScreen,
+  [screenRoutes.ui_text]: TextScreen,
+  [screenRoutes.ui_textVariants]: TextVariantsScreen,
+  [screenRoutes.f_localData]: LocalDataManagerScreen,
 };
