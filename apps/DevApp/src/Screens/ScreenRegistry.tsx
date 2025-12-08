@@ -1,6 +1,9 @@
 import { Screen } from 'framework';
 // test bed
 import TestbedScreen from './TestbedScreen';
+/**
+ * UI
+ */
 // container
 import BoxScreen from './UI/Container/BoxScreen';
 import CollapsiblesScreen from './UI/Container/CollapsiblesScreen';
@@ -30,6 +33,10 @@ import SelectionsScreen from './UI/Selections/SelectionsScreen';
 import IconScreen from './UI/Text/IconScreen';
 import TextScreen from './UI/Text/TextScreen';
 import TextVariantsScreen from './UI/Text/TextVariantsScreen';
+/**
+ * Functionality
+ */
+import LocalDataManagerScreen from './Functionality/LocalDataManagerScreen';
 
 /******************************************************************************************************************
  * Screen routes
@@ -54,6 +61,7 @@ export const screenRoutes = {
   ui_icon: 'icon',
   ui_text: 'text',
   ui_textVariants: 'textVariants',
+  f_localData: 'localData',
 } as const;
 
 /******************************************************************************************************************
@@ -79,4 +87,5 @@ export const screenRegistry: Screen.ScreenMap = {
   [screenRoutes.ui_icon]: IconScreen,
   [screenRoutes.ui_text]: TextScreen,
   [screenRoutes.ui_textVariants]: TextVariantsScreen,
+  [screenRoutes.f_localData]: LocalDataManagerScreen,
 };

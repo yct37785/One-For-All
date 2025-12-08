@@ -221,15 +221,45 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
   /******************************************************************************************************************
    * Functionalities section (Framework/src/Manager)
    ******************************************************************************************************************/
+  const localDataOptions = [
+    { value: screenRoutes.f_localData, text: 'Local Data Manager' },
+  ];
+
+  const firebaseOptions = [
+    { value: screenRoutes.ui_avatar, text: 'Placeholder' },
+  ];
+
+  const FUNC_SECTIONS = [
+    { text: 'Local Data', icon: 'database' },
+    { text: 'Firebase', icon: 'cloud-sync' },
+  ];
+
   const RenderFuncsSection = memo(
     () => (
       <UI.Box>
         <UI.Box p={1}>
           <UI.Text variant='bodyMedium'>
-            Managers and application flows like
-            LocalDataManager, authentication, or synchronization logic etc.
+            Managers and application flows like data storage, authentication, or synchronization logic etc.
           </UI.Text>
         </UI.Box>
+        <UI.AccordionContainer sections={FUNC_SECTIONS}>
+
+          {/* Local data */}
+          <UI.MenuList
+            options={localDataOptions}
+            onSelect={handleSelect}
+            showDividers
+            align='center'
+          />
+
+          {/* Firebase */}
+          <UI.MenuList
+            options={firebaseOptions}
+            onSelect={handleSelect}
+            showDividers
+            align='center'
+          />
+        </UI.AccordionContainer>
       </UI.Box>
     )
   );
