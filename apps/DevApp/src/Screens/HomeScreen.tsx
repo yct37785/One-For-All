@@ -86,19 +86,24 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
     { value: screenRoutes.ui_icon, text: 'Icon' },
   ];
 
-  const UI_SECTIONS = [
-    { text: 'Container', icon: 'crop-square' },
-    { text: 'Data', icon: 'view-list' },
-    { text: 'Decorators', icon: 'palette' },
-    { text: 'Input', icon: 'form-textbox' },
-    { text: 'Interactive', icon: 'gesture-tap' },
-    { text: 'Layout', icon: 'view-grid-plus' },
-    { text: 'Menu / Navigation', icon: 'dots-vertical' },
-    { text: 'Modal', icon: 'message-draw' },
-    { text: 'Options', icon: 'tune' },
-    { text: 'Selections', icon: 'checkbox-multiple-marked' },
-    { text: 'Text / Icon', icon: 'format-text' },
+  /******************************************************************************************************************
+   * UI sections + mapped options
+   ******************************************************************************************************************/
+  const UI_SECTION_CONFIG = [
+    { header: { text: 'Container',      icon: 'crop-square' },                 options: UI_containerOptions },
+    { header: { text: 'Data',           icon: 'view-list' },                   options: UI_dataOptions },
+    { header: { text: 'Decorators',     icon: 'palette' },                     options: UI_decoratorsOptions },
+    { header: { text: 'Input',          icon: 'form-textbox' },                options: UI_inputOptions },
+    { header: { text: 'Interactive',    icon: 'gesture-tap' },                 options: UI_interactiveOptions },
+    { header: { text: 'Layout',         icon: 'view-grid-plus' },              options: UI_layoutOptions },
+    { header: { text: 'Menu / Navigation', icon: 'dots-vertical' },            options: UI_menuOptions },
+    { header: { text: 'Modal',          icon: 'message-draw' },                options: UI_modalOptions },
+    { header: { text: 'Options',        icon: 'tune' },                        options: UI_optionsOptions },
+    { header: { text: 'Selections',     icon: 'checkbox-multiple-marked' },    options: UI_selectionsOptions },
+    { header: { text: 'Text / Icon',    icon: 'format-text' },                 options: UI_textOptions },
   ];
+
+  const UI_SECTIONS = UI_SECTION_CONFIG.map(s => s.header);
 
   const RenderUISection = memo(
     () => (
@@ -108,95 +113,17 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
             Reusable UI primitive elements, including layout, text, inputs etc.
           </UI.Text>
         </UI.Box>
+
         <UI.AccordionContainer sections={UI_SECTIONS}>
-
-          {/* Container */}
-          <UI.MenuList
-            options={UI_containerOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Data */}
-          <UI.MenuList
-            options={UI_dataOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Decorators */}
-          <UI.MenuList
-            options={UI_decoratorsOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Input */}
-          <UI.MenuList
-            options={UI_inputOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Interactive */}
-          <UI.MenuList
-            options={UI_interactiveOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Layout */}
-          <UI.MenuList
-            options={UI_layoutOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Menu / Navigation */}
-          <UI.MenuList
-            options={UI_menuOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Modal */}
-          <UI.MenuList
-            options={UI_modalOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Options */}
-          <UI.MenuList
-            options={UI_optionsOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Selections */}
-          <UI.MenuList
-            options={UI_selectionsOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Text / Icon */}
-          <UI.MenuList
-            options={UI_textOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
+          {UI_SECTION_CONFIG.map((section, idx) => (
+            <UI.MenuList
+              key={section.header.text}
+              options={section.options}
+              onSelect={handleSelect}
+              showDividers
+              align='center'
+            />
+          ))}
         </UI.AccordionContainer>
       </UI.Box>
     )
@@ -229,10 +156,12 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
     { value: screenRoutes.ui_avatar, text: 'Placeholder' },
   ];
 
-  const FUNC_SECTIONS = [
-    { text: 'Local Data', icon: 'database' },
-    { text: 'Firebase', icon: 'cloud-sync' },
+  const FUNC_SECTION_CONFIG = [
+    { header: { text: 'Local Data', icon: 'database' },   options: localDataOptions },
+    { header: { text: 'Firebase',   icon: 'cloud-sync' }, options: firebaseOptions },
   ];
+
+  const FUNC_SECTIONS = FUNC_SECTION_CONFIG.map(s => s.header);
 
   const RenderFuncsSection = memo(
     () => (
@@ -242,23 +171,17 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
             Managers and application flows like data storage, authentication, or synchronization logic etc.
           </UI.Text>
         </UI.Box>
+
         <UI.AccordionContainer sections={FUNC_SECTIONS}>
-
-          {/* Local data */}
-          <UI.MenuList
-            options={localDataOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
-
-          {/* Firebase */}
-          <UI.MenuList
-            options={firebaseOptions}
-            onSelect={handleSelect}
-            showDividers
-            align='center'
-          />
+          {FUNC_SECTION_CONFIG.map(section => (
+            <UI.MenuList
+              key={section.header.text}
+              options={section.options}
+              onSelect={handleSelect}
+              showDividers
+              align='center'
+            />
+          ))}
         </UI.AccordionContainer>
       </UI.Box>
     )
