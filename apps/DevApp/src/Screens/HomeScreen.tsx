@@ -35,52 +35,52 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
   /******************************************************************************************************************
    * UI section (Framework/src/UI)
    ******************************************************************************************************************/
-  const containerOptions = [
+  const UI_containerOptions = [
     { value: screenRoutes.ui_box, text: 'Box' },
     { value: screenRoutes.ui_collapsibles, text: 'Collapsibles' },
     { value: screenRoutes.ui_tabs, text: 'Tabs' },
   ];
 
-  const dataOptions = [
+  const UI_dataOptions = [
     { value: screenRoutes.ui_avatar, text: 'Avatar' },
     { value: screenRoutes.ui_chip, text: 'Chip' },
     { value: screenRoutes.ui_list, text: 'List' },
   ];
 
-  const decoratorsOptions = [
+  const UI_decoratorsOptions = [
     { value: screenRoutes.ui_decorators, text: 'Divider etc.' },
   ];
 
-  const inputOptions = [
+  const UI_inputOptions = [
     { value: screenRoutes.ui_input, text: 'Input' },
   ];
 
-  const interactiveOptions = [
+  const UI_interactiveOptions = [
     { value: screenRoutes.ui_buttons, text: 'Buttons' },
     { value: screenRoutes.ui_touchable, text: 'Touchable' },
   ];
 
-  const layoutOptions = [
+  const UI_layoutOptions = [
     { value: screenRoutes.ui_layouts, text: 'Layouts' },
   ];
 
-  const menuOptions = [
+  const UI_menuOptions = [
     { value: screenRoutes.ui_menulist, text: 'Menu List' },
   ];
 
-  const modalOptions = [
+  const UI_modalOptions = [
     { value: screenRoutes.ui_modals, text: 'Dialogs & popups' },
   ];
 
-  const optionsOptions = [
+  const UI_optionsOptions = [
     { value: screenRoutes.ui_nestedOptions, text: 'Nested options' },
   ];
 
-  const selectionsOptions = [
+  const UI_selectionsOptions = [
     { value: screenRoutes.ui_selections, text: 'Pickers & selections' },
   ];
 
-  const textOptions = [
+  const UI_textOptions = [
     { value: screenRoutes.ui_text, text: 'Text' },
     { value: screenRoutes.ui_textVariants, text: 'Highlight / Hyperlink' },
     { value: screenRoutes.ui_icon, text: 'Icon' },
@@ -112,7 +112,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
 
           {/* Container */}
           <UI.MenuList
-            options={containerOptions}
+            options={UI_containerOptions}
             onSelect={handleSelect}
             showDividers
             align='center'
@@ -120,7 +120,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
 
           {/* Data */}
           <UI.MenuList
-            options={dataOptions}
+            options={UI_dataOptions}
             onSelect={handleSelect}
             showDividers
             align='center'
@@ -128,7 +128,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
 
           {/* Decorators */}
           <UI.MenuList
-            options={decoratorsOptions}
+            options={UI_decoratorsOptions}
             onSelect={handleSelect}
             showDividers
             align='center'
@@ -136,7 +136,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
 
           {/* Input */}
           <UI.MenuList
-            options={inputOptions}
+            options={UI_inputOptions}
             onSelect={handleSelect}
             showDividers
             align='center'
@@ -144,7 +144,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
 
           {/* Interactive */}
           <UI.MenuList
-            options={interactiveOptions}
+            options={UI_interactiveOptions}
             onSelect={handleSelect}
             showDividers
             align='center'
@@ -152,7 +152,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
 
           {/* Layout */}
           <UI.MenuList
-            options={layoutOptions}
+            options={UI_layoutOptions}
             onSelect={handleSelect}
             showDividers
             align='center'
@@ -160,7 +160,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
 
           {/* Menu / Navigation */}
           <UI.MenuList
-            options={menuOptions}
+            options={UI_menuOptions}
             onSelect={handleSelect}
             showDividers
             align='center'
@@ -168,7 +168,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
 
           {/* Modal */}
           <UI.MenuList
-            options={modalOptions}
+            options={UI_modalOptions}
             onSelect={handleSelect}
             showDividers
             align='center'
@@ -176,7 +176,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
 
           {/* Options */}
           <UI.MenuList
-            options={optionsOptions}
+            options={UI_optionsOptions}
             onSelect={handleSelect}
             showDividers
             align='center'
@@ -184,7 +184,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
 
           {/* Selections */}
           <UI.MenuList
-            options={selectionsOptions}
+            options={UI_selectionsOptions}
             onSelect={handleSelect}
             showDividers
             align='center'
@@ -192,7 +192,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
 
           {/* Text / Icon */}
           <UI.MenuList
-            options={textOptions}
+            options={UI_textOptions}
             onSelect={handleSelect}
             showDividers
             align='center'
