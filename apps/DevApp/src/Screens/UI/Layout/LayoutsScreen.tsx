@@ -38,7 +38,7 @@ const BlockBox: React.FC<{
  * - gap spacing
  * - Simple nested layouts for app-like structure
  ******************************************************************************************************************/
-const LayoutScreen: Screen.ScreenType = () => {
+const LayoutScreen: Screen.ScreenType = ({}) => {
   return (
     <Screen.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>

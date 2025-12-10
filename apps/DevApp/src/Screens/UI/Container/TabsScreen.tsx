@@ -53,7 +53,7 @@ const BottomSecondTab = () => (
   </UI.Box>
 );
 
-const TabsScreen: Screen.ScreenType = () => {
+const TabsScreen: Screen.ScreenType = ({}) => {
   // controlled tab indices for each example
   const [basicIndex, setBasicIndex] = useState(0);
   const [iconIndex, setIconIndex] = useState(0);

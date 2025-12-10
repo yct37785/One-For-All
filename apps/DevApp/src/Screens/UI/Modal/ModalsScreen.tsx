@@ -9,7 +9,7 @@ import { MenuOption } from 'react-native-popup-menu';
  * - UI.Dialog: focused modal surfaces for confirmation and decisions.
  * - UI.Popup: contextual floating menus triggered by a button or icon.
  ******************************************************************************************************************/
-const ModalsScreen: Screen.ScreenType = () => {
+const ModalsScreen: Screen.ScreenType = ({}) => {
   const [basicDialogVisible, setBasicDialogVisible] = useState(false);
   const [customDialogVisible, setCustomDialogVisible] = useState(false);
   const [dismissDialogVisible, setDismissDialogVisible] = useState(false);

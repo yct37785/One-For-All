@@ -11,7 +11,7 @@ import { Screen, UI } from 'framework';
  * - Bold and underline helpers
  * - Truncation with numberOfLines
  ******************************************************************************************************************/
-const TextScreen: Screen.ScreenType = () => {
+const TextScreen: Screen.ScreenType = ({}) => {
   return (
     <Screen.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>

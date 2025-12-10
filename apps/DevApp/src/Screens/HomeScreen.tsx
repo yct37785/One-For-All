@@ -10,7 +10,7 @@ import { screenRoutes } from './ScreenRegistry';
  * - Components (Framework/src/Component)
  * - Functionalities / managers (Framework/src/Manager)
  ******************************************************************************************************************/
-const HomeScreen: Screen.ScreenType = ({ navigation }) => {
+const HomeScreen: Screen.ScreenType = ({ navigate }) => {
   const { user } = Manager.useAuth();
   const isAnon = !!user?.isAnonymous || !user;
   const uid = user?.uid;
@@ -29,7 +29,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
    * Unified navigation handler
    ******************************************************************************************************************/
   const handleSelect = (routeName: string) => {
-    navigation.navigate(routeName, { paramText: 'hello from home' });
+    navigate(routeName, { paramText: 'hello from home' });
   };
 
   /******************************************************************************************************************

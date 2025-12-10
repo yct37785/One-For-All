@@ -73,7 +73,7 @@ const collectSelectedLeafLabels = (
  * This screen demonstrates:
  * - UI.CheckOptions: checkbox-based nested options built on BaseOptions.
  ******************************************************************************************************************/
-const NestedOptionsScreen: Screen.ScreenType = () => {
+const NestedOptionsScreen: Screen.ScreenType = ({}) => {
   const [value, setValue] = useState<UI.OptionValue>(() =>
     UI.buildOptionsValueFromSchema(INITIAL_SCHEMA)
   );

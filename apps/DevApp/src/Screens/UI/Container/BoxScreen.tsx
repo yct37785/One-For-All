@@ -20,7 +20,7 @@ import { Screen, UI } from 'framework';
  *  3 = 3x base spacing
  *  4 = 4x base spacing
  ******************************************************************************************************************/
-const BoxScreen: Screen.ScreenType = () => {
+const BoxScreen: Screen.ScreenType = ({}) => {
   return (
     <Screen.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>

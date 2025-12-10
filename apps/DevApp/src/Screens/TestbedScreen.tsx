@@ -6,7 +6,7 @@ import { Screen, UI } from 'framework';
 /******************************************************************************************************************
  * Testbed screen: used for development and testing of new UI elements
  ******************************************************************************************************************/
-const TestbedScreen: Screen.ScreenType = ({ navigation, route }) => {
+const TestbedScreen: Screen.ScreenType = ({}) => {
 
   const options: UI.MenuOption[] = [
     { text: 'Sign in with Google', value: 'signin', icon: 'google' },

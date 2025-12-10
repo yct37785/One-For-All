@@ -9,7 +9,7 @@ import { Screen, UI } from 'framework';
  * - Semantic theme colors and custom colors
  * - Using icons inline and inside simple containers
  ******************************************************************************************************************/
-const IconScreen: Screen.ScreenType = () => {
+const IconScreen: Screen.ScreenType = ({}) => {
   return (
     <Screen.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>

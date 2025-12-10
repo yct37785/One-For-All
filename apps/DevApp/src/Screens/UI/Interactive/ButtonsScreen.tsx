@@ -8,7 +8,7 @@ import { Screen, UI } from 'framework';
  * - UI.Button: MD3-styled buttons for primary actions.
  * - UI.IconButton: compact icon-only buttons for secondary actions and toggles.
  ******************************************************************************************************************/
-const ButtonScreen: Screen.ScreenType = () => {
+const ButtonScreen: Screen.ScreenType = ({}) => {
   const [btnClicks, setBtnClicks] = useState(0);
   const [iconClicks, setIconClicks] = useState(0);
   const [favorite, setFavorite] = useState(false);

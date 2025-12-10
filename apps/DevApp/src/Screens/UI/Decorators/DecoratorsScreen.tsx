@@ -11,7 +11,7 @@ import { Screen, UI } from 'framework';
  * Available decorators:
  * - Divider: a thin separator for grouping related sections
  ******************************************************************************************************************/
-const DecoratorsScreen: Screen.ScreenType = () => {
+const DecoratorsScreen: Screen.ScreenType = ({}) => {
   return (
     <Screen.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>

@@ -7,7 +7,7 @@ import { Screen, UI } from 'framework';
  * This screen demonstrates:
  * - UI.Avatar: label and image avatars with size, shape, badge, color, and press handling.
  ******************************************************************************************************************/
-const AvatarScreen: Screen.ScreenType = () => {
+const AvatarScreen: Screen.ScreenType = ({}) => {
   const [pressCount, setPressCount] = useState(0);
 
   return (

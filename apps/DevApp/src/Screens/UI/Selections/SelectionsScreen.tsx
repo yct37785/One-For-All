@@ -8,7 +8,7 @@ import { Screen, UI } from 'framework';
  * active at a time. Use Picker for dropdown-style selection and RadioGroup
  * when you want options to remain visible side by side.
  ******************************************************************************************************************/
-const SelectionsScreen: Screen.ScreenType = () => {
+const SelectionsScreen: Screen.ScreenType = ({}) => {
   const [pickerValue, setPickerValue] = useState<string>('red');
   const [radioValue, setRadioValue] = useState<string>('cat');
 

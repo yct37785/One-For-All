@@ -1,44 +1,33 @@
-import type { ParamListBase, RouteProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type React from 'react';
+import React, { ReactNode } from 'react';
+import { ScreenLayout, ScreenLayoutProps } from './ScreenLayout';
 
 /******************************************************************************************************************
- * Base props each screen receives.
+ * Navigation helpers.
  *
- * @template P - Param list (must extend ParamListBase)
- * @template N - Route name (key of P)
- *
- * @property navigation - React Navigation stack navigation object for the current route.
- *                        Provides methods such as `navigate`, `goBack`, and `setParams`.
- * @property route      - React Navigation route object containing the current route name and `params`.
- *                        Used to access screen-specific parameters or metadata.
+ * @property ScreenNavigate  - Navigate to a route with optional params
+ * @property ScreenGoBack    - Go back to the previous screen in the stack
  ******************************************************************************************************************/
-export type ScreenProps<
-  P extends ParamListBase = ParamListBase,
-  N extends keyof P & string = string
-> = {
-  navigation: NativeStackNavigationProp<P, N>;
-  route: RouteProp<P, N>;
+export type ScreenNavigate = (routeName: string, params?: any) => void;
+export type ScreenGoBack = () => void;
+
+/******************************************************************************************************************
+ * Screen props.
+ *
+ * @property navigate  - Simple navigation helper; wraps React Navigation's navigate()
+ * @property goBack    - Go back helper; wraps React Navigation's goBack()
+ * @property param?    - Optional route parameters passed from the navigator
+ ******************************************************************************************************************/
+export type ScreenProps<P = any> = {
+  navigate: ScreenNavigate;
+  goBack: ScreenGoBack;
+  param?: P;
 };
 
 /******************************************************************************************************************
- * Type for each screen in consumer app.
- ******************************************************************************************************************/
-export type ScreenType = React.FC<ScreenProps>;
-
-/******************************************************************************************************************
- * Schema for the screen map:
- * - A dictionary mapping screen names to React functional components.
- * - This is passed into the Root component to register all screens.
+ * Screen type and registry.
  *
- * @property [screenName] - a route name mapped to a React.FC that consumes ScreenProps
- * 
- * @usage
- * ```tsx
- * const screenMap: ScreenMap = {
- *   Home: HomeScreen,
- *   Details: DetailsScreen
- * }
- * ```
+ * @property ScreenType  - Functional component type for a screen
+ * @property ScreenMap   - Mapping of route names to screen components
  ******************************************************************************************************************/
-export type ScreenMap = Record<string, React.FC<ScreenProps>>;
+export type ScreenType<P = any> = React.FC<ScreenProps<P>>;
+export type ScreenMap = Record<string, ScreenType<any>>;

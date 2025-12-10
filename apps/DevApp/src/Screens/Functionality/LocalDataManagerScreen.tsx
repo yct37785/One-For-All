@@ -11,7 +11,7 @@ import { Screen, UI, Manager } from 'framework';
  *
  * All operations are async and backed directly by AsyncStorage.
  ******************************************************************************************************************/
-const LocalDataManagerScreen: Screen.ScreenType = () => {
+const LocalDataManagerScreen: Screen.ScreenType = ({}) => {
   const { getItem, setItem, clear } = Manager.useLocalData();
 
   /******************************************************************************************************************

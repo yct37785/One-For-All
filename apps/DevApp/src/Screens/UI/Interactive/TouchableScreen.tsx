@@ -7,7 +7,7 @@ import { Screen, UI } from 'framework';
  * This screen demonstrates:
  * - Touchable: generic pressable wrapper for custom interactive regions.
  ******************************************************************************************************************/
-const TouchableScreen: Screen.ScreenType = () => {
+const TouchableScreen: Screen.ScreenType = ({}) => {
   const [btnClicks, setBtnClicks] = useState(0);
   const [touchableClicks, setTouchableClicks] = useState(0);
 

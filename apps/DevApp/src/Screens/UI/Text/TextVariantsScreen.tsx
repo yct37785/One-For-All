@@ -9,7 +9,7 @@ import { Screen, UI } from 'framework';
  * - HighlightText: emphasizes substrings that match a query
  * - HyperlinkText: dedicated hyperlink styling that calls onPress when tapped
  ******************************************************************************************************************/
-const TextVariantsScreen: Screen.ScreenType = () => {
+const TextVariantsScreen: Screen.ScreenType = ({}) => {
   const [query, setQuery] = useState('hero');
   const [tosClicks, setTosClicks] = useState(0);
   const [privacyClicks, setPrivacyClicks] = useState(0);

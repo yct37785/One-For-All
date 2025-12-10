@@ -10,7 +10,7 @@ import { Screen, UI } from 'framework';
  * - Leading icons
  * - Closable chips (isClose)
  ******************************************************************************************************************/
-const ChipScreen: Screen.ScreenType = () => {
+const ChipScreen: Screen.ScreenType = ({}) => {
   // simple toggle state for “filter-like” chips
   const [selectedFilters, setSelectedFilters] = useState<Set<string>>(
     () => new Set(['All'])

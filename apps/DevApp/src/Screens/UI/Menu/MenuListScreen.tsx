@@ -8,7 +8,7 @@ import { Screen, UI } from 'framework';
  * - UI.MenuList: a structured list of selectable menu options.
  * - UI.MenuListItem: support for text/icon options and dense/centered rows.
  ******************************************************************************************************************/
-const MenuListScreen: Screen.ScreenType = () => {
+const MenuListScreen: Screen.ScreenType = ({}) => {
   const [lastSelected, setLastSelected] = useState<string | null>(null);
 
   const handleSelect = (value: string) => {

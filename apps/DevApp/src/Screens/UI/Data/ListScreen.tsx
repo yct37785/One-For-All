@@ -20,7 +20,7 @@ const CATEGORIES = ['Electronics', 'Clothing', 'Home', 'Books', 'Sports', 'Toys'
  * - UI.ChipOptions: category filters in a horizontal scroll row.
  * - UI.HighlightText: inline highlighting of the search term within each list item.
  ******************************************************************************************************************/
-const ListScreen: Screen.ScreenType = () => {
+const ListScreen: Screen.ScreenType = ({}) => {
   const [query, setQuery] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<Set<string>>(() => new Set());
   const [chipResetSignal, setChipResetSignal] = useState(0);

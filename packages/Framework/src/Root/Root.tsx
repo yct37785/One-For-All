@@ -127,9 +127,25 @@ const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap, defaultScreen
           <MenuProvider>
             <ScreenLayoutContext.Provider value={defaultScreenLayoutProps}>
               <NavigationContainer theme={navTheme}>
-                <Stack.Navigator initialRouteName={DEFAULT_SCREEN} screenOptions={{ headerShown: false }}>
+                <Stack.Navigator
+                  initialRouteName={DEFAULT_SCREEN}
+                  screenOptions={{ headerShown: false }}
+                >
                   {Object.entries(screenMap).map(([name, Component]) => (
-                    <Stack.Screen name={name} key={name} component={Component as any} />
+                    <Stack.Screen name={name} key={name}>
+                      {({ navigation, route }) => (
+                        <Component
+                          // simple navigate helper exposed to screens
+                          navigate={(routeName: string, params?: any) =>
+                            navigation.navigate(routeName as never, params as never)
+                          }
+                          // goBack helper
+                          goBack={() => navigation.goBack()}
+                          // pass through route params as a single `param` prop
+                          param={route?.params}
+                        />
+                      )}
+                    </Stack.Screen>
                   ))}
                 </Stack.Navigator>
               </NavigationContainer>

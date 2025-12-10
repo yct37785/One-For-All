@@ -8,7 +8,7 @@ import { Screen, UI } from 'framework';
  * - UI.CollapsibleContainer: single header that toggles its body.
  * - UI.AccordionContainer: multiple headers where one section is open at a time.
  ******************************************************************************************************************/
-const CollapsibleScreen: Screen.ScreenType = () => {
+const CollapsibleScreen: Screen.ScreenType = ({}) => {
   return (
     <Screen.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>

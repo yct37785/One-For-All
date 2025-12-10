@@ -9,7 +9,7 @@ import { Screen, UI } from 'framework';
  * - Required fields with '*' indicator and built-in blur validation
  * - Custom validation using error / errorText (e.g. email format)
  ******************************************************************************************************************/
-const TextInputScreen: Screen.ScreenType = () => {
+const TextInputScreen: Screen.ScreenType = ({}) => {
   const [name, setName] = useState('');
   const [outlineName, setOutlineName] = useState('');
   const [email, setEmail] = useState('');
