@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 import { MenuOption } from 'react-native-popup-menu';
 
 /******************************************************************************************************************
@@ -9,7 +9,7 @@ import { MenuOption } from 'react-native-popup-menu';
  * - UI.Dialog: focused modal surfaces for confirmation and decisions.
  * - UI.Popup: contextual floating menus triggered by a button or icon.
  ******************************************************************************************************************/
-const ModalsScreen: Screen.ScreenType = ({}) => {
+const ModalsScreen: Nav.ScreenType = ({}) => {
   const [basicDialogVisible, setBasicDialogVisible] = useState(false);
   const [customDialogVisible, setCustomDialogVisible] = useState(false);
   const [dismissDialogVisible, setDismissDialogVisible] = useState(false);
@@ -17,7 +17,7 @@ const ModalsScreen: Screen.ScreenType = ({}) => {
   const [lastPopupAction, setLastPopupAction] = useState<string | null>(null);
 
   return (
-    <Screen.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
         {/* Header */}
         <UI.Text variant='bodyMedium'>
@@ -184,7 +184,7 @@ const ModalsScreen: Screen.ScreenType = ({}) => {
           </UI.Popup>
         </UI.Box>
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

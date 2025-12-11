@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
-import { Screen, UI, Manager } from 'framework';
+import { Nav, UI, Manager } from 'framework';
 
 /******************************************************************************************************************
  * LocalDataManager demo
@@ -11,7 +11,7 @@ import { Screen, UI, Manager } from 'framework';
  *
  * All operations are async and backed directly by AsyncStorage.
  ******************************************************************************************************************/
-const LocalDataManagerScreen: Screen.ScreenType = ({}) => {
+const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
   const { getItem, setItem, clear } = Manager.useLocalData();
 
   /******************************************************************************************************************
@@ -110,7 +110,7 @@ const LocalDataManagerScreen: Screen.ScreenType = ({}) => {
    * Render
    ******************************************************************************************************************/
   return (
-    <Screen.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
         {/* Header */}
@@ -235,7 +235,7 @@ const LocalDataManagerScreen: Screen.ScreenType = ({}) => {
         </UI.Box>
 
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

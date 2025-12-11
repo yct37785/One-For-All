@@ -46,9 +46,9 @@ export type ScreenLayoutProps = {
  * @usage
  * ```tsx
  *  return (
- *    <Screen.ScreenLayout>
+ *    <Nav.ScreenLayout>
  *      ...
- *    </Screen.ScreenLayout>
+ *    </Nav.ScreenLayout>
  *  );
  * ```
  ******************************************************************************************************************/

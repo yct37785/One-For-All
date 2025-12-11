@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 
 /******************************************************************************************************************
  * Selections demo
@@ -8,7 +8,7 @@ import { Screen, UI } from 'framework';
  * active at a time. Use Picker for dropdown-style selection and RadioGroup
  * when you want options to remain visible side by side.
  ******************************************************************************************************************/
-const SelectionsScreen: Screen.ScreenType = ({}) => {
+const SelectionsScreen: Nav.ScreenType = ({}) => {
   const [pickerValue, setPickerValue] = useState<string>('red');
   const [radioValue, setRadioValue] = useState<string>('cat');
 
@@ -25,7 +25,7 @@ const SelectionsScreen: Screen.ScreenType = ({}) => {
   };
 
   return (
-    <Screen.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
         {/* Header */}
@@ -78,7 +78,7 @@ const SelectionsScreen: Screen.ScreenType = ({}) => {
         </UI.Box>
 
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

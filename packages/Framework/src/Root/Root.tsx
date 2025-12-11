@@ -2,7 +2,7 @@
 import 'react-native-get-random-values';
 import 'react-native-gesture-handler';
 // screen typing and layout
-import { ScreenLayoutProps, ScreenLayoutContext } from '../Screen/ScreenLayout';
+import { ScreenLayoutProps, ScreenLayoutContext } from '../Nav/ScreenLayout';
 // core
 import React, { memo, useEffect, useState } from 'react';
 import { View, StatusBar, Platform, LogBox } from 'react-native';

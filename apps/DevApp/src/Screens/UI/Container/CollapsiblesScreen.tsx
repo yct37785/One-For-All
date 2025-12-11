@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 
 /******************************************************************************************************************
  * Collapsible & Accordion demo
@@ -8,9 +8,9 @@ import { Screen, UI } from 'framework';
  * - UI.CollapsibleContainer: single header that toggles its body.
  * - UI.AccordionContainer: multiple headers where one section is open at a time.
  ******************************************************************************************************************/
-const CollapsibleScreen: Screen.ScreenType = ({}) => {
+const CollapsibleScreen: Nav.ScreenType = ({}) => {
   return (
-    <Screen.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
         {/* Header */}
@@ -153,7 +153,7 @@ const CollapsibleScreen: Screen.ScreenType = ({}) => {
         </UI.Box>
 
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

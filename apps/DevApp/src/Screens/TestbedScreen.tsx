@@ -1,12 +1,12 @@
 import React, { memo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 
 /******************************************************************************************************************
  * Testbed screen: used for development and testing of new UI elements
  ******************************************************************************************************************/
-const TestbedScreen: Screen.ScreenType = ({}) => {
+const TestbedScreen: Nav.ScreenType = ({}) => {
 
   const options: UI.MenuOption[] = [
     { text: 'Sign in with Google', value: 'signin', icon: 'google' },
@@ -24,13 +24,13 @@ const TestbedScreen: Screen.ScreenType = ({}) => {
   );
 
   return (
-    <Screen.ScreenLayout LeftContent={<LeftContent />}>
+    <Nav.ScreenLayout LeftContent={<LeftContent />}>
       <UI.VerticalLayout constraint='scroll'>
 
         <UI.MenuList options={options} onSelect={handleSelect} dense showDividers />
 
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

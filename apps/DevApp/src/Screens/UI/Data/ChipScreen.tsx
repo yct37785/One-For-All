@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 
 /******************************************************************************************************************
  * Chip demo
@@ -10,7 +10,7 @@ import { Screen, UI } from 'framework';
  * - Leading icons
  * - Closable chips (isClose)
  ******************************************************************************************************************/
-const ChipScreen: Screen.ScreenType = ({}) => {
+const ChipScreen: Nav.ScreenType = ({}) => {
   // simple toggle state for “filter-like” chips
   const [selectedFilters, setSelectedFilters] = useState<Set<string>>(
     () => new Set(['All'])
@@ -45,7 +45,7 @@ const ChipScreen: Screen.ScreenType = ({}) => {
   };
 
   return (
-    <Screen.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
         {/* Header */}
         <UI.Text variant='bodyMedium'>
@@ -163,7 +163,7 @@ const ChipScreen: Screen.ScreenType = ({}) => {
           </UI.Text>
         </UI.Box>
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

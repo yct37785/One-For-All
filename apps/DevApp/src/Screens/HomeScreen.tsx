@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Screen, Manager, UI } from 'framework';
+import { Nav, Manager, UI } from 'framework';
 import { screenRoutes } from './ScreenRegistry';
 
 /******************************************************************************************************************
@@ -10,7 +10,7 @@ import { screenRoutes } from './ScreenRegistry';
  * - Components (Framework/src/Component)
  * - Functionalities / managers (Framework/src/Manager)
  ******************************************************************************************************************/
-const HomeScreen: Screen.ScreenType = ({ navigate }) => {
+const HomeScreen: Nav.ScreenType = ({ navigate }) => {
   const { user } = Manager.useAuth();
   const isAnon = !!user?.isAnonymous || !user;
   const uid = user?.uid;
@@ -191,7 +191,7 @@ const HomeScreen: Screen.ScreenType = ({ navigate }) => {
    * Render
    ******************************************************************************************************************/
   return (
-    <Screen.ScreenLayout>
+    <Nav.ScreenLayout>
       <UI.VerticalLayout constraint='scroll' gap={1}>
         {/* Hero / intro */}
         <UI.Text variant='titleLarge'>Framework Showcase</UI.Text>
@@ -248,7 +248,7 @@ const HomeScreen: Screen.ScreenType = ({ navigate }) => {
         </UI.CollapsibleContainer>
 
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

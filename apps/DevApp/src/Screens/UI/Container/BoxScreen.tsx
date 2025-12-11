@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 
 /******************************************************************************************************************
  * Box demo & usage guide
@@ -20,9 +20,9 @@ import { Screen, UI } from 'framework';
  *  3 = 3x base spacing
  *  4 = 4x base spacing
  ******************************************************************************************************************/
-const BoxScreen: Screen.ScreenType = ({}) => {
+const BoxScreen: Nav.ScreenType = ({}) => {
   return (
-    <Screen.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
         {/* Header */}
@@ -164,7 +164,7 @@ const BoxScreen: Screen.ScreenType = ({}) => {
         </UI.Box>
 
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

@@ -1,4 +1,3 @@
-import { Screen } from 'framework';
 // test bed
 import TestbedScreen from './TestbedScreen';
 /**
@@ -65,9 +64,9 @@ export const screenRoutes = {
 } as const;
 
 /******************************************************************************************************************
- * Screen registry (except home screen)
+ * Screen registry (except HomeScreen)
  ******************************************************************************************************************/
-export const screenRegistry: Screen.ScreenMap = {
+export const screenRegistry = {
   [screenRoutes.testbed]: TestbedScreen,
   [screenRoutes.ui_box]: BoxScreen,
   [screenRoutes.ui_collapsibles]: CollapsiblesScreen,

@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 
 /******************************************************************************************************************
  * Decorators demo
@@ -11,9 +11,9 @@ import { Screen, UI } from 'framework';
  * Available decorators:
  * - Divider: a thin separator for grouping related sections
  ******************************************************************************************************************/
-const DecoratorsScreen: Screen.ScreenType = ({}) => {
+const DecoratorsScreen: Nav.ScreenType = ({}) => {
   return (
-    <Screen.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
         {/* Header */}
@@ -55,7 +55,7 @@ const DecoratorsScreen: Screen.ScreenType = ({}) => {
         </UI.Box>
 
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

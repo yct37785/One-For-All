@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 
 /******************************************************************************************************************
  * TextInput demo
@@ -9,7 +9,7 @@ import { Screen, UI } from 'framework';
  * - Required fields with '*' indicator and built-in blur validation
  * - Custom validation using error / errorText (e.g. email format)
  ******************************************************************************************************************/
-const TextInputScreen: Screen.ScreenType = ({}) => {
+const TextInputScreen: Nav.ScreenType = ({}) => {
   const [name, setName] = useState('');
   const [outlineName, setOutlineName] = useState('');
   const [email, setEmail] = useState('');
@@ -25,7 +25,7 @@ const TextInputScreen: Screen.ScreenType = ({}) => {
   const emailFormatInvalid = emailTouched && emailHasValue && !emailRegex.test(email);
 
   return (
-    <Screen.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
         {/* Header */}
         <UI.Text variant='bodyMedium'>
@@ -165,7 +165,7 @@ const TextInputScreen: Screen.ScreenType = ({}) => {
           />
         </UI.Box>
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

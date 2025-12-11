@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { ParamListBase } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ScreenType } from '../Screen/Screen';
+import { ScreenType } from './Screen';
 
 const Stack = createNativeStackNavigator<ParamListBase>();
 

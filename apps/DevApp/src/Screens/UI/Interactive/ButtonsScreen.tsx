@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 
 /******************************************************************************************************************
  * Button demo
@@ -8,7 +8,7 @@ import { Screen, UI } from 'framework';
  * - UI.Button: MD3-styled buttons for primary actions.
  * - UI.IconButton: compact icon-only buttons for secondary actions and toggles.
  ******************************************************************************************************************/
-const ButtonScreen: Screen.ScreenType = ({}) => {
+const ButtonScreen: Nav.ScreenType = ({}) => {
   const [btnClicks, setBtnClicks] = useState(0);
   const [iconClicks, setIconClicks] = useState(0);
   const [favorite, setFavorite] = useState(false);
@@ -18,7 +18,7 @@ const ButtonScreen: Screen.ScreenType = ({}) => {
   const onIconClick = () => setIconClicks(c => c + 1);
 
   return (
-    <Screen.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
         {/* Header */}
         <UI.Text variant='bodyMedium'>
@@ -274,7 +274,7 @@ const ButtonScreen: Screen.ScreenType = ({}) => {
         </UI.Box>
 
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

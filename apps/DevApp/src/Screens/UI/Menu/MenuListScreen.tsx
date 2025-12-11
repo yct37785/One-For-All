@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 
 /******************************************************************************************************************
  * MenuList demo
@@ -8,7 +8,7 @@ import { Screen, UI } from 'framework';
  * - UI.MenuList: a structured list of selectable menu options.
  * - UI.MenuListItem: support for text/icon options and dense/centered rows.
  ******************************************************************************************************************/
-const MenuListScreen: Screen.ScreenType = ({}) => {
+const MenuListScreen: Nav.ScreenType = ({}) => {
   const [lastSelected, setLastSelected] = useState<string | null>(null);
 
   const handleSelect = (value: string) => {
@@ -16,7 +16,7 @@ const MenuListScreen: Screen.ScreenType = ({}) => {
   };
 
   return (
-    <Screen.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
         {/* Header */}
@@ -171,7 +171,7 @@ const MenuListScreen: Screen.ScreenType = ({}) => {
         </UI.Box>
 
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

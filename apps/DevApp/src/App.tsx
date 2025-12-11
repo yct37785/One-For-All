@@ -1,4 +1,4 @@
-import { Root, Screen, Nav } from 'framework';
+import { Root, Nav } from 'framework';
 // screens
 import HomeScreen from './Screens/HomeScreen';
 import { screenRegistry } from './Screens/ScreenRegistry';

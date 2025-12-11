@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 
 /******************************************************************************************************************
  * Initial nested options schema.
@@ -73,7 +73,7 @@ const collectSelectedLeafLabels = (
  * This screen demonstrates:
  * - UI.CheckOptions: checkbox-based nested options built on BaseOptions.
  ******************************************************************************************************************/
-const NestedOptionsScreen: Screen.ScreenType = ({}) => {
+const NestedOptionsScreen: Nav.ScreenType = ({}) => {
   const [value, setValue] = useState<UI.OptionValue>(() =>
     UI.buildOptionsValueFromSchema(INITIAL_SCHEMA)
   );
@@ -81,7 +81,7 @@ const NestedOptionsScreen: Screen.ScreenType = ({}) => {
   const selectedLeafLabels = collectSelectedLeafLabels(INITIAL_SCHEMA, value);
 
   return (
-    <Screen.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
         {/* Header */}
         <UI.Text variant='bodyMedium'>
@@ -114,7 +114,7 @@ const NestedOptionsScreen: Screen.ScreenType = ({}) => {
           </UI.Text>
         </UI.Box>
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 
