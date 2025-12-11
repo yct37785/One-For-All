@@ -88,3 +88,10 @@ export const screenRegistry = {
   [screenRoutes.ui_textVariants]: TextVariantsScreen,
   [screenRoutes.f_localData]: LocalDataManagerScreen,
 };
+
+// test nested navigator navNodeMap
+export const uiStackNodeMap = {
+  'nested_box': BoxScreen,
+  'nested_collapsibles': CollapsiblesScreen,
+  'nested_tabs': TabsScreen,
+};

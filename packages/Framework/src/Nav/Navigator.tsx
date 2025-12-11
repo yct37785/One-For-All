@@ -6,11 +6,13 @@ import { ScreenType } from './Screen';
 const Stack = createNativeStackNavigator<ParamListBase>();
 
 /******************************************************************************************************************
- * Navigator and screen registry:
- * - ScreenType
- * - NavigatorType
+ * NavNodeMap
+ *
+ * A route registry where each entry can be either:
+ * - a ScreenType (leaf screen), or
+ * - a preconfigured navigator component (nested navigator)
  ******************************************************************************************************************/
-export type NavNodeMap = Record<string, ScreenType<any>>;
+export type NavNodeMap = Record<string, ScreenType<any> | React.FC>;
 
 /******************************************************************************************************************
  * Navigator props.
@@ -26,19 +28,25 @@ export type NavigatorProps = {
 };
 
 /******************************************************************************************************************
- * Navigator
+ * StackNavigator
  *
  * Thin wrapper around React Navigation's native navigator:
- * - Injects `navigate`, `goBack`, and `param` props into each Screen
+ * - Injects `navigate`, `goBack`, and `param` props into each ScreenType
+ * - Allows nested navigators by accepting React.FC values in navNodeMap
  * - Hides React Navigation types from screen implementations
  *
- * Example (in end user app):
+ * @usage
  * ```tsx
+ * const navNodeMap: NavNodeMap = {
+ *   home: HomeScreen,
+ *   nested: NestedNavigator, // preconfigured nested navigator
+ * };
+ *
  * const AppNavigator: React.FC = () => (
- *   <Navigator
- *     initialRouteName="Home"
+ *   <StackNavigator
+ *     initialRouteName="home"
  *     headerShown={false}
- *     screenMap={screenMap}
+ *     navNodeMap={navNodeMap}
  *   />
  * );
  * ```
@@ -50,22 +58,29 @@ export const StackNavigator: React.FC<NavigatorProps> = memo(
         initialRouteName={initialRouteName}
         screenOptions={{ headerShown }}
       >
-        {Object.entries(navNodeMap).map(([name, Component]) => (
-          <Stack.Screen name={name} key={name}>
-            {({ navigation, route }) => (
-              <Component
-                // simple navigate helper exposed to screens
-                navigate={(routeName: string, params?: any) =>
-                  navigation.navigate(routeName as never, params as never)
-                }
-                // goBack helper
-                goBack={() => navigation.goBack()}
-                // pass through route params as a single `param` prop
-                param={route?.params}
-              />
-            )}
-          </Stack.Screen>
-        ))}
+        {Object.entries(navNodeMap).map(([name, Node]) => {
+          // Node can be either a ScreenType or a preconfigured navigator; at runtime
+          // both are just function components, so we can treat them uniformly.
+          const Component = Node as React.ComponentType<any>;
+
+          return (
+            <Stack.Screen name={name} key={name}>
+              {({ navigation, route }) => (
+                <Component
+                  // simple navigate helper exposed to screens
+                  navigate={(routeName: string, params?: any) =>
+                    navigation.navigate(routeName as never, params as never)
+                  }
+                  // goBack helper
+                  goBack={() => navigation.goBack()}
+                  // pass through route params
+                  param={route?.params}
+                />
+              )}
+            </Stack.Screen>
+          );
+        })}
       </Stack.Navigator>
     );
-  });
+  }
+);

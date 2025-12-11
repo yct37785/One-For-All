@@ -1,15 +1,25 @@
 import { Root, Nav } from 'framework';
 // screens
 import HomeScreen from './Screens/HomeScreen';
-import { screenRegistry } from './Screens/ScreenRegistry';
+import { screenRegistry, screenRoutes, uiStackNodeMap } from './Screens/ScreenRegistry';
 // layout
 import { DefaultLeftContent, DefaultRightContent } from './ScreenLayout';
+
+// test nested navigator
+const UiNestedNavigator: React.FC = () => (
+  <Nav.StackNavigator
+    initialRouteName='nested_box'
+    navNodeMap={uiStackNodeMap}
+    headerShown={false}
+  />
+);
 
 /******************************************************************************************************************
  * Screen setup
  ******************************************************************************************************************/
 export const navNodeMap: Nav.NavNodeMap = {
   home: HomeScreen,
+  testNestedNav: UiNestedNavigator,
   ...screenRegistry,
 };
 
