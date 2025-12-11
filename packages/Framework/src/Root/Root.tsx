@@ -23,9 +23,7 @@ import {
   NavigationContainer,
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
-  ParamListBase
 } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // data storage
 import { useLocalData, LocalDataProvider } from '../Manager/LocalDataManager';
 // Firebase
@@ -48,18 +46,14 @@ const { LightTheme: NavLight, DarkTheme: NavDark } = adaptNavigationTheme({
   reactNavigationDark: NavigationDarkTheme,
 });
 
-const Stack = createNativeStackNavigator<ParamListBase>();
-
 /******************************************************************************************************************
  * Root component props.
  *
- * @property DEFAULT_SCREEN   - Initial route name for the stack navigator
- * @property screenMap        - Mapping of route names to screen components
- * @property defaultScreenLayoutProps   - app wide screen layout (AppBar left content etc)
+ * @property rootNavigator             - Root navigator component defined by the end user app
+ * @property defaultScreenLayoutProps  - App wide screen layout (AppBar left content etc)
  ******************************************************************************************************************/
 export type RootProps = {
-  DEFAULT_SCREEN: string;
-  screenMap: ScreenMap;
+  rootNavigator: React.ReactNode;
   defaultScreenLayoutProps: ScreenLayoutProps;
 };
 
@@ -76,7 +70,8 @@ export type RootProps = {
  *  - We gate effect work with `if (!isLoaded) return;` and gate UI via conditional JSX.
  *  - Put all providers here.
  ******************************************************************************************************************/
-const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap, defaultScreenLayoutProps }) => {
+const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps }) => {
+  const RootNavigator = rootNavigator;
   const { getItem } = useLocalData();
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -127,27 +122,7 @@ const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap, defaultScreen
           <MenuProvider>
             <ScreenLayoutContext.Provider value={defaultScreenLayoutProps}>
               <NavigationContainer theme={navTheme}>
-                <Stack.Navigator
-                  initialRouteName={DEFAULT_SCREEN}
-                  screenOptions={{ headerShown: false }}
-                >
-                  {Object.entries(screenMap).map(([name, Component]) => (
-                    <Stack.Screen name={name} key={name}>
-                      {({ navigation, route }) => (
-                        <Component
-                          // simple navigate helper exposed to screens
-                          navigate={(routeName: string, params?: any) =>
-                            navigation.navigate(routeName as never, params as never)
-                          }
-                          // goBack helper
-                          goBack={() => navigation.goBack()}
-                          // pass through route params as a single `param` prop
-                          param={route?.params}
-                        />
-                      )}
-                    </Stack.Screen>
-                  ))}
-                </Stack.Navigator>
+                {rootNavigator}
               </NavigationContainer>
             </ScreenLayoutContext.Provider>
           </MenuProvider>
