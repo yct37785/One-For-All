@@ -1,21 +1,28 @@
 import React, { memo } from 'react';
 import { ParamListBase } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ScreenMap } from '../Screen/Screen';
+import { ScreenType } from '../Screen/Screen';
 
 const Stack = createNativeStackNavigator<ParamListBase>();
+
+/******************************************************************************************************************
+ * Navigator and screen registry:
+ * - ScreenType
+ * - NavigatorType
+ ******************************************************************************************************************/
+export type NavNodeMap = Record<string, ScreenType<any>>;
 
 /******************************************************************************************************************
  * Navigator props.
  *
  * @property initialRouteName  - Initial route name for the stack navigator
- * @property headerShown?      - Controls header visibility for all screens; defaults to false
- * @property screenMap         - Mapping of route names to Screen components
+ * @property navNodeMap        - Mapping of route names to Navigator and Screen components
+ * @property headerShown?      - Controls header visibility for all screens
  ******************************************************************************************************************/
 export type NavigatorProps = {
   initialRouteName: string;
+  navNodeMap: NavNodeMap;
   headerShown?: boolean;
-  screenMap: ScreenMap;
 };
 
 /******************************************************************************************************************
@@ -36,14 +43,14 @@ export type NavigatorProps = {
  * );
  * ```
  ******************************************************************************************************************/
-const Navigator: React.FC<NavigatorProps> =
-  ({ initialRouteName, headerShown = false, screenMap }) => {
+export const StackNavigator: React.FC<NavigatorProps> = memo(
+  ({ initialRouteName, navNodeMap, headerShown = false }) => {
     return (
       <Stack.Navigator
         initialRouteName={initialRouteName}
         screenOptions={{ headerShown }}
       >
-        {Object.entries(screenMap).map(([name, Component]) => (
+        {Object.entries(navNodeMap).map(([name, Component]) => (
           <Stack.Screen name={name} key={name}>
             {({ navigation, route }) => (
               <Component
@@ -61,6 +68,4 @@ const Navigator: React.FC<NavigatorProps> =
         ))}
       </Stack.Navigator>
     );
-  };
-
-export default memo(Navigator);
+  });

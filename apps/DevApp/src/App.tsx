@@ -1,4 +1,4 @@
-import { Root, Screen, Navigator } from 'framework';
+import { Root, Screen, Nav } from 'framework';
 // screens
 import HomeScreen from './Screens/HomeScreen';
 import { screenRegistry } from './Screens/ScreenRegistry';
@@ -8,15 +8,15 @@ import { DefaultLeftContent, DefaultRightContent } from './ScreenLayout';
 /******************************************************************************************************************
  * Screen setup
  ******************************************************************************************************************/
-export const screenMap: Screen.ScreenMap = {
+export const navNodeMap: Nav.NavNodeMap = {
   home: HomeScreen,
   ...screenRegistry,
 };
 
 const RootNavigator = (
-  <Navigator
+  <Nav.StackNavigator
     initialRouteName='home'
-    screenMap={screenMap}
+    navNodeMap={navNodeMap}
   />
 );
 

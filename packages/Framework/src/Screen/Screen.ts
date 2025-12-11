@@ -23,10 +23,6 @@ export type ScreenProps<P = any> = {
 };
 
 /******************************************************************************************************************
- * Screen type and registry.
- *
- * @property ScreenType  - Functional component type for a screen
- * @property ScreenMap   - Mapping of route names to screen components
+ * Functional component type for a screen
  ******************************************************************************************************************/
 export type ScreenType<P = any> = React.FC<ScreenProps<P>>;
-export type ScreenMap = Record<string, ScreenType<any>>;
