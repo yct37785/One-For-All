@@ -89,10 +89,3 @@ export const screenRegistry: Nav.NavNodeMap = {
   [screenRoutes.ui_textVariants]: { component: TextVariantsScreen },
   [screenRoutes.f_localData]: { component: LocalDataManagerScreen },
 };
-
-// test nested navigator navNodeMap
-export const uiStackNodeMap: Nav.NavNodeMap = {
-  'nested_box': { component: BoxScreen },
-  'nested_collapsibles': { component: CollapsiblesScreen  },
-  'nested_tabs': { component: TabsScreen },
-};
