@@ -119,9 +119,10 @@ export const StackNavigator: React.FC<NavigatorProps> = memo(
  * @param navNodeMap  - Route metadata map used to derive labels, icons, and disabled state
  ******************************************************************************************************************/
 const RenderBottomNavBar: React.FC<any> = ({ state, navigation, navNodeMap }) => {
+  const selectedValue = state.routes[state.index]?.name;
+
   const items: BottomNavBarItem[] = state.routes.map((route: any) => {
     const node = navNodeMap[route.name];
-
     return {
       value: route.name,
       text: node?.label ?? route.name,
@@ -132,19 +133,15 @@ const RenderBottomNavBar: React.FC<any> = ({ state, navigation, navNodeMap }) =>
     };
   });
 
-  const selectedValue = state.routes[state.index]?.name;
-
   function onSelect(routeName: string): void {
-    const routeIndex = state.routes.findIndex((r: any) => r.name === routeName);
-    const routeKey = state.routes[routeIndex]?.key;
+    const route = state.routes.find((r: any) => r.name === routeName);
+    if (!route) return;
 
-    if (routeIndex < 0 || !routeKey) return;
-
-    const isFocused = state.index === routeIndex;
+    const isFocused = selectedValue === routeName;
 
     const event = navigation.emit({
       type: 'tabPress',
-      target: routeKey,
+      target: route.key,
       canPreventDefault: true,
     });
 
@@ -153,13 +150,7 @@ const RenderBottomNavBar: React.FC<any> = ({ state, navigation, navNodeMap }) =>
     }
   }
 
-  return (
-    <BottomNavBar
-      items={items}
-      selectedValue={selectedValue}
-      onSelect={onSelect}
-    />
-  );
+  return <BottomNavBar items={items} selectedValue={selectedValue} onSelect={onSelect} />;
 };
 
 /******************************************************************************************************************

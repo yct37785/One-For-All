@@ -1,18 +1,25 @@
 import React, { memo } from 'react';
-import { StyleSheet, View, ViewStyle, StyleProp } from 'react-native';
-import * as Const from '../Const';
+import { StyleSheet, ViewStyle, StyleProp } from 'react-native';
+import { useTheme } from 'react-native-paper';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Box } from '../UI/Container/Box';
 import { Touchable } from '../UI/Interactive/Touchable';
 import { Text, TextProps } from '../UI/Text/Text';
 import { Icon, IconProps } from '../UI/Text/Icon';
+import * as Const from '../Const';
+
+// defaults (can be overridden per item via iconOpts/textOpts)
+const defaultIconVariant: IconProps['variant'] = 'sm';
+const defaultLabelVariant: TextProps['variant'] = 'labelSmall';
 
 /******************************************************************************************************************
  * Bottom nav bar item.
  *
  * @property value        - Navigation key / route name
  * @property text?        - Optional label
- * @property textOpts?    - Optional text props overrides (variant, color, bold, underline, etc.)
+ * @property textOpts?    - Optional text props overrides
  * @property icon?        - Optional icon source
- * @property iconOpts?    - Optional icon props overrides (variant, color/customColor, style wrapper, etc.)
+ * @property iconOpts?    - Optional icon props overrides
  * @property disabled?    - When true, item is non-interactive
  ******************************************************************************************************************/
 export type BottomNavBarItem = {
@@ -30,23 +37,15 @@ export type BottomNavBarItem = {
  * @property items                 - Navigation items (order preserved)
  * @property selectedValue?        - Currently selected route key
  * @property onSelect              - Called with selected item's value
- * @property dense?                - Compact layout
  * @property style?                - Optional container style override
  * @property itemStyle?            - Optional wrapper style for each tab item touch area
- * @property iconContainerStyle?   - Optional container style for icon wrapper area
- * @property labelContainerStyle?  - Optional container style for label wrapper area
- * @property gap?                  - Vertical gap between icon and label when both exist
  ******************************************************************************************************************/
 export type BottomNavBarProps = {
   items: BottomNavBarItem[];
   selectedValue?: string;
   onSelect: (value: string) => void;
-  dense?: boolean;
-  style?: ViewStyle;
-  itemStyle?: ViewStyle;
-  iconContainerStyle?: ViewStyle;
-  labelContainerStyle?: ViewStyle;
-  gap?: number;
+  style?: StyleProp<ViewStyle>;
+  itemStyle?: StyleProp<ViewStyle>;
 };
 
 /******************************************************************************************************************
@@ -64,107 +63,83 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = memo(
     items,
     selectedValue,
     onSelect,
-    dense = false,
     style,
     itemStyle,
-    iconContainerStyle,
-    labelContainerStyle,
-    gap,
   }) => {
-    const paddingY = dense ? Const.padSize025 : Const.padSize05;
-    const iconVariant: IconProps['variant'] = dense ? 'sm' : 'md';
-    const labelVariant: TextProps['variant'] = dense ? 'labelSmall' : 'labelMedium';
-    const resolvedGap = gap !== undefined ? gap : (dense ? Const.padSize025 : Const.padSize05);
+    const theme = useTheme();
+    const insets = useSafeAreaInsets();
 
     return (
-      <View style={[styles.row, { paddingVertical: paddingY }, style]}>
+      <Box dir='row' align='center' bgColor={theme.colors.elevation.level2} flex={0}
+        style={[
+          styles.root,
+          {
+            paddingBottom: insets.bottom,
+            borderTopColor: theme.colors.outlineVariant,
+          },
+          style,
+        ]}
+      >
         {items.map((item, idx) => {
           const disabled = !!item.disabled;
           const isSelected = selectedValue !== undefined && item.value === selectedValue;
 
-          const hasIcon = !!item.icon;
-          const hasText = !!item.text;
-
-          // caller can override by supplying explicit color/customColor in textOpts/iconOpts
-          const defaultColor: TextProps['color'] =
+          // default color
+          const color: TextProps['color'] =
             disabled ? 'disabled' : isSelected ? 'primary' : 'default';
 
-          // merge icon style safely (IconProps has style, TextProps does not)
-          const iconStyle: StyleProp<ViewStyle> = [
-            styles.iconContainer,
-            iconContainerStyle,
-            hasIcon && hasText ? { marginBottom: resolvedGap } : null,
-            item.iconOpts?.style,
-          ];
-
-          // prevent passing style twice to Icon (we merged it above)
-          const { style: _iconStyleRemove, ...iconOptsRest } = item.iconOpts ?? {};
-
           return (
-            <Touchable
-              key={`${item.value}-${idx}`}
-              onPress={() => !disabled && onSelect(item.value)}
-              disabled={disabled}
-              pressOpacity={Const.pressOpacityHeavy}
-              style={[styles.itemButton, itemStyle]}
-            >
-              <>
-                {/* icon-only OR icon+label */}
-                {hasIcon ? (
-                  <View style={iconStyle}>
-                    <Icon
-                      source={item.icon as string}
-                      variant={iconVariant}
-                      color={defaultColor}
-                      {...iconOptsRest}
-                    />
-                  </View>
-                ) : null}
+            // slot wrapper enforces equal-width distribution
+            <Box key={`${item.value}-${idx}`} flex={1}>
+              <Touchable
+                onPress={() => !disabled && onSelect(item.value)}
+                disabled={disabled}
+                style={[styles.itemButton, itemStyle]}
+              >
+                <Box align='center' justify='center' flex={0}>
+                  {item.icon ? (
+                    <Box align='center' justify='center' flex={0}>
+                      <Icon
+                        source={item.icon}
+                        variant={item.iconOpts?.variant ?? defaultIconVariant}
+                        color={item.iconOpts?.color ?? color}
+                        {...item.iconOpts}
+                      />
+                    </Box>
+                  ) : null}
 
-                {/* label-only OR icon+label */}
-                {hasText ? (
-                  <View style={[styles.labelContainer, labelContainerStyle]}>
-                    <Text
-                      variant={labelVariant}
-                      color={defaultColor}
-                      {...item.textOpts}
-                    >
-                      {item.text as string}
-                    </Text>
-                  </View>
-                ) : null}
-              </>
-            </Touchable>
+                  {item.text ? (
+                    <Box align='center' justify='center' flex={0}>
+                      <Text
+                        variant={item.textOpts?.variant ?? defaultLabelVariant}
+                        color={item.textOpts?.color ?? color}
+                        {...item.textOpts}
+                      >
+                        {item.text}
+                      </Text>
+                    </Box>
+                  ) : null}
+                </Box>
+              </Touchable>
+            </Box>
           );
         })}
-      </View>
+      </Box>
     );
   }
 );
 
 /******************************************************************************************************************
- * Styles
+ * Styles.
  ******************************************************************************************************************/
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  root: {
+    width: '100%',
+    borderTopWidth: StyleSheet.hairlineWidth,
   },
-
   itemButton: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: Const.padSize,
-  },
-
-  iconContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  labelContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });

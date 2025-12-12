@@ -222,7 +222,6 @@ const HomeScreen: Nav.ScreenType = ({ navigate }) => {
           showDividers
           align='start'
         />
-        <UI.Button onPress={() => navigate('testNestedNav')}>testNestedNav</UI.Button>
 
         {/* UI section */}
         <UI.CollapsibleContainer
