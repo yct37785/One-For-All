@@ -18,8 +18,8 @@ const UiNestedNavigator: React.FC = () => (
  * Screen setup
  ******************************************************************************************************************/
 export const navNodeMap: Nav.NavNodeMap = {
-  home: HomeScreen,
-  testNestedNav: UiNestedNavigator,
+  home: { component: HomeScreen },
+  testNestedNav: { component: UiNestedNavigator },
   ...screenRegistry,
 };
 
