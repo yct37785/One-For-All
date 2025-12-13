@@ -25,7 +25,7 @@ const TestbedScreen: Nav.ScreenType = ({}) => {
 
   return (
     <Nav.ScreenLayout LeftContent={<LeftContent />}>
-      <UI.VerticalLayout constraint='scroll'>
+      <UI.VerticalLayout bgColor='red'>
 
         <UI.MenuList options={options} onSelect={handleSelect} dense showDividers />
 

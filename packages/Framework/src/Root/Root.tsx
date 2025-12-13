@@ -2,10 +2,11 @@
 import 'react-native-get-random-values';
 import 'react-native-gesture-handler';
 // screen typing and layout
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScreenLayoutProps, ScreenLayoutContext } from '../Nav/ScreenLayout';
 // core
 import React, { memo, useEffect, useState } from 'react';
-import { View, StatusBar, Platform, LogBox } from 'react-native';
+import { View, StatusBar, Platform, LogBox, StyleSheet } from 'react-native';
 // UI
 import {
   Provider as PaperProvider,
@@ -70,7 +71,6 @@ export type RootProps = {
  *  - Put all providers here.
  ******************************************************************************************************************/
 const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps }) => {
-  const RootNavigator = rootNavigator;
   const { getItem } = useLocalData();
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -120,9 +120,12 @@ const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps 
         <PaperProvider theme={paperTheme}>
           <MenuProvider>
             <ScreenLayoutContext.Provider value={defaultScreenLayoutProps}>
-              <NavigationContainer theme={navTheme}>
-                {rootNavigator}
-              </NavigationContainer>
+              {/* SafeAreaView here so bottom inset encompasses BottomNavBar too */}
+              <SafeAreaView edges={['bottom']} style={styles.content}>
+                <NavigationContainer theme={navTheme}>
+                  {rootNavigator}
+                </NavigationContainer>
+              </SafeAreaView>
             </ScreenLayoutContext.Provider>
           </MenuProvider>
         </PaperProvider>
@@ -143,3 +146,12 @@ const AppEntry: React.FC<RootProps> = (props) => {
 };
 
 export default memo(AppEntry);
+
+/******************************************************************************************************************
+ * Styles
+ ******************************************************************************************************************/
+const styles = StyleSheet.create({
+  content: {
+    flex: 1,
+  }
+});

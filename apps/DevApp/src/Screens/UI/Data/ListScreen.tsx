@@ -116,7 +116,7 @@ const ListScreen: Nav.ScreenType = ({}) => {
     <Nav.ScreenLayout showTitle={false} LeftContent={LeftContent} RightContent={null}>
 
       {/* Header */}
-      <UI.Box ph={2}>
+      <UI.Box ph={2} pt={2}>
         <UI.Text variant='bodyMedium'>
           List renders large datasets with text search, category filters, and inline highlighting.
         </UI.Text>

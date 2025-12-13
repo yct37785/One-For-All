@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
 import { StyleSheet, ViewStyle, StyleProp } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Box } from '../UI/Container/Box';
 import { Touchable } from '../UI/Interactive/Touchable';
 import { Text, TextProps } from '../UI/Text/Text';
@@ -67,16 +66,12 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = memo(
     itemStyle,
   }) => {
     const theme = useTheme();
-    const insets = useSafeAreaInsets();
 
     return (
       <Box dir='row' align='center' bgColor={theme.colors.elevation.level2} flex={0}
         style={[
           styles.root,
-          {
-            paddingBottom: insets.bottom,
-            borderTopColor: theme.colors.outlineVariant,
-          },
+          { borderTopColor: theme.colors.outlineVariant },
           style,
         ]}
       >
@@ -130,7 +125,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = memo(
 );
 
 /******************************************************************************************************************
- * Styles.
+ * Styles
  ******************************************************************************************************************/
 const styles = StyleSheet.create({
   root: {
