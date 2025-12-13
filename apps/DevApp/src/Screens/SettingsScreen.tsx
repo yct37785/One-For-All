@@ -1,17 +1,21 @@
 import React, { memo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Switch, useTheme, Text } from 'react-native-paper';
 import { Nav, Manager, UI } from 'framework';
 
 /******************************************************************************************************************
  * Settings
  ******************************************************************************************************************/
 const SettingsScreen: Nav.ScreenType = ({ }) => {
+  const { isDarkMode, setIsDarkMode } = Manager.useAppSettings();
 
   return (
     <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout>
-        <UI.Text>Settings Screen</UI.Text>
+        <Switch
+          value={isDarkMode}
+          onValueChange={setIsDarkMode}
+        />
       </UI.VerticalLayout>
     </Nav.ScreenLayout>
   );

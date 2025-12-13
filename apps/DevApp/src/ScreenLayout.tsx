@@ -1,13 +1,13 @@
 import React, { memo, useEffect } from 'react';
 import { View } from 'react-native';
-import { Switch, useTheme, Text } from 'react-native-paper';
+import { Nav, Manager, UI } from 'framework';
 
 /******************************************************************************************************************
  * AppBar: default left content
  ******************************************************************************************************************/
 export const DefaultLeftContent = memo(() => {
   return (<View style={{ flex: 1, backgroundColor: 'red' }}>
-    <Text>Left content</Text>
+    <UI.Text>Left content</UI.Text>
   </View>)
 });
 
@@ -16,6 +16,6 @@ export const DefaultLeftContent = memo(() => {
  ******************************************************************************************************************/
 export const DefaultRightContent = memo(() => {
   return (<View style={{ flex: 1, backgroundColor: 'green' }}>
-    <Text>Right content</Text>
+    <UI.Text>Right content</UI.Text>
   </View>)
 });
