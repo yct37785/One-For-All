@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 
 /******************************************************************************************************************
  * Box demo & usage guide
@@ -20,10 +20,15 @@ import { Screen, UI } from 'framework';
  *  3 = 3x base spacing
  *  4 = 4x base spacing
  ******************************************************************************************************************/
-const BoxScreen: Screen.ScreenType = () => {
+const BoxScreen: Nav.ScreenType = ({navigate}) => {
   return (
-    <Screen.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
+
+        <UI.Text variant='bodyMedium'>Test nested Navigator please remove</UI.Text>
+        <UI.Button onPress={() => navigate('nested_collapsibles')}>ui_collapsibles</UI.Button>
+        <UI.Button onPress={() => navigate('nested_tabs')}>ui_tabs</UI.Button>
+        <UI.Divider spacing={1} />
 
         {/* Header */}
         <UI.Text variant='bodyMedium'>
@@ -164,7 +169,7 @@ const BoxScreen: Screen.ScreenType = () => {
         </UI.Box>
 
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

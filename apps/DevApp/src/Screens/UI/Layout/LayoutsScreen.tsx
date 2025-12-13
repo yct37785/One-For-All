@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 
 /******************************************************************************************************************
  * Colors and sizing helpers
@@ -38,9 +38,9 @@ const BlockBox: React.FC<{
  * - gap spacing
  * - Simple nested layouts for app-like structure
  ******************************************************************************************************************/
-const LayoutScreen: Screen.ScreenType = () => {
+const LayoutScreen: Nav.ScreenType = ({}) => {
   return (
-    <Screen.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
         {/* Intro */}
@@ -203,7 +203,7 @@ const LayoutScreen: Screen.ScreenType = () => {
         </UI.Box>
 
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

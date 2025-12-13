@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 
 /******************************************************************************************************************
  * Icon demo
@@ -9,9 +9,9 @@ import { Screen, UI } from 'framework';
  * - Semantic theme colors and custom colors
  * - Using icons inline and inside simple containers
  ******************************************************************************************************************/
-const IconScreen: Screen.ScreenType = () => {
+const IconScreen: Nav.ScreenType = ({}) => {
   return (
-    <Screen.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
         {/* Header */}
@@ -125,7 +125,7 @@ const IconScreen: Screen.ScreenType = () => {
         </UI.Box>
 
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

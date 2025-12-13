@@ -1,4 +1,4 @@
-import { Screen } from 'framework';
+import { Nav } from 'framework';
 // test bed
 import TestbedScreen from './TestbedScreen';
 /**
@@ -65,27 +65,27 @@ export const screenRoutes = {
 } as const;
 
 /******************************************************************************************************************
- * Screen registry (except home screen)
+ * Screen registry (except HomeScreen)
  ******************************************************************************************************************/
-export const screenRegistry: Screen.ScreenMap = {
-  [screenRoutes.testbed]: TestbedScreen,
-  [screenRoutes.ui_box]: BoxScreen,
-  [screenRoutes.ui_collapsibles]: CollapsiblesScreen,
-  [screenRoutes.ui_tabs]: TabsScreen,
-  [screenRoutes.ui_avatar]: AvatarScreen,
-  [screenRoutes.ui_chip]: ChipScreen,
-  [screenRoutes.ui_list]: ListScreen,
-  [screenRoutes.ui_decorators]: DecoratorsScreen,
-  [screenRoutes.ui_input]: InputScreen,
-  [screenRoutes.ui_buttons]: ButtonsScreen,
-  [screenRoutes.ui_touchable]: TouchableScreen,
-  [screenRoutes.ui_layouts]: LayoutsScreen,
-  [screenRoutes.ui_menulist]: MenuListScreen,
-  [screenRoutes.ui_modals]: ModalsScreen,
-  [screenRoutes.ui_nestedOptions]: NestedOptionsScreen,
-  [screenRoutes.ui_selections]: SelectionsScreen,
-  [screenRoutes.ui_icon]: IconScreen,
-  [screenRoutes.ui_text]: TextScreen,
-  [screenRoutes.ui_textVariants]: TextVariantsScreen,
-  [screenRoutes.f_localData]: LocalDataManagerScreen,
+export const screenRegistry: Nav.NavNodeMap = {
+  [screenRoutes.testbed]: { component: TestbedScreen },
+  [screenRoutes.ui_box]: { component: BoxScreen },
+  [screenRoutes.ui_collapsibles]: { component: CollapsiblesScreen },
+  [screenRoutes.ui_tabs]: { component: TabsScreen },
+  [screenRoutes.ui_avatar]: { component: AvatarScreen },
+  [screenRoutes.ui_chip]: { component: ChipScreen },
+  [screenRoutes.ui_list]: { component: ListScreen },
+  [screenRoutes.ui_decorators]: { component: DecoratorsScreen },
+  [screenRoutes.ui_input]: { component: InputScreen },
+  [screenRoutes.ui_buttons]: { component: ButtonsScreen },
+  [screenRoutes.ui_touchable]: { component: TouchableScreen },
+  [screenRoutes.ui_layouts]: { component: LayoutsScreen },
+  [screenRoutes.ui_menulist]: { component: MenuListScreen },
+  [screenRoutes.ui_modals]: { component: ModalsScreen },
+  [screenRoutes.ui_nestedOptions]: { component: NestedOptionsScreen },
+  [screenRoutes.ui_selections]: { component: SelectionsScreen },
+  [screenRoutes.ui_icon]: { component: IconScreen },
+  [screenRoutes.ui_text]: { component: TextScreen },
+  [screenRoutes.ui_textVariants]: { component: TextVariantsScreen },
+  [screenRoutes.f_localData]: { component: LocalDataManagerScreen },
 };

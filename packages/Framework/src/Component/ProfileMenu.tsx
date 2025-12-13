@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { StyleSheet } from 'react-native';
-import { Avatar } from '../UI/Misc/Avatar';
+import { Avatar } from '../UI/Data/Avatar';
 import { Popup } from '../UI/Modal/Popup';
 import { MenuList } from '../UI/Menu/MenuList';
 import { VerticalLayout } from '../UI/Layout/Layout';
@@ -49,7 +49,7 @@ export const ProfileMenu = memo(() => {
 });
 
 /******************************************************************************************************************
- * Styles.
+ * Styles
  ******************************************************************************************************************/
 const styles = StyleSheet.create({
   triggerContainer: {

@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 
 /******************************************************************************************************************
  * Text demo
@@ -11,9 +11,9 @@ import { Screen, UI } from 'framework';
  * - Bold and underline helpers
  * - Truncation with numberOfLines
  ******************************************************************************************************************/
-const TextScreen: Screen.ScreenType = () => {
+const TextScreen: Nav.ScreenType = ({}) => {
   return (
-    <Screen.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
         {/* Header */}
@@ -123,7 +123,7 @@ const TextScreen: Screen.ScreenType = () => {
         </UI.Box>
 
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

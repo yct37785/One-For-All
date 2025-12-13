@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 
 const TAB_CONTENT_HEIGHT = 120;
 
@@ -53,7 +53,7 @@ const BottomSecondTab = () => (
   </UI.Box>
 );
 
-const TabsScreen: Screen.ScreenType = () => {
+const TabsScreen: Nav.ScreenType = ({}) => {
   // controlled tab indices for each example
   const [basicIndex, setBasicIndex] = useState(0);
   const [iconIndex, setIconIndex] = useState(0);
@@ -92,7 +92,7 @@ const TabsScreen: Screen.ScreenType = () => {
   };
 
   return (
-    <Screen.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
         {/* Header */}
@@ -143,7 +143,7 @@ const TabsScreen: Screen.ScreenType = () => {
         </UI.Box>
 
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

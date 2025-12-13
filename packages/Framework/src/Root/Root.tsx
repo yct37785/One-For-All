@@ -2,11 +2,11 @@
 import 'react-native-get-random-values';
 import 'react-native-gesture-handler';
 // screen typing and layout
-import { ScreenMap } from '../Screen/Screen';
-import { ScreenLayoutProps, ScreenLayoutContext } from '../Screen/ScreenLayout';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScreenLayoutProps, ScreenLayoutContext } from '../Nav/ScreenLayout';
 // core
 import React, { memo, useEffect, useState } from 'react';
-import { View, StatusBar, Platform, LogBox } from 'react-native';
+import { View, StatusBar, Platform, LogBox, StyleSheet } from 'react-native';
 // UI
 import {
   Provider as PaperProvider,
@@ -23,9 +23,7 @@ import {
   NavigationContainer,
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
-  ParamListBase
 } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // data storage
 import { useLocalData, LocalDataProvider } from '../Manager/LocalDataManager';
 // Firebase
@@ -48,18 +46,14 @@ const { LightTheme: NavLight, DarkTheme: NavDark } = adaptNavigationTheme({
   reactNavigationDark: NavigationDarkTheme,
 });
 
-const Stack = createNativeStackNavigator<ParamListBase>();
-
 /******************************************************************************************************************
  * Root component props.
  *
- * @property DEFAULT_SCREEN   - Initial route name for the stack navigator
- * @property screenMap        - Mapping of route names to screen components
- * @property defaultScreenLayoutProps   - app wide screen layout (AppBar left content etc)
+ * @property rootNavigator             - Root navigator component defined by the end user app
+ * @property defaultScreenLayoutProps  - App wide screen layout (AppBar left content etc)
  ******************************************************************************************************************/
 export type RootProps = {
-  DEFAULT_SCREEN: string;
-  screenMap: ScreenMap;
+  rootNavigator: React.ReactNode;
   defaultScreenLayoutProps: ScreenLayoutProps;
 };
 
@@ -76,7 +70,7 @@ export type RootProps = {
  *  - We gate effect work with `if (!isLoaded) return;` and gate UI via conditional JSX.
  *  - Put all providers here.
  ******************************************************************************************************************/
-const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap, defaultScreenLayoutProps }) => {
+const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps }) => {
   const { getItem } = useLocalData();
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -126,13 +120,12 @@ const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap, defaultScreen
         <PaperProvider theme={paperTheme}>
           <MenuProvider>
             <ScreenLayoutContext.Provider value={defaultScreenLayoutProps}>
-              <NavigationContainer theme={navTheme}>
-                <Stack.Navigator initialRouteName={DEFAULT_SCREEN} screenOptions={{ headerShown: false }}>
-                  {Object.entries(screenMap).map(([name, Component]) => (
-                    <Stack.Screen name={name} key={name} component={Component as any} />
-                  ))}
-                </Stack.Navigator>
-              </NavigationContainer>
+              {/* SafeAreaView here so bottom inset encompasses BottomNavBar too */}
+              <SafeAreaView edges={['bottom']} style={styles.content}>
+                <NavigationContainer theme={navTheme}>
+                  {rootNavigator}
+                </NavigationContainer>
+              </SafeAreaView>
             </ScreenLayoutContext.Provider>
           </MenuProvider>
         </PaperProvider>
@@ -153,3 +146,12 @@ const AppEntry: React.FC<RootProps> = (props) => {
 };
 
 export default memo(AppEntry);
+
+/******************************************************************************************************************
+ * Styles
+ ******************************************************************************************************************/
+const styles = StyleSheet.create({
+  content: {
+    flex: 1,
+  }
+});

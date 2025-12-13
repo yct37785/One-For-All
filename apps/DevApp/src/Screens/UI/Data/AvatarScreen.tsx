@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 
 /******************************************************************************************************************
  * Avatar demo
@@ -7,11 +7,11 @@ import { Screen, UI } from 'framework';
  * This screen demonstrates:
  * - UI.Avatar: label and image avatars with size, shape, badge, color, and press handling.
  ******************************************************************************************************************/
-const AvatarScreen: Screen.ScreenType = () => {
+const AvatarScreen: Nav.ScreenType = ({}) => {
   const [pressCount, setPressCount] = useState(0);
 
   return (
-    <Screen.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
         {/* Header */}
         <UI.Text variant='bodyMedium'>
@@ -150,7 +150,7 @@ const AvatarScreen: Screen.ScreenType = () => {
 
         <UI.Box mb={4} />
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

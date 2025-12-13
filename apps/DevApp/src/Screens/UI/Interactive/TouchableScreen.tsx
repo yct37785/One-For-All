@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 
 /******************************************************************************************************************
  * Interactive demo
@@ -7,7 +7,7 @@ import { Screen, UI } from 'framework';
  * This screen demonstrates:
  * - Touchable: generic pressable wrapper for custom interactive regions.
  ******************************************************************************************************************/
-const TouchableScreen: Screen.ScreenType = () => {
+const TouchableScreen: Nav.ScreenType = ({}) => {
   const [btnClicks, setBtnClicks] = useState(0);
   const [touchableClicks, setTouchableClicks] = useState(0);
 
@@ -15,7 +15,7 @@ const TouchableScreen: Screen.ScreenType = () => {
   const onTouchableClick = () => setTouchableClicks(c => c + 1);
 
   return (
-    <Screen.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
         {/* Header */}
         <UI.Text variant='bodyMedium'>
@@ -102,7 +102,7 @@ const TouchableScreen: Screen.ScreenType = () => {
         </UI.Box>
 
       </UI.VerticalLayout>
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 

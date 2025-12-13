@@ -1,6 +1,6 @@
 import React, { memo, useMemo, useState } from 'react';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
-import { Screen, UI } from 'framework';
+import { Nav, UI } from 'framework';
 import { faker } from '@faker-js/faker';
 
 type DemoListItem = {
@@ -20,7 +20,7 @@ const CATEGORIES = ['Electronics', 'Clothing', 'Home', 'Books', 'Sports', 'Toys'
  * - UI.ChipOptions: category filters in a horizontal scroll row.
  * - UI.HighlightText: inline highlighting of the search term within each list item.
  ******************************************************************************************************************/
-const ListScreen: Screen.ScreenType = () => {
+const ListScreen: Nav.ScreenType = ({}) => {
   const [query, setQuery] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<Set<string>>(() => new Set());
   const [chipResetSignal, setChipResetSignal] = useState(0);
@@ -113,10 +113,10 @@ const ListScreen: Screen.ScreenType = () => {
   );
 
   return (
-    <Screen.ScreenLayout showTitle={false} LeftContent={LeftContent} RightContent={null}>
+    <Nav.ScreenLayout showTitle={false} LeftContent={LeftContent} RightContent={null}>
 
       {/* Header */}
-      <UI.Box ph={2}>
+      <UI.Box ph={2} pt={2}>
         <UI.Text variant='bodyMedium'>
           List renders large datasets with text search, category filters, and inline highlighting.
         </UI.Text>
@@ -154,7 +154,7 @@ const ListScreen: Screen.ScreenType = () => {
         <UI.List dataArr={items} query={query} filterMap={filterMap} renderItem={renderItem} listType={UI.ListType.flashlist} />
       </UI.Box>
 
-    </Screen.ScreenLayout>
+    </Nav.ScreenLayout>
   );
 };
 
