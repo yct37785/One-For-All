@@ -103,17 +103,17 @@ const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps 
   }, []);
 
   return (
-    <PaperProvider theme={paperTheme}>
-      <MenuProvider>
-        <ScreenLayoutContext.Provider value={defaultScreenLayoutProps}>
-          <SafeAreaView edges={['top', 'left', 'right', 'bottom']} style={styles.content}>
-            <NavigationContainer theme={navTheme}>
+    <NavigationContainer theme={navTheme}>
+      <PaperProvider theme={paperTheme}>
+        <MenuProvider>
+          <ScreenLayoutContext.Provider value={defaultScreenLayoutProps}>
+            <SafeAreaView edges={['top', 'left', 'right', 'bottom']} style={styles.content}>
               {rootNavigator}
-            </NavigationContainer>
-          </SafeAreaView>
-        </ScreenLayoutContext.Provider>
-      </MenuProvider>
-    </PaperProvider>
+            </SafeAreaView>
+          </ScreenLayoutContext.Provider>
+        </MenuProvider>
+      </PaperProvider>
+    </NavigationContainer>
   );
 };
 
