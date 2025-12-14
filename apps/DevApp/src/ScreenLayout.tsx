@@ -6,16 +6,20 @@ import { Nav, Manager, UI } from 'framework';
  * AppBar: default left content
  ******************************************************************************************************************/
 export const DefaultLeftContent = memo(() => {
-  return (<View style={{ flex: 1, backgroundColor: 'red' }}>
+  return (<UI.Box flex={1} bgColor='red'>
     <UI.Text>Left content</UI.Text>
-  </View>)
+  </UI.Box>)
 });
 
 /******************************************************************************************************************
  * AppBar: default right content
  ******************************************************************************************************************/
 export const DefaultRightContent = memo(() => {
-  return (<View style={{ flex: 1, backgroundColor: 'green' }}>
-    <UI.Text>Right content</UI.Text>
-  </View>)
+  const { isDarkMode, setIsDarkMode } = Manager.useAppSettings();
+  return (<UI.Box flex={1} justify='center'>
+    <UI.Switch
+      value={isDarkMode}
+      onValueChange={setIsDarkMode}
+    />
+  </UI.Box>)
 });
