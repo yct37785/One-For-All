@@ -25,6 +25,14 @@ export type DemoColorSet = {
   cyanA: string;
   cyanB: string;
   cyanC: string;
+
+  listRowA: string;
+  listRowB: string;
+  listThumbBg: string;
+
+  tier1: string;
+  tier2: string;
+  tier3: string;
 };
 
 /******************************************************************************************************************
@@ -62,5 +70,17 @@ export function getDemoColors(isDarkMode: boolean): DemoColorSet {
     cyanA: isDarkMode ? '#1f6570' : '#4dd0e1',
     cyanB: isDarkMode ? '#1b7482' : '#26c6da',
     cyanC: isDarkMode ? '#198291' : '#00acc1',
+
+    // list rows (subtle alternation)
+    listRowA: isDarkMode ? '#101316' : '#ffffff',
+    listRowB: isDarkMode ? '#151a1f' : '#fafafa',
+
+    // optional: used behind thumbnails if image fails / loads slowly
+    listThumbBg: isDarkMode ? '#232a31' : '#eeeeee',
+
+    // tiers
+    tier1: isDarkMode ? '#121417' : '#f0f1f5ff',
+    tier2: isDarkMode ? '#1d2227ff' : '#e0e1e6ff',
+    tier3: isDarkMode ? '#2d343bff' : '#bdc0c4ff',
   };
 }
