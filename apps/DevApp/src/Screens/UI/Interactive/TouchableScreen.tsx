@@ -34,9 +34,7 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
             onPress={onTouchableClick}
             style={{
               paddingVertical: 10,
-              paddingHorizontal: 16,
-              borderRadius: 8,
-              backgroundColor: colors.cyanBg,
+              paddingHorizontal: 16
             }}
           >
             <UI.Text variant='bodyMedium'>Tap me (opacity + ripple)</UI.Text>
@@ -51,7 +49,7 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
 
         {/* Touchable · custom content */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Touchable · custom content</UI.Text>
+        <UI.Text variant='titleMedium'>Touchable · custom style</UI.Text>
 
         <UI.Box mt={2}>
           <UI.Touchable

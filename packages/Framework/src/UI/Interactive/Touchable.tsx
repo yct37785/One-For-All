@@ -181,7 +181,8 @@ export const Touchable: React.FC<TouchableProps> = memo(
 
     const ripple =
       Platform.OS === 'android' && isOpacity
-        ? { ...rippleBase, foreground: !hasAnyRadius }
+      // ? { ...rippleBase, foreground: !hasAnyRadius } removed foreground
+        ? { ...rippleBase }
         : undefined;
 
     return (
