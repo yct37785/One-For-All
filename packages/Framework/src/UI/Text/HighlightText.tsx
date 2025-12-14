@@ -6,7 +6,7 @@ function escapeRegExp(s: string) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-const defaultHighlightColor = 'yellow';
+const defaultHighlightColor = 'rgba(255, 235, 59, 0.4)';
 
 /******************************************************************************************************************
  * Highlight text props.
