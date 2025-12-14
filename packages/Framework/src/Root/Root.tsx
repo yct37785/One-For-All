@@ -7,13 +7,10 @@ import { ScreenLayoutProps, ScreenLayoutContext } from '../Nav/ScreenLayout';
 // core
 import React, { memo, useEffect, useState } from 'react';
 import { View, StatusBar, Platform, LogBox, StyleSheet } from 'react-native';
-// UI
-import {
-  Provider as PaperProvider,
-  adaptNavigationTheme,
-  MD3DarkTheme,
-  MD3LightTheme
-} from 'react-native-paper';
+// theme
+import { Provider as PaperProvider, adaptNavigationTheme } from 'react-native-paper';
+import { AppLightTheme, AppDarkTheme } from '../Theme/Theme';
+// UI & layout
 import { MenuProvider } from 'react-native-popup-menu';
 import * as NavigationBar from 'expo-navigation-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -77,7 +74,7 @@ const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps 
   const { isDarkMode } = useAppSettings();
 
   // pick theme
-  const paperTheme = isDarkMode ? MD3DarkTheme : MD3LightTheme;
+  const paperTheme = isDarkMode ? AppDarkTheme : AppLightTheme;
   const navTheme = isDarkMode ? NavDark : NavLight;
 
   /****************************************************************************************************************
