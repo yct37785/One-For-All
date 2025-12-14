@@ -52,12 +52,11 @@ export type MenuListItemProps = {
  ******************************************************************************************************************/
 export const MenuListItem: React.FC<MenuListItemProps> = memo(
   ({ option, onPress, dense = false, align = 'start' }) => {
-    const paddingX = dense ? Const.padSize025 : Const.padSize;
     const paddingY = dense ? Const.padSize : Const.padSize * 2;
     const disabled = !!option.disabled;
 
     const wrapperStyle: ViewStyle = {
-      paddingHorizontal: paddingX,
+      paddingHorizontal: Const.padSize,
       paddingVertical: paddingY,
       flexDirection: 'row',
       alignItems: 'center',
@@ -75,7 +74,6 @@ export const MenuListItem: React.FC<MenuListItemProps> = memo(
 
     return (
       <Touchable
-        pressOpacity={Const.pressOpacityHeavy}
         onPress={() => !disabled && onPress(option.value)}
         disabled={disabled}
         style={wrapperStyle}

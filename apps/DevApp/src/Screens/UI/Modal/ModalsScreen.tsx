@@ -1,6 +1,5 @@
 import React, { memo, useState } from 'react';
 import { Nav, UI } from 'framework';
-import { MenuOption } from 'react-native-popup-menu';
 
 /******************************************************************************************************************
  * Modals demo
@@ -140,21 +139,16 @@ const ModalsScreen: Nav.ScreenType = ({}) => {
               </UI.Button>
             }
           >
-            <MenuOption
-              onSelect={() => setLastPopupAction('New file')}
-              text='New file'
-            />
-            <MenuOption
-              onSelect={() => setLastPopupAction('Open…')}
-              text='Open…'
-            />
-            <MenuOption
-              onSelect={() => setLastPopupAction('Save')}
-              text='Save'
-            />
-            <MenuOption
-              onSelect={() => setLastPopupAction('Duplicate')}
-              text='Duplicate'
+            <UI.MenuList
+              options={[
+                { value: 'New file', text: 'New file' },
+                { value: 'Open…', text: 'Open…' },
+                { value: 'Save', text: 'Save' },
+                { value: 'Duplicate', text: 'Duplicate' },
+              ]}
+              onSelect={(value) => setLastPopupAction(value)}
+              showDividers
+              dense
             />
           </UI.Popup>
         </UI.Box>
@@ -169,20 +163,19 @@ const ModalsScreen: Nav.ScreenType = ({}) => {
               <UI.IconButton icon='dots-vertical' mode='contained-tonal' />
             }
           >
-            <MenuOption
-              onSelect={() => setLastPopupAction('Share')}
-              text='Share'
-            />
-            <MenuOption
-              onSelect={() => setLastPopupAction('Rename')}
-              text='Rename'
-            />
-            <MenuOption
-              onSelect={() => setLastPopupAction('Move to trash')}
-              text='Move to trash'
+            <UI.MenuList
+              options={[
+                { value: 'Share', text: 'Share', icon: 'share-variant' },
+                { value: 'Rename', text: 'Rename', icon: 'pencil' },
+                { value: 'Move to trash', text: 'Move to trash', icon: 'trash-can-outline' },
+              ]}
+              onSelect={(value) => setLastPopupAction(value)}
+              showDividers
+              dense
             />
           </UI.Popup>
         </UI.Box>
+
       </UI.VerticalLayout>
     </Nav.ScreenLayout>
   );
