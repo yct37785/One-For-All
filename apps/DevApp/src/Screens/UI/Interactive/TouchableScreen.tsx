@@ -1,5 +1,6 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI } from 'framework';
+import { Nav, UI, Manager } from 'framework';
+import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
  * Interactive demo
@@ -8,10 +9,10 @@ import { Nav, UI } from 'framework';
  * - Touchable: generic pressable wrapper for custom interactive regions.
  ******************************************************************************************************************/
 const TouchableScreen: Nav.ScreenType = ({}) => {
-  const [btnClicks, setBtnClicks] = useState(0);
+  const { isDarkMode } = Manager.useAppSettings();
+  const colors = getDemoColors(isDarkMode);
   const [touchableClicks, setTouchableClicks] = useState(0);
 
-  const onBtnClick = () => setBtnClicks(c => c + 1);
   const onTouchableClick = () => setTouchableClicks(c => c + 1);
 
   return (
@@ -34,7 +35,7 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
               paddingVertical: 10,
               paddingHorizontal: 16,
               borderRadius: 8,
-              backgroundColor: '#e3f2fd',
+              backgroundColor: colors.cyanBg,
             }}
           >
             <UI.Text variant='bodyMedium'>Tap me (opacity + ripple)</UI.Text>
@@ -58,7 +59,7 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
               paddingVertical: 10,
               paddingHorizontal: 16,
               borderRadius: 999,
-              backgroundColor: '#fff3e0',
+              backgroundColor: colors.amber,
               flexDirection: 'row',
               alignItems: 'center',
             }}
@@ -88,7 +89,7 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
               paddingVertical: 10,
               paddingHorizontal: 16,
               borderRadius: 8,
-              backgroundColor: '#fce4ec',
+              backgroundColor: colors.greenStrong,
             }}
           >
             <UI.Text variant='bodyMedium'>No visual feedback</UI.Text>

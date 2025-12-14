@@ -50,7 +50,7 @@ const TextScreen: Nav.ScreenType = ({}) => {
         <UI.Text variant='titleMedium'>Colors</UI.Text>
 
         <UI.Text variant='labelMedium' color='label'>
-          Use semantic colors to match the theme.
+          Use semantic colors to match the requirements.
         </UI.Text>
 
         <UI.Box mt={2}>
@@ -60,9 +60,6 @@ const TextScreen: Nav.ScreenType = ({}) => {
           <UI.Text color='primary'>Primary text</UI.Text>
           <UI.Text color='secondary'>Secondary text</UI.Text>
           <UI.Text color='error'>Error text</UI.Text>
-          <UI.Box mt={1} bgColor='#212121' p={1}>
-            <UI.Text color='surface'>Surface text on dark background</UI.Text>
-          </UI.Box>
         </UI.Box>
 
         {/* Highlighting */}

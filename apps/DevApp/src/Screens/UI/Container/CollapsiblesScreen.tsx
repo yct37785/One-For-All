@@ -84,7 +84,7 @@ const CollapsibleScreen: Nav.ScreenType = ({}) => {
           <UI.CollapsibleContainer
             text='Custom color'
             icon='palette'
-            textOpts={{ variant: 'titleSmall', customColor: colors.purpleB }}
+            textOpts={{ variant: 'titleSmall', customColor: colors.cyanC }}
             iconOpts={{ customColor: colors.purpleB }}
           >
             <UI.Box bgColor={colors.purpleBg} p={1}>
