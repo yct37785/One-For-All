@@ -77,7 +77,7 @@ const HomeScreen: Nav.ScreenType = ({ navigate }) => {
   ];
 
   const UI_selectionsOptions = [
-    { value: screenRoutes.ui_selections, text: 'Pickers & selections' },
+    { value: screenRoutes.ui_selections, text: 'Selections & toggles' },
   ];
 
   const UI_textOptions = [

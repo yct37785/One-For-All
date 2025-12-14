@@ -20,6 +20,7 @@ export * from '../UI/Options/CheckOptions';
 export * from '../UI/Options/ChipOptions';
 export * from '../UI/Selection/Picker';
 export * from '../UI/Selection/RadioGroup';
+export * from '../UI/Selection/Switch';
 export * from '../UI/Text/HighlightText';
 export * from '../UI/Text/HyperlinkText';
 export * from '../UI/Text/Icon';
