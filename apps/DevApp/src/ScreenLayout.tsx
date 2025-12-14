@@ -1,21 +1,25 @@
 import React, { memo, useEffect } from 'react';
 import { View } from 'react-native';
-import { Switch, useTheme, Text } from 'react-native-paper';
+import { Nav, Manager, UI } from 'framework';
 
 /******************************************************************************************************************
  * AppBar: default left content
  ******************************************************************************************************************/
 export const DefaultLeftContent = memo(() => {
-  return (<View style={{ flex: 1, backgroundColor: 'red' }}>
-    <Text>Left content</Text>
-  </View>)
+  return (<UI.Box flex={1} bgColor='red'>
+    <UI.Text>Left content</UI.Text>
+  </UI.Box>)
 });
 
 /******************************************************************************************************************
  * AppBar: default right content
  ******************************************************************************************************************/
 export const DefaultRightContent = memo(() => {
-  return (<View style={{ flex: 1, backgroundColor: 'green' }}>
-    <Text>Right content</Text>
-  </View>)
+  const { isDarkMode, setIsDarkMode } = Manager.useAppSettings();
+  return (<UI.Box flex={1} justify='center'>
+    <UI.Switch
+      value={isDarkMode}
+      onValueChange={setIsDarkMode}
+    />
+  </UI.Box>)
 });

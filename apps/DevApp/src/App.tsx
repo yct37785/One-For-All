@@ -2,6 +2,7 @@ import React from 'react';
 import { Root, Nav } from 'framework';
 // screens
 import HomeScreen from './Screens/HomeScreen';
+import SettingsScreen from './Screens/SettingsScreen';
 import { screenRegistry } from './Screens/ScreenRegistry';
 // layout
 import { DefaultLeftContent, DefaultRightContent } from './ScreenLayout';
@@ -28,6 +29,7 @@ const MainStackNavigator: React.FC = () => (
  * - Two dummy tabs: reuse existing screens for now
  ******************************************************************************************************************/
 export const rootTabsNodeMap: Nav.NavNodeMap = {
+  // main stack
   main: {
     component: MainStackNavigator,
     label: 'Main',
@@ -41,9 +43,9 @@ export const rootTabsNodeMap: Nav.NavNodeMap = {
     icon: 'compass',
   },
 
-  // dummy tab #2 (reuse an existing page)
+  // settings screen
   settings: {
-    component: mainStackNodeMap['ui_layouts']?.component ?? MainStackNavigator,
+    component: SettingsScreen,
     label: 'Settings',
     icon: 'cog',
   },

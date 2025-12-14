@@ -1,6 +1,7 @@
 import React, { useRef, memo, ReactNode } from 'react';
 import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Menu, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
+import { useTheme } from 'react-native-paper';
 import { Touchable } from '../Interactive/Touchable';
 
 /******************************************************************************************************************
@@ -22,30 +23,40 @@ export type PopupProps = {
 
 /******************************************************************************************************************
  * A contextual floating menu or overlay triggered by a user action such as a button press.
- *
- * @usage
- * ```tsx
- * <Popup triggerComp={<IconButton icon="dots-vertical" />}>
- *   <MenuOption onSelect={doSomething} text="Option A" />
- *   <MenuOption onSelect={doOther} text="Option B" />
- * </Popup>
- * ```
  ******************************************************************************************************************/
 export const Popup: React.FC<PopupProps> = memo(
   ({ triggerComp, disabled = false, triggerContainerStyle, style, children }) => {
     const menuRef = useRef<Menu | null>(null);
+    const theme = useTheme();
 
     const triggerStyles = {
       TriggerTouchableComponent: Touchable,
       triggerOuterWrapper: triggerContainerStyle,
     };
 
+    // key forces Menu to remount when theme mode changes (helps if library caches internal styles)
+    const themeKey = theme.dark ? 'dark' : 'light';
+
     return (
-      <Menu ref={menuRef} style={[styles.menu, style]}>
+      <Menu key={themeKey} ref={menuRef} style={[styles.menu, style]}>
         <MenuTrigger disabled={disabled} customStyles={triggerStyles}>
           {triggerComp}
         </MenuTrigger>
-        <MenuOptions>{children}</MenuOptions>
+
+        <MenuOptions
+          customStyles={{
+            optionsContainer: {
+              backgroundColor: theme.colors.elevation.level2,
+              borderRadius: 12,
+              paddingVertical: 6,
+            },
+            optionsWrapper: {
+              backgroundColor: 'transparent',
+            },
+          }}
+        >
+          {children}
+        </MenuOptions>
       </Menu>
     );
   }

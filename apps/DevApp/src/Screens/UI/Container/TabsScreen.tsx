@@ -1,7 +1,68 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI } from 'framework';
+import { Nav, UI, Manager } from 'framework';
+import { getDemoColors } from '../../demoColors';
 
 const TAB_CONTENT_HEIGHT = 120;
+
+/******************************************************************************************************************
+ * Tab scene factory
+ ******************************************************************************************************************/
+function createTabScenes(isDarkMode: boolean) {
+  const colors = getDemoColors(isDarkMode);
+
+  // simple tab scenes for demos
+  const BasicFirstTab = () => (
+    <UI.Box p={2} bgColor={colors.skyBg} flex={1}>
+      <UI.Text variant='bodySmall'>Basic first tab content.</UI.Text>
+    </UI.Box>
+  );
+
+  const BasicSecondTab = () => (
+    <UI.Box p={2} bgColor={colors.neutralAlt} flex={1}>
+      <UI.Text variant='bodySmall'>Basic second tab content.</UI.Text>
+    </UI.Box>
+  );
+
+  const IconHomeTab = () => (
+    <UI.Box p={2} bgColor={colors.orangeBg} flex={1}>
+      <UI.Text variant='bodySmall'>Home tab with icon.</UI.Text>
+    </UI.Box>
+  );
+
+  const IconSearchTab = () => (
+    <UI.Box p={2} bgColor={colors.purpleBg} flex={1}>
+      <UI.Text variant='bodySmall'>Search tab with icon.</UI.Text>
+    </UI.Box>
+  );
+
+  const IconProfileTab = () => (
+    <UI.Box p={2} bgColor={colors.cyanBg} flex={1}>
+      <UI.Text variant='bodySmall'>Profile tab with icon.</UI.Text>
+    </UI.Box>
+  );
+
+  const BottomFirstTab = () => (
+    <UI.Box p={2} bgColor={colors.purpleA} flex={1}>
+      <UI.Text variant='bodySmall'>Bottom tabs · first tab.</UI.Text>
+    </UI.Box>
+  );
+
+  const BottomSecondTab = () => (
+    <UI.Box p={2} bgColor={colors.purpleB} flex={1}>
+      <UI.Text variant='bodySmall'>Bottom tabs · second tab.</UI.Text>
+    </UI.Box>
+  );
+
+  return {
+    BasicFirstTab,
+    BasicSecondTab,
+    IconHomeTab,
+    IconSearchTab,
+    IconProfileTab,
+    BottomFirstTab,
+    BottomSecondTab,
+  };
+}
 
 /******************************************************************************************************************
  * Tabs demo
@@ -9,51 +70,10 @@ const TAB_CONTENT_HEIGHT = 120;
  * This screen demonstrates:
  * - UI.TabsContainer: tabbed navigation where the active tab controls which scene is shown.
  ******************************************************************************************************************/
-
-// simple tab scenes for demos
-const BasicFirstTab = () => (
-  <UI.Box p={2} bgColor='#e3f2fd' flex={1}>
-    <UI.Text variant='bodySmall'>Basic first tab content.</UI.Text>
-  </UI.Box>
-);
-
-const BasicSecondTab = () => (
-  <UI.Box p={2} bgColor='#f1f8e9' flex={1}>
-    <UI.Text variant='bodySmall'>Basic second tab content.</UI.Text>
-  </UI.Box>
-);
-
-const IconHomeTab = () => (
-  <UI.Box p={2} bgColor='#fff3e0' flex={1}>
-    <UI.Text variant='bodySmall'>Home tab with icon.</UI.Text>
-  </UI.Box>
-);
-
-const IconSearchTab = () => (
-  <UI.Box p={2} bgColor='#e8eaf6' flex={1}>
-    <UI.Text variant='bodySmall'>Search tab with icon.</UI.Text>
-  </UI.Box>
-);
-
-const IconProfileTab = () => (
-  <UI.Box p={2} bgColor='#e0f7fa' flex={1}>
-    <UI.Text variant='bodySmall'>Profile tab with icon.</UI.Text>
-  </UI.Box>
-);
-
-const BottomFirstTab = () => (
-  <UI.Box p={2} bgColor='#fce4ec' flex={1}>
-    <UI.Text variant='bodySmall'>Bottom tabs · first tab.</UI.Text>
-  </UI.Box>
-);
-
-const BottomSecondTab = () => (
-  <UI.Box p={2} bgColor='#ede7f6' flex={1}>
-    <UI.Text variant='bodySmall'>Bottom tabs · second tab.</UI.Text>
-  </UI.Box>
-);
-
 const TabsScreen: Nav.ScreenType = ({}) => {
+  const { isDarkMode } = Manager.useAppSettings();
+  const scenes = createTabScenes(isDarkMode);
+
   // controlled tab indices for each example
   const [basicIndex, setBasicIndex] = useState(0);
   const [iconIndex, setIconIndex] = useState(0);
@@ -65,8 +85,8 @@ const TabsScreen: Nav.ScreenType = ({}) => {
     { key: 'basicSecond', title: 'Second' },
   ];
   const basicSceneMap = {
-    basicFirst: BasicFirstTab,
-    basicSecond: BasicSecondTab,
+    basicFirst: scenes.BasicFirstTab,
+    basicSecond: scenes.BasicSecondTab,
   };
 
   // tabs with icons (top)
@@ -76,9 +96,9 @@ const TabsScreen: Nav.ScreenType = ({}) => {
     { key: 'profile', title: 'Profile', icon: 'account' },
   ];
   const iconSceneMap = {
-    home: IconHomeTab,
-    search: IconSearchTab,
-    profile: IconProfileTab,
+    home: scenes.IconHomeTab,
+    search: scenes.IconSearchTab,
+    profile: scenes.IconProfileTab,
   };
 
   // bottom-positioned tabs
@@ -87,8 +107,8 @@ const TabsScreen: Nav.ScreenType = ({}) => {
     { key: 'bottomSecond', title: 'Second', icon: 'format-list-bulleted' },
   ];
   const bottomSceneMap = {
-    bottomFirst: BottomFirstTab,
-    bottomSecond: BottomSecondTab,
+    bottomFirst: scenes.BottomFirstTab,
+    bottomSecond: scenes.BottomSecondTab,
   };
 
   return (

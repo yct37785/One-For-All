@@ -1,43 +1,32 @@
 import React, { memo, useState } from 'react';
 import { Nav, UI } from 'framework';
-import { MenuOption } from 'react-native-popup-menu';
 
 /******************************************************************************************************************
- * Modals demo
+ * Dialogs demo
  *
  * This screen demonstrates:
  * - UI.Dialog: focused modal surfaces for confirmation and decisions.
- * - UI.Popup: contextual floating menus triggered by a button or icon.
  ******************************************************************************************************************/
-const ModalsScreen: Nav.ScreenType = ({}) => {
+const DialogsScreen: Nav.ScreenType = ({}) => {
   const [basicDialogVisible, setBasicDialogVisible] = useState(false);
   const [customDialogVisible, setCustomDialogVisible] = useState(false);
   const [dismissDialogVisible, setDismissDialogVisible] = useState(false);
   const [lastDialogAction, setLastDialogAction] = useState<string | null>(null);
-  const [lastPopupAction, setLastPopupAction] = useState<string | null>(null);
 
   return (
     <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
         {/* Header */}
         <UI.Text variant='bodyMedium'>
-          Dialog and Popup provide modal and contextual overlays for focused user actions such as confirmations or
-          small menus.
+          Dialog provides a focused modal surface for confirmations, decisions, and important actions.
         </UI.Text>
 
-        {/* Last actions */}
-        {(lastDialogAction || lastPopupAction) && (
+        {/* Last action */}
+        {lastDialogAction && (
           <UI.Box mt={1}>
-            {lastDialogAction && (
-              <UI.Text variant='labelSmall' color='label'>
-                Last dialog action: {lastDialogAction}
-              </UI.Text>
-            )}
-            {lastPopupAction && (
-              <UI.Text variant='labelSmall' color='label'>
-                Last popup action: {lastPopupAction}
-              </UI.Text>
-            )}
+            <UI.Text variant='labelSmall' color='label'>
+              Last dialog action: {lastDialogAction}
+            </UI.Text>
           </UI.Box>
         )}
 
@@ -128,64 +117,9 @@ const ModalsScreen: Nav.ScreenType = ({}) => {
           </UI.VerticalLayout>
         </UI.Dialog>
 
-        {/* Popup · basic menu */}
-        <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Popup · basic menu</UI.Text>
-
-        <UI.Box mt={2}>
-          <UI.Popup
-            triggerComp={
-              <UI.Button mode='outlined'>
-                Open menu
-              </UI.Button>
-            }
-          >
-            <MenuOption
-              onSelect={() => setLastPopupAction('New file')}
-              text='New file'
-            />
-            <MenuOption
-              onSelect={() => setLastPopupAction('Open…')}
-              text='Open…'
-            />
-            <MenuOption
-              onSelect={() => setLastPopupAction('Save')}
-              text='Save'
-            />
-            <MenuOption
-              onSelect={() => setLastPopupAction('Duplicate')}
-              text='Duplicate'
-            />
-          </UI.Popup>
-        </UI.Box>
-
-        {/* Popup · icon trigger */}
-        <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Popup · icon trigger</UI.Text>
-
-        <UI.Box mt={2} mb={4}>
-          <UI.Popup
-            triggerComp={
-              <UI.IconButton icon='dots-vertical' mode='contained-tonal' />
-            }
-          >
-            <MenuOption
-              onSelect={() => setLastPopupAction('Share')}
-              text='Share'
-            />
-            <MenuOption
-              onSelect={() => setLastPopupAction('Rename')}
-              text='Rename'
-            />
-            <MenuOption
-              onSelect={() => setLastPopupAction('Move to trash')}
-              text='Move to trash'
-            />
-          </UI.Popup>
-        </UI.Box>
       </UI.VerticalLayout>
     </Nav.ScreenLayout>
   );
 };
 
-export default memo(ModalsScreen);
+export default memo(DialogsScreen);

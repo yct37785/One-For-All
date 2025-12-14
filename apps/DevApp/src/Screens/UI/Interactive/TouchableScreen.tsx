@@ -1,5 +1,7 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI } from 'framework';
+import { StyleSheet } from 'react-native';
+import { Nav, UI, Manager } from 'framework';
+import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
  * Interactive demo
@@ -8,10 +10,10 @@ import { Nav, UI } from 'framework';
  * - Touchable: generic pressable wrapper for custom interactive regions.
  ******************************************************************************************************************/
 const TouchableScreen: Nav.ScreenType = ({}) => {
-  const [btnClicks, setBtnClicks] = useState(0);
+  const { isDarkMode } = Manager.useAppSettings();
+  const colors = getDemoColors(isDarkMode);
   const [touchableClicks, setTouchableClicks] = useState(0);
 
-  const onBtnClick = () => setBtnClicks(c => c + 1);
   const onTouchableClick = () => setTouchableClicks(c => c + 1);
 
   return (
@@ -32,9 +34,7 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
             onPress={onTouchableClick}
             style={{
               paddingVertical: 10,
-              paddingHorizontal: 16,
-              borderRadius: 8,
-              backgroundColor: '#e3f2fd',
+              paddingHorizontal: 16
             }}
           >
             <UI.Text variant='bodyMedium'>Tap me (opacity + ripple)</UI.Text>
@@ -49,7 +49,7 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
 
         {/* Touchable · custom content */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Touchable · custom content</UI.Text>
+        <UI.Text variant='titleMedium'>Touchable · custom style</UI.Text>
 
         <UI.Box mt={2}>
           <UI.Touchable
@@ -58,7 +58,7 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
               paddingVertical: 10,
               paddingHorizontal: 16,
               borderRadius: 999,
-              backgroundColor: '#fff3e0',
+              backgroundColor: colors.amber,
               flexDirection: 'row',
               alignItems: 'center',
             }}
@@ -66,6 +66,75 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
             <UI.Icon source='heart-outline' variant='sm' />
             <UI.Box ml={1}>
               <UI.Text variant='bodyMedium'>Like</UI.Text>
+            </UI.Box>
+          </UI.Touchable>
+        </UI.Box>
+
+        <UI.Box mt={1}>
+          <UI.Text variant='labelSmall' color='label'>
+            Touchable taps: {touchableClicks}
+          </UI.Text>
+        </UI.Box>
+
+        {/* Touchable · radius & shapes */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>Touchable · radius & shapes</UI.Text>
+
+        <UI.Box mt={1}>
+          <UI.Text variant='labelSmall' color='label'>
+            These examples demonstrate ripple clipping with rounded / custom shapes.
+          </UI.Text>
+        </UI.Box>
+
+        {/* pill */}
+        <UI.Box mt={2}>
+          <UI.Touchable
+            onPress={onTouchableClick}
+            style={{
+              paddingVertical: 12,
+              paddingHorizontal: 18,
+              borderRadius: 999,
+              backgroundColor: colors.greenStrong,
+            }}
+          >
+            <UI.Text variant='bodyMedium'>Pill (borderRadius: 999)</UI.Text>
+          </UI.Touchable>
+        </UI.Box>
+
+        {/* asymmetric radius */}
+        <UI.Box mt={2}>
+          <UI.Touchable
+            onPress={onTouchableClick}
+            style={{
+              paddingVertical: 12,
+              paddingHorizontal: 18,
+              backgroundColor: colors.purpleBg,
+              borderTopLeftRadius: 18,
+              borderTopRightRadius: 4,
+              borderBottomLeftRadius: 4,
+              borderBottomRightRadius: 18,
+            }}
+          >
+            <UI.Text variant='bodyMedium'>Asymmetric corners</UI.Text>
+          </UI.Touchable>
+        </UI.Box>
+
+        {/* card-like */}
+        <UI.Box mt={2}>
+          <UI.Touchable
+            onPress={onTouchableClick}
+            style={{
+              paddingVertical: 14,
+              paddingHorizontal: 16,
+              backgroundColor: colors.neutralAlt,
+              borderRadius: 14,
+            }}
+          >
+            <UI.Text variant='bodyMedium'>Card radius (14)</UI.Text>
+            <UI.Box mt={1}>
+              <UI.Text variant='bodySmall' color='label'>
+                Ripple should stay inside the rounded container.
+              </UI.Text>
             </UI.Box>
           </UI.Touchable>
         </UI.Box>
@@ -88,7 +157,7 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
               paddingVertical: 10,
               paddingHorizontal: 16,
               borderRadius: 8,
-              backgroundColor: '#fce4ec',
+              backgroundColor: colors.greenStrong,
             }}
           >
             <UI.Text variant='bodyMedium'>No visual feedback</UI.Text>
@@ -107,3 +176,5 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
 };
 
 export default memo(TouchableScreen);
+
+const styles = StyleSheet.create({});

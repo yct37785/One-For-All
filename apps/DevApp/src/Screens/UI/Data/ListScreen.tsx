@@ -1,7 +1,8 @@
 import React, { memo, useMemo, useState } from 'react';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
-import { Nav, UI } from 'framework';
+import { Nav, UI, Manager } from 'framework';
 import { faker } from '@faker-js/faker';
+import { getDemoColors } from '../../demoColors';
 
 type DemoListItem = {
   searchable: Record<string, string>;
@@ -21,6 +22,9 @@ const CATEGORIES = ['Electronics', 'Clothing', 'Home', 'Books', 'Sports', 'Toys'
  * - UI.HighlightText: inline highlighting of the search term within each list item.
  ******************************************************************************************************************/
 const ListScreen: Nav.ScreenType = ({}) => {
+  const { isDarkMode } = Manager.useAppSettings();
+  const colors = getDemoColors(isDarkMode);
+
   const [query, setQuery] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<Set<string>>(() => new Set());
   const [chipResetSignal, setChipResetSignal] = useState(0);
@@ -72,13 +76,15 @@ const ListScreen: Nav.ScreenType = ({}) => {
     const { category } = item.filterable;
     const { price, imageUrl } = item.none;
 
-    const bg = index % 2 === 0 ? '#ffffff' : '#fafafa';
+    const bg = index % 2 === 0 ? colors.listRowA : colors.listRowB;
 
     return (
       <UI.Box bgColor={bg} p={1}>
         <View style={styles.itemRow}>
           {/* Thumbnail */}
-          <Image source={{ uri: imageUrl }} style={styles.thumbnail} />
+          <UI.Box bgColor={colors.listThumbBg} style={styles.thumbContainer}>
+            <Image source={{ uri: imageUrl }} style={styles.thumbnail} />
+          </UI.Box>
 
           {/* Text block */}
           <View style={styles.itemText}>
@@ -121,7 +127,7 @@ const ListScreen: Nav.ScreenType = ({}) => {
           List renders large datasets with text search, category filters, and inline highlighting.
         </UI.Text>
       </UI.Box>
-      
+
       {/* Chips filter */}
       <UI.Divider spacing={1} />
       <UI.Box p={1}>
@@ -151,7 +157,13 @@ const ListScreen: Nav.ScreenType = ({}) => {
 
       {/* List as the main scrollable content */}
       <UI.Box flex={1} mt={0}>
-        <UI.List dataArr={items} query={query} filterMap={filterMap} renderItem={renderItem} listType={UI.ListType.flashlist} />
+        <UI.List
+          dataArr={items}
+          query={query}
+          filterMap={filterMap}
+          renderItem={renderItem}
+          listType={UI.ListType.flashlist}
+        />
       </UI.Box>
 
     </Nav.ScreenLayout>
@@ -163,12 +175,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
   },
-  thumbnail: {
+
+  // container behind the Image so list looks stable during image loading/failures
+  thumbContainer: {
     width: 52,
     height: 52,
     borderRadius: 6,
     marginRight: 8,
+    overflow: 'hidden',
   },
+  thumbnail: {
+    width: 52,
+    height: 52,
+    borderRadius: 6,
+  },
+
   itemText: {
     flex: 1,
   },

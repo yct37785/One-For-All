@@ -7,10 +7,14 @@ import { Nav, UI } from 'framework';
  * This screen demonstrates single-selection UI, where only one option can be
  * active at a time. Use Picker for dropdown-style selection and RadioGroup
  * when you want options to remain visible side by side.
+ *
+ * It also includes Switch, which is commonly used in settings screens to toggle
+ * a single preference (e.g. dark mode).
  ******************************************************************************************************************/
 const SelectionsScreen: Nav.ScreenType = ({}) => {
   const [pickerValue, setPickerValue] = useState<string>('red');
   const [radioValue, setRadioValue] = useState<string>('cat');
+  const [switchValue, setSwitchValue] = useState<boolean>(false);
 
   const pickerOptions = [
     { label: 'Red', value: 'red' },
@@ -74,6 +78,26 @@ const SelectionsScreen: Nav.ScreenType = ({}) => {
         <UI.Box mt={1}>
           <UI.Text variant='bodySmall'>
             Selected animal: {radioValue}
+          </UI.Text>
+        </UI.Box>
+
+        {/* Switch */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>Switch</UI.Text>
+        <UI.Text variant='labelMedium' color='label'>
+          A binary toggle for enabling/disabling a preference.
+        </UI.Text>
+
+        <UI.Box mt={2}>
+          <UI.Switch
+            value={switchValue}
+            onValueChange={setSwitchValue}
+          />
+        </UI.Box>
+
+        <UI.Box mt={1}>
+          <UI.Text variant='bodySmall'>
+            Switch value: {switchValue ? 'On' : 'Off'}
           </UI.Text>
         </UI.Box>
 

@@ -104,7 +104,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = memo(
                   ) : null}
 
                   {item.text ? (
-                    <Box align='center' justify='center' flex={0}>
+                    <Box align='center' justify='center' flex={0} mt={1}>
                       <Text
                         variant={item.textOpts?.variant ?? defaultLabelVariant}
                         color={item.textOpts?.color ?? color}

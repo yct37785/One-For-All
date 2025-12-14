@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
-import { Nav, UI } from 'framework';
+import { Nav, UI, Manager } from 'framework';
+import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
  * Box demo & usage guide
@@ -20,7 +21,10 @@ import { Nav, UI } from 'framework';
  *  3 = 3x base spacing
  *  4 = 4x base spacing
  ******************************************************************************************************************/
-const BoxScreen: Nav.ScreenType = ({navigate}) => {
+const BoxScreen: Nav.ScreenType = ({ navigate }) => {
+  const { isDarkMode } = Manager.useAppSettings();
+  const colors = getDemoColors(isDarkMode);
+
   return (
     <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
@@ -43,7 +47,7 @@ const BoxScreen: Nav.ScreenType = ({navigate}) => {
         <UI.Text variant='labelMedium' color='label'>
           Drop-in replacement of View.
         </UI.Text>
-        <UI.Box bgColor='#2eb82e' p={1} m={1}>
+        <UI.Box bgColor={colors.greenStrong} p={1} m={1}>
           <UI.Text color='surface'>Use Box like a View</UI.Text>
         </UI.Box>
 
@@ -52,7 +56,7 @@ const BoxScreen: Nav.ScreenType = ({navigate}) => {
           changing layout flow.
         </UI.Text>
         <UI.Box m={1}>
-          <UI.Box bgColor='#e0f2f1' p={1}>
+          <UI.Box bgColor={colors.neutralAlt} p={1}>
             <UI.Text variant='labelSmall'>
               This inner Box only adds padding and background around the text.
             </UI.Text>
@@ -64,19 +68,19 @@ const BoxScreen: Nav.ScreenType = ({navigate}) => {
         <UI.Text variant='titleMedium'>Padding scale</UI.Text>
 
         <UI.Box dir='row'>
-          <UI.Box bgColor='#eeeeee' p={0} m={1}>
+          <UI.Box bgColor={colors.neutral} p={0} m={1}>
             <UI.Text variant='labelSmall'>p=0</UI.Text>
           </UI.Box>
-          <UI.Box bgColor='#eeeeee' p={1} m={1}>
+          <UI.Box bgColor={colors.neutral} p={1} m={1}>
             <UI.Text variant='labelSmall'>p=1</UI.Text>
           </UI.Box>
-          <UI.Box bgColor='#eeeeee' p={2} m={1}>
+          <UI.Box bgColor={colors.neutral} p={2} m={1}>
             <UI.Text variant='labelSmall'>p=2</UI.Text>
           </UI.Box>
-          <UI.Box bgColor='#eeeeee' p={3} m={1}>
+          <UI.Box bgColor={colors.neutral} p={3} m={1}>
             <UI.Text variant='labelSmall'>p=3</UI.Text>
           </UI.Box>
-          <UI.Box bgColor='#eeeeee' p={4} m={1}>
+          <UI.Box bgColor={colors.neutral} p={4} m={1}>
             <UI.Text variant='labelSmall'>p=4</UI.Text>
           </UI.Box>
         </UI.Box>
@@ -88,14 +92,14 @@ const BoxScreen: Nav.ScreenType = ({navigate}) => {
         <UI.Text variant='labelMedium' color='label'>
           Row layout with different flex values
         </UI.Text>
-        <UI.Box dir='row' bgColor='#f0f0f0' p={1} mv={1}>
-          <UI.Box flex={1} bgColor='#9de923'>
+        <UI.Box dir='row' bgColor={colors.neutralAlt} p={1} mv={1}>
+          <UI.Box flex={1} bgColor={colors.greenSoft}>
             <UI.Text variant='labelSmall'>flex=1</UI.Text>
           </UI.Box>
-          <UI.Box flex={2} bgColor='#ffdd55' ml={1}>
+          <UI.Box flex={2} bgColor={colors.amber} ml={1}>
             <UI.Text variant='labelSmall'>flex=2</UI.Text>
           </UI.Box>
-          <UI.Box flex={0} bgColor='#ff9999' ml={1}>
+          <UI.Box flex={0} bgColor={colors.red} ml={1}>
             <UI.Text variant='labelSmall'>flex=0 (no grow)</UI.Text>
           </UI.Box>
         </UI.Box>
@@ -103,7 +107,7 @@ const BoxScreen: Nav.ScreenType = ({navigate}) => {
         <UI.Text variant='labelMedium' color='label'>
           Row · justify="space-between"
         </UI.Text>
-        <UI.Box dir='row' bgColor='#ffe0b2' p={1} justify='space-between' mv={1}>
+        <UI.Box dir='row' bgColor={colors.orangeBg} p={1} justify='space-between' mv={1}>
           <UI.Text variant='labelSmall'>Item A</UI.Text>
           <UI.Text variant='labelSmall'>Item B</UI.Text>
           <UI.Text variant='labelSmall'>Item C</UI.Text>
@@ -115,7 +119,7 @@ const BoxScreen: Nav.ScreenType = ({navigate}) => {
         <UI.Box
           dir='column'
           justify='center'
-          bgColor='#e1f5fe'
+          bgColor={colors.skyBg}
           p={1}
           mv={1}
           style={{ height: 120 }}
@@ -131,15 +135,15 @@ const BoxScreen: Nav.ScreenType = ({navigate}) => {
         <UI.Box
           dir='row'
           align='center'
-          bgColor='#f3e5f5'
+          bgColor={colors.purpleBg}
           p={1}
           mv={1}
           style={{ height: 80 }}
         >
-          <UI.Box bgColor='#ce93d8' p={1}>
+          <UI.Box bgColor={colors.purpleA} p={1}>
             <UI.Text variant='labelSmall'>short</UI.Text>
           </UI.Box>
-          <UI.Box bgColor='#ba68c8' p={2} ml={1}>
+          <UI.Box bgColor={colors.purpleB} p={2} ml={1}>
             <UI.Text variant='labelSmall'>taller item</UI.Text>
           </UI.Box>
         </UI.Box>
@@ -154,16 +158,16 @@ const BoxScreen: Nav.ScreenType = ({navigate}) => {
           content instead.
         </UI.Text>
 
-        <UI.Box bgColor='#e0f7fa' p={1} mv={1} style={{ height: 140 }}>
-          <UI.Box bgColor='#4dd0e1' p={1} self='flex-start' mt={1}>
+        <UI.Box bgColor={colors.cyanBg} p={1} mv={1} style={{ height: 140 }}>
+          <UI.Box bgColor={colors.cyanA} p={1} self='flex-start' mt={1}>
             <UI.Text variant='labelSmall'>self="flex-start"</UI.Text>
           </UI.Box>
 
-          <UI.Box bgColor='#26c6da' p={1} self='center' mt={1}>
+          <UI.Box bgColor={colors.cyanB} p={1} self='center' mt={1}>
             <UI.Text variant='labelSmall'>self="center"</UI.Text>
           </UI.Box>
 
-          <UI.Box bgColor='#00acc1' p={1} self='flex-end' mt={1}>
+          <UI.Box bgColor={colors.cyanC} p={1} self='flex-end' mt={1}>
             <UI.Text variant='labelSmall'>self="flex-end"</UI.Text>
           </UI.Box>
         </UI.Box>

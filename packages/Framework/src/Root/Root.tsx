@@ -2,7 +2,7 @@
 import 'react-native-get-random-values';
 import 'react-native-gesture-handler';
 // screen typing and layout
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, Edge } from 'react-native-safe-area-context';
 import { ScreenLayoutProps, ScreenLayoutContext } from '../Nav/ScreenLayout';
 // core
 import React, { memo, useEffect, useState } from 'react';
@@ -28,11 +28,14 @@ import {
 import { useLocalData, LocalDataProvider } from '../Manager/LocalDataManager';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
+// managers
+import { AppSettingsProvider, useAppSettings } from '../Manager/AppSettingsManager';
 // utils
 import { doLog } from '../Util/General';
 import { logColors } from '../Const';
 
 LogBox.ignoreAllLogs();
+const SAFE_AREA_EDGES: Edge[] = ['left', 'right', 'bottom'];
 
 // mode
 console.log('DEV MODE:', __DEV__);
@@ -71,35 +74,25 @@ export type RootProps = {
  *  - Put all providers here.
  ******************************************************************************************************************/
 const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps }) => {
-  const { getItem } = useLocalData();
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { isDarkMode } = useAppSettings();
 
-  /**
-   * Load isDarkMode from storage on mount.
-   */
-  useEffect(() => {
-    (async () => {
-      const stored = await getItem<boolean>('isDarkMode');
-      setIsDarkMode(!!stored);
-    })();
-  }, [getItem]);
+  // pick theme
+  const paperTheme = isDarkMode ? MD3DarkTheme : MD3LightTheme;
+  const navTheme = isDarkMode ? NavDark : NavLight;
 
-  /**
+  /****************************************************************************************************************
    * Nav and status bar config.
-   */
+   ****************************************************************************************************************/
   useEffect(() => {
     StatusBar.setBarStyle(isDarkMode ? 'light-content' : 'dark-content', true);
     if (Platform.OS === 'android') {
       NavigationBar.setButtonStyleAsync(isDarkMode ? 'light' : 'dark');
-      // optional:
-      // NavigationBar.setVisibilityAsync('visible');
-      // StatusBar.setBackgroundColor(navTheme.colors.background);
     }
   }, [isDarkMode]);
 
-  /**
+  /****************************************************************************************************************
    * Firebase pulse check.
-   */
+   ****************************************************************************************************************/
   useEffect(() => {
     try {
       const firebaseApp = getApp();
@@ -110,38 +103,35 @@ const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps 
     }
   }, []);
 
-  // pick theme
-  const paperTheme = isDarkMode ? MD3DarkTheme : MD3LightTheme;
-  const navTheme = isDarkMode ? NavDark : NavLight;
-
   return (
-    <SafeAreaProvider>
-      <KeyboardProvider>
-        <PaperProvider theme={paperTheme}>
-          <MenuProvider>
-            <ScreenLayoutContext.Provider value={defaultScreenLayoutProps}>
-              {/* SafeAreaView here so bottom inset encompasses BottomNavBar too */}
-              <SafeAreaView edges={['bottom']} style={styles.content}>
-                <NavigationContainer theme={navTheme}>
-                  {rootNavigator}
-                </NavigationContainer>
-              </SafeAreaView>
-            </ScreenLayoutContext.Provider>
-          </MenuProvider>
-        </PaperProvider>
-      </KeyboardProvider>
-    </SafeAreaProvider>
+    <NavigationContainer theme={navTheme}>
+      <PaperProvider theme={paperTheme}>
+        <MenuProvider>
+          <ScreenLayoutContext.Provider value={defaultScreenLayoutProps}>
+            <SafeAreaView edges={SAFE_AREA_EDGES} style={styles.content}>
+              {rootNavigator}
+            </SafeAreaView>
+          </ScreenLayoutContext.Provider>
+        </MenuProvider>
+      </PaperProvider>
+    </NavigationContainer>
   );
 };
 
 /******************************************************************************************************************
- * App entry: provide LocalData context around RootApp and export the wrapped app entry.
+ * App entry: provide context around RootApp and export the wrapped app entry.
  ******************************************************************************************************************/
 const AppEntry: React.FC<RootProps> = (props) => {
   return (
-    <LocalDataProvider>
-      <RootApp {...props} />
-    </LocalDataProvider>
+    <SafeAreaProvider>
+      <KeyboardProvider>
+        <LocalDataProvider>
+          <AppSettingsProvider>
+            <RootApp {...props} />
+          </AppSettingsProvider>
+        </LocalDataProvider>
+      </KeyboardProvider>
+    </SafeAreaProvider>
   );
 };
 

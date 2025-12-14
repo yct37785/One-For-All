@@ -9,12 +9,22 @@ import {
   Animated,
   Easing,
 } from 'react-native';
+import { useTheme } from 'react-native-paper';
 import * as Const from '../../Const';
 
-// predefined Android ripple configuration (shared instance)
-const ANDROID_RIPPLE = {
+/******************************************************************************************************************
+ * Android ripple presets (shared instances).
+ ******************************************************************************************************************/
+const ANDROID_RIPPLE_LIGHT = {
   borderless: false,
   foreground: true,
+  color: Const.rippleColorForLight,
+} as const;
+
+const ANDROID_RIPPLE_DARK = {
+  borderless: false,
+  foreground: true,
+  color: Const.rippleColorForDark,
 } as const;
 
 /******************************************************************************************************************
@@ -23,71 +33,60 @@ const ANDROID_RIPPLE = {
  * @property feedback              - Press feedback style ('opacity' | 'none'). Default: 'opacity'
  *                                   • 'opacity': Smooth opacity animation + Android ripple
  *                                   • 'none'   : No visual feedback
- * @property pressOpacity          - Press opacity, defaults to pressOpacityLight
  * @property disabled              - Disables press handling & visual feedback
  * @property onPress               - Called when the press gesture ends successfully
  * @property onPressIn             - Called when the press gesture starts
  * @property onPressOut            - Called when the press gesture ends (canceled or completed)
  * @property onLongPress           - Called when the user presses and holds for longer than the delay
  * @property delayLongPress        - Time (ms) before onLongPress fires
- * @property android_disableSound  - Disables Android's click sound
- * @property hitSlop               - Extra touch area around the element
- * @property pressRetentionOffset  - Defines how far the touch can move before deactivating press
  * @property style                 - Style(s) applied to the root container
  * @property children              - React children rendered inside the touchable
  ******************************************************************************************************************/
 export interface TouchableProps {
   feedback?: 'opacity' | 'none';
-  pressOpacity?: number;
   disabled?: boolean;
   onPress?: PressableProps['onPress'];
   onPressIn?: PressableProps['onPressIn'];
   onPressOut?: PressableProps['onPressOut'];
   onLongPress?: PressableProps['onLongPress'];
   delayLongPress?: number;
-  android_disableSound?: boolean;
-  hitSlop?: PressableProps['hitSlop'];
-  pressRetentionOffset?: PressableProps['pressRetentionOffset'];
   style?: StyleProp<ViewStyle>;
   children?: React.ReactNode;
 }
 
 /******************************************************************************************************************
- * A generic interactive wrapper providing consistent feedback (ripple or opacity) for pressable elements.
- *
- * Notes:
- * - Uses Animated.Value for opacity feedback (native driver).
- * - Avoids heavy hooks (no useMemo/useCallback) since work is cheap.
- * - Uses a shared ripple config instead of recreating it per render.
- * - For Android ripple clipping, border radius is applied to the Pressable and overflow is set to 'hidden'.
- * 
- * @usage
- * ```tsx
- * <Touchable onPress={handlePress} style={{ padding: 12, borderRadius: 8 }}>
- *   <Text>Tap me</Text>
- * </Touchable>
- * ```
+ * Touchable
  ******************************************************************************************************************/
 export const Touchable: React.FC<TouchableProps> = memo(
   ({
     feedback = 'opacity',
-    pressOpacity = Const.pressOpacityLight,
     disabled,
     onPress,
     onPressIn,
     onPressOut,
     onLongPress,
     delayLongPress,
-    android_disableSound,
-    hitSlop,
-    pressRetentionOffset,
     style,
     children,
   }) => {
+    const theme = useTheme();
     const opacity = useRef(new Animated.Value(1)).current;
     const isOpacity = feedback === 'opacity';
 
+    // track last animated target to avoid redundant animations
+    const lastTarget = useRef<number>(1);
+
+    /**************************************************************************************************************
+     * Theme-aware defaults.
+     **************************************************************************************************************/
+    const resolvedPressOpacity = theme.dark
+      ? Const.pressOpacityLight
+      : Const.pressOpacityMedium;
+
     const run = (to: number, dur: number) => {
+      if (lastTarget.current === to) return;
+      lastTarget.current = to;
+
       opacity.stopAnimation();
       Animated.timing(opacity, {
         toValue: to,
@@ -99,7 +98,7 @@ export const Touchable: React.FC<TouchableProps> = memo(
 
     const handleIn = (e: any) => {
       if (!disabled && isOpacity) {
-        run(pressOpacity, Const.pressInDurationMS);
+        run(resolvedPressOpacity, Const.pressInDurationMS);
       }
       onPressIn?.(e);
     };
@@ -116,29 +115,23 @@ export const Touchable: React.FC<TouchableProps> = memo(
      */
     useEffect(() => {
       if (!isOpacity || disabled) {
+        lastTarget.current = 1;
         opacity.stopAnimation();
         opacity.setValue(1);
       }
     }, [isOpacity, disabled, opacity]);
 
-    const ripple =
-      Platform.OS === 'android' && isOpacity ? ANDROID_RIPPLE : undefined;
+    /**************************************************************************************************************
+     * Split style (fast paths):
+     * - If no style, skip flattening.
+     **************************************************************************************************************/
+    const flattened = style ? (StyleSheet.flatten(style) as ViewStyle) : undefined;
 
-    /**
-     * Split style:
-     * - pressableStyle    → border radius + overflow for ripple clipping
-     * - contentStyle      → remaining style applied to Animated.View
-     */
-    const flattened = StyleSheet.flatten(style) || {};
-    const {
-      borderRadius,
-      borderTopLeftRadius,
-      borderTopRightRadius,
-      borderBottomLeftRadius,
-      borderBottomRightRadius,
-      overflow: _overflowIgnored,
-      ...restStyle
-    } = flattened;
+    const borderRadius = flattened?.borderRadius;
+    const borderTopLeftRadius = flattened?.borderTopLeftRadius;
+    const borderTopRightRadius = flattened?.borderTopRightRadius;
+    const borderBottomLeftRadius = flattened?.borderBottomLeftRadius;
+    const borderBottomRightRadius = flattened?.borderBottomRightRadius;
 
     const hasAnyRadius =
       borderRadius != null ||
@@ -148,17 +141,49 @@ export const Touchable: React.FC<TouchableProps> = memo(
       borderBottomRightRadius != null;
 
     const pressableStyle: ViewStyle = {
-      borderRadius,
-      borderTopLeftRadius,
-      borderTopRightRadius,
-      borderBottomLeftRadius,
-      borderBottomRightRadius,
-      ...(hasAnyRadius ? { overflow: 'hidden' as const } : null),
+      ...(hasAnyRadius
+        ? {
+            borderRadius,
+            borderTopLeftRadius,
+            borderTopRightRadius,
+            borderBottomLeftRadius,
+            borderBottomRightRadius,
+            overflow: 'hidden',
+          }
+        : null),
     };
 
-    const contentStyle: ViewStyle = {
-      ...restStyle,
-    };
+    const contentStyle: ViewStyle | undefined = flattened
+      ? (() => {
+          // remove radius / overflow props from the inner content
+          const {
+            borderRadius: _br,
+            borderTopLeftRadius: _btlr,
+            borderTopRightRadius: _btrr,
+            borderBottomLeftRadius: _bblr,
+            borderBottomRightRadius: _bbrr,
+            overflow: _ov,
+            ...rest
+          } = flattened;
+
+          return rest as ViewStyle;
+        })()
+      : undefined;
+
+    /**************************************************************************************************************
+     * Android ripple config.
+     *
+     * Static/banding in dark mode is often caused by foreground ripple + clipping.
+     * If the touchable is rounded (overflow hidden), prefer background ripple.
+     **************************************************************************************************************/
+    const rippleBase =
+      theme.dark ? ANDROID_RIPPLE_DARK : ANDROID_RIPPLE_LIGHT;
+
+    const ripple =
+      Platform.OS === 'android' && isOpacity
+      // ? { ...rippleBase, foreground: !hasAnyRadius } removed foreground
+        ? { ...rippleBase }
+        : undefined;
 
     return (
       <Pressable
@@ -169,9 +194,6 @@ export const Touchable: React.FC<TouchableProps> = memo(
         onPressOut={handleOut}
         onLongPress={onLongPress}
         delayLongPress={delayLongPress}
-        android_disableSound={android_disableSound}
-        hitSlop={hitSlop}
-        pressRetentionOffset={pressRetentionOffset}
         style={pressableStyle}
       >
         <Animated.View style={[contentStyle, { opacity }]}>
