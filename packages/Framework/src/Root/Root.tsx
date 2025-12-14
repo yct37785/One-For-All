@@ -2,7 +2,7 @@
 import 'react-native-get-random-values';
 import 'react-native-gesture-handler';
 // screen typing and layout
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, Edge } from 'react-native-safe-area-context';
 import { ScreenLayoutProps, ScreenLayoutContext } from '../Nav/ScreenLayout';
 // core
 import React, { memo, useEffect, useState } from 'react';
@@ -35,6 +35,7 @@ import { doLog } from '../Util/General';
 import { logColors } from '../Const';
 
 LogBox.ignoreAllLogs();
+const SAFE_AREA_EDGES: Edge[] = ['left', 'right', 'bottom'];
 
 // mode
 console.log('DEV MODE:', __DEV__);
@@ -107,7 +108,7 @@ const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps 
       <PaperProvider theme={paperTheme}>
         <MenuProvider>
           <ScreenLayoutContext.Provider value={defaultScreenLayoutProps}>
-            <SafeAreaView edges={['top', 'left', 'right', 'bottom']} style={styles.content}>
+            <SafeAreaView edges={SAFE_AREA_EDGES} style={styles.content}>
               {rootNavigator}
             </SafeAreaView>
           </ScreenLayoutContext.Provider>
