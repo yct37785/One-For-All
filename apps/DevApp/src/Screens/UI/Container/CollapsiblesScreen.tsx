@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
-import { Nav, UI } from 'framework';
+import { Nav, UI, Manager } from 'framework';
+import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
  * Collapsible & Accordion demo
@@ -9,6 +10,9 @@ import { Nav, UI } from 'framework';
  * - UI.AccordionContainer: multiple headers where one section is open at a time.
  ******************************************************************************************************************/
 const CollapsibleScreen: Nav.ScreenType = ({}) => {
+  const { isDarkMode } = Manager.useAppSettings();
+  const colors = getDemoColors(isDarkMode);
+
   return (
     <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
@@ -24,7 +28,7 @@ const CollapsibleScreen: Nav.ScreenType = ({}) => {
         <UI.Text variant='titleMedium'>CollapsibleContainer · basic</UI.Text>
 
         <UI.CollapsibleContainer text='Tap to toggle'>
-          <UI.Box bgColor='#e3f2fd' p={1}>
+          <UI.Box bgColor={colors.skyBg} p={1}>
             <UI.Text variant='bodySmall'>Simple collapsible content.</UI.Text>
           </UI.Box>
         </UI.CollapsibleContainer>
@@ -41,7 +45,7 @@ const CollapsibleScreen: Nav.ScreenType = ({}) => {
             textOpts={{ variant: 'titleSmall', color: 'primary' }}
             iconOpts={{ color: 'primary' }}
           >
-            <UI.Box bgColor='#fff3e0' p={1}>
+            <UI.Box bgColor={colors.orangeBg} p={1}>
               <UI.Text variant='bodySmall'>Primary themed header.</UI.Text>
             </UI.Box>
           </UI.CollapsibleContainer>
@@ -55,7 +59,7 @@ const CollapsibleScreen: Nav.ScreenType = ({}) => {
             textOpts={{ variant: 'titleSmall', color: 'secondary' }}
             iconOpts={{ color: 'secondary' }}
           >
-            <UI.Box bgColor='#e8eaf6' p={1}>
+            <UI.Box bgColor={colors.purpleBg} p={1}>
               <UI.Text variant='bodySmall'>Secondary themed header.</UI.Text>
             </UI.Box>
           </UI.CollapsibleContainer>
@@ -69,7 +73,7 @@ const CollapsibleScreen: Nav.ScreenType = ({}) => {
             textOpts={{ variant: 'titleSmall', color: 'error' }}
             iconOpts={{ color: 'error' }}
           >
-            <UI.Box bgColor='#ffebee' p={1}>
+            <UI.Box bgColor={colors.red} p={1}>
               <UI.Text variant='bodySmall'>Error themed header.</UI.Text>
             </UI.Box>
           </UI.CollapsibleContainer>
@@ -80,10 +84,10 @@ const CollapsibleScreen: Nav.ScreenType = ({}) => {
           <UI.CollapsibleContainer
             text='Custom color'
             icon='palette'
-            textOpts={{ variant: 'titleSmall', customColor: '#8e24aa' }}
-            iconOpts={{ customColor: '#8e24aa' }}
+            textOpts={{ variant: 'titleSmall', customColor: colors.purpleB }}
+            iconOpts={{ customColor: colors.purpleB }}
           >
-            <UI.Box bgColor='#f3e5f5' p={1}>
+            <UI.Box bgColor={colors.purpleBg} p={1}>
               <UI.Text variant='bodySmall'>Header using custom hex color.</UI.Text>
             </UI.Box>
           </UI.CollapsibleContainer>
@@ -101,13 +105,13 @@ const CollapsibleScreen: Nav.ScreenType = ({}) => {
               { text: 'Third' },
             ]}
           >
-            <UI.Box bgColor='#e0f7fa' p={1}>
+            <UI.Box bgColor={colors.cyanBg} p={1}>
               <UI.Text variant='bodySmall'>First section content.</UI.Text>
             </UI.Box>
-            <UI.Box bgColor='#fff9c4' p={1}>
+            <UI.Box bgColor={colors.amber} p={1}>
               <UI.Text variant='bodySmall'>Second section content.</UI.Text>
             </UI.Box>
-            <UI.Box bgColor='#f1f8e9' p={1}>
+            <UI.Box bgColor={colors.neutralAlt} p={1}>
               <UI.Text variant='bodySmall'>Third section content.</UI.Text>
             </UI.Box>
           </UI.AccordionContainer>
@@ -129,24 +133,24 @@ const CollapsibleScreen: Nav.ScreenType = ({}) => {
               {
                 text: 'Warning',
                 icon: 'alert-outline',
-                textOpts: { variant: 'titleSmall', customColor: '#fb8c00' }, // custom orange
-                iconOpts: { customColor: '#fb8c00' },
+                textOpts: { variant: 'titleSmall', customColor: colors.amber }, // custom orange
+                iconOpts: { customColor: colors.amber },
               },
               {
                 text: 'Success',
                 icon: 'check-circle-outline',
-                textOpts: { variant: 'titleSmall', customColor: '#2e7d32' }, // custom green
-                iconOpts: { customColor: '#2e7d32' },
+                textOpts: { variant: 'titleSmall', customColor: colors.greenStrong }, // custom green
+                iconOpts: { customColor: colors.greenStrong },
               },
             ]}
           >
-            <UI.Box bgColor='#e3f2fd' p={1}>
+            <UI.Box bgColor={colors.skyBg} p={1}>
               <UI.Text variant='bodySmall'>Info content.</UI.Text>
             </UI.Box>
-            <UI.Box bgColor='#fff3e0' p={1}>
+            <UI.Box bgColor={colors.orangeBg} p={1}>
               <UI.Text variant='bodySmall'>Warning content.</UI.Text>
             </UI.Box>
-            <UI.Box bgColor='#e8f5e9' p={1}>
+            <UI.Box bgColor={colors.neutralAlt} p={1}>
               <UI.Text variant='bodySmall'>Success content.</UI.Text>
             </UI.Box>
           </UI.AccordionContainer>

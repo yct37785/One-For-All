@@ -11,6 +11,7 @@ import { screenRoutes } from './ScreenRegistry';
  * - Functionalities / managers (Framework/src/Manager)
  ******************************************************************************************************************/
 const HomeScreen: Nav.ScreenType = ({ navigate }) => {
+  const { isDarkMode } = Manager.useAppSettings();
   const { user } = Manager.useAuth();
   const isAnon = !!user?.isAnonymous || !user;
   const uid = user?.uid;
@@ -203,7 +204,7 @@ const HomeScreen: Nav.ScreenType = ({ navigate }) => {
 
         {/* Auth status card */}
         <UI.Box mv={1}>
-          <UI.VerticalLayout bgColor='#F5F5F5' gap={1}>
+          <UI.VerticalLayout bgColor={isDarkMode ? '#111111ff' : '#F5F5F5'} gap={1}>
             <UI.Text variant='labelSmall' color='label' bold>
               Session
             </UI.Text>
