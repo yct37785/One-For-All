@@ -70,7 +70,8 @@ const HomeScreen: Nav.ScreenType = ({ navigate }) => {
   ];
 
   const UI_modalOptions = [
-    { value: screenRoutes.ui_modals, text: 'Dialogs & popups' },
+    { value: screenRoutes.ui_dialog, text: 'Dialog' },
+    { value: screenRoutes.ui_popup, text: 'Popup' },
   ];
 
   const UI_optionsOptions = [

@@ -24,7 +24,8 @@ import LayoutsScreen from './UI/Layout/LayoutsScreen';
 // menu
 import MenuListScreen from './UI/Menu/MenuListScreen';
 // modal
-import ModalsScreen from './UI/Modal/ModalsScreen';
+import DialogScreen from './UI/Modal/DialogScreen';
+import PopupScreen from './UI/Modal/PopupScreen';
 // options
 import NestedOptionsScreen from './UI/Options/NestedOptionsScreen';
 // selections
@@ -55,7 +56,8 @@ export const screenRoutes = {
   ui_touchable: 'ui_touchable',
   ui_layouts: 'ui_layouts',
   ui_menulist: 'ui_menulist',
-  ui_modals: 'ui_modals',
+  ui_dialog: 'ui_dialog',
+  ui_popup: 'ui_popup',
   ui_nestedOptions: 'ui_nestedOptions',
   ui_selections: 'ui_selections',
   ui_icon: 'ui_icon',
@@ -81,7 +83,8 @@ export const screenRegistry: Nav.NavNodeMap = {
   [screenRoutes.ui_touchable]: { component: TouchableScreen },
   [screenRoutes.ui_layouts]: { component: LayoutsScreen },
   [screenRoutes.ui_menulist]: { component: MenuListScreen },
-  [screenRoutes.ui_modals]: { component: ModalsScreen },
+  [screenRoutes.ui_dialog]: { component: DialogScreen },
+  [screenRoutes.ui_popup]: { component: PopupScreen },
   [screenRoutes.ui_nestedOptions]: { component: NestedOptionsScreen },
   [screenRoutes.ui_selections]: { component: SelectionsScreen },
   [screenRoutes.ui_icon]: { component: IconScreen },
