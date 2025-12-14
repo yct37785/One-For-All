@@ -1,4 +1,5 @@
 import React, { memo, useState } from 'react';
+import { StyleSheet } from 'react-native';
 import { Nav, UI, Manager } from 'framework';
 import { getDemoColors } from '../../demoColors';
 
@@ -77,6 +78,75 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
           </UI.Text>
         </UI.Box>
 
+        {/* Touchable · radius & shapes */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>Touchable · radius & shapes</UI.Text>
+
+        <UI.Box mt={1}>
+          <UI.Text variant='labelSmall' color='label'>
+            These examples demonstrate ripple clipping with rounded / custom shapes.
+          </UI.Text>
+        </UI.Box>
+
+        {/* pill */}
+        <UI.Box mt={2}>
+          <UI.Touchable
+            onPress={onTouchableClick}
+            style={{
+              paddingVertical: 12,
+              paddingHorizontal: 18,
+              borderRadius: 999,
+              backgroundColor: colors.greenStrong,
+            }}
+          >
+            <UI.Text variant='bodyMedium'>Pill (borderRadius: 999)</UI.Text>
+          </UI.Touchable>
+        </UI.Box>
+
+        {/* asymmetric radius */}
+        <UI.Box mt={2}>
+          <UI.Touchable
+            onPress={onTouchableClick}
+            style={{
+              paddingVertical: 12,
+              paddingHorizontal: 18,
+              backgroundColor: colors.purpleBg,
+              borderTopLeftRadius: 18,
+              borderTopRightRadius: 4,
+              borderBottomLeftRadius: 4,
+              borderBottomRightRadius: 18,
+            }}
+          >
+            <UI.Text variant='bodyMedium'>Asymmetric corners</UI.Text>
+          </UI.Touchable>
+        </UI.Box>
+
+        {/* card-like */}
+        <UI.Box mt={2}>
+          <UI.Touchable
+            onPress={onTouchableClick}
+            style={{
+              paddingVertical: 14,
+              paddingHorizontal: 16,
+              backgroundColor: colors.neutralAlt,
+              borderRadius: 14,
+            }}
+          >
+            <UI.Text variant='bodyMedium'>Card radius (14)</UI.Text>
+            <UI.Box mt={1}>
+              <UI.Text variant='bodySmall' color='label'>
+                Ripple should stay inside the rounded container.
+              </UI.Text>
+            </UI.Box>
+          </UI.Touchable>
+        </UI.Box>
+
+        <UI.Box mt={1}>
+          <UI.Text variant='labelSmall' color='label'>
+            Touchable taps: {touchableClicks}
+          </UI.Text>
+        </UI.Box>
+
         {/* Touchable · no feedback */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Touchable · no feedback</UI.Text>
@@ -108,3 +178,5 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
 };
 
 export default memo(TouchableScreen);
+
+const styles = StyleSheet.create({});
