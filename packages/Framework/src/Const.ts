@@ -9,8 +9,8 @@ export const radiusSmall = 4;
 export const radiusMedium = 8;
 export const radiusLarge = 12;
 
-export const rippleColorForLight = 'rgba(0,0,0,0.26)';
-export const rippleColorForDark = 'rgba(255,255,255,0.26)';
+export const rippleColorForLight = 'rgba(0,0,0,0.12)';
+export const rippleColorForDark = 'rgba(255,255,255,0.12)';
 
 export const snackbarDuration = 2000;
 

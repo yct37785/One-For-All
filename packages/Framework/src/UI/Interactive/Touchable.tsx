@@ -9,13 +9,8 @@ import {
   Animated,
   Easing,
 } from 'react-native';
+import { useTheme } from 'react-native-paper';
 import * as Const from '../../Const';
-
-// predefined Android ripple configuration (shared instance)
-const ANDROID_RIPPLE = {
-  borderless: false,
-  foreground: true,
-} as const;
 
 /******************************************************************************************************************
  * TouchableProps
@@ -23,7 +18,7 @@ const ANDROID_RIPPLE = {
  * @property feedback              - Press feedback style ('opacity' | 'none'). Default: 'opacity'
  *                                   • 'opacity': Smooth opacity animation + Android ripple
  *                                   • 'none'   : No visual feedback
- * @property pressOpacity          - Press opacity, defaults to pressOpacityLight
+ * @property pressOpacity          - Press opacity, defaults by theme (light/dark)
  * @property disabled              - Disables press handling & visual feedback
  * @property onPress               - Called when the press gesture ends successfully
  * @property onPressIn             - Called when the press gesture starts
@@ -58,20 +53,12 @@ export interface TouchableProps {
  * Notes:
  * - Uses Animated.Value for opacity feedback (native driver).
  * - Avoids heavy hooks (no useMemo/useCallback) since work is cheap.
- * - Uses a shared ripple config instead of recreating it per render.
  * - For Android ripple clipping, border radius is applied to the Pressable and overflow is set to 'hidden'.
- * 
- * @usage
- * ```tsx
- * <Touchable onPress={handlePress} style={{ padding: 12, borderRadius: 8 }}>
- *   <Text>Tap me</Text>
- * </Touchable>
- * ```
  ******************************************************************************************************************/
 export const Touchable: React.FC<TouchableProps> = memo(
   ({
     feedback = 'opacity',
-    pressOpacity = Const.pressOpacityLight,
+    pressOpacity,
     disabled,
     onPress,
     onPressIn,
@@ -84,8 +71,36 @@ export const Touchable: React.FC<TouchableProps> = memo(
     style,
     children,
   }) => {
+    const theme = useTheme();
     const opacity = useRef(new Animated.Value(1)).current;
     const isOpacity = feedback === 'opacity';
+
+    /**************************************************************************************************************
+     * Theme-aware defaults.
+     *
+     * In dark mode, a slightly higher opacity (less dim) tends to look better; in light mode we can dim more.
+     **************************************************************************************************************/
+    const resolvedPressOpacity =
+      pressOpacity !== undefined
+        ? pressOpacity
+        : theme.dark
+          ? Const.pressOpacityLight // less aggressive dimming in dark mode
+          : Const.pressOpacityMedium;
+
+    /**************************************************************************************************************
+     * Android ripple config (theme-aware).
+     *
+     * Provide an explicit ripple color to keep it visible and pleasant in dark mode.
+     **************************************************************************************************************/
+    const ripple =
+      Platform.OS === 'android' && isOpacity
+        ? {
+            borderless: false,
+            foreground: true,
+            // use primary with low alpha for consistent ripple on both themes
+            color: theme.dark ? Const.rippleColorForDark : Const.rippleColorForLight,
+          }
+        : undefined;
 
     const run = (to: number, dur: number) => {
       opacity.stopAnimation();
@@ -99,7 +114,7 @@ export const Touchable: React.FC<TouchableProps> = memo(
 
     const handleIn = (e: any) => {
       if (!disabled && isOpacity) {
-        run(pressOpacity, Const.pressInDurationMS);
+        run(resolvedPressOpacity, Const.pressInDurationMS);
       }
       onPressIn?.(e);
     };
@@ -120,9 +135,6 @@ export const Touchable: React.FC<TouchableProps> = memo(
         opacity.setValue(1);
       }
     }, [isOpacity, disabled, opacity]);
-
-    const ripple =
-      Platform.OS === 'android' && isOpacity ? ANDROID_RIPPLE : undefined;
 
     /**
      * Split style:
