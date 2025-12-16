@@ -9,7 +9,8 @@ import React, { memo, useEffect, useState } from 'react';
 import { View, StatusBar, Platform, LogBox, StyleSheet } from 'react-native';
 // theme
 import { Provider as PaperProvider, adaptNavigationTheme } from 'react-native-paper';
-import { AppLightTheme, AppDarkTheme } from '../Theme/Theme';
+import { MyTheme } from '../Theme/Theme.types';
+import { mergeMyTheme } from '../Theme/Theme';
 // UI & layout
 import { MenuProvider } from 'react-native-popup-menu';
 import * as NavigationBar from 'expo-navigation-bar';
@@ -49,12 +50,14 @@ const { LightTheme: NavLight, DarkTheme: NavDark } = adaptNavigationTheme({
 /******************************************************************************************************************
  * Root component props.
  *
- * @property rootNavigator             - Root navigator component defined by the end user app
+ * @property rootNavigator    - Root navigator component defined by the end user app
  * @property defaultScreenLayoutProps  - App wide screen layout (AppBar left content etc)
+ * @property myTheme?         - Custom theme
  ******************************************************************************************************************/
 export type RootProps = {
   rootNavigator: React.ReactNode;
   defaultScreenLayoutProps: ScreenLayoutProps;
+  myTheme?: MyTheme;
 };
 
 /******************************************************************************************************************
@@ -70,11 +73,17 @@ export type RootProps = {
  *  - We gate effect work with `if (!isLoaded) return;` and gate UI via conditional JSX.
  *  - Put all providers here.
  ******************************************************************************************************************/
-const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps }) => {
+const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps, myTheme }) => {
   const { isDarkMode } = useAppSettings();
 
+  // build paper themes from Paper defaults + client tokens
+  const { appLightTheme, appDarkTheme } = React.useMemo(
+    () => mergeMyTheme(myTheme),
+    [myTheme]
+  );
+
   // pick theme
-  const paperTheme = isDarkMode ? AppDarkTheme : AppLightTheme;
+  const paperTheme = isDarkMode ? appDarkTheme : appLightTheme;
   const navTheme = isDarkMode ? NavDark : NavLight;
 
   /****************************************************************************************************************

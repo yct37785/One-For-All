@@ -1,60 +1,117 @@
-import { MD3DarkTheme, MD3LightTheme, useTheme } from 'react-native-paper';
+import { MD3LightTheme, MD3DarkTheme, useTheme, type MD3Theme } from 'react-native-paper';
+import type { MyTheme, ThemeColors, ThemeCustom, ThemeFonts } from './Theme.types';
 
 /******************************************************************************************************************
- * Theme objects:
- * - Extend Paper’s MD3 themes.
- * - Supports overrides (colors, fonts, etc.) and extensions (custom/framework tokens).
- * - Shape is inferred from AppLightTheme, ensure AppDarkTheme follows the same shape (missing properties will be undefined).
- * 
- * @property custom - testing
- * @property colors - theme colors
- *  - testColor: str  - testing color
- *  - primary: str    - primary color
+ * AppTheme
+ *
+ * Full theme object consumed by:
+ * - PaperProvider (react-native-paper)
+ * - Framework UI (via useAppTheme)
+ *
+ * Notes:
+ * - We intentionally use Omit<MD3Theme, 'colors' | 'fonts'> to replace with our token types.
  ******************************************************************************************************************/
-export const AppLightTheme = {
-  ...MD3LightTheme,
-
-  // TEMP extension (example)
-  custom: 'light',
-
-  // colors
-  colors: {
-    ...MD3LightTheme.colors,
-
-    // TEMP extension (example)
-    testColor: '#d7294cff',
-
-    // TEMP override (example)
-    primary: '#50a465ff',
-  },
-} as const;
-
-export const AppDarkTheme = {
-  ...MD3DarkTheme,
-
-  // TEMP extension (example)
-  custom: 'dark',
-
-  // colors
-  colors: {
-    ...MD3DarkTheme.colors,
-
-    // TEMP extension (example)
-    testColor: '#cbd729ff',
-
-    // TEMP override (example)
-    primary: '#ffcebcff',
-  },
-} as const;
-
-export type AppTheme = typeof AppLightTheme;
+export type AppTheme = Omit<MD3Theme, 'colors' | 'fonts'> & {
+  colors: ThemeColors;
+  fonts: ThemeFonts;
+  custom: ThemeCustom;
+};
 
 /******************************************************************************************************************
  * AppTheme hook, use in-place of Paper's useTheme.
- * 
+ *
  * @usage
  * ```tsx
  * const theme = useAppTheme();
  * ```
  ******************************************************************************************************************/
 export const useAppTheme = () => useTheme<AppTheme>();
+
+/******************************************************************************************************************
+ * Defaults (move former Const.ts values here over time).
+ ******************************************************************************************************************/
+const defaultCustom: ThemeCustom = {
+  customProp: 0,
+};
+
+/******************************************************************************************************************
+ * Deep merge helper:
+ * - Only applies keys that exist in `toMergeIn` AND are not undefined.
+ * - Recursively merges plain objects (future-proof for nested tokens like elevation).
+ * - Arrays are replaced.
+ *
+ * @param base      - Source-of-truth object
+ * @param toMergeIn - Partial override object
+ *
+ * @return - New merged object (base is not mutated)
+ ******************************************************************************************************************/
+function deepMerge(base: any, toMergeIn: any) {
+  if (toMergeIn === null || toMergeIn === undefined) return base;
+
+  // primitives / functions: replace
+  const baseIsObj = typeof base === 'object' && base !== null;
+  const mergeIsObj = typeof toMergeIn === 'object' && toMergeIn !== null;
+  if (!baseIsObj || !mergeIsObj) return toMergeIn;
+
+  // arrays: replace (no deep merging for arrays)
+  if (Array.isArray(base) || Array.isArray(toMergeIn)) {
+    return Array.isArray(toMergeIn) ? toMergeIn : base;
+  }
+
+  const out: any = { ...base };
+
+  for (const key of Object.keys(toMergeIn)) {
+    const nextVal = toMergeIn[key];
+
+    // only apply explicitly defined keys
+    if (nextVal === undefined) continue;
+
+    out[key] = deepMerge(base[key], nextVal);
+  }
+
+  return out;
+}
+
+/******************************************************************************************************************
+ * Merge myTheme into Paper's MD3LightTheme / MD3DarkTheme.
+ *
+ * - MD3LightTheme and MD3DarkTheme are the source of truth.
+ * - Light/dark themes share fonts + custom, but have independent color overrides.
+ *
+ * @param myTheme - Theme tokens supplied by client app
+ *
+ * @return - appLightTheme and appDarkTheme
+ ******************************************************************************************************************/
+export function mergeMyTheme(myTheme?: MyTheme): {
+  appLightTheme: AppTheme;
+  appDarkTheme: AppTheme;
+} {
+  const baseLight = MD3LightTheme as MD3Theme;
+  const baseDark = MD3DarkTheme as MD3Theme;
+
+  // merge colors (mode-specific)
+  const colorsLight = deepMerge(baseLight.colors, myTheme?.colorsLight) as ThemeColors;
+  const colorsDark = deepMerge(baseDark.colors, myTheme?.colorsDark) as ThemeColors;
+
+  // merge fonts (shared)
+  const fonts = deepMerge(baseLight.fonts, myTheme?.fonts) as ThemeFonts;
+
+  // merge custom (shared)
+  const custom = deepMerge(defaultCustom, myTheme?.custom) as ThemeCustom;
+
+  const appLightTheme: AppTheme = {
+    ...baseLight,
+    colors: colorsLight,
+    fonts: fonts,
+    custom,
+  };
+
+  const appDarkTheme: AppTheme = {
+    ...baseDark,
+    colors: colorsDark,
+    fonts: fonts,
+    custom,
+  };
+
+  return { appLightTheme, appDarkTheme };
+}
