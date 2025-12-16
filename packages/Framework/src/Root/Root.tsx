@@ -64,7 +64,6 @@ export type RootProps = {
  * RootApp
  *
  * Single gate that:
- *  1) Waits for LocalData to load and reads `isDarkMode`.
  *  2) Chooses Paper MD3 theme + adapted React Navigation theme (no custom theme).
  *  3) Mounts providers and NavigationContainer.
  *
@@ -110,8 +109,8 @@ const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps,
   }, []);
 
   return (
-    <NavigationContainer theme={navTheme}>
-      <PaperProvider theme={paperTheme}>
+    <PaperProvider theme={paperTheme}>
+      <NavigationContainer theme={navTheme}>
         <MenuProvider>
           <ScreenLayoutContext.Provider value={defaultScreenLayoutProps}>
             <SafeAreaView edges={SAFE_AREA_EDGES} style={styles.content}>
@@ -119,8 +118,8 @@ const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps,
             </SafeAreaView>
           </ScreenLayoutContext.Provider>
         </MenuProvider>
-      </PaperProvider>
-    </NavigationContainer>
+      </NavigationContainer>
+    </PaperProvider>
   );
 };
 
