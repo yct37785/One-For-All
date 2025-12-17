@@ -10,7 +10,7 @@ import { View, StatusBar, Platform, LogBox, StyleSheet } from 'react-native';
 // theme
 import { Provider as PaperProvider, adaptNavigationTheme } from 'react-native-paper';
 import { MyTheme } from '../Theme/Theme.types';
-import { mergeMyTheme } from '../Theme/Theme';
+import { AppThemeProvider, useAppTheme } from '../Manager/AppThemeManager';
 // UI & layout
 import { MenuProvider } from 'react-native-popup-menu';
 import * as NavigationBar from 'expo-navigation-bar';
@@ -23,7 +23,7 @@ import {
   DefaultTheme as NavigationDefaultTheme,
 } from '@react-navigation/native';
 // data storage
-import { useLocalData, LocalDataProvider } from '../Manager/LocalDataManager';
+import { LocalDataProvider } from '../Manager/LocalDataManager';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
 // managers
@@ -46,6 +46,34 @@ const { LightTheme: NavLight, DarkTheme: NavDark } = adaptNavigationTheme({
   reactNavigationLight: NavigationDefaultTheme,
   reactNavigationDark: NavigationDarkTheme,
 });
+
+/******************************************************************************************************************
+ * PaperBridge
+ *
+ * - Bridges AppThemeManager -> PaperProvider.
+ * - Bridges any other nav/UI providers.
+ ******************************************************************************************************************/
+const PaperBridge: React.FC<{
+  rootNavigator: React.ReactNode;
+  defaultScreenLayoutProps: ScreenLayoutProps;
+  navTheme: any;
+}> = ({ rootNavigator, defaultScreenLayoutProps, navTheme }) => {
+  const { theme } = useAppTheme();
+
+  return (
+    <PaperProvider theme={theme}>
+      <NavigationContainer theme={navTheme}>
+        <MenuProvider>
+          <ScreenLayoutContext.Provider value={defaultScreenLayoutProps}>
+            <SafeAreaView edges={SAFE_AREA_EDGES} style={styles.content}>
+              {rootNavigator}
+            </SafeAreaView>
+          </ScreenLayoutContext.Provider>
+        </MenuProvider>
+      </NavigationContainer>
+    </PaperProvider>
+  );
+};
 
 /******************************************************************************************************************
  * Root component props.
@@ -74,15 +102,6 @@ export type RootProps = {
  ******************************************************************************************************************/
 const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps, myTheme }) => {
   const { isDarkMode } = useAppSettings();
-
-  // build paper themes from Paper defaults + client tokens
-  const { appLightTheme, appDarkTheme } = React.useMemo(
-    () => mergeMyTheme(myTheme),
-    [myTheme]
-  );
-
-  // pick theme
-  const paperTheme = isDarkMode ? appDarkTheme : appLightTheme;
   const navTheme = isDarkMode ? NavDark : NavLight;
 
   /****************************************************************************************************************
@@ -109,17 +128,13 @@ const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps,
   }, []);
 
   return (
-    <PaperProvider theme={paperTheme}>
-      <NavigationContainer theme={navTheme}>
-        <MenuProvider>
-          <ScreenLayoutContext.Provider value={defaultScreenLayoutProps}>
-            <SafeAreaView edges={SAFE_AREA_EDGES} style={styles.content}>
-              {rootNavigator}
-            </SafeAreaView>
-          </ScreenLayoutContext.Provider>
-        </MenuProvider>
-      </NavigationContainer>
-    </PaperProvider>
+    <AppThemeProvider isDarkMode={isDarkMode} myTheme={myTheme}>
+      <PaperBridge
+        rootNavigator={rootNavigator}
+        defaultScreenLayoutProps={defaultScreenLayoutProps}
+        navTheme={navTheme}
+      />
+    </AppThemeProvider>
   );
 };
 
