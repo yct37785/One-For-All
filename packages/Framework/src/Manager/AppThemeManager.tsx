@@ -7,21 +7,22 @@
  * - Resulting theme is provided to the framework via a single hook: useAppTheme().
  *
  * Notes:
- * - This manager exists so we can expose update APIs (setPrimary, setThemeTokens) in the same hook.
+ * - This manager exists so we can expose theme update APIs in the same hook.
+ * - All token merging is delegated to Theme.ts (deepMerge) so we avoid duplicated merge logic here.
  * - PaperProvider should still be used in Root; this manager only owns the resolved theme + update logic.
  ******************************************************************************************************************/
 import React, { createContext, memo, useCallback, useContext, useMemo, useState } from 'react';
-import type { MyTheme, ThemeColors, ThemeCustom } from '../Theme/Theme.types';
+import type { MyTheme } from '../Theme/Theme.types';
 import type { AppTheme } from '../Theme/Theme';
 import { mergeMyTheme } from '../Theme/Theme';
+import { deepMerge } from '../Util/General';
 
 /******************************************************************************************************************
  * AppThemeContextType shape.
  ******************************************************************************************************************/
 type AppThemeContextType = {
-  theme: AppTheme;    // Resolved AppTheme for the current mode
-  setPrimary: (color: string) => void;
-  setThemeTokens: (tokens: MyTheme) => void;
+  theme: AppTheme;                       // Resolved AppTheme for the current mode
+  updateTheme: (tokens: MyTheme) => void; // Merge partial theme tokens into runtime overrides
 };
 
 /******************************************************************************************************************
@@ -29,8 +30,7 @@ type AppThemeContextType = {
  ******************************************************************************************************************/
 const AppThemeContext = createContext<AppThemeContextType>({
   theme: undefined as unknown as AppTheme,
-  setPrimary: () => { },
-  setThemeTokens: () => { },
+  updateTheme: () => { },
 });
 
 /******************************************************************************************************************
@@ -50,7 +50,7 @@ export type AppThemeProviderProps = {
  * AppThemeProvider
  *
  * Owns runtime theme overrides so screens (e.g. Settings) can update theme tokens on the fly.
- * 
+ *
  * @usage
  * ```tsx
  * <AppThemeProvider>
@@ -62,23 +62,19 @@ export const AppThemeProvider: React.FC<AppThemeProviderProps> = memo(
   ({ isDarkMode, myTheme, children }) => {
     const [runtimeTokens, setRuntimeTokens] = useState<MyTheme>({});
 
-    /**
+    /**************************************************************************************************************
      * Merge client tokens + runtime tokens (runtime wins).
-     */
+     *
+     * Notes:
+     * - We use deepMerge from Theme.ts so nested tokens (present/future) merge automatically.
+     **************************************************************************************************************/
     const mergedTokens = useMemo<MyTheme>(() => {
-      return {
-        ...(myTheme ?? {}),
-        ...(runtimeTokens ?? {}),
-        colorsLight: { ...(myTheme?.colorsLight ?? {}), ...(runtimeTokens?.colorsLight ?? {}) },
-        colorsDark: { ...(myTheme?.colorsDark ?? {}), ...(runtimeTokens?.colorsDark ?? {}) },
-        fonts: { ...(myTheme?.fonts ?? {}), ...(runtimeTokens?.fonts ?? {}) },
-        custom: { ...(myTheme?.custom ?? {}), ...(runtimeTokens?.custom ?? {}) },
-      };
+      return deepMerge(myTheme ?? {}, runtimeTokens ?? {}) as MyTheme;
     }, [myTheme, runtimeTokens]);
 
-    /**
+    /**************************************************************************************************************
      * Build both themes once per token change, then select current based on mode.
-     */
+     **************************************************************************************************************/
     const { appLightTheme, appDarkTheme } = useMemo(
       () => mergeMyTheme(mergedTokens),
       [mergedTokens]
@@ -87,62 +83,30 @@ export const AppThemeProvider: React.FC<AppThemeProviderProps> = memo(
     const theme = isDarkMode ? appDarkTheme : appLightTheme;
 
     /**************************************************************************************************************
-     * Updates the primary color for the **current theme mode only**:
-     * - Light mode → updates `colorsLight.primary`
-     * - Dark mode  → updates `colorsDark.primary`
-     *
-     * @param color - New primary color value (hex / rgba / named color)
-     **************************************************************************************************************/
-    const setPrimary = useCallback(
-      (color: string) => {
-        setRuntimeTokens(prev => {
-          const next: MyTheme = { ...(prev ?? {}) };
-
-          if (isDarkMode) {
-            next.colorsDark = { ...(next.colorsDark ?? {}), primary: color } as Partial<ThemeColors>;
-          } else {
-            next.colorsLight = { ...(next.colorsLight ?? {}), primary: color } as Partial<ThemeColors>;
-          }
-
-          return next;
-        });
-      },
-      [isDarkMode]
-    );
-
-    /**************************************************************************************************************
      * Merges a partial `MyTheme` object into the current runtime theme tokens.
-     *
-     * Behavior:
-     * - Performs a shallow merge at the top level
-     * - Performs nested merges for:
-     *   - colorsLight
-     *   - colorsDark
-     *   - fonts
-     *   - custom
-     *
-     * This is the most flexible update API and should be used when
-     * applying multiple theme changes at once.
+     * 
+     * @usage
+     * ```tsx
+     * updateTheme({
+     *   colorsLight: { primary: '#00ff00' },
+     * });
+     * ```
      *
      * @param tokens - Partial theme tokens to merge into the runtime theme
      **************************************************************************************************************/
-    const setThemeTokens = useCallback((tokens: MyTheme) => {
-      setRuntimeTokens(prev => ({
-        ...(prev ?? {}),
-        ...(tokens ?? {}),
-        colorsLight: { ...(prev?.colorsLight ?? {}), ...(tokens?.colorsLight ?? {}) },
-        colorsDark: { ...(prev?.colorsDark ?? {}), ...(tokens?.colorsDark ?? {}) },
-        fonts: { ...(prev?.fonts ?? {}), ...(tokens?.fonts ?? {}) },
-        custom: { ...(prev?.custom ?? {}), ...(tokens?.custom ?? {}) as Partial<ThemeCustom> },
-      }));
+    const updateTheme = useCallback((tokens: MyTheme) => {
+      setRuntimeTokens(prev => deepMerge(prev ?? {}, tokens ?? {}) as MyTheme);
     }, []);
 
-    /**
-     * AppThemeContext value.
-     */
+    /**************************************************************************************************************
+     * AppThemeContext value
+     *
+     * @property theme       - Resolved AppTheme (light or dark)
+     * @property updateTheme - Theme update API exposed to consumers
+     **************************************************************************************************************/
     const value = useMemo<AppThemeContextType>(
-      () => ({ theme, setPrimary, setThemeTokens }),
-      [theme, setPrimary, setThemeTokens]
+      () => ({ theme, updateTheme }),
+      [theme, updateTheme]
     );
 
     return (
@@ -154,11 +118,11 @@ export const AppThemeProvider: React.FC<AppThemeProviderProps> = memo(
 );
 
 /******************************************************************************************************************
- * AppTheme hook.
- * 
+ * Primary theme hook for framework + client apps.
+ *
  * @usage
  * ```tsx
- * const { theme, setPrimary } = useAppTheme();
+ * const { theme, updateTheme } = useAppTheme();
  * ```
  ******************************************************************************************************************/
 export function useAppTheme() {
