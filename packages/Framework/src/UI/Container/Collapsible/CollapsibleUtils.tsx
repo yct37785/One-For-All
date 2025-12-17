@@ -83,8 +83,7 @@ export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
             <Icon
               source={icon}
               variant={variant}
-              //customColor={theme.colors.onSurface}
-              customColor={theme.colors.testColor}
+              customColor={theme.colors.onSurface}
               {...iconOpts}
             />
           </View>
@@ -106,8 +105,7 @@ export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
         <Icon
           source={isCollapsed ? 'chevron-down' : 'chevron-up'}
           variant='md'
-          //customColor={theme.colors.onSurface}
-          customColor={theme.colors.testColor}
+          customColor={theme.colors.onSurface}
         />
       </View>
     );
