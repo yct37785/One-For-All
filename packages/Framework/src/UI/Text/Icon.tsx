@@ -1,21 +1,6 @@
 import React, { memo, ReactNode } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Icon as PaperIcon, useTheme } from 'react-native-paper';
-import { resolveFontColor } from './Utils';
-
-/******************************************************************************************************************
- * declared locally for VSC intelliSense
- ******************************************************************************************************************/
-type FontColor =
-  | 'default'
-  | 'label'
-  | 'disabled'
-  | 'primary'
-  | 'secondary'
-  | 'error'
-  | 'surface'
-  | 'background'
-  | 'outline';
 
 /******************************************************************************************************************
  * IconVariant
@@ -36,14 +21,12 @@ export const iconVariantSizeMap: Record<IconVariant, number> = {
  * Icon props.
  *
  * @property variant?        - Prefixed size variant ('xs'|'sm'|'md'|'lg'|'xl'), defaults to 'md'
- * @property color?          - Font color
- * @property customColor?    - Raw color string (overrides color prop)
+ * @property color?          - Icon color
  * @property style?          - Container style for outer wrapper
  ******************************************************************************************************************/
 export type IconProps = {
   variant?: IconVariant;
-  color?: FontColor;
-  customColor?: string;
+  color?: string;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -63,9 +46,9 @@ export type IconProps = {
  * ```
  ******************************************************************************************************************/
 export const Icon: React.FC<IconProps & { source?: string }> = memo(
-  ({ source, variant = 'md', color = 'default', customColor, style }) => {
+  ({ source, variant = 'md', color, style }) => {
     const theme = useTheme();
-    const resolvedColor = resolveFontColor(color, customColor, theme);
+    const resolvedColor = color ?? theme.colors.onSurface;
 
     // resolve numeric size
     const pixel = iconVariantSizeMap[variant];

@@ -1,49 +1,18 @@
 import React, { memo, ReactNode } from 'react';
 import { TextStyle, StyleSheet } from 'react-native';
 import { Text as PaperText, useTheme } from 'react-native-paper';
-import { resolveFontColor } from './Utils';
-
-/******************************************************************************************************************
- * declared locally for VSC intelliSense
- ******************************************************************************************************************/
-type FontColor =
-  | 'default'
-  | 'label'
-  | 'disabled'
-  | 'primary'
-  | 'secondary'
-  | 'error'
-  | 'surface'
-  | 'background'
-  | 'outline';
 
 /******************************************************************************************************************
  * MD3 typography variants.
  ******************************************************************************************************************/
-export type TextVariant =
-  | 'displayLarge'
-  | 'displayMedium'
-  | 'displaySmall'
-  | 'headlineLarge'
-  | 'headlineMedium'
-  | 'headlineSmall'
-  | 'titleLarge'
-  | 'titleMedium'
-  | 'titleSmall'
-  | 'bodyLarge'
-  | 'bodyMedium'
-  | 'bodySmall'
-  | 'labelLarge'
-  | 'labelMedium'
-  | 'labelSmall';
+export type TextVariant = React.ComponentProps<typeof PaperText>['variant'];
 
 /******************************************************************************************************************
  * Text props.
  * 
  * @property variant          - MD3 text role; defaults to 'bodyMedium'
  * @property color?           - Font color
- * @property customColor?     - Raw color string (overrides color prop)
- * @property highlightColor?  - Raw color string
+ * @property highlightColor?  - Highlight color
  * @property bold?            - Bolded text
  * @property numberOfLines?   - Fixed num of lines if provided
  * @property underline?       - Underline the text
@@ -51,8 +20,7 @@ export type TextVariant =
  ******************************************************************************************************************/
 export interface TextProps {
   variant?: TextVariant;
-  color?: FontColor;
-  customColor?: string;
+  color?: string;
   highlightColor?: string;
   bold?: boolean;
   numberOfLines?: number;
@@ -76,8 +44,7 @@ export interface TextProps {
 export const Text: React.FC<TextProps & { children?: string | ReactNode }> = memo(
   ({
     variant = 'bodyMedium',
-    color = 'default',
-    customColor,
+    color,
     highlightColor,
     bold,
     numberOfLines,
@@ -86,7 +53,7 @@ export const Text: React.FC<TextProps & { children?: string | ReactNode }> = mem
     children
   }) => {
     const theme = useTheme();
-    const resolvedColor = resolveFontColor(color, customColor, theme);
+    const resolvedColor = color ?? theme.colors.onSurface;
 
     const colorStyle = {
       color: resolvedColor,
