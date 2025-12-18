@@ -1,48 +1,19 @@
 import React, { memo, ReactNode } from 'react';
 import { TextStyle, StyleSheet } from 'react-native';
 import { Text as PaperText, useTheme } from 'react-native-paper';
-import { TextVariant, ColorProps } from '../../Theme/Theme.types';
-import { resolveFontColor } from './Utils';
+import { AppColor, resolveAppColor } from '../CommonProps';
 
-// /******************************************************************************************************************
-//  * declared locally for VSC intelliSense
-//  ******************************************************************************************************************/
-// type FontColor =
-//   | 'default'
-//   | 'label'
-//   | 'disabled'
-//   | 'primary'
-//   | 'secondary'
-//   | 'error'
-//   | 'surface'
-//   | 'background'
-//   | 'outline';
-
-// /******************************************************************************************************************
-//  * MD3 typography variants.
-//  ******************************************************************************************************************/
-// export type TextVariant =
-//   | 'displayLarge'
-//   | 'displayMedium'
-//   | 'displaySmall'
-//   | 'headlineLarge'
-//   | 'headlineMedium'
-//   | 'headlineSmall'
-//   | 'titleLarge'
-//   | 'titleMedium'
-//   | 'titleSmall'
-//   | 'bodyLarge'
-//   | 'bodyMedium'
-//   | 'bodySmall'
-//   | 'labelLarge'
-//   | 'labelMedium'
-//   | 'labelSmall';
+/******************************************************************************************************************
+ * MD3 typography variant prop.
+ ******************************************************************************************************************/
+export type TextVariant = React.ComponentProps<typeof PaperText>['variant'];
 
 /******************************************************************************************************************
  * Text props.
  * 
  * @property variant          - MD3 text role; defaults to 'bodyMedium'
- * @property color?           - Color config
+ * @property color?           - Font color
+ * @property highlightColor?  - Highlight color
  * @property bold?            - Bolded text
  * @property numberOfLines?   - Fixed num of lines if provided
  * @property underline?       - Underline the text
@@ -50,7 +21,8 @@ import { resolveFontColor } from './Utils';
  ******************************************************************************************************************/
 export interface TextProps {
   variant?: TextVariant;
-  color?: ColorProps;
+  color?: AppColor;
+  highlightColor?: AppColor;
   bold?: boolean;
   numberOfLines?: number;
   underline?: boolean;
@@ -64,16 +36,16 @@ export interface TextProps {
  * 
  * @usage
  * ```tsx
- * <Text variant='h1'>Page Title</Text>
- * <Text variant='subtitle'>Section</Text>
- * <Text variant='body'>Body copy...</Text>
- * <Text variant='label2' color={t.colors.muted}>Secondary label</Text>
+ * <Text variant='titleMedium'>Page Title</Text>
+ * <Text variant='bodyMedium'>Body copy...</Text>
+ * <Text variant='labelSmall' color='error'>Secondary label</Text>
  * ```
  ******************************************************************************************************************/
 export const Text: React.FC<TextProps & { children?: string | ReactNode }> = memo(
   ({
     variant = 'bodyMedium',
-    color,
+    color = 'onSurface',
+    highlightColor,
     bold,
     numberOfLines,
     underline = false,
@@ -82,14 +54,12 @@ export const Text: React.FC<TextProps & { children?: string | ReactNode }> = mem
   }) => {
     const theme = useTheme();
 
-    // defaults + overrides
-    const colorToken = color?.color ?? 'onSurface';
-    const resolvedColor = color?.colorCustom ?? theme.colors[colorToken];
-    const highlightColor = color?.highlightColor;
+    const resolvedColor = resolveAppColor(theme.colors, color) ?? theme.colors.onSurface;
+    const resolvedHighlightColor = resolveAppColor(theme.colors, highlightColor);
 
-    const colorStyle = {
+    const colorStyle: TextStyle = {
       color: resolvedColor,
-      ...(highlightColor !== undefined ? { backgroundColor: highlightColor } : {}),
+      ...(resolvedHighlightColor && { backgroundColor: resolvedHighlightColor }),
     };
 
     const boldStyle: TextStyle = { fontWeight: bold ? 'bold' : 'normal' };
