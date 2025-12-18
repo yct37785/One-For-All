@@ -63,18 +63,13 @@ export const AppThemeProvider: React.FC<AppThemeProviderProps> = memo(
     const [runtimeTokens, setRuntimeTokens] = useState<MyTheme>({});
 
     /**************************************************************************************************************
-     * Merge client tokens + runtime tokens (runtime wins).
-     *
-     * Notes:
-     * - We use deepMerge from Theme.ts so nested tokens (present/future) merge automatically.
+     * 1) Merge client tokens + runtime tokens (runtime wins).
+     * 2) Build light and dark theme with mergedTokens.
      **************************************************************************************************************/
     const mergedTokens = useMemo<MyTheme>(() => {
       return deepMerge(myTheme ?? {}, runtimeTokens ?? {}) as MyTheme;
     }, [myTheme, runtimeTokens]);
 
-    /**************************************************************************************************************
-     * Build both themes once per token change, then select current based on mode.
-     **************************************************************************************************************/
     const { appLightTheme, appDarkTheme } = useMemo(
       () => mergeMyTheme(mergedTokens),
       [mergedTokens]

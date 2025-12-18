@@ -5,7 +5,7 @@ const SettingsScreen: React.FC = memo(() => {
   const { updateTheme } = Manager.useAppTheme();
   return (
     <Nav.ScreenLayout title='Settings'>
-      <UI.Button onPress={() => updateTheme({ colorsLight: { primary: '#ff0000ff' } })}>
+      <UI.Button onPress={() => updateTheme({ colorsLight: { onSurface: '#ff0000ff' } })}>
         Test Update Primary Color
       </UI.Button>
     </Nav.ScreenLayout>
