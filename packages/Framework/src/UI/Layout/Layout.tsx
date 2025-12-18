@@ -2,7 +2,7 @@ import React, { memo, ReactNode } from 'react';
 import { View, ScrollView, ViewStyle, FlexStyle } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import * as Const from '../../Const';
-import { PadSpacingValue } from '../../Types';
+import { PadSpacingValue } from '../CommonProps';
 
 /******************************************************************************************************************
  * Utils and types.

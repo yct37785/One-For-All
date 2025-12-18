@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Divider as PaperDivider } from 'react-native-paper';
 import * as Const from '../../Const';
-import { PadSpacingValue } from '../../Types';
+import { PadSpacingValue } from '../CommonProps';
 
 /******************************************************************************************************************
  * Divider props.

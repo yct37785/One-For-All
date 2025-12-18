@@ -26,7 +26,7 @@ const MenuListScreen: Nav.ScreenType = ({}) => {
         </UI.Text>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color='onSurfaceVariant'>
             Last selected: {lastSelected}
           </UI.Text>
         </UI.Box>
@@ -96,17 +96,17 @@ const MenuListScreen: Nav.ScreenType = ({}) => {
                 icon: 'alert-outline',
                 textOpts: {
                   variant: 'labelMedium',
-                  customColor: '#fb8c00',
+                  color: '#fb8c00',
                   bold: true,
                 },
-                iconOpts: { customColor: '#fb8c00' },
+                iconOpts: { color: '#fb8c00' },
               },
               {
                 value: 'success',
                 text: 'Success',
                 icon: 'check-circle-outline',
-                textOpts: { variant: 'labelMedium', customColor: '#2e7d32' },
-                iconOpts: { customColor: '#2e7d32' },
+                textOpts: { variant: 'labelMedium', color: '#2e7d32' },
+                iconOpts: { color: '#2e7d32' },
               },
               {
                 value: 'danger',

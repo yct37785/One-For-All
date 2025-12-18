@@ -110,7 +110,7 @@ export const Avatar: React.FC<AvatarProps> = memo(
           !!label && (
             <Text
               variant={textVariant}
-              {...(textColor ? { customColor: textColor } : {})}
+              {...(textColor ? { color: textColor } : {})}
             >
               {label}
             </Text>

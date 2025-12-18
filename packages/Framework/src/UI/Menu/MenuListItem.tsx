@@ -12,7 +12,7 @@ import { Touchable } from '../Interactive/Touchable';
  * @property text        - Preferred text label
  * @property textOpts    - Optional text props (variant, color, bold, style, …)
  * @property icon        - Optional leading icon
- * @property iconOpts    - Optional icon props (variant, color/customColor, size, style, …)
+ * @property iconOpts    - Optional icon props (variant, color, size, style, …)
  * @property disabled    - When true, the row is non-interactive and dimmed
  ******************************************************************************************************************/
 export type MenuOption = {
@@ -83,7 +83,7 @@ export const MenuListItem: React.FC<MenuListItemProps> = memo(
             <Icon
               source={option.icon}
               variant={dense ? 'sm' : 'md'}
-              color={disabled ? 'disabled' : 'default'}
+              color={disabled ? 'onSurfaceDisabled' : 'onSurface'}
               style={[
                 align === 'center' ? styles.iconCenteredMargin : iconMargin,
                 iconOverride,
@@ -95,7 +95,7 @@ export const MenuListItem: React.FC<MenuListItemProps> = memo(
           {text ? (
             <Text
               variant={dense ? 'labelSmall' : 'labelMedium'}
-              color={disabled ? 'disabled' : 'default'}
+              color={disabled ? 'onSurfaceDisabled' : 'onSurface'}
               {...option.textOpts}
             >
               {text}

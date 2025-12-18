@@ -206,7 +206,7 @@ const HomeScreen: Nav.ScreenType = ({ navigate }) => {
         {/* Auth status card */}
         <UI.Box mv={1}>
           <UI.VerticalLayout bgColor={isDarkMode ? '#111111ff' : '#F5F5F5'} gap={1}>
-            <UI.Text variant='labelSmall' color='label' bold>
+            <UI.Text variant='labelSmall' color='onSurfaceVariant' bold>
               Session
             </UI.Text>
             <UI.Text variant='bodySmall'>{statusText}</UI.Text>

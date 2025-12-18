@@ -92,7 +92,7 @@ const NestedOptionsScreen: Nav.ScreenType = ({}) => {
         {/* CheckOptions */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>CheckOptions</UI.Text>
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color='onSurfaceVariant'>
           Checkbox-based UI built on the generic nested option tree.
         </UI.Text>
 
@@ -106,7 +106,7 @@ const NestedOptionsScreen: Nav.ScreenType = ({}) => {
 
         {/* Selection summary */}
         <UI.Box mt={2} mb={4}>
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Text variant='labelSmall' color='onSurfaceVariant'>
             Selected leaf options:{' '}
             {selectedLeafLabels.length > 0
               ? selectedLeafLabels.join(', ')

@@ -77,7 +77,7 @@ export const HighlightText: React.FC<HighlightTextProps> = memo(
           const innerProps: TextProps = {
             ...rest,
 
-            ...(queryColor !== undefined ? { customColor: queryColor } : {}),
+            ...(queryColor !== undefined ? { color: queryColor } : {}),
 
             highlightColor:
               queryHighlightColor ?? defaultHighlightColor,

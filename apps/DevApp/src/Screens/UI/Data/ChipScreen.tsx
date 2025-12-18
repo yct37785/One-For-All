@@ -69,7 +69,7 @@ const ChipScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>States</UI.Text>
         <UI.Box>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color='onSurfaceVariant'>
             Selected chips appear filled; disabled chips are dimmed and non-interactive.
           </UI.Text>
         </UI.Box>
@@ -98,7 +98,7 @@ const ChipScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Closable chips</UI.Text>
         <UI.Box>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color='onSurfaceVariant'>
             Set isClose to true to show a trailing "X". Pressing the chip calls onPress, allowing the parent to
             remove or update the chip.
           </UI.Text>
@@ -116,7 +116,7 @@ const ChipScreen: Nav.ScreenType = ({}) => {
               />
             ))}
             {activeTags.length === 0 && (
-              <UI.Text variant='labelSmall' color='label'>
+              <UI.Text variant='labelSmall' color='onSurfaceVariant'>
                 No tags left. Use the reset button below to add them back.
               </UI.Text>
             )}
@@ -133,7 +133,7 @@ const ChipScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Filter chips</UI.Text>
         <UI.Box>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color='onSurfaceVariant'>
             Tap chips to toggle filters. Parent state manages which filters are active.
           </UI.Text>
         </UI.Box>
@@ -155,7 +155,7 @@ const ChipScreen: Nav.ScreenType = ({}) => {
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Text variant='labelSmall' color='onSurfaceVariant'>
             Active filters:{' '}
             {selectedFilters.size > 0
               ? Array.from(selectedFilters).join(', ')

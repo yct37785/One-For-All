@@ -36,7 +36,7 @@ const TextInputScreen: Nav.ScreenType = ({}) => {
         {/* TextInput · flat (required) */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>TextInput · flat (required)</UI.Text>
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color='onSurfaceVariant'>
           Leave required fields blank and tap elsewhere to trigger the required error.
         </UI.Text>
 
@@ -71,7 +71,7 @@ const TextInputScreen: Nav.ScreenType = ({}) => {
         {/* TextInput · email & password (with helper/error) */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>TextInput · email & password</UI.Text>
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color='onSurfaceVariant'>
           For email, type an invalid address (e.g. 'abc') and blur the field to see a format error.
         </UI.Text>
 

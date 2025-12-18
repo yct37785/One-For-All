@@ -21,7 +21,7 @@ const PopupsScreen: Nav.ScreenType = ({}) => {
         {/* Last action */}
         {lastPopupAction && (
           <UI.Box mt={1}>
-            <UI.Text variant='labelSmall' color='label'>
+            <UI.Text variant='labelSmall' color='onSurfaceVariant'>
               Last popup action: {lastPopupAction}
             </UI.Text>
           </UI.Box>

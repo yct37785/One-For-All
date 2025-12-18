@@ -25,7 +25,7 @@ const IconScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Size variants</UI.Text>
 
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color='onSurfaceVariant'>
           Use the variant prop to pick predefined icon sizes.
         </UI.Text>
 
@@ -43,14 +43,14 @@ const IconScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Colors</UI.Text>
 
-        <UI.Text variant='labelMedium' color='label'>
-          color uses theme tokens, customColor accepts any raw color string.
+        <UI.Text variant='labelMedium' color='onSurfaceVariant'>
+          Color uses theme tokens or any raw color string.
         </UI.Text>
 
         <UI.Box mt={2}>
           <UI.HorizontalLayout dir='row' gap={2} align='center'>
-            <UI.Icon source='heart' color='default' />
-            <UI.Icon source='heart' color='label' />
+            <UI.Icon source='heart' color='onSurface' />
+            <UI.Icon source='heart' color='onSurfaceVariant' />
             <UI.Icon source='heart' color='primary' />
             <UI.Icon source='heart' color='secondary' />
             <UI.Icon source='heart' color='error' />
@@ -58,8 +58,8 @@ const IconScreen: Nav.ScreenType = ({}) => {
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Icon source='palette' customColor='#8e24aa' />
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Icon source='palette' color='#8e24aa' />
+          <UI.Text variant='labelSmall' color='onSurfaceVariant'>
             Custom purple (#8e24aa)
           </UI.Text>
         </UI.Box>
@@ -68,7 +68,7 @@ const IconScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Icons inside containers</UI.Text>
 
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color='onSurfaceVariant'>
           Icons can be composed with Box to create simple decorated blocks.
         </UI.Text>
 
@@ -92,7 +92,7 @@ const IconScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Practical examples</UI.Text>
 
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color='onSurfaceVariant'>
           Combine icons with text or actions to give clearer meaning.
         </UI.Text>
 
@@ -116,10 +116,10 @@ const IconScreen: Nav.ScreenType = ({}) => {
         <UI.Box mt={2}>
           <UI.HorizontalLayout dir='row' gap={2} align='center'>
             <UI.Box bgColor='#eeeeee' p={2} style={{ borderRadius: 999 }}>
-              <UI.Icon source='thumb-up' color='label' />
+              <UI.Icon source='thumb-up' color='onSurfaceVariant' />
             </UI.Box>
             <UI.Box bgColor='#eeeeee' p={2} style={{ borderRadius: 999 }}>
-              <UI.Icon source='thumb-down' color='label' />
+              <UI.Icon source='thumb-down' color='onSurfaceVariant' />
             </UI.Box>
           </UI.HorizontalLayout>
         </UI.Box>

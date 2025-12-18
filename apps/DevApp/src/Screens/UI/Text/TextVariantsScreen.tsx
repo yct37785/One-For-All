@@ -27,13 +27,13 @@ const TextVariantsScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>HighlightText</UI.Text>
 
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color='onSurfaceVariant'>
           Highlights parts of the text that match a query, with optional
           case-sensitivity and custom highlight colors.
         </UI.Text>
 
         <UI.Box mt={2}>
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Text variant='labelSmall' color='onSurfaceVariant'>
             Try changing the query to see different parts highlighted.
           </UI.Text>
         </UI.Box>
@@ -77,7 +77,7 @@ const TextVariantsScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>HyperlinkText</UI.Text>
 
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color='onSurfaceVariant'>
           A dedicated hyperlink component that always uses primary color +
           underline and calls onPress when tapped.
         </UI.Text>
@@ -97,13 +97,13 @@ const TextVariantsScreen: Nav.ScreenType = ({}) => {
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Text variant='labelSmall' color='onSurfaceVariant'>
             Terms clicked: {tosClicks} · Privacy clicked: {privacyClicks}
           </UI.Text>
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Text variant='labelSmall' color='onSurfaceVariant'>
             HyperlinkText can be used inline with regular Text to build richer
             paragraphs with tappable sections.
           </UI.Text>

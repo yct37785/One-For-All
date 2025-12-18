@@ -24,7 +24,7 @@ const DialogsScreen: Nav.ScreenType = ({}) => {
         {/* Last action */}
         {lastDialogAction && (
           <UI.Box mt={1}>
-            <UI.Text variant='labelSmall' color='label'>
+            <UI.Text variant='labelSmall' color='onSurfaceVariant'>
               Last dialog action: {lastDialogAction}
             </UI.Text>
           </UI.Box>
@@ -83,7 +83,7 @@ const DialogsScreen: Nav.ScreenType = ({}) => {
             <UI.Text variant='bodySmall'>
               You are about to sign out from this device. Any unsaved changes may be lost.
             </UI.Text>
-            <UI.Text variant='bodySmall' color='label'>
+            <UI.Text variant='bodySmall' color='onSurfaceVariant'>
               Are you sure you want to continue?
             </UI.Text>
           </UI.VerticalLayout>

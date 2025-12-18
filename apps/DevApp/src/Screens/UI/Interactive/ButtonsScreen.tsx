@@ -63,7 +63,7 @@ const ButtonScreen: Nav.ScreenType = ({}) => {
         </UI.Box>
 
         <UI.Box mt={2}>
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Text variant='labelSmall' color='onSurfaceVariant'>
             Button clicks: {btnClicks}
           </UI.Text>
         </UI.Box>
@@ -150,7 +150,7 @@ const ButtonScreen: Nav.ScreenType = ({}) => {
         </UI.Box>
 
         <UI.Box mt={2}>
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Text variant='labelSmall' color='onSurfaceVariant'>
             Button clicks: {btnClicks}
           </UI.Text>
         </UI.Box>
@@ -241,7 +241,7 @@ const ButtonScreen: Nav.ScreenType = ({}) => {
         {/* TextButton · lightweight text-only button */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>TextButton</UI.Text>
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color='onSurfaceVariant'>
           A text-forward button alternative. Unlike Button mode="text", which has a fixed
           visual style, TextButton fully inherits Text props.
         </UI.Text>
@@ -268,7 +268,7 @@ const ButtonScreen: Nav.ScreenType = ({}) => {
         </UI.Box>
 
         <UI.Box mt={2}>
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Text variant='labelSmall' color='onSurfaceVariant'>
             Button clicks: {btnClicks}
           </UI.Text>
         </UI.Box>
