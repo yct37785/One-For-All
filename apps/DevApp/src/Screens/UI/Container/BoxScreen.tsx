@@ -172,6 +172,42 @@ const BoxScreen: Nav.ScreenType = ({ navigate }) => {
           </UI.Box>
         </UI.Box>
 
+        {/* Background color */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>Background color</UI.Text>
+
+        <UI.Text variant='labelMedium' color='label'>
+          bgColor accepts either a theme color token or a raw color string.
+        </UI.Text>
+
+        {/* Theme token */}
+        <UI.Box bgColor='primaryContainer' p={1} mv={1}>
+          <UI.Text variant='labelSmall'>
+            bgColor="primaryContainer" (theme token)
+          </UI.Text>
+        </UI.Box>
+
+        {/* Another theme token */}
+        <UI.Box bgColor='surfaceVariant' p={1} mv={1}>
+          <UI.Text variant='labelSmall'>
+            bgColor="surfaceVariant" (theme token)
+          </UI.Text>
+        </UI.Box>
+
+        {/* Raw color */}
+        <UI.Box bgColor='#4ade80' p={1} mv={1}>
+          <UI.Text variant='labelSmall'>
+            bgColor="#4ade80" (raw color)
+          </UI.Text>
+        </UI.Box>
+
+        {/* Raw rgba */}
+        <UI.Box bgColor='rgba(59, 130, 246, 0.25)' p={1} mv={1}>
+          <UI.Text variant='labelSmall'>
+            bgColor="rgba(59, 130, 246, 0.25)"
+          </UI.Text>
+        </UI.Box>
+
       </UI.VerticalLayout>
     </Nav.ScreenLayout>
   );

@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { View, StyleProp, ViewStyle, FlexStyle } from 'react-native';
-import { PadSpacingValue } from '../../Types';
+import { useTheme } from 'react-native-paper';
+import { AppColor, resolveAppColor, PadSpacingValue } from '../CommonProps';
 import * as Const from '../../Const';
 
 const spacing = (units?: number) =>
@@ -36,7 +37,7 @@ const spacing = (units?: number) =>
  * @property children       - Content
  ******************************************************************************************************************/
 export type BoxProps = {
-  bgColor?: string;
+  bgColor?: AppColor;
   flex?: number;
   dir?: FlexStyle['flexDirection'];
   align?: ViewStyle['alignItems'];
@@ -79,7 +80,7 @@ export type BoxProps = {
  ******************************************************************************************************************/
 export const Box: React.FC<BoxProps> = memo(
   ({
-    bgColor = 'transparent',
+    bgColor,
     flex,
     dir,
     align,
@@ -92,9 +93,16 @@ export const Box: React.FC<BoxProps> = memo(
     style,
     children,
   }) => {
+    const theme = useTheme();
+    
+    const resolvedColor = resolveAppColor(theme.colors, bgColor);
+    const colorStyle = {
+      ...(resolvedColor && { backgroundColor: resolvedColor }),
+    };
+
     const resolvedStyle = [
+      colorStyle,
       {
-        backgroundColor: bgColor,
         flex,
         flexDirection: dir,
         alignItems: align,
