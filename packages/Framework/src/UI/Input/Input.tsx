@@ -268,7 +268,7 @@ export const TextInput: React.FC<TextInputProps> = memo(
     const helperStyle: TextStyle = {
       marginTop: 4,
       fontSize: 12,
-      color: hasError ? theme.colors.error : theme.colors.onSurfaceVariant,
+      color: hasError ? theme.colors.error : theme.colors.outlineVariant,
     };
 
     /******************************************************************************************************************

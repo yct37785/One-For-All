@@ -1,12 +1,12 @@
 import React, { memo, ReactNode } from 'react';
-import type { TextStyle, StyleProp } from 'react-native';
 import { Text, TextProps } from './Text';
+import { AppColor } from '../CommonProps';
 
 function escapeRegExp(s: string) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-const defaultHighlightColor = 'rgba(255, 235, 59, 0.4)';
+const defaultHighlightColor: AppColor = 'rgba(255, 235, 59, 0.4)';
 
 /******************************************************************************************************************
  * Highlight text props.
@@ -19,8 +19,8 @@ const defaultHighlightColor = 'rgba(255, 235, 59, 0.4)';
 export interface HighlightTextProps extends TextProps {
   query: string;
   caseSensitive?: boolean;
-  queryColor?: string;
-  queryHighlightColor?: string;
+  queryColor?: AppColor;
+  queryHighlightColor?: AppColor;
   children?: string | ReactNode;
 };
 
@@ -30,12 +30,11 @@ export interface HighlightTextProps extends TextProps {
  * @usage
  * ```tsx
  * <TextHighlight
-      variant='body'
-      query='react'
-      highlightStyle={{ backgroundColor: t.colors.primary, color: t.colors.onPrimary }}
-    >
-      React Native makes mobile development easy with React.
-    </TextHighlight>
+ *   variant='body'
+ *   query='react'
+ * >
+ *   React Native makes mobile development easy with React.
+ * </TextHighlight>
  * ```
  ******************************************************************************************************************/
 export const HighlightText: React.FC<HighlightTextProps> = memo(
@@ -76,11 +75,8 @@ export const HighlightText: React.FC<HighlightTextProps> = memo(
           // build inner <Text> props (override only color + highlight)
           const innerProps: TextProps = {
             ...rest,
-
             ...(queryColor !== undefined ? { color: queryColor } : {}),
-
-            highlightColor:
-              queryHighlightColor ?? defaultHighlightColor,
+            highlightColor: queryHighlightColor ?? defaultHighlightColor,
           };
 
           return (

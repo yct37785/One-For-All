@@ -42,8 +42,8 @@ export type IconProps = {
  * @usage
  * ```tsx
  * <Icon source='home' />
- * <Icon source='star' variant='lg' color={{ color: 'onSurface' }} />
- * <Icon source='bell' size={28} color={{ color: 'error' }} />
+ * <Icon source='star' variant='lg' color='error' />
+ * <Icon source='bell' color='error' />
  * ```
  ******************************************************************************************************************/
 export const Icon: React.FC<IconProps & { source?: string }> = memo(

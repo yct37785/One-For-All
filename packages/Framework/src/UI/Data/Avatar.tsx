@@ -4,6 +4,7 @@ import { useTheme } from 'react-native-paper';
 import { TextVariant } from '../Text/Text';
 import { Text } from '../Text/Text';
 import { Touchable } from '../Interactive/Touchable';
+import { AppColor, resolveAppColor } from '../CommonProps';
 
 /******************************************************************************************************************
  * Avatar props.
@@ -12,8 +13,8 @@ import { Touchable } from '../Interactive/Touchable';
  * @property label?         - Fallback text (e.g., initials) when no image is available
  * @property size?          - Pixel size OR preset token ('sm' | 'md' | 'lg'), default: 'md'
  * @property shape?         - 'circle' | 'rounded', default: 'circle'
- * @property bgColor?       - Custom background color for label avatars (overrides theme surface)
- * @property textColor?     - Custom text color for label avatars
+ * @property bgColor?       - Background color for label avatars
+ * @property textColor?     - Text color for label avatars
  * @property badgeColor?    - Optional small status dot color
  * @property badgeSize?     - Radius of the status badge (defaults to size-based)
  * @property badgePosition? - Badge anchor position: 'top-right' | 'bottom-right' (default: 'bottom-right')
@@ -26,9 +27,9 @@ export type AvatarProps = {
   label?: string;
   size?: number | 'sm' | 'md' | 'lg';
   shape?: 'circle' | 'rounded';
-  bgColor?: string;
-  textColor?: string;
-  badgeColor?: string;
+  bgColor?: AppColor;
+  textColor?: AppColor;
+  badgeColor?: AppColor;
   badgeSize?: number;
   badgePosition?: 'top-right' | 'bottom-right';
   style?: StyleProp<ViewStyle>;
@@ -43,8 +44,9 @@ export type AvatarProps = {
  * ```tsx
  * <Avatar uri={user.photoURL} />
  * <Avatar label="JS" size="lg" />
- * <Avatar label="A" badgeColor="#2E7D32" />
- * <Avatar label="AB" bgColor="#1e88e5" textColor="#fff" onPress={...} />
+ * <Avatar label="A" badgeColor="primary" />
+ * <Avatar label="AB" bgColor="primary" textColor="onPrimary" onPress={...} />
+ * <Avatar label="AB" bgColor="#1e88e5" textColor="#fff" />
  * ```
  ******************************************************************************************************************/
 export const Avatar: React.FC<AvatarProps> = memo(
@@ -77,11 +79,21 @@ export const Avatar: React.FC<AvatarProps> = memo(
     const radius =
       shape === 'circle' ? px / 2 : Math.max(6, Math.round(px * 0.22));
 
+    // resolve token/raw colors
+    const resolvedBgColor =
+      resolveAppColor(theme.colors, bgColor) ?? theme.colors.surface;
+
+    const resolvedTextColor =
+      resolveAppColor(theme.colors, textColor);
+
+    const resolvedBadgeColor =
+      resolveAppColor(theme.colors, badgeColor);
+
     const containerStyle: ViewStyle = {
       width: px,
       height: px,
       borderRadius: radius,
-      backgroundColor: bgColor ?? theme.colors.surface,
+      backgroundColor: resolvedBgColor,
       borderColor: theme.colors.outline,
     };
 
@@ -110,14 +122,14 @@ export const Avatar: React.FC<AvatarProps> = memo(
           !!label && (
             <Text
               variant={textVariant}
-              {...(textColor ? { color: textColor } : {})}
+              {...(resolvedTextColor ? { color: resolvedTextColor } : {})}
             >
               {label}
             </Text>
           )
         )}
 
-        {badgeColor ? (
+        {resolvedBadgeColor ? (
           <View
             style={[
               styles.badgeBase,
@@ -125,7 +137,7 @@ export const Avatar: React.FC<AvatarProps> = memo(
               {
                 width: computedBadgeSize,
                 height: computedBadgeSize,
-                backgroundColor: badgeColor,
+                backgroundColor: resolvedBadgeColor,
                 borderColor: theme.colors.surface,
               },
             ]}

@@ -10,6 +10,7 @@ import * as Const from '../../Const';
 import { Text } from '../Text/Text';
 import { Touchable } from '../Interactive/Touchable';
 import { Icon } from '../Text/Icon';
+import { AppColor, resolveAppColor } from '../CommonProps';
 
 /******************************************************************************************************************
  * Chip props.
@@ -20,6 +21,10 @@ import { Icon } from '../Text/Icon';
  * @property leadingIcon?    - Optional leading icon name (e.g. 'tag', 'filter')
  * @property isClose?        - If true, shows trailing "X" and treats onPress as a close/remove action
  * @property onPress?        - Called when the chip is pressed (for close chips, this is the close logic)
+ * @property bgColor?        - Background color override
+ * @property borderColor?    - Border color override
+ * @property textColor?      - Text color override
+ * @property iconColor?      - Icon color override (defaults to textColor)
  * @property style?          - Extra style(s) for the chip container
  ******************************************************************************************************************/
 export type ChipProps = {
@@ -29,6 +34,10 @@ export type ChipProps = {
   leadingIcon?: string;
   isClose?: boolean;
   onPress?: () => void;
+  bgColor?: AppColor;
+  borderColor?: AppColor;
+  textColor?: AppColor;
+  iconColor?: AppColor;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -61,6 +70,10 @@ export const Chip: React.FC<ChipProps> = memo(
     leadingIcon,
     isClose = false,
     onPress,
+    bgColor: bgColorOverride,
+    borderColor: borderColorOverride,
+    textColor: textColorOverride,
+    iconColor: iconColorOverride,
     style,
   }) => {
     const theme = useTheme();
@@ -86,10 +99,23 @@ export const Chip: React.FC<ChipProps> = memo(
       return theme.colors.onSurface;
     })();
 
+    // resolve token/raw overrides (if provided)
+    const resolvedBgColor =
+      resolveAppColor(theme.colors, bgColorOverride) ?? bgColor;
+
+    const resolvedBorderColor =
+      resolveAppColor(theme.colors, borderColorOverride) ?? borderColor;
+
+    const resolvedTextColor =
+      resolveAppColor(theme.colors, textColorOverride) ?? textColor;
+
+    const resolvedIconColor =
+      resolveAppColor(theme.colors, iconColorOverride) ?? resolvedTextColor;
+
     // visible container (inside Touchable) – responsible for border + background
     const innerContainerStyle: ViewStyle = {
-      backgroundColor: bgColor,
-      borderColor,
+      backgroundColor: resolvedBgColor,
+      borderColor: resolvedBorderColor,
       borderRadius: CHIP_RADIUS,
     };
 
@@ -98,11 +124,11 @@ export const Chip: React.FC<ChipProps> = memo(
         <View style={styles.innerRow}>
           {leadingIcon ? (
             <View style={styles.leadingIconWrapper}>
-              <Icon source={leadingIcon} variant='sm' color={textColor} />
+              <Icon source={leadingIcon} variant='sm' color={resolvedIconColor} />
             </View>
           ) : null}
 
-          <Text variant='labelMedium' color={textColor} numberOfLines={1}>
+          <Text variant='labelMedium' color={resolvedTextColor} numberOfLines={1}>
             {label}
           </Text>
 
@@ -111,7 +137,7 @@ export const Chip: React.FC<ChipProps> = memo(
               <Icon
                 source='close'
                 variant='xs'
-                color={textColor}
+                color={resolvedIconColor}
               />
             </View>
           ) : null}
