@@ -26,7 +26,7 @@ const defaultCustom: ThemeCustom = {
 };
 
 /******************************************************************************************************************
- * Merge myTheme into Paper's MD3LightTheme / MD3DarkTheme.
+ * Build theme by merging myTheme into Paper's MD3LightTheme / MD3DarkTheme.
  *
  * - MD3LightTheme and MD3DarkTheme are the source of truth.
  * - Light/dark themes share fonts + custom, but have independent color overrides.
@@ -35,7 +35,7 @@ const defaultCustom: ThemeCustom = {
  *
  * @return - appLightTheme and appDarkTheme
  ******************************************************************************************************************/
-export function mergeMyTheme(myTheme?: MyTheme): {
+export function buildTheme(myTheme?: MyTheme): {
   appLightTheme: AppTheme;
   appDarkTheme: AppTheme;
 } {

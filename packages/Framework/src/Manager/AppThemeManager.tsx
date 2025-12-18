@@ -14,7 +14,7 @@
 import React, { createContext, memo, useCallback, useContext, useMemo, useState } from 'react';
 import type { MyTheme } from '../Theme/Theme.types';
 import type { AppTheme } from '../Theme/Theme';
-import { mergeMyTheme } from '../Theme/Theme';
+import { buildTheme } from '../Theme/Theme';
 import { deepMerge } from '../Util/General';
 
 /******************************************************************************************************************
@@ -71,7 +71,7 @@ export const AppThemeProvider: React.FC<AppThemeProviderProps> = memo(
     }, [myTheme, runtimeTokens]);
 
     const { appLightTheme, appDarkTheme } = useMemo(
-      () => mergeMyTheme(mergedTokens),
+      () => buildTheme(mergedTokens),
       [mergedTokens]
     );
 
