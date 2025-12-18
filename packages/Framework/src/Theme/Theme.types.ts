@@ -1,4 +1,5 @@
-import { MD3LightTheme } from 'react-native-paper';
+import { MD3LightTheme, Text as PaperText } from 'react-native-paper';
+import { KeysOfType } from '../Util/Template';
 
 /******************************************************************************************************************
  * Theme workflow:
@@ -30,3 +31,18 @@ export type MyTheme = Partial<{
   fonts: Partial<ThemeFonts>;
   custom: Partial<ThemeCustom>;
 }>;
+
+/******************************************************************************************************************
+ * Color props.
+ *
+ * @property color?          - Theme color token (defaults to 'onSurface')
+ * @property colorCustom?    - Raw color string (overrides `color`)
+ * @property highlightColor? - Background highlight color
+ ******************************************************************************************************************/
+export type ColorProps = Partial<{
+  color: KeysOfType<ThemeColors, string>;
+  colorCustom: string;
+  highlightColor: string;
+}>;
+
+export type TextVariant = React.ComponentProps<typeof PaperText>['variant'];
