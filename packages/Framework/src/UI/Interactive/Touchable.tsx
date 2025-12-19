@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, memo } from 'react';
+import React, { useRef, useEffect, memo, useMemo } from 'react';
 import {
   Pressable,
   PressableProps,
@@ -109,7 +109,10 @@ export const Touchable: React.FC<TouchableProps> = memo(
      * Split style (fast paths):
      * - If no style, skip flattening.
      **************************************************************************************************************/
-    const flattened = style ? (StyleSheet.flatten(style) as ViewStyle) : undefined;
+    const flattened = useMemo(
+      () => (style ? (StyleSheet.flatten(style) as ViewStyle) : undefined),
+      [style]
+    );
 
     const borderRadius = flattened?.borderRadius;
     const borderTopLeftRadius = flattened?.borderTopLeftRadius;
