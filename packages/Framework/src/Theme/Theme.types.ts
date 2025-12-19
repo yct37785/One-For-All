@@ -9,9 +9,34 @@ import { MD3LightTheme } from 'react-native-paper';
 export type ThemeColors = typeof MD3LightTheme.colors;
 export type ThemeFonts = typeof MD3LightTheme.fonts;
 
-// test custom token
-export type ThemeCustom = {
-  customProp: number;
+// design tokens
+export type ThemeDesign = {
+  padSize025: number;
+  padSize05: number;
+  padSize: number;
+
+  radiusSmall: number;
+  radiusMedium: number;
+  radiusLarge: number;
+
+  rippleColorForLight: string;
+  rippleColorForDark: string;
+
+  snackbarDuration: number;
+
+  textOpacityHEmphasis: number;
+  textOpacityMEmphasis: number;
+
+  iconSizeSmall: number;
+  iconSizeMedium: number;
+
+  pressOpacityLight: number;
+  pressOpacityMedium: number;
+  pressOpacityHeavy: number;
+  pressInDurationMS: number;
+  pressOutDurationMS: number;
+
+  animDuration: number;
 };
 
 /******************************************************************************************************************
@@ -28,5 +53,5 @@ export type MyTheme = Partial<{
   colorsLight: Partial<ThemeColors>;
   colorsDark: Partial<ThemeColors>;
   fonts: Partial<ThemeFonts>;
-  custom: Partial<ThemeCustom>;
+  design: Partial<ThemeDesign>;
 }>;
