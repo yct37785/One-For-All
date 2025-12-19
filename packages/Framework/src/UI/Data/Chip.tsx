@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,7 +6,6 @@ import {
   StyleProp,
 } from 'react-native';
 import { useAppTheme } from '../../Manager/AppThemeManager';
-import * as Const from '../../Const';
 import { Text } from '../Text/Text';
 import { Touchable } from '../Interactive/Touchable';
 import { Icon } from '../Text/Icon';
@@ -93,6 +92,38 @@ export const Chip: React.FC<ChipProps> = memo(
       borderRadius: CHIP_RADIUS,
     };
 
+    /**
+     * style
+     */
+    const styles = useMemo(
+      () =>
+        StyleSheet.create({
+          innerContainer: {
+            minHeight: 32,
+            borderWidth: StyleSheet.hairlineWidth,
+            borderStyle: 'solid',
+            paddingHorizontal: theme.design.padSize * 1.5,
+            paddingVertical: theme.design.padSize * 0.5,
+            flexDirection: 'row',
+            alignItems: 'center',
+          },
+          innerRow: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            flexShrink: 1,
+          },
+          leadingIconWrapper: {
+            marginRight: theme.design.padSize,
+          },
+          closeWrapper: {
+            marginLeft: theme.design.padSize,
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+        }),
+      [theme]
+    );
+
     const content = (
       <View style={[styles.innerContainer, innerContainerStyle, style]}>
         <View style={styles.innerRow}>
@@ -139,31 +170,3 @@ export const Chip: React.FC<ChipProps> = memo(
     return <View style={touchableStyle}>{content}</View>;
   }
 );
-
-/******************************************************************************************************************
- * Styles
- ******************************************************************************************************************/
-const styles = StyleSheet.create({
-  innerContainer: {
-    minHeight: 32,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderStyle: 'solid',
-    paddingHorizontal: Const.padSize * 1.5,
-    paddingVertical: Const.padSize * 0.5,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  innerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexShrink: 1,
-  },
-  leadingIconWrapper: {
-    marginRight: Const.padSize,
-  },
-  closeWrapper: {
-    marginLeft: Const.padSize,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

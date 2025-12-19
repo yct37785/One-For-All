@@ -1,8 +1,8 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { StyleSheet, ViewStyle, StyleProp } from 'react-native';
 import { Touchable } from '../Interactive/Touchable';
 import { Text, TextProps } from '../Text/Text';
-import * as Const from '../../Const';
+import { useAppTheme } from '../../Manager/AppThemeManager';
 
 /******************************************************************************************************************
  * TextButton props.
@@ -47,6 +47,25 @@ export const TextButton: React.FC<TextButtonProps> = memo(
     style,
     textOpts,
   }) => {
+    const { theme } = useAppTheme();
+
+    /**
+     * style
+     */
+    const styles = useMemo(
+      () =>
+        StyleSheet.create({
+          button: {
+            paddingVertical: theme.design.padSize,
+            paddingHorizontal: theme.design.padSize * 2,
+            borderRadius: theme.design.radiusMedium,
+            alignSelf: 'flex-start',
+            justifyContent: 'center',
+          },
+        }),
+      [theme]
+    );
+
     return (
       <Touchable
         onPress={onPress}
@@ -64,16 +83,3 @@ export const TextButton: React.FC<TextButtonProps> = memo(
     );
   }
 );
-
-/******************************************************************************************************************
- * Styles
- ******************************************************************************************************************/
-const styles = StyleSheet.create({
-  button: {
-    paddingVertical: Const.padSize,
-    paddingHorizontal: Const.padSize * 2,
-    borderRadius: Const.radiusMedium,
-    alignSelf: 'flex-start',
-    justifyContent: 'center',
-  },
-});

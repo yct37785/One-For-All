@@ -10,22 +10,6 @@ import {
   Easing,
 } from 'react-native';
 import { useAppTheme } from '../../Manager/AppThemeManager';
-import * as Const from '../../Const';
-
-/******************************************************************************************************************
- * Android ripple presets (shared instances).
- ******************************************************************************************************************/
-const ANDROID_RIPPLE_LIGHT = {
-  borderless: false,
-  foreground: true,
-  color: Const.rippleColorForLight,
-} as const;
-
-const ANDROID_RIPPLE_DARK = {
-  borderless: false,
-  foreground: true,
-  color: Const.rippleColorForDark,
-} as const;
 
 /******************************************************************************************************************
  * TouchableProps
@@ -80,8 +64,8 @@ export const Touchable: React.FC<TouchableProps> = memo(
      * Theme-aware defaults.
      **************************************************************************************************************/
     const resolvedPressOpacity = theme.dark
-      ? Const.pressOpacityLight
-      : Const.pressOpacityMedium;
+      ? theme.design.pressOpacityLight
+      : theme.design.pressOpacityMedium;
 
     const run = (to: number, dur: number) => {
       if (lastTarget.current === to) return;
@@ -98,14 +82,14 @@ export const Touchable: React.FC<TouchableProps> = memo(
 
     const handleIn = (e: any) => {
       if (!disabled && isOpacity) {
-        run(resolvedPressOpacity, Const.pressInDurationMS);
+        run(resolvedPressOpacity, theme.design.pressInDurationMS);
       }
       onPressIn?.(e);
     };
 
     const handleOut = (e: any) => {
       if (isOpacity) {
-        run(1, Const.pressOutDurationMS);
+        run(1, theme.design.pressOutDurationMS);
       }
       onPressOut?.(e);
     };
@@ -143,31 +127,31 @@ export const Touchable: React.FC<TouchableProps> = memo(
     const pressableStyle: ViewStyle = {
       ...(hasAnyRadius
         ? {
-            borderRadius,
-            borderTopLeftRadius,
-            borderTopRightRadius,
-            borderBottomLeftRadius,
-            borderBottomRightRadius,
-            overflow: 'hidden',
-          }
+          borderRadius,
+          borderTopLeftRadius,
+          borderTopRightRadius,
+          borderBottomLeftRadius,
+          borderBottomRightRadius,
+          overflow: 'hidden',
+        }
         : null),
     };
 
     const contentStyle: ViewStyle | undefined = flattened
       ? (() => {
-          // remove radius / overflow props from the inner content
-          const {
-            borderRadius: _br,
-            borderTopLeftRadius: _btlr,
-            borderTopRightRadius: _btrr,
-            borderBottomLeftRadius: _bblr,
-            borderBottomRightRadius: _bbrr,
-            overflow: _ov,
-            ...rest
-          } = flattened;
+        // remove radius / overflow props from the inner content
+        const {
+          borderRadius: _br,
+          borderTopLeftRadius: _btlr,
+          borderTopRightRadius: _btrr,
+          borderBottomLeftRadius: _bblr,
+          borderBottomRightRadius: _bbrr,
+          overflow: _ov,
+          ...rest
+        } = flattened;
 
-          return rest as ViewStyle;
-        })()
+        return rest as ViewStyle;
+      })()
       : undefined;
 
     /**************************************************************************************************************
@@ -176,12 +160,15 @@ export const Touchable: React.FC<TouchableProps> = memo(
      * Static/banding in dark mode is often caused by foreground ripple + clipping.
      * If the touchable is rounded (overflow hidden), prefer background ripple.
      **************************************************************************************************************/
-    const rippleBase =
-      theme.dark ? ANDROID_RIPPLE_DARK : ANDROID_RIPPLE_LIGHT;
+    const rippleBase = {
+      borderless: false,
+      foreground: true,
+      color: theme.dark ? theme.design.rippleColorForDark : theme.design.rippleColorForLight,
+    }
 
     const ripple =
       Platform.OS === 'android' && isOpacity
-      // ? { ...rippleBase, foreground: !hasAnyRadius } removed foreground
+        // ? { ...rippleBase, foreground: !hasAnyRadius } removed foreground
         ? { ...rippleBase }
         : undefined;
 
