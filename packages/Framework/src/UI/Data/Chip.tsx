@@ -98,11 +98,11 @@ export const Chip: React.FC<ChipProps> = memo(
         <View style={styles.innerRow}>
           {leadingIcon ? (
             <View style={styles.leadingIconWrapper}>
-              <Icon source={leadingIcon} variant='sm' customColor={textColor} />
+              <Icon source={leadingIcon} variant='sm' color={textColor} />
             </View>
           ) : null}
 
-          <Text variant='labelMedium' customColor={textColor} numberOfLines={1}>
+          <Text variant='labelMedium' color={textColor} numberOfLines={1}>
             {label}
           </Text>
 
@@ -111,7 +111,7 @@ export const Chip: React.FC<ChipProps> = memo(
               <Icon
                 source='close'
                 variant='xs'
-                customColor={textColor}
+                color={textColor}
               />
             </View>
           ) : null}

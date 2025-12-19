@@ -12,7 +12,7 @@ import { Touchable } from '../Interactive/Touchable';
  * @property text        - Preferred text label
  * @property textOpts    - Optional text props (variant, color, bold, style, …)
  * @property icon        - Optional leading icon
- * @property iconOpts    - Optional icon props (variant, color/customColor, size, style, …)
+ * @property iconOpts    - Optional icon props (variant, color, size, style, …)
  * @property disabled    - When true, the row is non-interactive and dimmed
  ******************************************************************************************************************/
 export type MenuOption = {

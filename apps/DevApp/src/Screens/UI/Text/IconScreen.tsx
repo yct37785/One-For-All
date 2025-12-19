@@ -45,7 +45,7 @@ const IconScreen: Nav.ScreenType = ({}) => {
         <UI.Text variant='titleMedium'>Colors</UI.Text>
 
         <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
-          color uses theme tokens, customColor accepts any raw color string.
+          Supply color via theme color tokens or raw color string.
         </UI.Text>
 
         <UI.Box mt={2}>
