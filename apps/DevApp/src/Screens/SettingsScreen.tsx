@@ -8,6 +8,7 @@ const SettingsScreen: React.FC = memo(() => {
       <UI.Button onPress={() => updateTheme({ colorsLight: { onSurface: '#ff0000ff' } })}>
         Test Update Primary Color
       </UI.Button>
+      <UI.Text color={theme.colors.onSurface}>asdasdasdasd</UI.Text>
     </Nav.ScreenLayout>
   );
 });

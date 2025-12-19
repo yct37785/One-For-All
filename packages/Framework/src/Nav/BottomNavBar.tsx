@@ -81,7 +81,8 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = memo(
 
           // default color
           const color: TextProps['color'] =
-            disabled ? 'disabled' : isSelected ? 'primary' : 'default';
+            disabled ? theme.colors.onSurfaceDisabled : 
+            isSelected ? theme.colors.primary : theme.colors.onSurface;
 
           return (
             // slot wrapper enforces equal-width distribution
