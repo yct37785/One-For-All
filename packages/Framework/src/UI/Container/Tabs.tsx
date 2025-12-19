@@ -1,6 +1,6 @@
 import React, { memo, useMemo } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { useAppTheme } from '../../Manager/AppThemeManager';
 import { Icon } from '../Text/Icon';
 import * as Const from '../../Const';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
@@ -60,7 +60,7 @@ export type TabsContainerProps = {
  ******************************************************************************************************************/
 export const TabsContainer: React.FC<TabsContainerProps> = memo(
   ({ routes, sceneMap, tabIndex, onTabIdxChange, position, style }) => {
-    const theme = useTheme();
+    const { theme } = useAppTheme();
 
     // memoized scene map
     const renderScene = useMemo(() => SceneMap(sceneMap as any), [sceneMap]);

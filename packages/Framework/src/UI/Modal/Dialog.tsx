@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { Text, Modal, Button, Card, useTheme, Portal } from 'react-native-paper';
+import { Text, Modal, Button, Card, Portal } from 'react-native-paper';
+import { useAppTheme } from '../../Manager/AppThemeManager';
 import * as Const from '../../Const';
 
 /******************************************************************************************************************
@@ -46,7 +47,7 @@ export const Dialog: React.FC<DialogProps> = memo(
     closeText = 'Close',
     style,
   }) => {
-    const theme = useTheme();
+    const { theme } = useAppTheme();
 
     const containerDynamic: StyleProp<ViewStyle> = {
       backgroundColor: theme.colors.surface,

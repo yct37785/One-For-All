@@ -1,6 +1,5 @@
 import React, { useState, memo, useEffect, useRef, useCallback, ReactNode } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { useTheme } from 'react-native-paper';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
 import * as Const from '../../../Const';
@@ -102,7 +101,6 @@ const AccordionOption = React.memo(function AccordionOption({
   onTrigger: (idx: number, sameSection: boolean) => void;
 }) {
   const [activeSections, setActiveSections] = useState<number[]>([]);
-  const theme = useTheme();
 
   // close on receiving trigger
   useEffect(() => {

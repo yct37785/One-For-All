@@ -1,6 +1,7 @@
 import React, { memo, ReactNode } from 'react';
 import { TextStyle, StyleSheet } from 'react-native';
-import { Text as PaperText, useTheme } from 'react-native-paper';
+import { Text as PaperText } from 'react-native-paper';
+import { useAppTheme } from '../../Manager/AppThemeManager';
 
 /******************************************************************************************************************
  * MD3 typography variants.
@@ -52,7 +53,7 @@ export const Text: React.FC<TextProps & { children?: string | ReactNode }> = mem
     onPress,
     children
   }) => {
-    const theme = useTheme();
+    const { theme } = useAppTheme();
     const resolvedColor = color ?? theme.colors.onSurface;
 
     const colorStyle = {

@@ -9,7 +9,7 @@ import {
   Animated,
   Easing,
 } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { useAppTheme } from '../../Manager/AppThemeManager';
 import * as Const from '../../Const';
 
 /******************************************************************************************************************
@@ -69,7 +69,7 @@ export const Touchable: React.FC<TouchableProps> = memo(
     style,
     children,
   }) => {
-    const theme = useTheme();
+    const { theme } = useAppTheme();
     const opacity = useRef(new Animated.Value(1)).current;
     const isOpacity = feedback === 'opacity';
 

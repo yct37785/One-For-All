@@ -1,6 +1,7 @@
 import React, { memo, ReactNode } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { Icon as PaperIcon, useTheme } from 'react-native-paper';
+import { Icon as PaperIcon } from 'react-native-paper';
+import { useAppTheme } from '../../Manager/AppThemeManager';
 
 /******************************************************************************************************************
  * IconVariant
@@ -47,7 +48,7 @@ export type IconProps = {
  ******************************************************************************************************************/
 export const Icon: React.FC<IconProps & { source?: string }> = memo(
   ({ source, variant = 'md', color, style }) => {
-    const theme = useTheme();
+    const { theme } = useAppTheme();
     const resolvedColor = color ?? theme.colors.onSurface;
 
     // resolve numeric size

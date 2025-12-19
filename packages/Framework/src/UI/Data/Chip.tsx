@@ -5,7 +5,7 @@ import {
   ViewStyle,
   StyleProp,
 } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { useAppTheme } from '../../Manager/AppThemeManager';
 import * as Const from '../../Const';
 import { Text } from '../Text/Text';
 import { Touchable } from '../Interactive/Touchable';
@@ -63,7 +63,7 @@ export const Chip: React.FC<ChipProps> = memo(
     onPress,
     style,
   }) => {
-    const theme = useTheme();
+    const { theme } = useAppTheme();
 
     // base colors for different states
     const isInteractive = !!onPress;

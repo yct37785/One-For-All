@@ -72,8 +72,8 @@ export default function App() {
         RightContent: <DefaultRightContent />,
       }}
       myTheme={{
-        colorsLight: { primary: 'green' },
-        colorsDark: { primary: 'yellow' },
+        // colorsLight: { primary: 'green' },
+        // colorsDark: { primary: 'yellow' },
       }}
     />
   );

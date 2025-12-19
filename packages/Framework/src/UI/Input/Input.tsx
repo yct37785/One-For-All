@@ -10,7 +10,7 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { useAppTheme } from '../../Manager/AppThemeManager';
 import { Icon } from '../Text/Icon';
 
 /******************************************************************************************************************
@@ -142,7 +142,7 @@ export const TextInput: React.FC<TextInputProps> = memo(
     helperText,
     errorText,
   }) => {
-    const theme = useTheme();
+    const { theme } = useAppTheme();
     const inputRef = useRef<RNTextInput | null>(null);
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [isFocused, setIsFocused] = useState(false);

@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { useTheme } from 'react-native-paper';
 import { Picker as RNPicker } from '@react-native-picker/picker';
+import { useAppTheme } from '../../Manager/AppThemeManager';
 
 /******************************************************************************************************************
  * Define a selectable option for the picker.
@@ -51,7 +51,7 @@ export type PickerProps = {
  ******************************************************************************************************************/
 export const Picker: React.FC<PickerProps> = memo(
   ({ value, options, onChange, style }) => {
-    const theme = useTheme();
+    const { theme } = useAppTheme();
 
     const pickerStyle = [
       styles.pickerBase,

@@ -1,4 +1,4 @@
-import { MD3LightTheme, MD3DarkTheme, useTheme, type MD3Theme } from 'react-native-paper';
+import { MD3LightTheme, MD3DarkTheme, type MD3Theme } from 'react-native-paper';
 import type { MyTheme, ThemeColors, ThemeCustom, ThemeFonts } from './Theme.types';
 import { deepMerge } from '../Util/General';
 

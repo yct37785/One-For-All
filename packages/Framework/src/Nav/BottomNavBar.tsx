@@ -1,10 +1,10 @@
 import React, { memo } from 'react';
 import { StyleSheet, ViewStyle, StyleProp } from 'react-native';
-import { useTheme } from 'react-native-paper';
 import { Box } from '../UI/Container/Box';
 import { Touchable } from '../UI/Interactive/Touchable';
 import { Text, TextProps } from '../UI/Text/Text';
 import { Icon, IconProps } from '../UI/Text/Icon';
+import { useAppTheme } from '../Manager/AppThemeManager';
 import * as Const from '../Const';
 
 // defaults (can be overridden per item via iconOpts/textOpts)
@@ -65,7 +65,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = memo(
     style,
     itemStyle,
   }) => {
-    const theme = useTheme();
+    const { theme } = useAppTheme();
 
     return (
       <Box dir='row' align='center' bgColor={theme.colors.elevation.level2} flex={0}

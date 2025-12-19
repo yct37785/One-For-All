@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
-import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { Appbar, useTheme } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native';
+import { Appbar } from 'react-native-paper';
 import { Text } from 'react-native-paper';
 import * as Const from '../Const';
 
