@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Nav, UI } from 'framework';
+import { Nav, UI, Manager } from 'framework';
 
 /******************************************************************************************************************
  * Decorators demo
@@ -12,6 +12,7 @@ import { Nav, UI } from 'framework';
  * - Divider: a thin separator for grouping related sections
  ******************************************************************************************************************/
 const DecoratorsScreen: Nav.ScreenType = ({}) => {
+  const { theme } = Manager.useAppTheme();
   return (
     <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
@@ -27,7 +28,7 @@ const DecoratorsScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Divider</UI.Text>
 
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
           A thin separator used to divide related sections. Dividers help break
           content into logical groups for better readability.
         </UI.Text>
@@ -41,7 +42,7 @@ const DecoratorsScreen: Nav.ScreenType = ({}) => {
 
         {/* Vertical divider demo */}
         <UI.Box mt={3}>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
             Vertical divider inside a row
           </UI.Text>
 

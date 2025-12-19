@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Nav, UI } from 'framework';
+import { Nav, UI, Manager } from 'framework';
 
 /******************************************************************************************************************
  * Text demo
@@ -12,6 +12,7 @@ import { Nav, UI } from 'framework';
  * - Truncation with numberOfLines
  ******************************************************************************************************************/
 const TextScreen: Nav.ScreenType = ({}) => {
+  const { theme } = Manager.useAppTheme();
   return (
     <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
@@ -27,7 +28,7 @@ const TextScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Variants</UI.Text>
 
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
           Commonly used text roles.
         </UI.Text>
 
@@ -49,24 +50,24 @@ const TextScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Colors</UI.Text>
 
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
           Use semantic colors to match the requirements.
         </UI.Text>
 
         <UI.Box mt={2}>
-          <UI.Text color='default'>Default color</UI.Text>
-          <UI.Text color='label'>Label color</UI.Text>
-          <UI.Text color='disabled'>Disabled text</UI.Text>
-          <UI.Text color='primary'>Primary text</UI.Text>
-          <UI.Text color='secondary'>Secondary text</UI.Text>
-          <UI.Text color='error'>Error text</UI.Text>
+          <UI.Text color={theme.colors.onSurface}>Default color</UI.Text>
+          <UI.Text color={theme.colors.onSurfaceVariant}>Label color</UI.Text>
+          <UI.Text color={theme.colors.onSurfaceDisabled}>Disabled text</UI.Text>
+          <UI.Text color={theme.colors.primary}>Primary text</UI.Text>
+          <UI.Text color={theme.colors.secondary}>Secondary text</UI.Text>
+          <UI.Text color={theme.colors.error}>Error text</UI.Text>
         </UI.Box>
 
         {/* Highlighting */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Highlighting</UI.Text>
 
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
           highlightColor applies a background behind the text.
         </UI.Text>
 
@@ -80,7 +81,7 @@ const TextScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Bold & underline</UI.Text>
 
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
           Use bold and underline helpers for lightweight emphasis.
         </UI.Text>
 
@@ -100,7 +101,7 @@ const TextScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Truncation (numberOfLines)</UI.Text>
 
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
           Use numberOfLines to clamp text and show ellipsis when content is too long.
         </UI.Text>
 

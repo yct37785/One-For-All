@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI } from 'framework';
+import { Nav, UI, Manager } from 'framework';
 
 /******************************************************************************************************************
  * Popups demo
@@ -8,6 +8,7 @@ import { Nav, UI } from 'framework';
  * - UI.Popup: contextual floating menus triggered by a button or icon.
  ******************************************************************************************************************/
 const PopupsScreen: Nav.ScreenType = ({}) => {
+  const { theme } = Manager.useAppTheme();
   const [lastPopupAction, setLastPopupAction] = useState<string | null>(null);
 
   return (
@@ -21,7 +22,7 @@ const PopupsScreen: Nav.ScreenType = ({}) => {
         {/* Last action */}
         {lastPopupAction && (
           <UI.Box mt={1}>
-            <UI.Text variant='labelSmall' color='label'>
+            <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
               Last popup action: {lastPopupAction}
             </UI.Text>
           </UI.Box>

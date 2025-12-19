@@ -11,6 +11,7 @@ import { getDemoColors } from '../../demoColors';
  ******************************************************************************************************************/
 const TouchableScreen: Nav.ScreenType = ({}) => {
   const { isDarkMode } = Manager.useAppSettings();
+  const { theme } = Manager.useAppTheme();
   const colors = getDemoColors(isDarkMode);
   const [touchableClicks, setTouchableClicks] = useState(0);
 
@@ -42,7 +43,7 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
             Touchable taps: {touchableClicks}
           </UI.Text>
         </UI.Box>
@@ -71,7 +72,7 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
             Touchable taps: {touchableClicks}
           </UI.Text>
         </UI.Box>
@@ -81,7 +82,7 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
         <UI.Text variant='titleMedium'>Touchable · radius & shapes</UI.Text>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
             These examples demonstrate ripple clipping with rounded / custom shapes.
           </UI.Text>
         </UI.Box>
@@ -132,7 +133,7 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
           >
             <UI.Text variant='bodyMedium'>Card radius (14)</UI.Text>
             <UI.Box mt={1}>
-              <UI.Text variant='bodySmall' color='label'>
+              <UI.Text variant='bodySmall' color={theme.colors.onSurfaceVariant}>
                 Ripple should stay inside the rounded container.
               </UI.Text>
             </UI.Box>
@@ -140,7 +141,7 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
             Touchable taps: {touchableClicks}
           </UI.Text>
         </UI.Box>
@@ -165,7 +166,7 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
             Touchable taps: {touchableClicks}
           </UI.Text>
         </UI.Box>

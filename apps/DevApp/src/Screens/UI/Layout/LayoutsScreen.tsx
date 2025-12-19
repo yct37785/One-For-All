@@ -16,18 +16,19 @@ const BlockBox: React.FC<{
   width: number;
   height: number;
   bgColor: string;
-}> = ({ i, width, height, bgColor }) => (
-  <UI.Box
+}> = ({ i, width, height, bgColor }) => {
+  const { theme } = Manager.useAppTheme();
+  return <UI.Box
     align='center'
     justify='center'
     bgColor={bgColor}
     style={{ width, height }}
   >
-    <UI.Text variant='labelSmall' color='label'>
+    <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
       child {i}
     </UI.Text>
   </UI.Box>
-);
+};
 
 /******************************************************************************************************************
  * Layouts demo
@@ -40,6 +41,7 @@ const BlockBox: React.FC<{
  ******************************************************************************************************************/
 const LayoutsScreen: Nav.ScreenType = ({}) => {
   const { isDarkMode } = Manager.useAppSettings();
+  const { theme } = Manager.useAppTheme();
   const colors = getDemoColors(isDarkMode);
 
   return (
@@ -58,7 +60,7 @@ const LayoutsScreen: Nav.ScreenType = ({}) => {
         <UI.Text variant='titleMedium'>Direction</UI.Text>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
             HorizontalLayout (row)
           </UI.Text>
         </UI.Box>
@@ -69,7 +71,7 @@ const LayoutsScreen: Nav.ScreenType = ({}) => {
         </UI.HorizontalLayout>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
             VerticalLayout (column)
           </UI.Text>
         </UI.Box>
@@ -83,13 +85,13 @@ const LayoutsScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={2} />
         <UI.Text variant='titleMedium'>Align</UI.Text>
         <UI.Box>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
             align controls cross-axis alignment of children (e.g. vertical alignment in a horizontal layout).
           </UI.Text>
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
             HorizontalLayout (align = 'center')
           </UI.Text>
         </UI.Box>
@@ -108,13 +110,13 @@ const LayoutsScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={2} />
         <UI.Text variant='titleMedium'>Constraint wrap</UI.Text>
         <UI.Box>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
             Wrap lets children flow onto new rows or new columns when they run out of space.
           </UI.Text>
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
             VerticalLayout (wrap, parent height)
           </UI.Text>
         </UI.Box>
@@ -133,7 +135,7 @@ const LayoutsScreen: Nav.ScreenType = ({}) => {
         </UI.VerticalLayout>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
             HorizontalLayout (wrap, parent width)
           </UI.Text>
         </UI.Box>
@@ -154,7 +156,7 @@ const LayoutsScreen: Nav.ScreenType = ({}) => {
         <UI.Text variant='titleMedium'>Constraint scroll</UI.Text>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
             HorizontalLayout (horizontal scroll)
           </UI.Text>
         </UI.Box>
@@ -174,13 +176,13 @@ const LayoutsScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={2} />
         <UI.Text variant='titleMedium'>Gap</UI.Text>
         <UI.Box>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
             gap adds spacing between children.
           </UI.Text>
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelMedium' color='label'>gap = 2</UI.Text>
+          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>gap = 2</UI.Text>
         </UI.Box>
         <UI.HorizontalLayout
           bgColor={colors.tier1}
@@ -196,7 +198,7 @@ const LayoutsScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={2} />
         <UI.Text variant='titleMedium'>Nested layouts</UI.Text>
         <UI.Box>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
             Combine horizontal and vertical layouts to create simple app structures like headers, sidebars,
             and content areas.
           </UI.Text>
@@ -207,7 +209,7 @@ const LayoutsScreen: Nav.ScreenType = ({}) => {
             {/* Header */}
             <UI.HorizontalLayout bgColor={colors.tier2} gap={1}>
               <UI.Box flex={1}>
-                <UI.Text variant='labelMedium' color='label'>Header</UI.Text>
+                <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>Header</UI.Text>
               </UI.Box>
               <UI.Box>
                 <UI.Button mode='text' onPress={() => {}}>
@@ -219,10 +221,10 @@ const LayoutsScreen: Nav.ScreenType = ({}) => {
             {/* Content */}
             <UI.HorizontalLayout bgColor={colors.tier2} gap={1}>
               <UI.VerticalLayout flex={1} bgColor={colors.tier3} gap={1}>
-                <UI.Text variant='labelMedium' color='label'>Sidebar</UI.Text>
+                <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>Sidebar</UI.Text>
               </UI.VerticalLayout>
               <UI.VerticalLayout flex={2} bgColor={colors.orangeBg} gap={1}>
-                <UI.Text variant='labelMedium' color='label'>Main content</UI.Text>
+                <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>Main content</UI.Text>
                 <UI.Text variant='bodySmall'>
                   Layouts define structure; Box and other components fill in the details.
                 </UI.Text>
@@ -231,7 +233,7 @@ const LayoutsScreen: Nav.ScreenType = ({}) => {
 
             {/* Footer */}
             <UI.HorizontalLayout bgColor={colors.tier2} gap={1}>
-              <UI.Text variant='labelMedium' color='label'>Footer area</UI.Text>
+              <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>Footer area</UI.Text>
             </UI.HorizontalLayout>
           </UI.VerticalLayout>
         </UI.Box>

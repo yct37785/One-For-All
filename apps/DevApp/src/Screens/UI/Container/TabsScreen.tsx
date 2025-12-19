@@ -72,6 +72,7 @@ function createTabScenes(isDarkMode: boolean) {
  ******************************************************************************************************************/
 const TabsScreen: Nav.ScreenType = ({}) => {
   const { isDarkMode } = Manager.useAppSettings();
+  const { theme } = Manager.useAppTheme();
   const scenes = createTabScenes(isDarkMode);
 
   // controlled tab indices for each example

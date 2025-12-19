@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI } from 'framework';
+import { Nav, UI, Manager } from 'framework';
 
 /******************************************************************************************************************
  * Selections demo
@@ -12,6 +12,7 @@ import { Nav, UI } from 'framework';
  * a single preference (e.g. dark mode).
  ******************************************************************************************************************/
 const SelectionsScreen: Nav.ScreenType = ({}) => {
+  const { theme } = Manager.useAppTheme();
   const [pickerValue, setPickerValue] = useState<string>('red');
   const [radioValue, setRadioValue] = useState<string>('cat');
   const [switchValue, setSwitchValue] = useState<boolean>(false);
@@ -42,7 +43,7 @@ const SelectionsScreen: Nav.ScreenType = ({}) => {
         {/* Picker */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Picker</UI.Text>
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
           A dropdown selector for choosing a single value from a list.
         </UI.Text>
 
@@ -63,7 +64,7 @@ const SelectionsScreen: Nav.ScreenType = ({}) => {
         {/* RadioGroup */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>RadioGroup</UI.Text>
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
           A set of radio buttons for visible, side-by-side single selection.
         </UI.Text>
 
@@ -84,7 +85,7 @@ const SelectionsScreen: Nav.ScreenType = ({}) => {
         {/* Switch */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Switch</UI.Text>
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
           A binary toggle for enabling/disabling a preference.
         </UI.Text>
 

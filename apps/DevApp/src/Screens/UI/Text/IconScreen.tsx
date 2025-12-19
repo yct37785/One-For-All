@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Nav, UI } from 'framework';
+import { Nav, UI, Manager } from 'framework';
 
 /******************************************************************************************************************
  * Icon demo
@@ -10,6 +10,7 @@ import { Nav, UI } from 'framework';
  * - Using icons inline and inside simple containers
  ******************************************************************************************************************/
 const IconScreen: Nav.ScreenType = ({}) => {
+  const { theme } = Manager.useAppTheme();
   return (
     <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
@@ -25,7 +26,7 @@ const IconScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Size variants</UI.Text>
 
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
           Use the variant prop to pick predefined icon sizes.
         </UI.Text>
 
@@ -43,23 +44,23 @@ const IconScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Colors</UI.Text>
 
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
           color uses theme tokens, customColor accepts any raw color string.
         </UI.Text>
 
         <UI.Box mt={2}>
           <UI.HorizontalLayout dir='row' gap={2} align='center'>
-            <UI.Icon source='heart' color='default' />
-            <UI.Icon source='heart' color='label' />
-            <UI.Icon source='heart' color='primary' />
-            <UI.Icon source='heart' color='secondary' />
-            <UI.Icon source='heart' color='error' />
+            <UI.Icon source='heart' color={theme.colors.onSurface} />
+            <UI.Icon source='heart' color={theme.colors.onSurfaceVariant} />
+            <UI.Icon source='heart' color={theme.colors.primary} />
+            <UI.Icon source='heart' color={theme.colors.secondary} />
+            <UI.Icon source='heart' color={theme.colors.error} />
           </UI.HorizontalLayout>
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Icon source='palette' customColor='#8e24aa' />
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Icon source='palette' color='#8e24aa' />
+          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
             Custom purple (#8e24aa)
           </UI.Text>
         </UI.Box>
@@ -68,22 +69,22 @@ const IconScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Icons inside containers</UI.Text>
 
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
           Icons can be composed with Box to create simple decorated blocks.
         </UI.Text>
 
         <UI.Box mt={2}>
           <UI.HorizontalLayout dir='row' gap={2} align='center'>
             <UI.Box bgColor='#e3f2fd' p={2}>
-              <UI.Icon source='information' variant='lg' color='primary' />
+              <UI.Icon source='information' variant='lg' color={theme.colors.primary} />
             </UI.Box>
 
             <UI.Box bgColor='#fce4ec' p={2}>
-              <UI.Icon source='flower' variant='lg' color='secondary' />
+              <UI.Icon source='flower' variant='lg' color={theme.colors.secondary} />
             </UI.Box>
 
             <UI.Box bgColor='#fff3e0' p={2}>
-              <UI.Icon source='alert' variant='lg' color='error' />
+              <UI.Icon source='alert' variant='lg' color={theme.colors.error} />
             </UI.Box>
           </UI.HorizontalLayout>
         </UI.Box>
@@ -92,14 +93,14 @@ const IconScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Practical examples</UI.Text>
 
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
           Combine icons with text or actions to give clearer meaning.
         </UI.Text>
 
         {/* Icon + label row */}
         <UI.Box mt={2}>
           <UI.HorizontalLayout dir='row' gap={1} align='center'>
-            <UI.Icon source='map-marker' variant='md' color='primary' />
+            <UI.Icon source='map-marker' variant='md' color={theme.colors.primary} />
             <UI.Text variant='bodyMedium'>Gotham City</UI.Text>
           </UI.HorizontalLayout>
         </UI.Box>
@@ -107,7 +108,7 @@ const IconScreen: Nav.ScreenType = ({}) => {
         {/* Status row */}
         <UI.Box mt={1}>
           <UI.HorizontalLayout dir='row' gap={1} align='center'>
-            <UI.Icon source='check-circle' variant='sm' color='primary' />
+            <UI.Icon source='check-circle' variant='sm' color={theme.colors.primary} />
             <UI.Text variant='labelSmall'>Active status</UI.Text>
           </UI.HorizontalLayout>
         </UI.Box>
@@ -116,10 +117,10 @@ const IconScreen: Nav.ScreenType = ({}) => {
         <UI.Box mt={2}>
           <UI.HorizontalLayout dir='row' gap={2} align='center'>
             <UI.Box bgColor='#eeeeee' p={2} style={{ borderRadius: 999 }}>
-              <UI.Icon source='thumb-up' color='label' />
+              <UI.Icon source='thumb-up' color={theme.colors.onSurfaceVariant} />
             </UI.Box>
             <UI.Box bgColor='#eeeeee' p={2} style={{ borderRadius: 999 }}>
-              <UI.Icon source='thumb-down' color='label' />
+              <UI.Icon source='thumb-down' color={theme.colors.onSurfaceVariant} />
             </UI.Box>
           </UI.HorizontalLayout>
         </UI.Box>

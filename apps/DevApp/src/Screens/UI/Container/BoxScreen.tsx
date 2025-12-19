@@ -49,7 +49,7 @@ const BoxScreen: Nav.ScreenType = ({ navigate }) => {
           Drop-in replacement of View.
         </UI.Text>
         <UI.Box bgColor={colors.greenStrong} p={1} m={1}>
-          <UI.Text color='surface'>Use Box like a View</UI.Text>
+          <UI.Text color={theme.colors.surface}>Use Box like a View</UI.Text>
         </UI.Box>
 
         <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
@@ -125,7 +125,7 @@ const BoxScreen: Nav.ScreenType = ({ navigate }) => {
           mv={1}
           style={{ height: 120 }}
         >
-          <UI.Text variant='labelSmall' color='primary'>
+          <UI.Text variant='labelSmall' color={theme.colors.primary}>
             content is vertically centered
           </UI.Text>
         </UI.Box>

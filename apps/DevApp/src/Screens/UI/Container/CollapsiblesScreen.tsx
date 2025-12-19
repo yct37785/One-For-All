@@ -11,6 +11,7 @@ import { getDemoColors } from '../../demoColors';
  ******************************************************************************************************************/
 const CollapsibleScreen: Nav.ScreenType = ({}) => {
   const { isDarkMode } = Manager.useAppSettings();
+  const { theme } = Manager.useAppTheme();
   const colors = getDemoColors(isDarkMode);
 
   return (
@@ -42,8 +43,8 @@ const CollapsibleScreen: Nav.ScreenType = ({}) => {
           <UI.CollapsibleContainer
             text='Profile settings'
             icon='account-circle'
-            textOpts={{ variant: 'titleSmall', color: 'primary' }}
-            iconOpts={{ color: 'primary' }}
+            textOpts={{ variant: 'titleSmall', color: theme.colors.primary }}
+            iconOpts={{ color: theme.colors.primary }}
           >
             <UI.Box bgColor={colors.orangeBg} p={1}>
               <UI.Text variant='bodySmall'>Primary themed header.</UI.Text>
@@ -56,8 +57,8 @@ const CollapsibleScreen: Nav.ScreenType = ({}) => {
           <UI.CollapsibleContainer
             text='Notifications'
             icon='bell'
-            textOpts={{ variant: 'titleSmall', color: 'secondary' }}
-            iconOpts={{ color: 'secondary' }}
+            textOpts={{ variant: 'titleSmall', color: theme.colors.secondary }}
+            iconOpts={{ color: theme.colors.secondary }}
           >
             <UI.Box bgColor={colors.purpleBg} p={1}>
               <UI.Text variant='bodySmall'>Secondary themed header.</UI.Text>
@@ -70,8 +71,8 @@ const CollapsibleScreen: Nav.ScreenType = ({}) => {
           <UI.CollapsibleContainer
             text='Danger zone'
             icon='alert'
-            textOpts={{ variant: 'titleSmall', color: 'error' }}
-            iconOpts={{ color: 'error' }}
+            textOpts={{ variant: 'titleSmall', color: theme.colors.error }}
+            iconOpts={{ color: theme.colors.error }}
           >
             <UI.Box bgColor={colors.red} p={1}>
               <UI.Text variant='bodySmall'>Error themed header.</UI.Text>
@@ -84,8 +85,8 @@ const CollapsibleScreen: Nav.ScreenType = ({}) => {
           <UI.CollapsibleContainer
             text='Custom color'
             icon='palette'
-            textOpts={{ variant: 'titleSmall', customColor: colors.cyanC }}
-            iconOpts={{ customColor: colors.purpleB }}
+            textOpts={{ variant: 'titleSmall', color: colors.cyanC }}
+            iconOpts={{ color: colors.purpleB }}
           >
             <UI.Box bgColor={colors.purpleBg} p={1}>
               <UI.Text variant='bodySmall'>Header using custom hex color.</UI.Text>
@@ -127,20 +128,20 @@ const CollapsibleScreen: Nav.ScreenType = ({}) => {
               {
                 text: 'Info',
                 icon: 'information-outline',
-                textOpts: { variant: 'titleSmall', color: 'primary' },   // primary
-                iconOpts: { color: 'primary' },
+                textOpts: { variant: 'titleSmall', color: theme.colors.primary },   // primary
+                iconOpts: { color: theme.colors.primary },
               },
               {
                 text: 'Warning',
                 icon: 'alert-outline',
-                textOpts: { variant: 'titleSmall', customColor: colors.amber }, // custom orange
-                iconOpts: { customColor: colors.amber },
+                textOpts: { variant: 'titleSmall', color: colors.amber }, // custom orange
+                iconOpts: { color: colors.amber },
               },
               {
                 text: 'Success',
                 icon: 'check-circle-outline',
-                textOpts: { variant: 'titleSmall', customColor: colors.greenStrong }, // custom green
-                iconOpts: { customColor: colors.greenStrong },
+                textOpts: { variant: 'titleSmall', color: colors.greenStrong }, // custom green
+                iconOpts: { color: colors.greenStrong },
               },
             ]}
           >

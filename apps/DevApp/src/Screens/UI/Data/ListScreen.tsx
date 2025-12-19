@@ -23,6 +23,7 @@ const CATEGORIES = ['Electronics', 'Clothing', 'Home', 'Books', 'Sports', 'Toys'
  ******************************************************************************************************************/
 const ListScreen: Nav.ScreenType = ({}) => {
   const { isDarkMode } = Manager.useAppSettings();
+  const { theme } = Manager.useAppTheme();
   const colors = getDemoColors(isDarkMode);
 
   const [query, setQuery] = useState('');
@@ -148,7 +149,7 @@ const ListScreen: Nav.ScreenType = ({}) => {
           <UI.TextButton
             onPress={onResetFilters}
             disabled={selectedCategories.size === 0}
-            textOpts={{ variant: 'labelSmall', color: 'label' }}
+            textOpts={{ variant: 'labelSmall', color: theme.colors.onSurfaceVariant }}
           >
             Reset filters
           </UI.TextButton>

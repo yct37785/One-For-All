@@ -85,7 +85,7 @@ export const TabsContainer: React.FC<TabsContainerProps> = memo(
       color: string;
     }) =>
       route.icon ? (
-        <Icon source={route.icon} variant='xs' customColor={color} />
+        <Icon source={route.icon} variant='xs' color={color} />
       ) : null;
 
     /**************************************************************************************************************

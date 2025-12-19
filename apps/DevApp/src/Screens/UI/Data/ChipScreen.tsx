@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI } from 'framework';
+import { Nav, UI, Manager } from 'framework';
 
 /******************************************************************************************************************
  * Chip demo
@@ -11,6 +11,7 @@ import { Nav, UI } from 'framework';
  * - Closable chips (isClose)
  ******************************************************************************************************************/
 const ChipScreen: Nav.ScreenType = ({}) => {
+  const { theme } = Manager.useAppTheme();
   // simple toggle state for “filter-like” chips
   const [selectedFilters, setSelectedFilters] = useState<Set<string>>(
     () => new Set(['All'])
@@ -69,7 +70,7 @@ const ChipScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>States</UI.Text>
         <UI.Box>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
             Selected chips appear filled; disabled chips are dimmed and non-interactive.
           </UI.Text>
         </UI.Box>
@@ -98,7 +99,7 @@ const ChipScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Closable chips</UI.Text>
         <UI.Box>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
             Set isClose to true to show a trailing "X". Pressing the chip calls onPress, allowing the parent to
             remove or update the chip.
           </UI.Text>
@@ -116,7 +117,7 @@ const ChipScreen: Nav.ScreenType = ({}) => {
               />
             ))}
             {activeTags.length === 0 && (
-              <UI.Text variant='labelSmall' color='label'>
+              <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
                 No tags left. Use the reset button below to add them back.
               </UI.Text>
             )}
@@ -133,7 +134,7 @@ const ChipScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Filter chips</UI.Text>
         <UI.Box>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
             Tap chips to toggle filters. Parent state manages which filters are active.
           </UI.Text>
         </UI.Box>
@@ -155,7 +156,7 @@ const ChipScreen: Nav.ScreenType = ({}) => {
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
             Active filters:{' '}
             {selectedFilters.size > 0
               ? Array.from(selectedFilters).join(', ')
