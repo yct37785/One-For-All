@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI } from 'framework';
+import { Nav, UI, Manager } from 'framework';
 
 /******************************************************************************************************************
  * Button demo
@@ -9,6 +9,7 @@ import { Nav, UI } from 'framework';
  * - UI.IconButton: compact icon-only buttons for secondary actions and toggles.
  ******************************************************************************************************************/
 const ButtonScreen: Nav.ScreenType = ({}) => {
+  const { theme } = Manager.useAppTheme();
   const [btnClicks, setBtnClicks] = useState(0);
   const [iconClicks, setIconClicks] = useState(0);
   const [favorite, setFavorite] = useState(false);
@@ -63,7 +64,7 @@ const ButtonScreen: Nav.ScreenType = ({}) => {
         </UI.Box>
 
         <UI.Box mt={2}>
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
             Button clicks: {btnClicks}
           </UI.Text>
         </UI.Box>
@@ -150,7 +151,7 @@ const ButtonScreen: Nav.ScreenType = ({}) => {
         </UI.Box>
 
         <UI.Box mt={2}>
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
             Button clicks: {btnClicks}
           </UI.Text>
         </UI.Box>
@@ -241,7 +242,7 @@ const ButtonScreen: Nav.ScreenType = ({}) => {
         {/* TextButton · lightweight text-only button */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>TextButton</UI.Text>
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
           A text-forward button alternative. Unlike Button mode="text", which has a fixed
           visual style, TextButton fully inherits Text props.
         </UI.Text>
@@ -268,7 +269,7 @@ const ButtonScreen: Nav.ScreenType = ({}) => {
         </UI.Box>
 
         <UI.Box mt={2}>
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
             Button clicks: {btnClicks}
           </UI.Text>
         </UI.Box>

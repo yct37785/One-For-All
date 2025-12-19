@@ -19,10 +19,6 @@ type LocalData = Record<string, any>;
 
 /******************************************************************************************************************
  * Type defining the APIs exposed by LocalDataContext.Provider.
- * 
- * @property setItem  - Persist a value to AsyncStorage
- * @property getItem  - Retrieve a typed value (reads from AsyncStorage each time)
- * @property clear    - Clear all stored values and optionally re-seed defaults
  ******************************************************************************************************************/
 type LocalDataContextType = {
   setItem: (key: string, value: any) => Promise<void>;

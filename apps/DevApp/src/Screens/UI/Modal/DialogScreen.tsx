@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI } from 'framework';
+import { Nav, UI, Manager } from 'framework';
 
 /******************************************************************************************************************
  * Dialogs demo
@@ -8,6 +8,7 @@ import { Nav, UI } from 'framework';
  * - UI.Dialog: focused modal surfaces for confirmation and decisions.
  ******************************************************************************************************************/
 const DialogsScreen: Nav.ScreenType = ({}) => {
+  const { theme } = Manager.useAppTheme();
   const [basicDialogVisible, setBasicDialogVisible] = useState(false);
   const [customDialogVisible, setCustomDialogVisible] = useState(false);
   const [dismissDialogVisible, setDismissDialogVisible] = useState(false);
@@ -24,7 +25,7 @@ const DialogsScreen: Nav.ScreenType = ({}) => {
         {/* Last action */}
         {lastDialogAction && (
           <UI.Box mt={1}>
-            <UI.Text variant='labelSmall' color='label'>
+            <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
               Last dialog action: {lastDialogAction}
             </UI.Text>
           </UI.Box>
@@ -83,7 +84,7 @@ const DialogsScreen: Nav.ScreenType = ({}) => {
             <UI.Text variant='bodySmall'>
               You are about to sign out from this device. Any unsaved changes may be lost.
             </UI.Text>
-            <UI.Text variant='bodySmall' color='label'>
+            <UI.Text variant='bodySmall' color={theme.colors.onSurfaceVariant}>
               Are you sure you want to continue?
             </UI.Text>
           </UI.VerticalLayout>

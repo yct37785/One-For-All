@@ -1,5 +1,4 @@
 import React, { memo, ReactNode } from 'react';
-import type { TextStyle, StyleProp } from 'react-native';
 import { Text, TextProps } from './Text';
 
 function escapeRegExp(s: string) {
@@ -77,7 +76,7 @@ export const HighlightText: React.FC<HighlightTextProps> = memo(
           const innerProps: TextProps = {
             ...rest,
 
-            ...(queryColor !== undefined ? { customColor: queryColor } : {}),
+            ...(queryColor !== undefined ? { color: queryColor } : {}),
 
             highlightColor:
               queryHighlightColor ?? defaultHighlightColor,

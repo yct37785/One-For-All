@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI } from 'framework';
+import { Nav, UI, Manager } from 'framework';
 
 /******************************************************************************************************************
  * MenuList demo
@@ -9,6 +9,7 @@ import { Nav, UI } from 'framework';
  * - UI.MenuListItem: support for text/icon options and dense/centered rows.
  ******************************************************************************************************************/
 const MenuListScreen: Nav.ScreenType = ({}) => {
+  const { theme } = Manager.useAppTheme();
   const [lastSelected, setLastSelected] = useState<string | null>(null);
 
   const handleSelect = (value: string) => {
@@ -26,7 +27,7 @@ const MenuListScreen: Nav.ScreenType = ({}) => {
         </UI.Text>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelMedium' color='label'>
+          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
             Last selected: {lastSelected}
           </UI.Text>
         </UI.Box>
@@ -87,8 +88,8 @@ const MenuListScreen: Nav.ScreenType = ({}) => {
                 value: 'info',
                 text: 'Info',
                 icon: 'information-outline',
-                textOpts: { variant: 'labelMedium', color: 'primary' },
-                iconOpts: { color: 'primary' },
+                textOpts: { variant: 'labelMedium', color: theme.colors.primary },
+                iconOpts: { color: theme.colors.primary },
               },
               {
                 value: 'warning',
@@ -96,24 +97,24 @@ const MenuListScreen: Nav.ScreenType = ({}) => {
                 icon: 'alert-outline',
                 textOpts: {
                   variant: 'labelMedium',
-                  customColor: '#fb8c00',
+                  color: '#fb8c00',
                   bold: true,
                 },
-                iconOpts: { customColor: '#fb8c00' },
+                iconOpts: { color: '#fb8c00' },
               },
               {
                 value: 'success',
                 text: 'Success',
                 icon: 'check-circle-outline',
-                textOpts: { variant: 'labelMedium', customColor: '#2e7d32' },
-                iconOpts: { customColor: '#2e7d32' },
+                textOpts: { variant: 'labelMedium', color: '#2e7d32' },
+                iconOpts: { color: '#2e7d32' },
               },
               {
                 value: 'danger',
                 text: 'Danger',
                 icon: 'alert-circle-outline',
-                textOpts: { variant: 'labelMedium', color: 'error' },
-                iconOpts: { color: 'error' },
+                textOpts: { variant: 'labelMedium', color: theme.colors.error },
+                iconOpts: { color: theme.colors.error },
               },
             ]}
             onSelect={handleSelect}

@@ -66,3 +66,41 @@ export function doErrLog(module: string, func: string, message: string) {
   str += message;
   console.log(str);
 };
+
+/******************************************************************************************************************
+ * Deep merge helper:
+ * - Only applies keys that exist in `toMergeIn` AND are not undefined.
+ * - Recursively merges plain objects (future-proof for nested tokens).
+ * - Arrays are replaced.
+ *
+ * @param base      - Source-of-truth object
+ * @param toMergeIn - Partial override object
+ *
+ * @return - New merged object (base is not mutated)
+ ******************************************************************************************************************/
+export function deepMerge(base: any, toMergeIn: any) {
+  if (toMergeIn === null || toMergeIn === undefined) return base;
+
+  // primitives / functions: replace
+  const baseIsObj = typeof base === 'object' && base !== null;
+  const mergeIsObj = typeof toMergeIn === 'object' && toMergeIn !== null;
+  if (!baseIsObj || !mergeIsObj) return toMergeIn;
+
+  // arrays: replace (no deep merging for arrays)
+  if (Array.isArray(base) || Array.isArray(toMergeIn)) {
+    return Array.isArray(toMergeIn) ? toMergeIn : base;
+  }
+
+  const out: any = { ...base };
+
+  for (const key of Object.keys(toMergeIn)) {
+    const nextVal = toMergeIn[key];
+
+    // only apply explicitly defined keys
+    if (nextVal === undefined) continue;
+
+    out[key] = deepMerge(base[key], nextVal);
+  }
+
+  return out;
+}

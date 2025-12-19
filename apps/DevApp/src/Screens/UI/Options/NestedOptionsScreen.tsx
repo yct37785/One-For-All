@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI } from 'framework';
+import { Nav, UI, Manager } from 'framework';
 
 /******************************************************************************************************************
  * Initial nested options schema.
@@ -74,6 +74,7 @@ const collectSelectedLeafLabels = (
  * - UI.CheckOptions: checkbox-based nested options built on BaseOptions.
  ******************************************************************************************************************/
 const NestedOptionsScreen: Nav.ScreenType = ({}) => {
+  const { theme } = Manager.useAppTheme();
   const [value, setValue] = useState<UI.OptionValue>(() =>
     UI.buildOptionsValueFromSchema(INITIAL_SCHEMA)
   );
@@ -92,7 +93,7 @@ const NestedOptionsScreen: Nav.ScreenType = ({}) => {
         {/* CheckOptions */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>CheckOptions</UI.Text>
-        <UI.Text variant='labelMedium' color='label'>
+        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
           Checkbox-based UI built on the generic nested option tree.
         </UI.Text>
 
@@ -106,7 +107,7 @@ const NestedOptionsScreen: Nav.ScreenType = ({}) => {
 
         {/* Selection summary */}
         <UI.Box mt={2} mb={4}>
-          <UI.Text variant='labelSmall' color='label'>
+          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
             Selected leaf options:{' '}
             {selectedLeafLabels.length > 0
               ? selectedLeafLabels.join(', ')

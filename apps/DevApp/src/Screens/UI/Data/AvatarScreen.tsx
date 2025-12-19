@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI } from 'framework';
+import { Nav, UI, Manager } from 'framework';
 
 /******************************************************************************************************************
  * Avatar demo
@@ -8,6 +8,7 @@ import { Nav, UI } from 'framework';
  * - UI.Avatar: label and image avatars with size, shape, badge, color, and press handling.
  ******************************************************************************************************************/
 const AvatarScreen: Nav.ScreenType = ({}) => {
+  const { theme } = Manager.useAppTheme();
   const [pressCount, setPressCount] = useState(0);
 
   return (
@@ -141,7 +142,7 @@ const AvatarScreen: Nav.ScreenType = ({}) => {
               <UI.Text variant='bodySmall'>
                 Tap the avatar to increment a counter.
               </UI.Text>
-              <UI.Text variant='labelSmall' color='label'>
+              <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
                 Press count: {pressCount}
               </UI.Text>
             </UI.Box>

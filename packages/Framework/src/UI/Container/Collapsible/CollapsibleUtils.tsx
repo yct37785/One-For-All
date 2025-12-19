@@ -1,6 +1,6 @@
 import React, { useState, memo, useEffect, useRef, useCallback, ReactNode } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { useAppTheme } from '../../../Manager/AppThemeManager';
 import * as Const from '../../../Const';
 import { Text, TextProps } from '../../Text/Text';
 import { Icon, IconProps, iconVariantSizeMap } from '../../Text/Icon';
@@ -61,7 +61,7 @@ export type ToggleHeaderProps = {
  ******************************************************************************************************************/
 export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
   ({ text, textOpts, icon, iconOpts, isCollapsed }) => {
-    const theme = useTheme();
+    const { theme } = useAppTheme();
 
     // determine icon size (default to 'md' if none provided)
     const variant = iconOpts?.variant ?? 'md';
@@ -83,7 +83,7 @@ export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
             <Icon
               source={icon}
               variant={variant}
-              customColor={theme.colors.onSurface}
+              color={theme.colors.onSurface}
               {...iconOpts}
             />
           </View>
@@ -105,7 +105,7 @@ export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
         <Icon
           source={isCollapsed ? 'chevron-down' : 'chevron-up'}
           variant='md'
-          customColor={theme.colors.onSurface}
+          color={theme.colors.onSurface}
         />
       </View>
     );

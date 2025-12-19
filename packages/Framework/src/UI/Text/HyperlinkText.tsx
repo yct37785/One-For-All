@@ -1,11 +1,6 @@
 import React, { memo, ReactNode } from 'react';
+import { useAppTheme } from '../../Manager/AppThemeManager';
 import { Text, TextProps } from './Text';
-
-// always force hyperlink styling
-const hyperlinkProps: Partial<TextProps> = {
-  color: 'primary',
-  underline: true,
-};
 
 /******************************************************************************************************************
  * HyperlinkText props.
@@ -38,10 +33,12 @@ export const HyperlinkText: React.FC<HyperlinkTextProps> = memo(
     children,
     ...rest
   }) => {
+    const { theme } = useAppTheme();
     return (
       <Text
         {...rest}
-        {...hyperlinkProps}
+        color={theme.colors.primary}
+        underline={true}
         onPress={onPress}
       >
         {children}

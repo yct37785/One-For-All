@@ -49,7 +49,7 @@ export const CollapsibleContainer: React.FC<CollapsibleContainerProps> = memo(
 
     return (
       <View style={style}>
-        <Touchable pressOpacity={Const.pressOpacityHeavy} onPress={toggleCollapse}>
+        <Touchable onPress={toggleCollapse}>
           <ToggleHeader
             text={text}
             textOpts={textOpts}
