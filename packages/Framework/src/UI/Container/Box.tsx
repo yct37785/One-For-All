@@ -1,10 +1,7 @@
 import React, { memo } from 'react';
 import { View, StyleProp, ViewStyle, FlexStyle } from 'react-native';
 import { PadSpacingValue } from '../../Types';
-import * as Const from '../../Const';
-
-const spacing = (units?: number) =>
-  units === undefined ? undefined : units * Const.padSize;
+import { useAppTheme } from '../../Manager/AppThemeManager';
 
 /******************************************************************************************************************
  * @property bgColor?  - Background color of the container
@@ -92,6 +89,15 @@ export const Box: React.FC<BoxProps> = memo(
     style,
     children,
   }) => {
+    const { theme } = useAppTheme();
+    const padSize = theme.design.padSize;
+
+    const spacing = (units?: number) =>
+      units === undefined ? undefined : units * padSize;
+
+    /**
+     * style
+     */
     const resolvedStyle = [
       {
         backgroundColor: bgColor,
