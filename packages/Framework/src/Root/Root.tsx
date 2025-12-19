@@ -58,7 +58,12 @@ const PaperBridge: React.FC<{
   defaultScreenLayoutProps: ScreenLayoutProps;
   navTheme: any;
 }> = ({ rootNavigator, defaultScreenLayoutProps, navTheme }) => {
-  const { theme } = useAppTheme();
+  const { theme, isLoaded } = useAppTheme();
+
+  // gate rendering until AppThemeManager resolves the initial theme
+  if (!isLoaded) {
+    return null;
+  }
 
   return (
     <PaperProvider theme={theme}>

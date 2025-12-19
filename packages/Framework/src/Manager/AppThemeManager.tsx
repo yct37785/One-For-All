@@ -11,7 +11,7 @@
  * - All token merging is delegated to Theme.ts (deepMerge) so we avoid duplicated merge logic here.
  * - PaperProvider should still be used in Root; this manager only owns the resolved theme + update logic.
  ******************************************************************************************************************/
-import React, { createContext, memo, useCallback, useContext, useMemo, useState } from 'react';
+import React, { createContext, memo, useCallback, useContext, useMemo, useState, useEffect } from 'react';
 import type { MyTheme } from '../Theme/Theme.types';
 import type { AppTheme } from '../Theme/Theme';
 import { buildTheme } from '../Theme/Theme';
@@ -19,10 +19,15 @@ import { deepMerge } from '../Util/General';
 
 /******************************************************************************************************************
  * AppThemeContextType shape.
+ * 
+ * @property theme        - Resolved AppTheme for the current mode
+ * @property updateTheme  - Merge partial theme tokens into runtime overrides
+ * @property isLoaded     - True once initial theme is resolved
  ******************************************************************************************************************/
 type AppThemeContextType = {
-  theme: AppTheme;                       // Resolved AppTheme for the current mode
-  updateTheme: (tokens: MyTheme) => void; // Merge partial theme tokens into runtime overrides
+  theme: AppTheme;
+  updateTheme: (tokens: MyTheme) => void;
+  isLoaded: boolean;
 };
 
 /******************************************************************************************************************
@@ -31,6 +36,7 @@ type AppThemeContextType = {
 const AppThemeContext = createContext<AppThemeContextType>({
   theme: undefined as unknown as AppTheme,
   updateTheme: () => { },
+  isLoaded: false,
 });
 
 /******************************************************************************************************************
@@ -61,6 +67,14 @@ export type AppThemeProviderProps = {
 export const AppThemeProvider: React.FC<AppThemeProviderProps> = memo(
   ({ isDarkMode, myTheme, children }) => {
     const [runtimeTokens, setRuntimeTokens] = useState<MyTheme>({});
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    /**************************************************************************************************************
+     * Mark theme as loaded once the initial theme has been resolved.
+     **************************************************************************************************************/
+    useEffect(() => {
+      setIsLoaded(true);
+    }, []);
 
     /**************************************************************************************************************
      * 1) Merge client tokens + runtime tokens (runtime wins).
@@ -95,13 +109,10 @@ export const AppThemeProvider: React.FC<AppThemeProviderProps> = memo(
 
     /**************************************************************************************************************
      * AppThemeContext value
-     *
-     * @property theme       - Resolved AppTheme (light or dark)
-     * @property updateTheme - Theme update API exposed to consumers
      **************************************************************************************************************/
     const value = useMemo<AppThemeContextType>(
-      () => ({ theme, updateTheme }),
-      [theme, updateTheme]
+      () => ({ theme, updateTheme, isLoaded }),
+      [theme, updateTheme, isLoaded]
     );
 
     return (
