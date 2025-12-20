@@ -1,6 +1,6 @@
-import React, { memo } from 'react';
-import { StyleSheet, ViewStyle } from 'react-native';
-import * as Const from '../../Const';
+import React, { memo, useMemo } from 'react';
+import { StyleSheet } from 'react-native';
+import { useAppTheme } from '../../Manager/AppThemeManager';
 import { Text, TextProps } from '../Text/Text';
 import { Icon, IconProps } from '../Text/Icon';
 import { Touchable } from '../Interactive/Touchable';
@@ -52,16 +52,36 @@ export type MenuListItemProps = {
  ******************************************************************************************************************/
 export const MenuListItem: React.FC<MenuListItemProps> = memo(
   ({ option, onPress, dense = false, align = 'start' }) => {
-    const paddingY = dense ? Const.padSize : Const.padSize * 2;
+    const { theme } = useAppTheme();
+    const paddingY = dense ? theme.design.padSize : theme.design.padSize * 2;
     const disabled = !!option.disabled;
 
-    const wrapperStyle: ViewStyle = {
-      paddingHorizontal: Const.padSize,
-      paddingVertical: paddingY,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: align === 'center' ? 'center' : 'flex-start',
-    };
+    /**
+     * style
+     */
+    const styles = useMemo(
+      () =>
+        StyleSheet.create({
+          iconMarginDense: {
+            marginRight: theme.design.padSize,
+          },
+          iconMarginRegular: {
+            marginRight: theme.design.padSize * 2,
+          },
+          // smaller, balanced spacing for centered layout
+          iconCenteredMargin: {
+            marginRight: theme.design.padSize,
+          },
+          wrapper: {
+            paddingHorizontal: theme.design.padSize,
+            paddingVertical: paddingY,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: align === 'center' ? 'center' : 'flex-start',
+          },
+        }),
+      [theme]
+    );
 
     const iconMargin = dense
       ? styles.iconMarginDense
@@ -76,7 +96,7 @@ export const MenuListItem: React.FC<MenuListItemProps> = memo(
       <Touchable
         onPress={() => !disabled && onPress(option.value)}
         disabled={disabled}
-        style={wrapperStyle}
+        style={styles.wrapper}
       >
         <>
           {option.icon ? (
@@ -106,19 +126,3 @@ export const MenuListItem: React.FC<MenuListItemProps> = memo(
     );
   }
 );
-
-/******************************************************************************************************************
- * Styles
- ******************************************************************************************************************/
-const styles = StyleSheet.create({
-  iconMarginDense: {
-    marginRight: Const.padSize,
-  },
-  iconMarginRegular: {
-    marginRight: Const.padSize * 2,
-  },
-  // smaller, balanced spacing for centered layout
-  iconCenteredMargin: {
-    marginRight: Const.padSize,
-  },
-});

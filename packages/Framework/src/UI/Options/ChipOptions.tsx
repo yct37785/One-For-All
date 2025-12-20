@@ -1,7 +1,7 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useState, useMemo } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Chip } from '../Data/Chip';
-import * as Const from '../../Const';
+import { useAppTheme } from '../../Manager/AppThemeManager';
 
 /******************************************************************************************************************
  * ChipOptions props.
@@ -39,6 +39,8 @@ export type ChipOptionsProps = {
  ******************************************************************************************************************/
 export const ChipOptions: React.FC<ChipOptionsProps> = memo(
   ({ schema, onSelected, resetSignal, style }) => {
+    const { theme } = useAppTheme();
+
     const [selectedSet, setSelectedSet] = useState<Set<string>>(
       () => new Set()
     );
@@ -75,6 +77,23 @@ export const ChipOptions: React.FC<ChipOptionsProps> = memo(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [resetSignal]);
 
+    /**
+     * style
+     */
+    const styles = useMemo(
+      () =>
+        StyleSheet.create({
+          container: {
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+          },
+          chipWrapper: {
+            margin: theme.design.padSize05,
+          },
+        }),
+      [theme]
+    );
+
     return (
       <View style={[styles.container, style]}>
         {Array.from(schema).map((value) => {
@@ -94,16 +113,3 @@ export const ChipOptions: React.FC<ChipOptionsProps> = memo(
     );
   }
 );
-
-/******************************************************************************************************************
- * Styles
- ******************************************************************************************************************/
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  chipWrapper: {
-    margin: Const.padSize05,
-  },
-});

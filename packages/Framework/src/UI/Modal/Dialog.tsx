@@ -1,8 +1,7 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Text, Modal, Button, Card, Portal } from 'react-native-paper';
 import { useAppTheme } from '../../Manager/AppThemeManager';
-import * as Const from '../../Const';
 
 /******************************************************************************************************************
  * Dialog props.
@@ -60,6 +59,40 @@ export const Dialog: React.FC<DialogProps> = memo(
       }
     };
 
+    /**
+     * style
+     */
+    const styles = useMemo(
+      () =>
+        StyleSheet.create({
+          modal: {
+            marginHorizontal: theme.design.padSize * 4,
+          },
+          container: {
+            minHeight: 160,
+            overflow: 'hidden',
+          },
+          title: {
+            padding: theme.design.padSize * 2,
+          },
+          subtitle: {
+            marginHorizontal: theme.design.padSize * 2,
+            marginBottom: theme.design.padSize * 2,
+          },
+          childrenFallback: {
+            flex: 1,
+          },
+          actionsWrapper: {
+            width: '100%',
+            padding: theme.design.padSize,
+          },
+          actionsRow: {
+            justifyContent: 'flex-end',
+          },
+        }),
+      [theme]
+    );
+
     return (
       <Portal>
         <Modal
@@ -107,33 +140,3 @@ export const Dialog: React.FC<DialogProps> = memo(
     );
   }
 );
-
-/******************************************************************************************************************
- * Styles
- ******************************************************************************************************************/
-const styles = StyleSheet.create({
-  modal: {
-    marginHorizontal: Const.padSize * 4,
-  },
-  container: {
-    minHeight: 160,
-    overflow: 'hidden',
-  },
-  title: {
-    padding: Const.padSize * 2,
-  },
-  subtitle: {
-    marginHorizontal: Const.padSize * 2,
-    marginBottom: Const.padSize * 2,
-  },
-  childrenFallback: {
-    flex: 1,
-  },
-  actionsWrapper: {
-    width: '100%',
-    padding: Const.padSize,
-  },
-  actionsRow: {
-    justifyContent: 'flex-end',
-  },
-});

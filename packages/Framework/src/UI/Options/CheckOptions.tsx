@@ -1,7 +1,7 @@
 import React, { memo, ReactNode } from 'react';
 import { View, TouchableOpacity, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Text, Checkbox } from 'react-native-paper';
-import * as Const from '../../Const';
+import { useAppTheme } from '../../Manager/AppThemeManager';
 import {
   BaseOptions,
   OptionState,
@@ -40,6 +40,8 @@ const OptionsContainer: React.FC<{ children: ReactNode }> = ({ children }) => (
  ******************************************************************************************************************/
 export const CheckOptions: React.FC<CheckOptionCompProps> = memo(
   ({ schema, value, onChange, style }) => {
+    const { theme } = useAppTheme();
+
     /**************************************************************************************************************
      * Renders a single checkbox option row.
      **************************************************************************************************************/
@@ -74,7 +76,7 @@ export const CheckOptions: React.FC<CheckOptionCompProps> = memo(
         onChange={onChange}
         optionsContainer={OptionsContainer}
         renderOption={renderCheckbox}
-        depthPadding={Const.padSize * 2}
+        depthPadding={theme.design.padSize * 2}
         style={style}
       />
     );
