@@ -1,7 +1,6 @@
-import React, { useState, memo, useEffect, useRef, useCallback, ReactNode } from 'react';
+import React, { useState, memo, useEffect, useRef, useMemo } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { useAppTheme } from '../../../Manager/AppThemeManager';
-import * as Const from '../../../Const';
 import { Text, TextProps } from '../../Text/Text';
 import { Icon, IconProps, iconVariantSizeMap } from '../../Text/Icon';
 
@@ -67,6 +66,24 @@ export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
     const variant = iconOpts?.variant ?? 'md';
     const pixel = iconVariantSizeMap[variant];
 
+    /**
+     * style
+     */
+    const styles = useMemo(
+      () =>
+        StyleSheet.create({
+          toggleHeaderRow: {
+            padding: theme.design.padSize,
+            flexDirection: 'row',
+            alignItems: 'center',
+          },
+          flexSpacer: {
+            flex: 1,
+          },
+        }),
+      [theme]
+    );
+
     return (
       <View style={styles.toggleHeaderRow}>
 
@@ -77,7 +94,7 @@ export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
               width: pixel,
               alignItems: 'center',
               justifyContent: 'center',
-              marginRight: Const.padSize * 2,
+              marginRight: theme.design.padSize * 2,
             }}
           >
             <Icon
@@ -111,17 +128,3 @@ export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
     );
   }
 );
-
-/******************************************************************************************************************
- * Styles
- ******************************************************************************************************************/
-const styles = StyleSheet.create({
-  toggleHeaderRow: {
-    padding: Const.padSize,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  flexSpacer: {
-    flex: 1,
-  },
-});

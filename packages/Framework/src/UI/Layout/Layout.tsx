@@ -1,7 +1,7 @@
-import React, { memo, ReactNode } from 'react';
-import { View, ScrollView, ViewStyle, FlexStyle } from 'react-native';
+import React, { memo, ReactNode, useMemo } from 'react';
+import { View, ScrollView, ViewStyle, FlexStyle, StyleSheet } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
-import * as Const from '../../Const';
+import { useAppTheme } from '../../Manager/AppThemeManager';
 import { PadSpacingValue } from '../../Types';
 
 /******************************************************************************************************************
@@ -65,6 +65,8 @@ const Layout: React.FC<LayoutProps> = ({
   align,
   children,
 }) => {
+  const { theme } = useAppTheme();
+  
   // reverse children if requested
   const content = reverse
     ? React.Children.toArray(children).reverse()
@@ -96,16 +98,25 @@ const Layout: React.FC<LayoutProps> = ({
     return isWrap ? 'flex-start' : 'stretch';
   })();
 
-  const contentStyle: ViewStyle = {
-    flexWrap,
-    flexDirection: dir,
-    justifyContent: 'flex-start',
-    alignItems: alignItemsValue,      // cross-axis alignment
-    alignContent: alignContentValue,  // how rows stack (wrap)
-    padding: padding * Const.padSize,
-    gap: gap * Const.padSize,
-    backgroundColor: bgColor,
-  };
+  /**
+   * style
+   */
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        content: {
+          flexWrap,
+          flexDirection: dir,
+          justifyContent: 'flex-start',
+          alignItems: alignItemsValue,      // cross-axis alignment
+          alignContent: alignContentValue,  // how rows stack (wrap)
+          padding: padding * theme.design.padSize,
+          gap: gap * theme.design.padSize,
+          backgroundColor: bgColor,
+        },
+      }),
+    [theme]
+  );
 
   if (isScroll) {
     return (
@@ -114,15 +125,15 @@ const Layout: React.FC<LayoutProps> = ({
         horizontal={isRow}
         showsVerticalScrollIndicator={!isRow}
         showsHorizontalScrollIndicator={isRow}
-        style={containerDims}                 // dimensions on ScrollView
-        contentContainerStyle={contentStyle}  // layout rules on inner content
+        style={containerDims}                   // dimensions on ScrollView
+        contentContainerStyle={styles.content}  // layout rules on inner content
       >
         {content}
       </KeyboardAwareScrollView>
     );
   }
 
-  return <View style={[containerDims, contentStyle]}>{content}</View>;
+  return <View style={[containerDims, styles.content]}>{content}</View>;
 };
 
 /******************************************************************************************************************

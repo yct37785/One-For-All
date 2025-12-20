@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Divider as PaperDivider } from 'react-native-paper';
-import * as Const from '../../Const';
+import { useAppTheme } from '../../Manager/AppThemeManager';
 import { PadSpacingValue } from '../../Types';
 
 /******************************************************************************************************************
@@ -32,14 +32,15 @@ export type DividerProps = {
 export type DividerType = React.FC<DividerProps>;
 export const Divider: DividerType = memo(
   ({ orientation = 'horizontal', spacing = 1, margin = 0, style }) => {
+    const { theme } = useAppTheme();
 
     // vertical divider
     if (orientation === 'vertical') {
       const vStyle: ViewStyle = {
         width: StyleSheet.hairlineWidth,
         height: '100%',
-        marginHorizontal: spacing * Const.padSize,
-        marginVertical: margin * Const.padSize
+        marginHorizontal: spacing * theme.design.padSize,
+        marginVertical: margin * theme.design.padSize
       };
 
       return <PaperDivider style={[styles.base, vStyle, style]} />;
@@ -48,8 +49,8 @@ export const Divider: DividerType = memo(
     // horizontal divider
     const hStyle: ViewStyle = {
       height: StyleSheet.hairlineWidth,
-      marginVertical: spacing * Const.padSize,
-      marginHorizontal: margin * Const.padSize,
+      marginVertical: spacing * theme.design.padSize,
+      marginHorizontal: margin * theme.design.padSize,
     };
 
     return <PaperDivider style={[styles.base, hStyle, style]} />;

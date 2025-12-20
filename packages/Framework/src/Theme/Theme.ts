@@ -1,5 +1,5 @@
-import { MD3LightTheme, MD3DarkTheme, useTheme, type MD3Theme } from 'react-native-paper';
-import type { MyTheme, ThemeColors, ThemeCustom, ThemeFonts } from './Theme.types';
+import { MD3LightTheme, MD3DarkTheme, type MD3Theme } from 'react-native-paper';
+import type { MyTheme, ThemeColors, ThemeDesign, ThemeFonts } from './Theme.types';
 import { deepMerge } from '../Util/General';
 
 /******************************************************************************************************************
@@ -15,14 +15,39 @@ import { deepMerge } from '../Util/General';
 export type AppTheme = Omit<MD3Theme, 'colors' | 'fonts'> & {
   colors: ThemeColors;
   fonts: ThemeFonts;
-  custom: ThemeCustom;
+  design: ThemeDesign;
 };
 
 /******************************************************************************************************************
- * Defaults (move former Const.ts values here over time).
+ * Default design tokens.
  ******************************************************************************************************************/
-const defaultCustom: ThemeCustom = {
-  customProp: 0,
+const defaultDesign: ThemeDesign = {
+  padSize025: 3,
+  padSize05: 4,
+  padSize: 8,
+
+  radiusSmall: 4,
+  radiusMedium: 8,
+  radiusLarge: 12,
+
+  rippleColorForLight: 'rgba(0,0,0,0.12)',
+  rippleColorForDark: 'rgba(255,255,255,0.12)',
+
+  snackbarDuration: 2000,
+
+  textOpacityHEmphasis: 0.87,
+  textOpacityMEmphasis: 0.6,
+
+  iconSizeSmall: 20,
+  iconSizeMedium: 30,
+
+  pressOpacityLight: 0.8,
+  pressOpacityMedium: 0.5,
+  pressOpacityHeavy: 0.2,
+  pressInDurationMS: 110,
+  pressOutDurationMS: 160,
+
+  animDuration: 300,
 };
 
 /******************************************************************************************************************
@@ -49,21 +74,21 @@ export function buildTheme(myTheme?: MyTheme): {
   // merge fonts (shared)
   const fonts = deepMerge(baseLight.fonts, myTheme?.fonts) as ThemeFonts;
 
-  // merge custom (shared)
-  const custom = deepMerge(defaultCustom, myTheme?.custom) as ThemeCustom;
+  // merge design (shared)
+  const design = deepMerge(defaultDesign, myTheme?.design) as ThemeDesign;
 
   const appLightTheme: AppTheme = {
     ...baseLight,
     colors: colorsLight,
-    fonts: fonts,
-    custom,
+    fonts,
+    design,
   };
 
   const appDarkTheme: AppTheme = {
     ...baseDark,
     colors: colorsDark,
-    fonts: fonts,
-    custom,
+    fonts,
+    design,
   };
 
   return { appLightTheme, appDarkTheme };

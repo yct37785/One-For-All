@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Image, View, StyleSheet, ViewStyle, ImageStyle, StyleProp } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { useAppTheme } from '../../Manager/AppThemeManager';
 import { TextVariant } from '../Text/Text';
 import { Text } from '../Text/Text';
 import { Touchable } from '../Interactive/Touchable';
@@ -62,7 +62,7 @@ export const Avatar: React.FC<AvatarProps> = memo(
     imageStyle,
     onPress,
   }) => {
-    const theme = useTheme();
+    const { theme } = useAppTheme();
 
     // px: avatar size in pixels
     const px =

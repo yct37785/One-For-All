@@ -1,8 +1,8 @@
-import React, { memo } from 'react';
-import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { Appbar, useTheme } from 'react-native-paper';
+import React, { memo, useMemo } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Appbar } from 'react-native-paper';
 import { Text } from 'react-native-paper';
-import * as Const from '../Const';
+import { useAppTheme } from '../Manager/AppThemeManager';
 
 /******************************************************************************************************************
  * AppBar props.
@@ -28,6 +28,41 @@ export type AppBarProps = {
  * ```
  ******************************************************************************************************************/
 export const AppBar: React.FC<AppBarProps> = memo(({ title, onBack, left, right }) => {
+  const { theme } = useAppTheme();
+
+  /**
+   * style
+   */
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        titleWithBack: {
+          paddingLeft: 0,
+        },
+        titleNoBack: {
+          paddingLeft: theme.design.padSize * 2,
+        },
+        leftSlot: {
+          flex: 1,
+          minWidth: 0,
+          flexDirection: 'row',
+          alignItems: 'center',
+        },
+        leftInner: {
+          marginLeft: theme.design.padSize,
+          flex: 1,
+        },
+        rightSlot: {
+          flex: 0,
+          flexDirection: 'row',
+          alignItems: 'center',
+        },
+        rightInner: {
+          marginRight: theme.design.padSize,
+        },
+      }),
+    [theme]
+  );
 
   return (
     <Appbar.Header elevated>
@@ -54,34 +89,4 @@ export const AppBar: React.FC<AppBarProps> = memo(({ title, onBack, left, right 
       </View>
     </Appbar.Header>
   );
-});
-
-/******************************************************************************************************************
- * Styles
- ******************************************************************************************************************/
-const styles = StyleSheet.create({
-  titleWithBack: {
-    paddingLeft: 0,
-  },
-  titleNoBack: {
-    paddingLeft: Const.padSize * 2,
-  },
-  leftSlot: {
-    flex: 1,
-    minWidth: 0, // allow inner text to ellipsize
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  leftInner: {
-    marginLeft: Const.padSize,
-    flex: 1, // lets child opt-in to grow if it uses flex styles
-  },
-  rightSlot: {
-    flex: 0,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  rightInner: {
-    marginRight: Const.padSize,
-  }
 });

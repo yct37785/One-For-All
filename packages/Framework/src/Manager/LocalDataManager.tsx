@@ -9,7 +9,7 @@
  ******************************************************************************************************************/
 import React, { createContext, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { localDataDefaults } from '../Const';
+import { localDataDefaults } from '../Defaults';
 import { doLog, doErrLog } from '../Util/General';
 
 /******************************************************************************************************************

@@ -1,9 +1,8 @@
 import React, { useState, memo, useEffect, useRef, useCallback, ReactNode } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { useTheme } from 'react-native-paper';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
-import * as Const from '../../../Const';
+import { useAppTheme } from '../../../Manager/AppThemeManager';
 import { Touchable } from '../../Interactive/Touchable';
 import type { TextProps } from '../../Text/Text';
 import type { IconProps } from '../../Text/Icon';
@@ -101,8 +100,8 @@ const AccordionOption = React.memo(function AccordionOption({
   closeTrigger: number;
   onTrigger: (idx: number, sameSection: boolean) => void;
 }) {
+  const { theme } = useAppTheme();
   const [activeSections, setActiveSections] = useState<number[]>([]);
-  const theme = useTheme();
 
   // close on receiving trigger
   useEffect(() => {
@@ -120,7 +119,7 @@ const AccordionOption = React.memo(function AccordionOption({
   );
 
   const renderContent = (section: Section, _i: number, isActive: boolean) => (
-    <KeepMountedDuringClose active={isActive} durationMs={Const.animDuration}>
+    <KeepMountedDuringClose active={isActive} durationMs={theme.design.animDuration}>
       <View>{section.content}</View>
     </KeepMountedDuringClose>
   );
@@ -139,7 +138,7 @@ const AccordionOption = React.memo(function AccordionOption({
   return (
     <Accordion
       touchableComponent={Touchable}
-      touchableProps={{ pressOpacity: Const.pressOpacityHeavy }}
+      touchableProps={{ pressOpacity: theme.design.pressOpacityHeavy }}
       sections={sections}
       activeSections={activeSections}
       renderHeader={renderHeader}
@@ -147,7 +146,7 @@ const AccordionOption = React.memo(function AccordionOption({
       onChange={onChange}
       expandMultiple={false}
       renderAsFlatList={false}
-      duration={Const.animDuration}
+      duration={theme.design.animDuration}
     />
   );
 });

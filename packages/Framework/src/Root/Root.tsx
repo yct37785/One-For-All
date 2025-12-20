@@ -30,7 +30,7 @@ import { getApp } from '@react-native-firebase/app';
 import { AppSettingsProvider, useAppSettings } from '../Manager/AppSettingsManager';
 // utils
 import { doLog } from '../Util/General';
-import { logColors } from '../Const';
+import { logColors } from '../Defaults';
 
 LogBox.ignoreAllLogs();
 const SAFE_AREA_EDGES: Edge[] = ['left', 'right', 'bottom'];

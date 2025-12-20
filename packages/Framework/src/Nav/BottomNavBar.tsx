@@ -1,11 +1,10 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { StyleSheet, ViewStyle, StyleProp } from 'react-native';
-import { useTheme } from 'react-native-paper';
 import { Box } from '../UI/Container/Box';
 import { Touchable } from '../UI/Interactive/Touchable';
 import { Text, TextProps } from '../UI/Text/Text';
 import { Icon, IconProps } from '../UI/Text/Icon';
-import * as Const from '../Const';
+import { useAppTheme } from '../Manager/AppThemeManager';
 
 // defaults (can be overridden per item via iconOpts/textOpts)
 const defaultIconVariant: IconProps['variant'] = 'sm';
@@ -65,7 +64,26 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = memo(
     style,
     itemStyle,
   }) => {
-    const theme = useTheme();
+    const { theme } = useAppTheme();
+
+    /**
+     * style
+     */
+    const styles = useMemo(
+      () =>
+        StyleSheet.create({
+          root: {
+            width: '100%',
+            borderTopWidth: StyleSheet.hairlineWidth,
+          },
+          itemButton: {
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingVertical: theme.design.padSize,
+          },
+        }),
+      [theme]
+    );
 
     return (
       <Box dir='row' align='center' bgColor={theme.colors.elevation.level2} flex={0}
@@ -124,18 +142,3 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = memo(
     );
   }
 );
-
-/******************************************************************************************************************
- * Styles
- ******************************************************************************************************************/
-const styles = StyleSheet.create({
-  root: {
-    width: '100%',
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
-  itemButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: Const.padSize,
-  },
-});

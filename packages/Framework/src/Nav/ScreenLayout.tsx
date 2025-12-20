@@ -1,11 +1,10 @@
 import React, { memo, useContext, createContext } from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useTheme } from 'react-native-paper';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { AppBar } from './AppBar';
 import { PadSpacingValue } from '../Types';
-import * as Const from '../Const';
+import { useAppTheme } from '../Manager/AppThemeManager';
 
 /******************************************************************************************************************
  * Screen layout defaults context.
@@ -51,7 +50,7 @@ export type ScreenLayoutProps = {
  ******************************************************************************************************************/
 export const ScreenLayout: React.FC<ScreenLayoutProps> = memo((props) => {
   const defaults = useContext(ScreenLayoutContext);
-  const theme = useTheme();
+  const { theme } = useAppTheme();
   const navigation = useNavigation();
   const route = useRoute();
 
