@@ -1,13 +1,12 @@
-import React, { useRef, useEffect, memo, useMemo } from 'react';
+import React, { memo } from 'react';
 import {
   Pressable,
-  PressableProps,
+  View,
   ViewStyle,
   StyleProp,
-  StyleSheet,
   Platform,
-  Animated,
-  Easing,
+  TouchableNativeFeedback,
+  TouchableNativeFeedbackProps
 } from 'react-native';
 import { useAppTheme } from '../../Manager/AppThemeManager';
 
@@ -15,7 +14,7 @@ import { useAppTheme } from '../../Manager/AppThemeManager';
  * TouchableProps
  *
  * @property feedback              - Press feedback style ('opacity' | 'none'). Default: 'opacity'
- *                                   • 'opacity': Smooth opacity animation + Android ripple
+ *                                   • 'opacity': Android ripple (native) + iOS opacity (pressed)
  *                                   • 'none'   : No visual feedback
  * @property disabled              - Disables press handling & visual feedback
  * @property onPress               - Called when the press gesture ends successfully
@@ -29,11 +28,11 @@ import { useAppTheme } from '../../Manager/AppThemeManager';
 export interface TouchableProps {
   feedback?: 'opacity' | 'none';
   disabled?: boolean;
-  onPress?: PressableProps['onPress'];
-  onPressIn?: PressableProps['onPressIn'];
-  onPressOut?: PressableProps['onPressOut'];
-  onLongPress?: PressableProps['onLongPress'];
-  delayLongPress?: number;
+  onPress?: TouchableNativeFeedbackProps['onPress'];
+  onPressIn?: TouchableNativeFeedbackProps['onPressIn'];
+  onPressOut?: TouchableNativeFeedbackProps['onPressOut'];
+  onLongPress?: TouchableNativeFeedbackProps['onLongPress'];
+  delayLongPress?: TouchableNativeFeedbackProps['delayLongPress'];
   style?: StyleProp<ViewStyle>;
   children?: React.ReactNode;
 }
@@ -54,11 +53,7 @@ export const Touchable: React.FC<TouchableProps> = memo(
     children,
   }) => {
     const { theme } = useAppTheme();
-    const opacity = useRef(new Animated.Value(1)).current;
     const isOpacity = feedback === 'opacity';
-
-    // track last animated target to avoid redundant animations
-    const lastTarget = useRef<number>(1);
 
     /**************************************************************************************************************
      * Theme-aware defaults.
@@ -67,129 +62,73 @@ export const Touchable: React.FC<TouchableProps> = memo(
       ? theme.design.pressOpacityLight
       : theme.design.pressOpacityMedium;
 
-    const run = (to: number, dur: number) => {
-      if (lastTarget.current === to) return;
-      lastTarget.current = to;
-
-      opacity.stopAnimation();
-      Animated.timing(opacity, {
-        toValue: to,
-        duration: dur,
-        easing: Easing.out(Easing.quad),
-        useNativeDriver: true,
-      }).start();
-    };
-
-    const handleIn = (e: any) => {
-      if (!disabled && isOpacity) {
-        run(resolvedPressOpacity, theme.design.pressInDurationMS);
-      }
-      onPressIn?.(e);
-    };
-
-    const handleOut = (e: any) => {
-      if (isOpacity) {
-        run(1, theme.design.pressOutDurationMS);
-      }
-      onPressOut?.(e);
-    };
-
-    /**
-     * Reset opacity immediately when disabled or feedback mode changes.
-     */
-    useEffect(() => {
-      if (!isOpacity || disabled) {
-        lastTarget.current = 1;
-        opacity.stopAnimation();
-        opacity.setValue(1);
-      }
-    }, [isOpacity, disabled, opacity]);
-
-    /**************************************************************************************************************
-     * Split style (fast paths):
-     * - If no style, skip flattening.
-     **************************************************************************************************************/
-    const flattened = useMemo(
-      () => (style ? (StyleSheet.flatten(style) as ViewStyle) : undefined),
-      [style]
-    );
-
-    const borderRadius = flattened?.borderRadius;
-    const borderTopLeftRadius = flattened?.borderTopLeftRadius;
-    const borderTopRightRadius = flattened?.borderTopRightRadius;
-    const borderBottomLeftRadius = flattened?.borderBottomLeftRadius;
-    const borderBottomRightRadius = flattened?.borderBottomRightRadius;
-
-    const hasAnyRadius =
-      borderRadius != null ||
-      borderTopLeftRadius != null ||
-      borderTopRightRadius != null ||
-      borderBottomLeftRadius != null ||
-      borderBottomRightRadius != null;
-
-    const pressableStyle: ViewStyle = {
-      ...(hasAnyRadius
-        ? {
-          borderRadius,
-          borderTopLeftRadius,
-          borderTopRightRadius,
-          borderBottomLeftRadius,
-          borderBottomRightRadius,
-          overflow: 'hidden',
-        }
-        : null),
-    };
-
-    const contentStyle: ViewStyle | undefined = flattened
-      ? (() => {
-        // remove radius / overflow props from the inner content
-        const {
-          borderRadius: _br,
-          borderTopLeftRadius: _btlr,
-          borderTopRightRadius: _btrr,
-          borderBottomLeftRadius: _bblr,
-          borderBottomRightRadius: _bbrr,
-          overflow: _ov,
-          ...rest
-        } = flattened;
-
-        return rest as ViewStyle;
-      })()
-      : undefined;
-
     /**************************************************************************************************************
      * Android ripple config.
      *
-     * Static/banding in dark mode is often caused by foreground ripple + clipping.
-     * If the touchable is rounded (overflow hidden), prefer background ripple.
+     * Notes:
+     * - TouchableNativeFeedback provides a native ripple.
+     * - Ripple is clipped ONLY if the child view has borderRadius + overflow: 'hidden'.
+     * - We do NOT flatten styles; we simply apply `style` to the child container view.
      **************************************************************************************************************/
-    const rippleBase = {
-      borderless: false,
-      foreground: true,
-      color: theme.dark ? theme.design.rippleColorForDark : theme.design.rippleColorForLight,
-    }
-
     const ripple =
       Platform.OS === 'android' && isOpacity
-        // ? { ...rippleBase, foreground: !hasAnyRadius } removed foreground
-        ? { ...rippleBase }
+        ? TouchableNativeFeedback.Ripple(
+            theme.dark ? theme.design.rippleColorForDark : theme.design.rippleColorForLight,
+            false
+          )
         : undefined;
 
+    // Android: use native ripple (no animated opacity)
+    if (Platform.OS === 'android') {
+      return (
+        <TouchableNativeFeedback
+          disabled={disabled}
+          onPress={onPress}
+          onPressIn={onPressIn}
+          onPressOut={onPressOut}
+          onLongPress={onLongPress}
+          delayLongPress={delayLongPress}
+          background={ripple}
+          useForeground={true}
+        >
+          <View
+            style={[
+              style,
+              // ensure ripple can be clipped if caller provided borderRadius in style
+              isOpacity ? styles.androidClip : null,
+            ]}
+          >
+            {children}
+          </View>
+        </TouchableNativeFeedback>
+      );
+    }
+
+    // iOS: Pressable opacity feedback (no ripple)
     return (
       <Pressable
         disabled={disabled}
-        android_ripple={ripple}
         onPress={onPress}
-        onPressIn={handleIn}
-        onPressOut={handleOut}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
         onLongPress={onLongPress}
         delayLongPress={delayLongPress}
-        style={pressableStyle}
+        style={({ pressed }) => [
+          style,
+          isOpacity && pressed && !disabled ? { opacity: resolvedPressOpacity } : null,
+        ]}
       >
-        <Animated.View style={[contentStyle, { opacity }]}>
-          {children}
-        </Animated.View>
+        {children}
       </Pressable>
     );
   }
 );
+
+/******************************************************************************************************************
+ * Styles
+ ******************************************************************************************************************/
+const styles = {
+  androidClip: {
+    overflow: 'hidden',
+  } as ViewStyle,
+};
