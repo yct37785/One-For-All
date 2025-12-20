@@ -1,4 +1,4 @@
-import * as Const from '../Const';
+import * as Const from '../Defaults';
 
 /******************************************************************************************************************
  * [ASYNC] Wrap a promise with a timeout that rejects if it does not settle within the given duration.
