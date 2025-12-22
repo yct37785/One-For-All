@@ -7,37 +7,37 @@ By consolidating dependencies and common logic into a single framework, apps can
 
 *What is a monorepo: A monorepo is a single repository containing multiple distinct projects, with well-defined relationships.*
 
-## End Goals
+# End Goals
 - Provide a ready-to-use template for quickly building new Expo apps.
 - Maintain a shared framework of reusable components.
 - Manage dependencies centrally (monorepo philosophy).
 - Keep app projects lightweight by only adding app-specific code.
 - Support native builds (`npx expo run:android` / `npx expo run:ios`) with Metro-powered hot reloading.
 
-## Project Structure
-### Overview
+# Project Structure
+## Overview
 The monorepo is structured as follows:
 ```bash
 root/
 ├── apps/
-│   └── DevApp/        # example Expo app consuming the framework
+│   └── DevApp/          # example Expo app consuming the framework
 │       └── ...
-├── node_modules/			# all common deps installed here
+├── node_modules/		 # all common deps installed here
 ├── packages/
-│   └── Framework/          # core shared framework
+│   └── Framework/       # core shared framework
 │       └── ...
-├── install.bat             # sync shared deps then install (Windows helper)
-├── scripts/				# shared build scripts
+├── install.bat          # sync shared deps then install (Windows helper)
+├── scripts/		     # shared build scripts
 │       └── ...
-├── templates/				# shared config templates
+├── templates/			 # shared config templates
 │       └── ...
-└── package.json            # root scripts + shared version pins (overrides)
+└── package.json         # root scripts + shared version pins (overrides)
 ```
 
-## High Level Overview
+# High Level Overview
 At a high level, this repository follows a monorepo + shared framework model optimized specifically for Expo and React Native development.
 
-### root/
+## root/
 The root of the repository acts as the single source of truth for the entire monorepo.
 
 It is responsible for:
@@ -49,7 +49,7 @@ It is responsible for:
 
 All apps and packages inherit behavior from the root, ensuring consistency and preventing configuration or dependency drift.
 
-### apps/
+## apps/
 Each app is a thin consumer of the shared framework and infrastructure.
 
 An app:
@@ -60,7 +60,7 @@ An app:
 
 Apps are intentionally lightweight. They should not duplicate setup, dependency versioning, or cross-app concerns unless absolutely necessary.
 
-### packages/Framework/
+## packages/Framework/
 The Framework package contains shared, app-agnostic code intended to be reused across all apps in the monorepo.
 
 Typical responsibilities include:
@@ -77,13 +77,154 @@ Because the Framework lives inside the monorepo:
 
 The Framework is designed to enable apps, not control them. App architecture and behavior remain app-owned.
 
-### templates/
+## templates/
 The templates directory contains base configuration files shared across apps.
 
 Apps import and extend these base configs rather than copying them.
 This keeps configuration consistent while still allowing per-app customization.
 
-### scripts/
+## scripts/
 The scripts directory contains maintenance and orchestration scripts used by the monorepo.
 
 Scripts in this directory are typically invoked from root-level npm scripts and are considered part of the monorepo's internal tooling.
+
+# Prerequisite
+## Initial setup
+After cloning the repository (or whenever shared dependencies are modified), run the following from the root of the project:
+```
+install.bat
+```
+This script:
+- Synchronizes shared dependencies across apps
+- Regenerates the lockfile using root-pinned versions
+- Installs all workspace dependencies in a consistent state
+
+This only needs to be run on first clone or after changes to shared dependencies.
+
+## Ninja (Windows / Android Builds)
+When building Android on Windows, you may encounter the following error during native compilation (triggered by `react-native-keyboard-controller`):
+![asdasds](https://github.com/user-attachments/assets/7cccd0db-31bb-4a4e-b44c-aeb93cc876c5)
+
+This is a known limitation of older versions of Ninja, which is bundled with the Android SDK's CMake installation. Fix:
+
+1. Download the latest `ninja.exe` from the official releases page:
+
+2. Locate your Android SDK CMake installation:
+
+	```
+	C:\Users\<your-user>\AppData\Local\Android\Sdk\cmake\<version>\bin
+	```
+
+3. Replace the existing `ninja.exe` in that folder with the downloaded one.
+
+	> Use the same CMake version that is reported in the error output when the build fails.
+	(The path shown in the error log tells you exactly which <version> to target.)
+
+4. After replacing `ninja.exe`, rerun your Android build.
+
+# Getting Started
+Follow these steps to create a new Expo app using the shared framework.
+
+## 1. Create a new app folder
+Inside the `apps/` directory, create a new folder using your app's name:
+```
+apps/MyNewApp/
+```
+
+## 2. Copy the base app structure
+Copy the contents of `apps/DevApp` into your new app folder except for the following directories and files:
+- `.expo/`
+
+- `android/`
+
+- `google-services.json`
+
+- `.env`
+
+These files are either build artifacts or app-specific secrets and should be generated per app.
+
+## 3. Open the workspace
+Open the repository using the provided `vsc.code-workspace` file.
+
+This keeps the entire monorepo visible in the editor, allowing you to work on:
+- The new app
+- The shared Framework
+- Shared configuration and scripts
+
+at the same time.
+
+## 4. Update app metadata
+Inside your new app folder, update the following files.
+
+### package.json
+Set the app name to match your new app:
+```
+{
+  "name": "mynewapp"
+}
+```
+
+### app.config.js
+Update the Expo configuration to reflect your new app:
+```
+expo: {
+  name: "MyNewApp",
+  slug: "mynewapp",
+  version: "1.0.0",
+	...
+  android: {
+  	...
+    package: "com.anonymous.mynewapp"
+  }
+}
+```
+> Note: The Android package name must be unique across apps.
+
+## 5. Firebase setup (optional)
+If your app uses Firebase:
+1. Create a new Firebase project
+
+2. Generate a `google-services.json` file
+
+3. Place it in your app's root folder
+
+4. Add the following to your `.env` file:
+```
+GOOGLE_WEB_CLIENT_ID=your_client_id_here
+```
+
+Each app maintains its own Firebase configuration.
+
+## 6. App code
+Application code lives under:
+```
+apps/MyNewApp/src/
+```
+
+`App.tsx` is the entry point for the app.
+
+You can now modify the copied DevApp code as needed, replacing screens, logic, and assets to match your new app.
+
+## 7. Install and run
+For Android development, helper scripts are provided to simplify running the app.
+
+From your app directory, use one of the following:
+
+### Run without rebuilding native code
+```
+run-android-dev.bat
+```
+
+Use this for normal development when native dependencies have not changed.
+
+#### Run without rebuilding native code
+```
+run-android-dev-rebuild.bat
+```
+
+Use this after:
+- Adding or updating native dependencies
+- Changing Expo config that affects native builds
+- Cleaning or regenerating the Android project
+
+Both scripts launch the app with Metro enabled for fast iteration.
