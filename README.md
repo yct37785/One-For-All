@@ -92,7 +92,7 @@ Scripts in this directory are typically invoked from root-level npm scripts and 
 ## Firebase project
 All client apps are bootstrapped with Firebase support enabled, therefore requiring a corresponding Firebase project to be linked before native Android builds can succeed.
 
-> Refer to [Firebase → Firebase Project Setup](https://github.com/yct37785/One-For-All/edit/main/README.md#firebase-project-setup) for detailed steps.
+> Refer to [Firebase → Firebase Project Setup](https://github.com/yct37785/One-For-All/tree/main?tab=readme-ov-file#firebase-project-setup) for detailed steps.
 
 Simply download the project's `google-services.json` and place it in the app root later.
 
