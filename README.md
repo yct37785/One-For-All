@@ -108,7 +108,7 @@ When building Android on Windows, you may encounter the following error during n
 
 This is a known limitation of older versions of Ninja, which is bundled with the Android SDK's CMake installation. Fix:
 
-1. Download the latest `ninja.exe` from the official releases page:
+1. Download the latest `ninja.exe` from the [official releases page](https://github.com/ninja-build/ninja/releases).
 
 2. Locate your Android SDK CMake installation:
 
@@ -217,7 +217,7 @@ Both scripts launch the app with hot-reloading enabled for fast iteration.
 ### Your first build (Android)
 1. Connect an Android device with USB debugging enabled.
 
-2. Run `run-android-dev-rebuild.bat`
+2. Run `run-android-dev-rebuild.bat`.
 
 3. The build will fail with a Firebase-related error due to a missing `google-services.json`:
    
@@ -226,11 +226,11 @@ Both scripts launch the app with hot-reloading enabled for fast iteration.
 4. Create a Firebase project for your app and place the generated `google-services.json` file in your app's root directory.
 	> Refer to Firebase → Firebase Project Setup for detailed steps.
 
-5. Re-run `run-android-dev-rebuild.bat`
+5. Re-run `run-android-dev-rebuild.bat`.
 
 6. The app should now build and launch on your Android device.
 
-7. If the app does not automatically launch, just run `run-android-dev.bat`
+7. If the app does not automatically launch, just run `run-android-dev.bat`.
 
 From this point on, you can use either script as needed.
 
@@ -271,10 +271,10 @@ All client apps are bootstrapped with Firebase support enabled, therefore requir
 
 5. Click Register app.
 
-When prompted to download `google-services.json`, skip this step for now by clicking next and complete the remaining setup steps.
+When prompted to download `google-services.json`, skip this step for now by clicking next (remaining setup steps can be skipped).
 
 ### Generate the app signing fingerprint
-1. In your app’s root directory, run `get-fingerprint.bat`
+1. In your app’s root directory, run `get-fingerprint.bat`.
 
 2. In the console output, locate the SHA1 fingerprint. It will be used in the next step.
 
@@ -287,13 +287,13 @@ When prompted to download `google-services.json`, skip this step for now by clic
 
    <img width="1402" height="735" alt="Screenshot 2025-12-23 235853" src="https://github.com/user-attachments/assets/292ec616-3247-426f-926e-6a4a522dbe09" />
 
-4. Click Add fingerprint:
+3. Click Add fingerprint:
 
    <img width="1025" height="716" alt="Screenshot 2025-12-24 004807" src="https://github.com/user-attachments/assets/101d9f39-a273-4773-8a2c-fbe1e4f72b83" />
 
-5. Paste the SHA1 value copied from the previous step.
+4. Paste the SHA1 value copied from the previous step.
 
-6. Save the changes.
+5. Save the changes.
 
 	> This step is required for Firebase authentication and Google Sign-In to function correctly.
 
