@@ -5,7 +5,7 @@ Core functionality such as UI elements, hooks, and utilities (collectively refer
 
 By consolidating dependencies and common logic into a single framework, apps can be developed quickly without redefining the same building blocks.
 
-*What is a monorepo: A monorepo is a single repository containing multiple distinct projects, with well-defined relationships.*
+> What is a monorepo: A monorepo is a single repository containing multiple distinct projects, with well-defined relationships.
 
 # End Goals
 - Provide a ready-to-use template for quickly building new Expo apps.
@@ -103,6 +103,7 @@ This only needs to be run on first clone or after changes to shared dependencies
 
 ## Ninja (Windows / Android Builds)
 When building Android on Windows, you may encounter the following error during native compilation (triggered by `react-native-keyboard-controller`):
+
 ![asdasds](https://github.com/user-attachments/assets/7cccd0db-31bb-4a4e-b44c-aeb93cc876c5)
 
 This is a known limitation of older versions of Ninja, which is bundled with the Android SDK's CMake installation. Fix:
@@ -132,7 +133,7 @@ apps/MyNewApp/
 ```
 
 ## 2. Copy the base app structure
-Copy the contents of `apps/DevApp` into your new app folder except for the following directories and files:
+Copy the contents of `apps/DevApp` into your new app folder except for the following directories and files (if present):
 - `.expo/`
 
 - `android/`
@@ -151,13 +152,13 @@ This keeps the entire monorepo visible in the editor, allowing you to work on:
 - The shared Framework
 - Shared configuration and scripts
 
-at the same time.
+It ignores DevApp and any other app folders under `apps/`.
 
 ## 4. Update app metadata
-Inside your new app folder, update the following files.
+Inside your new app folder, update the following files:
 
 ### package.json
-Set the app name to match your new app:
+Set the app name to match your new app (note casing):
 ```
 {
   "name": "mynewapp"
@@ -165,7 +166,7 @@ Set the app name to match your new app:
 ```
 
 ### app.config.js
-Update the Expo configuration to reflect your new app:
+Update the Expo configuration to reflect your new app (note casing):
 ```
 expo: {
   name: "MyNewApp",
@@ -180,22 +181,7 @@ expo: {
 ```
 > Note: The Android package name must be unique across apps.
 
-## 5. Firebase setup (optional)
-If your app uses Firebase:
-1. Create a new Firebase project
-
-2. Generate a `google-services.json` file
-
-3. Place it in your app's root folder
-
-4. Add the following to your `.env` file:
-```
-GOOGLE_WEB_CLIENT_ID=your_client_id_here
-```
-
-Each app maintains its own Firebase configuration.
-
-## 6. App code
+## 5. App code
 Application code lives under:
 ```
 apps/MyNewApp/src/
@@ -205,26 +191,123 @@ apps/MyNewApp/src/
 
 You can now modify the copied DevApp code as needed, replacing screens, logic, and assets to match your new app.
 
-## 7. Install and run
-For Android development, helper scripts are provided to simplify running the app.
-
-From your app directory, use one of the following:
+## 6. Build and run
+For Android development, helper scripts are provided to simplify building and running the app:
 
 ### Run without rebuilding native code
 ```
 run-android-dev.bat
 ```
 
-Use this for normal development when native dependencies have not changed.
+Use this for normal development when native dependencies and configuration have not changed.
 
-#### Run without rebuilding native code
+### Rebuild native code and run
 ```
 run-android-dev-rebuild.bat
 ```
 
-Use this after:
+Use this when:
+- Running the app for the first time
 - Adding or updating native dependencies
-- Changing Expo config that affects native builds
-- Cleaning or regenerating the Android project
+- Changing Expo or native configuration
+- Regenerating or cleaning the Android project
 
-Both scripts launch the app with Metro enabled for fast iteration.
+Both scripts launch the app with hot-reloading enabled for fast iteration.
+
+### Your first build (Android)
+1. Connect an Android device with USB debugging enabled.
+
+2. Run `run-android-dev-rebuild.bat`
+
+3. The build will fail with a Firebase-related error due to a missing `google-services.json`:
+   
+   <img width="1468" height="522" alt="Screenshot 2025-12-23 224531" src="https://github.com/user-attachments/assets/837cde17-cc8a-4ae0-9635-d5e4de119c8c" />
+
+4. Create a Firebase project for your app and place the generated `google-services.json` file in your app's root directory.
+	> Refer to Firebase → Firebase Project Setup for detailed steps.
+
+5. Re-run `run-android-dev-rebuild.bat`
+
+6. The app should now build and launch on your Android device.
+
+7. If the app does not automatically launch, just run `run-android-dev.bat`
+
+From this point on, you can use either script as needed.
+
+## 7. Tracking your app project
+Each app created under `apps/` is intended to be its own project, even though it lives inside the monorepo.
+
+For end users, this means tracking your app in it's own Git repository.
+
+# Firebase
+All client apps are bootstrapped with Firebase support enabled, therefore requiring a corresponding Firebase project to be linked before native Android builds can succeed.
+
+## Firebase project setup
+### Create a Firebase project
+1. Login to [Firebase console](https://console.firebase.google.com/ "Firebase console").
+
+2. Create a new Firebase project.
+
+3. Once completed, you will be taken to the project's dashboard:
+
+   <img width="1822" height="937" alt="Screenshot 2025-12-23 235736" src="https://github.com/user-attachments/assets/f699fc09-d50c-484e-9c16-4f9b93f6797a" />
+
+### Register the Android app
+1. On the project dashboard, click "+ Add app".
+
+2. Select the Android platform.
+
+3. Enter the Android package name from your app's `app.config.js`:
+```
+  android: {
+  	...
+    package: "com.anonymous.mynewapp"
+  }
+```
+
+4. Optionally provide an app nickname.
+
+   <img width="826" height="803" alt="Screenshot 2025-12-23 235801" src="https://github.com/user-attachments/assets/67661b57-fbb1-46c5-b7d0-89a25ca75a67" />
+
+5. Click Register app.
+
+When prompted to download `google-services.json`, skip this step for now by clicking next and complete the remaining setup steps.
+
+### Generate the app signing fingerprint
+1. In your app’s root directory, run `get-fingerprint.bat`
+
+2. In the console output, locate the SHA1 fingerprint. It will be used in the next step.
+
+   <img width="1191" height="782" alt="Screenshot 2025-12-24 000133" src="https://github.com/user-attachments/assets/27aefcc2-7a81-4f02-9cfe-f11b487bdea1" />
+
+### Add the SHA1 fingerprint in Firebase
+1. Return to the Firebase Console.
+
+2. Navigate to your registered Android app settings:
+
+   <img width="1402" height="735" alt="Screenshot 2025-12-23 235853" src="https://github.com/user-attachments/assets/292ec616-3247-426f-926e-6a4a522dbe09" />
+
+4. Click Add fingerprint:
+
+   <img width="1025" height="716" alt="Screenshot 2025-12-24 004807" src="https://github.com/user-attachments/assets/101d9f39-a273-4773-8a2c-fbe1e4f72b83" />
+
+5. Paste the SHA1 value copied from the previous step.
+
+6. Save the changes.
+
+	> This step is required for Firebase authentication and Google Sign-In to function correctly.
+
+### Download and link google-services.json
+1. In the same app settings page, download the `google-services.json` file.
+
+2. Place the file in your app's root directory.
+
+This file is required for Android native builds when Firebase is enabled.
+
+## Firebase auth setup
+Add the following to your `.env` file:
+```
+GOOGLE_WEB_CLIENT_ID=your_client_id_here
+```
+
+## Firestore setup
