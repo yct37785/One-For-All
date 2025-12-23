@@ -89,6 +89,13 @@ The scripts directory contains maintenance and orchestration scripts used by the
 Scripts in this directory are typically invoked from root-level npm scripts and are considered part of the monorepo's internal tooling.
 
 # Prerequisite
+## Firebase project
+All client apps are bootstrapped with Firebase support enabled, therefore requiring a corresponding Firebase project to be linked before native Android builds can succeed.
+
+> Refer to [Firebase → Firebase Project Setup](https://github.com/yct37785/One-For-All/edit/main/README.md#firebase-project-setup) for detailed steps.
+
+Simply download the project's `google-services.json` and place it in the app root later.
+
 ## Initial setup
 After cloning the repository (or whenever shared dependencies are modified), run the following from the root of the project:
 ```
@@ -217,20 +224,13 @@ Both scripts launch the app with hot-reloading enabled for fast iteration.
 ### Your first build (Android)
 1. Connect an Android device with USB debugging enabled.
 
-2. Run `run-android-dev-rebuild.bat`.
+2. Place the corresponding Firebase project's `google-services.json` in app root.
 
-3. The build will fail with a Firebase-related error due to a missing `google-services.json`:
-   
-   <img width="1468" height="522" alt="Screenshot 2025-12-23 224531" src="https://github.com/user-attachments/assets/837cde17-cc8a-4ae0-9635-d5e4de119c8c" />
+3. Run `run-android-dev-rebuild.bat`.
 
-4. Create a Firebase project for your app and place the generated `google-services.json` file in your app's root directory.
-	> Refer to Firebase → Firebase Project Setup for detailed steps.
+4. The app should now build and launch on your Android device.
 
-5. Re-run `run-android-dev-rebuild.bat`.
-
-6. The app should now build and launch on your Android device.
-
-7. If the app does not automatically launch, just run `run-android-dev.bat`.
+5. If the app does not automatically launch, just run `run-android-dev.bat`.
 
 From this point on, you can use either script as needed.
 
@@ -243,16 +243,13 @@ For end users, this means tracking your app in it's own Git repository.
 All client apps are bootstrapped with Firebase support enabled, therefore requiring a corresponding Firebase project to be linked before native Android builds can succeed.
 
 ## Firebase project setup
-### Create a Firebase project
+### 1. Create a Firebase project
 1. Login to [Firebase console](https://console.firebase.google.com/ "Firebase console").
 
 2. Create a new Firebase project.
+	> To prevent confusion, your project name should be different from the app name.
 
-3. Once completed, you will be taken to the project's dashboard:
-
-   <img width="1822" height="937" alt="Screenshot 2025-12-23 235736" src="https://github.com/user-attachments/assets/f699fc09-d50c-484e-9c16-4f9b93f6797a" />
-
-### Register the Android app
+### 2. Register the Android app
 1. On the project dashboard, click "+ Add app".
 
 2. Select the Android platform.
@@ -267,47 +264,30 @@ All client apps are bootstrapped with Firebase support enabled, therefore requir
 
 4. Optionally provide an app nickname.
 
-   <img width="826" height="803" alt="Screenshot 2025-12-23 235801" src="https://github.com/user-attachments/assets/67661b57-fbb1-46c5-b7d0-89a25ca75a67" />
-
 5. Click Register app.
 
-When prompted to download `google-services.json`, skip this step for now by clicking next (remaining setup steps can be skipped).
+6. Download `google-services.json` when prompted and complete setup.
 
-### Generate the app signing fingerprint
-1. In your app’s root directory, run `get-fingerprint.bat`.
-
-2. In the console output, locate the SHA1 fingerprint. It will be used in the next step.
-
-   <img width="1191" height="782" alt="Screenshot 2025-12-24 000133" src="https://github.com/user-attachments/assets/27aefcc2-7a81-4f02-9cfe-f11b487bdea1" />
-
-### Add the SHA1 fingerprint in Firebase
-1. Return to the Firebase Console.
-
-2. Navigate to your registered Android app settings:
-
-   <img width="1402" height="735" alt="Screenshot 2025-12-23 235853" src="https://github.com/user-attachments/assets/292ec616-3247-426f-926e-6a4a522dbe09" />
-
-3. Click Add fingerprint:
-
-   <img width="1025" height="716" alt="Screenshot 2025-12-24 004807" src="https://github.com/user-attachments/assets/101d9f39-a273-4773-8a2c-fbe1e4f72b83" />
-
-4. Paste the SHA1 value copied from the previous step.
-
-5. Save the changes.
-
-	> This step is required for Firebase authentication and Google Sign-In to function correctly.
-
-### Download and link google-services.json
-1. In the same app settings page, download the `google-services.json` file.
-
-2. Place the file in your app's root directory.
-
-This file is required for Android native builds when Firebase is enabled.
+7. Place the downloaded `google-services.json` in your app's root directory.
 
 ## Firebase auth setup
-Add the following to your `.env` file:
-```
-GOOGLE_WEB_CLIENT_ID=your_client_id_here
-```
+### 1. Add the app signing fingerprint
+This step is required for Firebase Authentication and Google Sign-In to function correctly on Android.
+
+1. In the app root directory, run `get-fingerprint.bat` to output the SHA-1 fingerprint of the Android debug signing key used on your machine.
+
+   <img width="1470" height="422" alt="Screenshot 2025-12-24 020917" src="https://github.com/user-attachments/assets/b6e0fd4c-42ef-4d58-892a-390106baf78c" />
+
+2. Return to the Firebase Console.
+
+3. Navigate to your registered Android app settings.
+
+4. Click Add fingerprint, paste the SHA-1 value, and save.
+
+5. Download the updated `google-services.json` file and place it in your app's root directory.
+
+6. Run the `run-android-dev-rebuild.bat` again.
+
+> Note: The SHA-1 fingerprint is tied to the local machine, not the app; get-fingerprint.bat is run from the app root solely to access gradlew.
 
 ## Firestore setup
