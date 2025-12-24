@@ -91,7 +91,7 @@ Firebase projects are backed by Google Cloud projects. Google Sign-In requires a
 
     <img width="2212" height="1252" alt="Screenshot 2025-12-24 100756" src="https://github.com/user-attachments/assets/ec4bb7d9-94cc-432f-b789-1280d8aaae76" />
 
-### 4. Configure Google Sign-In in the App
+### 4. Configure Google sign-in in the app
 1. Go to Firebase project console, Authentication → Sign-in method, select the Google provider.
 
 2. Expand Web SDK configuration and copy the Web client ID.
