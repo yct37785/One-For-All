@@ -198,7 +198,7 @@ apps/MyNewApp/src/
 
 You can now modify the copied DevApp code as needed, replacing screens, logic, and assets to match your new app.
 
-## 6. Build and run
+## 6. Build scripts
 For Android development, helper scripts are provided to simplify building and running the app:
 
 ### Run without rebuilding native code
@@ -221,7 +221,7 @@ Use this when:
 
 Both scripts launch the app with hot-reloading enabled for fast iteration.
 
-### Your first build
+## 7. Your first build
 1. Connect an Android device with USB debugging enabled.
 
 2. Place the corresponding Firebase project's `google-services.json` in app root.
@@ -234,7 +234,7 @@ Both scripts launch the app with hot-reloading enabled for fast iteration.
 
 From this point on, you can use either script as needed.
 
-## 7. Tracking your app project
+## 8. Tracking your app project
 Each app created under `apps/` is intended to be its own project, even though it lives inside the monorepo.
 
 For end users, this means tracking your app in it's own Git repository.
