@@ -32,9 +32,9 @@ This section enables Firebase Authentication, including Anonymous and Google Sig
 
 ### 1. Add the app signing fingerprint
 Firebase requires the Android app's signing certificate fingerprint to validate authentication requests.
-1. From the app root directory, run `get-fingerprint.bat`. This outputs the SHA-1 fingerprint of the Android debug signing key used on your machine.
+1. From the monorepo root directory, run `get_debug_fingerprint.bat`. This outputs the SHA-1 fingerprint of the Android debug signing key used on your machine.
 
-   <img width="1470" height="422" alt="Screenshot 2025-12-24 020917" src="https://github.com/user-attachments/assets/b6e0fd4c-42ef-4d58-892a-390106baf78c" />
+<img width="699" height="185" alt="image" src="https://github.com/user-attachments/assets/5b316c57-8ce4-4729-9480-4aecdc114386" />
 
 2. Return to the Firebase Console.
 
@@ -43,9 +43,6 @@ Firebase requires the Android app's signing certificate fingerprint to validate 
    <img width="1402" height="735" alt="Screenshot 2025-12-23 235853" src="https://github.com/user-attachments/assets/327e4289-6599-4012-826e-4c138fcbef0c" />
 
 5. Click Add fingerprint, paste the SHA-1 value, and save.
-
-> Note: The SHA-1 fingerprint is machine-specific, not app-specific.
-get-fingerprint.bat is run from the app root only because it relies on gradlew.
 
 ### 2. Enable authentication providers in Firebase
 1. In the Firebase console, Build → Authentication, click on Get started.
@@ -68,7 +65,7 @@ Firebase projects are backed by Google Cloud projects. Google Sign-In requires a
 
 2. Go to APIs & Services → Credentials, ensure an OAuth 2.0 Client ID exists for your Android app package:
    
-   <img width="2532" height="776" alt="Screenshot 2025-12-24 095849" src="https://github.com/user-attachments/assets/7a0d8b3c-ce6c-452a-8f38-2c7f422c93a4" />
+   <img width="1905" height="470" alt="image" src="https://github.com/user-attachments/assets/ecd85e1c-f2f5-4c41-99d4-5633945de37f" />
 
 3. Open the client and verify that the SHA-1 certificate fingerprint field is populated. If missing, paste the same debug SHA-1 and save.
 
