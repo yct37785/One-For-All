@@ -6,7 +6,7 @@ export default ({ config }) =>
       ...config,
       expo: {
         name: "DevApp",
-        slug: "DevApp",
+        slug: "devapp",
         version: "1.0.0",
         orientation: "portrait",
         icon: "./assets/icon.png",
@@ -27,7 +27,7 @@ export default ({ config }) =>
           },
           edgeToEdgeEnabled: true,
           predictiveBackGestureEnabled: false,
-          package: "com.anonymous.DevApp"
+          package: "com.anonymous.devapp"
         },
         web: {
           favicon: "./assets/favicon.png"
