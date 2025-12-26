@@ -2,18 +2,20 @@ import React, { createContext, useContext, useEffect, useMemo, useRef, useState 
 import { getApp } from '@react-native-firebase/app';
 import {
   getAuth,
-  onAuthStateChanged,
-  onIdTokenChanged,
+  signInWithCredential,
   linkWithCredential,
+  FirebaseAuthTypes,
+  signOut as fbSignOut,
 } from '@react-native-firebase/auth';
-import type { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import { startAuthObservers } from './FirebaseAuthHelpers';
+import { startAuthObservers, verifyCurrentUser } from './FirebaseAuthHelpers';
+import { configureGoogleSignIn, signInGoogle, signOutGoogle } from './GoogleAuth';
 import { doErrLog } from '../../../Util/General';
 
 /******************************************************************************************************************
  * User provider.
  ******************************************************************************************************************/
 export enum ProviderIdType {
+  None = 'none',
   Google = 'google.com',
   Facebook = 'facebook.com',
 };
@@ -66,12 +68,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (startedRef.current) return;
     startedRef.current = true;
 
-    // seed immediately so downstream can reflect an existing session (if any)
+    /**
+     * 1) Seed immediately so downstream can reflect an existing session (if any)
+     */
     const auth = getAuth(getApp());
     const seeded = auth.currentUser ?? null;
     setUser(seeded);
 
-    // sub to observers
+    /**
+     * 2) Sub to observers
+     */
     const stop = startAuthObservers({
       onUser: setUser,    // ensure user is always updated for downstream
       onInvalidation: async () => {
@@ -79,6 +85,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         await signOut();
       },
     });
+
+    /**
+     * 3) Configure Google Sign-In once
+     */
+    configureGoogleSignIn();
 
     return stop;
   }, []);
@@ -95,9 +106,64 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
    * await signIn()
    * ```
    ****************************************************************************************************************/
-  const signIn = async (): Promise<void> => {
+  const signIn = async (providerType: ProviderIdType): Promise<void> => {
     if (!signingRef.current) {
       signingOutRef.current = true;
+
+      try {
+        /**
+         * 1) Create Firebase cred
+         */
+        const auth = getAuth(getApp());
+        let cred = null;
+
+        if (providerType === ProviderIdType.Google) {
+          cred = await signInGoogle();
+        }
+        else if (providerType === ProviderIdType.Facebook) {
+          // future: Facebook sign in
+        }
+        else {
+          throw new Error('Unrecognized provider');
+        }
+
+        /**
+         * 2) Do sign-in
+         */
+        if (cred) {
+          /** a) Existing acc logged in (UID), we link this cred and sign in */
+          if (auth.currentUser) {
+            await linkWithCredential(auth.currentUser, cred);
+          }
+          /** b) Not logged in, we create a new acc (UID), link this cred and sign in */
+          else {
+            await signInWithCredential(auth, cred);
+          }
+        }
+
+        /**
+         * 3) Invalidation check
+         */
+        if (!(await verifyCurrentUser())) {
+          await signOut();
+          doErrLog('auth', 'signIn', 'Invalid user after sign-in, signed out');
+          return;
+        }
+
+        /**
+         * 4) Force refresh of user context
+         */
+        const updatedUser = getAuth(getApp()).currentUser ?? null;
+        if (!updatedUser) {
+          throw Error('updatedUser still null');
+        }
+        setUser(updatedUser);
+        
+      } catch (e) {
+        doErrLog('auth', 'signIn', `${e}`);
+      } finally {
+        signingRef.current = false;
+      }
     }
   };
 
@@ -114,8 +180,46 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signOut = async (): Promise<void> => {
     if (!signingOutRef.current) {
       signingOutRef.current = true;
+
+      try {
+        /**
+         * 1) Firebase sign out
+         */
+        const auth = getAuth(getApp());
+        await fbSignOut(auth);
+        
+        /**
+         * 2) Provider sign out
+         */
+        const providerType = getSignInProviderId();
+        if (providerType === ProviderIdType.Google) {
+          await signOutGoogle();
+        }
+        else if (providerType === ProviderIdType.Facebook) {
+          // future: Facebook sign out
+        }
+        else {
+          throw new Error('Unrecognized provider');
+        }
+
+      } catch (e) {
+        doErrLog('auth', 'signOut', `${e}`);
+      } finally {
+        /**
+         * 3) Force refresh of user context
+         */
+        setUser(null);
+        signingRef.current = false;
+      }
     }
   };
+
+  /****************************************************************************************************************
+   * Others
+   ****************************************************************************************************************/
+  const getSignInProviderId = (): string => {
+    return user?.providerData[0]?.providerId ?? ProviderIdType.None;
+  }
 
   const value = useMemo(() => ({ user, signIn, signOut }), [user]);
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
