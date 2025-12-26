@@ -26,7 +26,8 @@ import {
 import { LocalDataProvider } from '../Manager/LocalDataManager';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
-// managers
+import { FirebaseAuthProvider } from '../Manager/Firebase/Auth/FirebaseAuthManager';
+// app settings
 import { AppSettingsProvider, useAppSettings } from '../Manager/AppSettingsManager';
 // utils
 import { doLog } from '../Util/General';
@@ -133,13 +134,23 @@ const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps,
   }, []);
 
   return (
-    <AppThemeProvider isDarkMode={isDarkMode} myTheme={myTheme}>
-      <PaperBridge
-        rootNavigator={rootNavigator}
-        defaultScreenLayoutProps={defaultScreenLayoutProps}
-        navTheme={navTheme}
-      />
-    </AppThemeProvider>
+    <LocalDataProvider>
+      <AppSettingsProvider>
+        <FirebaseAuthProvider>
+          <SafeAreaProvider>
+            <KeyboardProvider>
+              <AppThemeProvider isDarkMode={isDarkMode} myTheme={myTheme}>
+                <PaperBridge
+                  rootNavigator={rootNavigator}
+                  defaultScreenLayoutProps={defaultScreenLayoutProps}
+                  navTheme={navTheme}
+                />
+              </AppThemeProvider>
+            </KeyboardProvider>
+          </SafeAreaProvider>
+        </FirebaseAuthProvider>
+      </AppSettingsProvider>
+    </LocalDataProvider>
   );
 };
 
@@ -148,15 +159,7 @@ const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps,
  ******************************************************************************************************************/
 const AppEntry: React.FC<RootProps> = (props) => {
   return (
-    <SafeAreaProvider>
-      <KeyboardProvider>
-        <LocalDataProvider>
-          <AppSettingsProvider>
-            <RootApp {...props} />
-          </AppSettingsProvider>
-        </LocalDataProvider>
-      </KeyboardProvider>
-    </SafeAreaProvider>
+    <RootApp {...props} />
   );
 };
 

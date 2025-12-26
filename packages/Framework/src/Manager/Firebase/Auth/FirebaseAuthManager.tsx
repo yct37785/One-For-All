@@ -52,7 +52,7 @@ const AuthContext = createContext<AuthContextType>({
  * </AuthProvider>
  * ```
  ******************************************************************************************************************/
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const FirebaseAuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
   // guards
   const startedRef = useRef(false);
@@ -203,7 +203,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   /****************************************************************************************************************
-   * Others
+   * Get current signed in provider.
+   * TODO: first provider isn't guranteed to be the current signed in provider. We need to save current provider.
    ****************************************************************************************************************/
   const getSignInProviderId = (): ProviderIdType => {
     const pid = user?.providerData?.[0]?.providerId;
