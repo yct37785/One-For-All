@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
-import { GoogleAuthProvider } from '@react-native-firebase/auth';
+import { GoogleAuthProvider, FirebaseAuthTypes } from '@react-native-firebase/auth';
 import Constants from 'expo-constants';
 import { logColors } from '../../../Defaults';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
@@ -46,7 +46,7 @@ export async function configureGoogleSignIn() {
  *
  * @throws {Error} any uncaught internal error during sign-in
  ****************************************************************************************************************/
-export async function signInGoogle(): Promise<any> {
+export async function signInGoogle(): Promise<FirebaseAuthTypes.AuthCredential | undefined> {
 
   try {
     /** 1) Ensure Play Services on Android **/
