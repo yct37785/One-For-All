@@ -4,6 +4,7 @@ import { Root, Nav } from 'framework';
 import SettingsScreen from './Screens/SettingsScreen';
 // registries
 import { uiScreenRoutes, uiScreenRegistry } from './Screens/UI/UIElemRegistry';
+import { funcScreenRoutes, funcScreenRegistry } from './Screens/Func/FuncRegistry';
 // layout
 import { DefaultLeftContent, DefaultRightContent } from './ScreenLayout';
 
@@ -14,6 +15,13 @@ const UIStackNavigator: React.FC = () => (
   <Nav.StackNavigator
     initialRouteName={uiScreenRoutes.home}
     navNodeMap={uiScreenRegistry}
+  />
+);
+
+const FuncStackNavigator: React.FC = () => (
+  <Nav.StackNavigator
+    initialRouteName={funcScreenRoutes.home}
+    navNodeMap={funcScreenRegistry}
   />
 );
 
@@ -33,7 +41,7 @@ export const rootTabsNodeMap: Nav.NavNodeMap = {
 
   // functionality stack
   func: {
-    component: UIStackNavigator,
+    component: FuncStackNavigator,
     label: 'Functions',
     icon: 'engine',
   },
