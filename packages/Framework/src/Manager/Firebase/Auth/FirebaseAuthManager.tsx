@@ -108,7 +108,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
    ****************************************************************************************************************/
   const signIn = async (providerType: ProviderIdType): Promise<void> => {
     if (!signingRef.current) {
-      signingOutRef.current = true;
+      signingRef.current = true;
 
       try {
         /**
@@ -150,15 +150,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           return;
         }
 
-        /**
-         * 4) Force refresh of user context
-         */
-        const updatedUser = getAuth(getApp()).currentUser ?? null;
-        if (!updatedUser) {
-          throw Error('updatedUser still null');
-        }
-        setUser(updatedUser);
-        
       } catch (e) {
         doErrLog('auth', 'signIn', `${e}`);
       } finally {
@@ -182,6 +173,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       signingOutRef.current = true;
 
       try {
+        const providerType = getSignInProviderId(); // get before Firebase sign out
+
         /**
          * 1) Firebase sign out
          */
@@ -191,7 +184,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         /**
          * 2) Provider sign out
          */
-        const providerType = getSignInProviderId();
         if (providerType === ProviderIdType.Google) {
           await signOutGoogle();
         }
@@ -199,17 +191,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           // future: Facebook sign out
         }
         else {
-          throw new Error('Unrecognized provider');
+          // no op
         }
 
       } catch (e) {
         doErrLog('auth', 'signOut', `${e}`);
       } finally {
-        /**
-         * 3) Force refresh of user context
-         */
-        setUser(null);
-        signingRef.current = false;
+        signingOutRef.current = false;
       }
     }
   };
@@ -217,11 +205,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   /****************************************************************************************************************
    * Others
    ****************************************************************************************************************/
-  const getSignInProviderId = (): string => {
-    return user?.providerData[0]?.providerId ?? ProviderIdType.None;
-  }
+  const getSignInProviderId = (): ProviderIdType => {
+    const pid = user?.providerData?.[0]?.providerId;
+    if (pid === ProviderIdType.Google) return ProviderIdType.Google;
+    if (pid === ProviderIdType.Facebook) return ProviderIdType.Facebook;
+    return ProviderIdType.None;
+  };
 
-  const value = useMemo(() => ({ user, signIn, signOut }), [user]);
+  const value = { user, signIn, signOut };  // do not memo in case stale
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
