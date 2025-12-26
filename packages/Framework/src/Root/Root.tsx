@@ -134,23 +134,13 @@ const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps,
   }, []);
 
   return (
-    <LocalDataProvider>
-      <AppSettingsProvider>
-        <FirebaseAuthProvider>
-          <SafeAreaProvider>
-            <KeyboardProvider>
-              <AppThemeProvider isDarkMode={isDarkMode} myTheme={myTheme}>
-                <PaperBridge
-                  rootNavigator={rootNavigator}
-                  defaultScreenLayoutProps={defaultScreenLayoutProps}
-                  navTheme={navTheme}
-                />
-              </AppThemeProvider>
-            </KeyboardProvider>
-          </SafeAreaProvider>
-        </FirebaseAuthProvider>
-      </AppSettingsProvider>
-    </LocalDataProvider>
+    <AppThemeProvider isDarkMode={isDarkMode} myTheme={myTheme}>
+      <PaperBridge
+        rootNavigator={rootNavigator}
+        defaultScreenLayoutProps={defaultScreenLayoutProps}
+        navTheme={navTheme}
+      />
+    </AppThemeProvider>
   );
 };
 
@@ -159,7 +149,17 @@ const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps,
  ******************************************************************************************************************/
 const AppEntry: React.FC<RootProps> = (props) => {
   return (
-    <RootApp {...props} />
+    <FirebaseAuthProvider>
+      <LocalDataProvider>
+        <AppSettingsProvider>
+          <SafeAreaProvider>
+            <KeyboardProvider>
+              <RootApp {...props} />
+            </KeyboardProvider>
+          </SafeAreaProvider>
+        </AppSettingsProvider>
+      </LocalDataProvider>
+    </FirebaseAuthProvider>
   );
 };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Root, Nav } from 'framework';
 // screens
+import TestbedScreen from './Screens/TestbedScreen';
 import SettingsScreen from './Screens/SettingsScreen';
 // registries
 import { uiScreenRoutes, uiScreenRegistry } from './Screens/UI/UIElemRegistry';
@@ -44,6 +45,13 @@ export const rootTabsNodeMap: Nav.NavNodeMap = {
     component: FuncStackNavigator,
     label: 'Functions',
     icon: 'engine',
+  },
+
+  // test bed screen
+  testbed: {
+    component: TestbedScreen,
+    label: 'Testbed',
+    icon: 'flask',
   },
 
   // settings screen
