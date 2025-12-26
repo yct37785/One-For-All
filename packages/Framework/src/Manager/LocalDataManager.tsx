@@ -1,16 +1,21 @@
 /******************************************************************************************************************
- * Generic local data provider built on AsyncStorage.
+ * Generic local data provider built on MMKV.
  *
- * Revised behavior:
- * - Does NOT keep an in-memory snapshot of all key/value pairs.
- * - Reads from AsyncStorage on every `getItem` call.
- * - Writes to AsyncStorage on every `setItem` call.
- * - Optionally re-seeds reserved default keys (`localDataDefaults`) when missing.
+ * Features:
+ * - Ensures reserved default keys (isDarkMode, language, etc.) always exist.
+ * - Does NOT keep an in-memory snapshot; reads/writes storage per call.
+ * - Provides setItem, getItem, removeItem and clear utilities.
  ******************************************************************************************************************/
-import React, { createContext, useContext } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { createContext, useContext, useEffect, useMemo } from 'react';
+import { createMMKV } from 'react-native-mmkv';
 import { localDataDefaults } from '../Defaults';
 import { doLog, doErrLog } from '../Util/General';
+
+/******************************************************************************************************************
+ * MMKV storage instance.
+ * - Single instance for the app.
+ ******************************************************************************************************************/
+export const storage = createMMKV();
 
 /******************************************************************************************************************
  * Local data schema and reserved defaults.
@@ -19,113 +24,111 @@ type LocalData = Record<string, any>;
 
 /******************************************************************************************************************
  * Type defining the APIs exposed by LocalDataContext.Provider.
+ *
+ * @property setItem     - Persist a value to MMKV
+ * @property getItem     - Retrieve a typed value or undefined
+ * @property removeItem  - Remove a single key from MMKV
+ * @property clear       - Clear all stored values
  ******************************************************************************************************************/
 type LocalDataContextType = {
   setItem: (key: string, value: any) => Promise<void>;
   getItem: <T = any>(key: string) => Promise<T | undefined>;
+  removeItem: (key: string) => Promise<void>;
   clear: () => Promise<void>;
 };
 
-/******************************************************************************************************************
- * Default (no-op) context implementation to avoid undefined checks in consumers.
- ******************************************************************************************************************/
 const LocalDataContext = createContext<LocalDataContextType>({
   setItem: async () => {},
   getItem: async () => undefined,
+  removeItem: async () => {},
   clear: async () => {},
 });
 
 /******************************************************************************************************************
- * Helper: Safely parse JSON values from AsyncStorage.
- *
- * @param value - Raw string value from AsyncStorage
- * @returns     - Parsed JSON or original string if parsing fails
+ * Safely parse a stored string:
+ * - If it looks like JSON, parse it
+ * - Otherwise return the raw string
  ******************************************************************************************************************/
-const safeParse = (value: string): any => {
+function parseStoredValue(raw: string): any {
   try {
-    return JSON.parse(value);
+    return JSON.parse(raw);
   } catch {
-    return value;
+    return raw;
   }
-};
+}
 
 /******************************************************************************************************************
- * Provide local key/value utilities backed directly by AsyncStorage.
- * No in-memory snapshot is maintained; every operation hits AsyncStorage.
+ * Convert any JS value to a storage string:
+ * - Always JSON.stringify for consistency
+ ******************************************************************************************************************/
+function toStoredValue(value: any): string {
+  return JSON.stringify(value);
+}
+
+/******************************************************************************************************************
+ * Provide local key/value helpers backed by MMKV, enforce reserved defaults.
  *
  * @param props - Provider props:
  *   - children: ReactNode - Subtree that consumes the context
- *
- * @usage
- * ```tsx
- * <LocalDataProvider>
- *   <App />
- * </LocalDataProvider>
- * ```
  ******************************************************************************************************************/
 export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  
   /****************************************************************************************************************
-   * [ASYNC] Sets a value in AsyncStorage.
+   * Ensure reserved defaults exist on mount:
+   * - If a default key is missing, write it into MMKV.
+   ****************************************************************************************************************/
+  useEffect(() => {
+    try {
+      for (const [key, defValue] of Object.entries(localDataDefaults)) {
+        const existing = storage.getString(key);
+        if (existing === undefined) {
+          storage.set(key, toStoredValue(defValue));
+        }
+      }
+      doLog('LocalData', 'init', 'Local data defaults ensured');
+    } catch (err) {
+      doErrLog('LocalData', 'init', `Failed to init local data defaults: ${err}`);
+    }
+  }, []);
+
+  /****************************************************************************************************************
+   * Sets a value in local data and persists it to MMKV.
    *
    * @param key     - String key to set
    * @param value   - Value to store (will be JSON.stringified)
-   * 
-   * @usage
-   * ```tsx
-   * await setItem('isDarkMode', true);
-   * ```
    ****************************************************************************************************************/
   const setItem = async (key: string, value: any) => {
     try {
-      await AsyncStorage.setItem(key, JSON.stringify(value));
-      doLog('LocalData', 'setItem', `Saved key "${key}" to local storage.`);
+      storage.set(key, toStoredValue(value));
     } catch (err) {
       doErrLog('LocalData', 'setItem', `Failed to save local data for key "${key}": ${err}`);
     }
   };
 
   /****************************************************************************************************************
-   * [ASYNC] Retrieves a value from AsyncStorage.
-   * 
+   * Retrieves a value from local data (MMKV).
+   *
    * Behavior:
-   * - Reads the value from AsyncStorage each time it is called.
-   * - If the key does not exist but is present in `localDataDefaults`, the default is written to AsyncStorage
-   *   and returned.
-   * - If the key does not exist and has no default, resolves to undefined.
-   * 
+   * - If key exists -> parse + return
+   * - If key missing but exists in localDataDefaults -> write default and return default
+   * - Otherwise -> undefined
+   *
    * @param key - Key to fetch
-   * 
-   * @return - Promise resolving to the stored value typed as T, or undefined if missing
-   * 
-   * @usage
-   * ```tsx
-   * const lang = await getItem<string>('language');
-   * ```
+   *
+   * @return - Stored value typed as T, or undefined if missing
    ****************************************************************************************************************/
-  const getItem = async <T = any>(key: string): Promise<T | undefined> => {
+  const getItem = async <T = any,>(key: string): Promise<T | undefined> => {
     try {
-      const stored = await AsyncStorage.getItem(key);
+      const raw = storage.getString(key);
 
-      if (stored !== null) {
-        const parsed = safeParse(stored);
-        return parsed as T;
+      if (raw !== undefined) {
+        return parseStoredValue(raw) as T;
       }
 
-      // If no value is stored but a default exists, seed AsyncStorage with the default and return it
+      // if missing, but reserved default exists, persist it and return it
       if (Object.prototype.hasOwnProperty.call(localDataDefaults, key)) {
-        const defaultValue = (localDataDefaults as LocalData)[key];
-        try {
-          await AsyncStorage.setItem(key, JSON.stringify(defaultValue));
-          doLog('LocalData', 'getItem', `Key "${key}" missing; seeded with default value.`);
-        } catch (err) {
-          doErrLog(
-            'LocalData',
-            'getItem',
-            `Failed to seed default value for key "${key}": ${err}`
-          );
-        }
-        return defaultValue as T;
+        const defValue = (localDataDefaults as LocalData)[key];
+        storage.set(key, toStoredValue(defValue));
+        return defValue as T;
       }
 
       return undefined;
@@ -136,51 +139,37 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   /****************************************************************************************************************
-   * [ASYNC] Clears all data from AsyncStorage.
+   * Removes a specific key from MMKV.
    *
-   * Behavior:
-   * - Calls `AsyncStorage.clear()` to remove all keys.
-   * - Re-seeds reserved defaults (`localDataDefaults`) to keep them available from a clean state.
-   *
-   * @usage
-   * ```tsx
-   * await clear();
-   * ```
+   * @param key - Key to remove
+   ****************************************************************************************************************/
+  const removeItem = async (key: string) => {
+    try {
+      storage.remove(key);
+    } catch (err) {
+      doErrLog('LocalData', 'removeItem', `Failed to remove local data for key "${key}": ${err}`);
+    }
+  };
+
+  /****************************************************************************************************************
+   * Clears all local data:
+   * - Deletes everything from MMKV
+   * - Next getItem will re-seed defaults when accessed (and init seeds on next mount)
    ****************************************************************************************************************/
   const clear = async () => {
     try {
-      await AsyncStorage.clear();
-      doLog('LocalData', 'clear', 'Cleared all local data.');
-
-      // re-seed reserved defaults so they exist after a reset
-      const defaultEntries = Object.entries(localDataDefaults).map(([key, value]) => [
-        key,
-        JSON.stringify(value),
-      ]) as [string, string][];
-
-      if (defaultEntries.length > 0) {
-        await AsyncStorage.multiSet(defaultEntries);
-        doLog('LocalData', 'clear', 'Re-seeded localDataDefaults after clear().');
-      }
+      storage.clearAll();
     } catch (err) {
       doErrLog('LocalData', 'clear', `Failed to clear local data: ${err}`);
     }
   };
 
-  return (
-    <LocalDataContext.Provider value={{ setItem, getItem, clear }}>
-      {children}
-    </LocalDataContext.Provider>
+  const value = useMemo<LocalDataContextType>(
+    () => ({ setItem, getItem, removeItem, clear }),
+    []
   );
+
+  return <LocalDataContext.Provider value={value}>{children}</LocalDataContext.Provider>;
 };
 
-/******************************************************************************************************************
- * Hook to consume the LocalDataContext.
- *
- * @usage
- * ```tsx
- * const { getItem, setItem, clear } = useLocalData();
- * const lang = await getItem<string>('language');
- * ```
- ******************************************************************************************************************/
 export const useLocalData = () => useContext(LocalDataContext);
