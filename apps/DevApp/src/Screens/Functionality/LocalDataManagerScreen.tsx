@@ -13,6 +13,7 @@ import { Nav, UI, Manager } from 'framework';
  ******************************************************************************************************************/
 const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
   const { getItem, setItem, clear } = Manager.useLocalData();
+  const { theme } = Manager.useAppTheme();
 
   /******************************************************************************************************************
    * Demo state

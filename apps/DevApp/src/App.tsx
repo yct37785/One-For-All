@@ -1,24 +1,19 @@
 import React from 'react';
 import { Root, Nav } from 'framework';
 // screens
-import HomeScreen from './Screens/HomeScreen';
 import SettingsScreen from './Screens/SettingsScreen';
-import { screenRegistry } from './Screens/ScreenRegistry';
+// registries
+import { uiScreenRoutes, uiScreenRegistry } from './Screens/UI/UIElemRegistry';
 // layout
 import { DefaultLeftContent, DefaultRightContent } from './ScreenLayout';
 
 /******************************************************************************************************************
- * Main stack (existing behavior)
+ * Stacks
  ******************************************************************************************************************/
-export const mainStackNodeMap: Nav.NavNodeMap = {
-  home: { component: HomeScreen },
-  ...screenRegistry,
-};
-
-const MainStackNavigator: React.FC = () => (
+const UIStackNavigator: React.FC = () => (
   <Nav.StackNavigator
-    initialRouteName='home'
-    navNodeMap={mainStackNodeMap}
+    initialRouteName={uiScreenRoutes.home}
+    navNodeMap={uiScreenRegistry}
   />
 );
 
@@ -29,18 +24,18 @@ const MainStackNavigator: React.FC = () => (
  * - Two dummy tabs: reuse existing screens for now
  ******************************************************************************************************************/
 export const rootTabsNodeMap: Nav.NavNodeMap = {
-  // main stack
-  main: {
-    component: MainStackNavigator,
-    label: 'Main',
-    icon: 'home-variant',
+  // UI elems stack
+  ui_elems: {
+    component: UIStackNavigator,
+    label: 'UI',
+    icon: 'shape',
   },
 
-  // dummy tab #1 (reuse an existing page)
-  explore: {
-    component: mainStackNodeMap['ui_list']?.component ?? MainStackNavigator,
-    label: 'Explore',
-    icon: 'compass',
+  // functionality stack
+  func: {
+    component: UIStackNavigator,
+    label: 'Functions',
+    icon: 'engine',
   },
 
   // settings screen
@@ -53,7 +48,7 @@ export const rootTabsNodeMap: Nav.NavNodeMap = {
 
 const RootNavigator = (
   <Nav.BottomTabsNavigator
-    initialRouteName='main'
+    initialRouteName='ui_elems'
     navNodeMap={rootTabsNodeMap}
     headerShown={false}
   />
