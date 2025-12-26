@@ -1,4 +1,4 @@
-import React, { memo, ReactNode } from 'react';
+import React, { memo, ReactNode, useMemo } from 'react';
 import { TextStyle, StyleSheet } from 'react-native';
 import { Text as PaperText } from 'react-native-paper';
 import { useAppTheme } from '../../Manager/AppThemeManager';
@@ -17,6 +17,7 @@ export type TextVariant = React.ComponentProps<typeof PaperText>['variant'];
  * @property bold?            - Bolded text
  * @property numberOfLines?   - Fixed num of lines if provided
  * @property underline?       - Underline the text
+ * @property topPx?           - Margin top (px) for line space
  * @property onPress?         - Press handler for clickable text
  ******************************************************************************************************************/
 export interface TextProps {
@@ -26,6 +27,7 @@ export interface TextProps {
   bold?: boolean;
   numberOfLines?: number;
   underline?: boolean;
+  topPx?: number;
   onPress?: () => void;
 }
 
@@ -50,24 +52,35 @@ export const Text: React.FC<TextProps & { children?: string | ReactNode }> = mem
     bold,
     numberOfLines,
     underline = false,
+    topPx = 0,
     onPress,
     children
   }) => {
     const { theme } = useAppTheme();
+
+    // resolve colors
     const resolvedColor = color ?? theme.colors.onSurface;
 
-    const colorStyle = {
-      color: resolvedColor,
-      ...(highlightColor !== undefined && { backgroundColor: highlightColor }),
-    };
-    const boldStyle: TextStyle = { fontWeight: bold ? 'bold' : 'normal' };
+    // memoize styles to reduce allocations (useful when many Text nodes render)
+    const textStyle = useMemo(() => {
+      const colorStyle: TextStyle = {
+        color: resolvedColor,
+        ...(highlightColor !== undefined ? { backgroundColor: highlightColor } : {}),
+      };
+
+      const boldStyle: TextStyle = { fontWeight: bold ? 'bold' : 'normal' };
+
+      const topStyle: TextStyle | undefined = topPx ? { marginTop: topPx } : undefined;
+
+      return [colorStyle, boldStyle, underline && styles.underline, topStyle];
+    }, [resolvedColor, highlightColor, bold, underline, topPx]);
 
     return (
       <PaperText
         variant={variant}
         {...(numberOfLines !== undefined ? { numberOfLines } : {})}
         onPress={onPress}
-        style={[colorStyle, boldStyle, underline && styles.underline]}
+        style={textStyle}
       >
         {children}
       </PaperText>
