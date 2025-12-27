@@ -36,7 +36,7 @@ export const AppSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ c
   useEffect(() => {
     (async () => {
       try {
-        const stored = await getItem<boolean>('isDarkMode');
+        const stored = getItem<boolean>('isDarkMode');
         setIsDarkModeState(!!stored);
       } catch (err) {
         doErrLog('AppSettings', 'load', `Failed to load settings: ${err}`);
@@ -55,7 +55,7 @@ export const AppSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ c
     setIsDarkModeState(prev => (prev === val ? prev : val));
 
     try {
-      await setItem('isDarkMode', val);
+      setItem('isDarkMode', val);
     } catch (err) {
       doErrLog('AppSettings', 'setIsDarkMode', `Failed to persist isDarkMode: ${err}`);
     }

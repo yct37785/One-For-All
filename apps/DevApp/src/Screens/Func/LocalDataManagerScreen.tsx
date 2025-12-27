@@ -69,17 +69,17 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
   const handleToggleFlag = async () => {
     const next = !demoFlag;
     setDemoFlag(next);
-    await setItem('demoFlag', next);
+    setItem('demoFlag', next);
   };
 
   const handleIncrementCounter = async () => {
     const next = demoCounter + 1;
     setDemoCounter(next);
-    await setItem('demoCounter', next);
+    setItem('demoCounter', next);
   };
 
   const handleSaveName = async () => {
-    await setItem('demoName', demoName);
+    setItem('demoName', demoName);
   };
 
   const handleReload = async () => {
@@ -100,7 +100,7 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
   };
 
   const handleClearAll = async () => {
-    await clear();
+    clear();
     // local mirrors reset to "empty" values
     setDemoFlag(false);
     setDemoCounter(0);
