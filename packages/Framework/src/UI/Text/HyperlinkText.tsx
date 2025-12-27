@@ -1,5 +1,5 @@
 import React, { memo, ReactNode } from 'react';
-import { useAppTheme } from '../../Manager/AppThemeManager';
+import { useAppTheme } from '../../Manager/App/AppThemeManager';
 import { Text, TextProps } from './Text';
 
 /******************************************************************************************************************

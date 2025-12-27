@@ -1,7 +1,7 @@
 import React, { memo, ReactNode, useMemo } from 'react';
 import { View, ScrollView, ViewStyle, FlexStyle, StyleSheet } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
-import { useAppTheme } from '../../Manager/AppThemeManager';
+import { useAppTheme } from '../../Manager/App/AppThemeManager';
 import { PadSpacingValue } from '../../Types';
 
 /******************************************************************************************************************

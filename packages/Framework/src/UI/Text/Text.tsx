@@ -1,7 +1,7 @@
 import React, { memo, ReactNode, useMemo } from 'react';
 import { TextStyle, StyleSheet } from 'react-native';
 import { Text as PaperText } from 'react-native-paper';
-import { useAppTheme } from '../../Manager/AppThemeManager';
+import { useAppTheme } from '../../Manager/App/AppThemeManager';
 
 /******************************************************************************************************************
  * MD3 typography variants.

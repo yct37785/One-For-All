@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { View, StyleProp, ViewStyle, FlexStyle } from 'react-native';
 import { PadSpacingValue } from '../../Types';
-import { useAppTheme } from '../../Manager/AppThemeManager';
+import { useAppTheme } from '../../Manager/App/AppThemeManager';
 
 /******************************************************************************************************************
  * @property bgColor?  - Background color of the container

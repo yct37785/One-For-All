@@ -1,7 +1,7 @@
 import React, { memo, ReactNode } from 'react';
 import { View, TouchableOpacity, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Text, Checkbox } from 'react-native-paper';
-import { useAppTheme } from '../../Manager/AppThemeManager';
+import { useAppTheme } from '../../Manager/App/AppThemeManager';
 import {
   BaseOptions,
   OptionState,

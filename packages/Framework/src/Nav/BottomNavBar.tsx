@@ -4,7 +4,7 @@ import { Box } from '../UI/Container/Box';
 import { Touchable } from '../UI/Interactive/Touchable';
 import { Text, TextProps } from '../UI/Text/Text';
 import { Icon, IconProps } from '../UI/Text/Icon';
-import { useAppTheme } from '../Manager/AppThemeManager';
+import { useAppTheme } from '../Manager/App/AppThemeManager';
 
 // defaults (can be overridden per item via iconOpts/textOpts)
 const defaultIconVariant: IconProps['variant'] = 'sm';
