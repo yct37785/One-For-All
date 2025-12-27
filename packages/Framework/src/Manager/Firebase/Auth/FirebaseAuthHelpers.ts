@@ -1,4 +1,3 @@
-import Constants from 'expo-constants';
 import { logColors } from '../../../Defaults';
 import { getApp } from '@react-native-firebase/app';
 import {

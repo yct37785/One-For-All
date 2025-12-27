@@ -1,13 +1,13 @@
 import { Nav } from 'framework';
 // container
-import LocalDataManagerScreen from './LocalDataManagerScreen';
+import LocalKVStoreManagerScreen from './LocalKVStoreManagerScreen';
 import FuncScreen from './FuncScreen';
 
 /******************************************************************************************************************
  * Screen routes
  ******************************************************************************************************************/
 export const funcScreenRoutes = {
-  localDataManager: 'func_local_data',
+  localKVStoreManager: 'func_local_kv_store',
   home: 'func_home'
 } as const;
 
@@ -15,6 +15,6 @@ export const funcScreenRoutes = {
  * Screen registry (except home screen)
  ******************************************************************************************************************/
 export const funcScreenRegistry: Nav.NavNodeMap = {
-  [funcScreenRoutes.localDataManager]: { component: LocalDataManagerScreen },
+  [funcScreenRoutes.localKVStoreManager]: { component: LocalKVStoreManagerScreen },
   [funcScreenRoutes.home]: { component: FuncScreen },
 };

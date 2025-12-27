@@ -1,5 +1,5 @@
 /******************************************************************************************************************
- * Generic local data provider built on expo-sqlite/kv-store (SQLite-backed key/value storage).
+ * Generic local kv store provider built on expo-sqlite/kv-store (SQLite-backed key/value storage).
  *
  * Features:
  * - Ensures reserved default keys (isDarkMode, language, etc.) always exist.
@@ -7,8 +7,8 @@
  ******************************************************************************************************************/
 import React, { createContext, useContext, useMemo, useCallback } from 'react';
 import Storage from 'expo-sqlite/kv-store';
-import { LOCAL_DATA_DEFAULTS } from '../Defaults';
-import { doErrLog } from '../Util/General';
+import { LOCAL_DATA_DEFAULTS } from '../../Defaults';
+import { doErrLog } from '../../Util/General';
 
 const storage = Storage;
 
@@ -16,25 +16,25 @@ const storage = Storage;
 type LocalData = Record<string, any>;
 
 /******************************************************************************************************************
- * Type defining the APIs exposed by LocalDataContext.Provider.
+ * Type defining the APIs exposed by LocalKVStoreContext.Provider.
  *
- * @property setItem     - Persist a value to storage
- * @property getItem     - Retrieve a typed value or undefined
- * @property removeItem  - Remove a single key from storage
- * @property clear       - Clear all stored values
+ * @property setItemKV     - Persist a value to storage
+ * @property getItemKV     - Retrieve a typed value or undefined
+ * @property removeItemKV  - Remove a single key from storage
+ * @property clearKVs      - Clear all stored values
  ******************************************************************************************************************/
-type LocalDataContextType = {
-  setItem: (key: string, value: any) => void;
-  getItem: <T = any>(key: string) => T | undefined;
-  removeItem: (key: string) => void;
-  clear: () => void;
+type LocalKVStoreContextType = {
+  setItemKV: (key: string, value: any) => void;
+  getItemKV: <T = any>(key: string) => T | undefined;
+  removeItemKV: (key: string) => void;
+  clearKVs: () => void;
 };
 
-const LocalDataContext = createContext<LocalDataContextType>({
-  setItem: () => {},
-  getItem: () => undefined,
-  removeItem: () => {},
-  clear: () => {},
+const LocalKVStoreContext = createContext<LocalKVStoreContextType>({
+  setItemKV: () => {},
+  getItemKV: () => undefined,
+  removeItemKV: () => {},
+  clearKVs: () => {},
 });
 
 // helper
@@ -49,7 +49,7 @@ function tryParse(value: string): unknown {
 /******************************************************************************************************************
  * Provide local key/value helpers backed by SQLite storage, enforce reserved defaults.
  ******************************************************************************************************************/
-export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const LocalKVStoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   /****************************************************************************************************************
    * Sets a value in storage.
@@ -57,11 +57,11 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
    * @param key     - String key to set
    * @param value   - Value to store (will be stringified)
    ****************************************************************************************************************/
-  const setItem = useCallback((key: string, value: any) => {
+  const setItemKV = useCallback((key: string, value: any) => {
     try {
       storage.setItemSync(key, JSON.stringify(value));
     } catch (err) {
-      doErrLog('LocalData', 'setItem', `Failed to save local data for key "${key}": ${err}`);
+      doErrLog('LocalData', 'setItem', `Failed to save local data for key '${key}': ${err}`);
     }
   }, []);
 
@@ -72,7 +72,7 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
    *
    * @return - Stored value typed as T, or undefined if missing (and no default)
    ****************************************************************************************************************/
-  const getItem = useCallback(
+  const getItemKV = useCallback(
     <T,>(key: string): T | undefined => {
       try {
         const raw = storage.getItemSync(key);
@@ -95,7 +95,7 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
         return undefined;
       } catch (err) {
-        doErrLog('LocalData', 'getItem', `Failed to read local data for key "${key}": ${err}`);
+        doErrLog('LocalData', 'getItem', `Failed to read local data for key '${key}': ${err}`);
         return undefined;
       }
     }, []);
@@ -105,18 +105,18 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
    *
    * @param key - Key to remove
    ****************************************************************************************************************/
-  const removeItem = useCallback((key: string) => {
+  const removeItemKV = useCallback((key: string) => {
     try {
       storage.removeItemSync(key);
     } catch (err) {
-      doErrLog('LocalData', 'removeItem', `Failed to remove local data for key "${key}": ${err}`);
+      doErrLog('LocalData', 'removeItem', `Failed to remove local data for key '${key}': ${err}`);
     }
   }, []);
 
   /****************************************************************************************************************
    * Clears all stored values.
    ****************************************************************************************************************/
-  const clear = useCallback(() => {
+  const clearKVs = useCallback(() => {
     try {
       storage.clearSync();
     } catch (err) {
@@ -125,23 +125,23 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   }, []);
 
   /****************************************************************************************************************
-   * LocalDataContext values.
+   * LocalKVStoreContextType values.
    ****************************************************************************************************************/
-  const value = useMemo<LocalDataContextType>(
+  const value = useMemo<LocalKVStoreContextType>(
     () => ({
-      setItem,
-      getItem,
-      removeItem,
-      clear,
+      setItemKV,
+      getItemKV,
+      removeItemKV,
+      clearKVs,
     }),
-    [setItem, getItem, removeItem, clear]
+    [setItemKV, getItemKV, removeItemKV, clearKVs]
   );
 
   return (
-    <LocalDataContext.Provider value={value}>
+    <LocalKVStoreContext.Provider value={value}>
       {children}
-    </LocalDataContext.Provider>
+    </LocalKVStoreContext.Provider>
   );
 };
 
-export const useLocalData = () => useContext(LocalDataContext);
+export const useLocalKVStore = () => useContext(LocalKVStoreContext);

@@ -13,14 +13,14 @@ const FuncScreen: Nav.ScreenType = ({ navigate }) => {
    * Func section (Framework/src/UI)
    ******************************************************************************************************************/
   const func_localStorageOptions = [
-    { value: funcScreenRoutes.localDataManager, text: 'Local Data Manager' },
+    { value: funcScreenRoutes.localKVStoreManager, text: 'Local KV Store Manager' },
   ];
 
   /******************************************************************************************************************
    * UI sections + mapped options
    ******************************************************************************************************************/
   const FUNC_SECTION_CONFIG = [
-    { header: { text: 'Local Storage',      icon: 'database' },               options: func_localStorageOptions },
+    { header: { text: 'Local Data',      icon: 'database' },               options: func_localStorageOptions },
   ];
 
   const FUNC_SECTIONS = FUNC_SECTION_CONFIG.map(s => s.header);

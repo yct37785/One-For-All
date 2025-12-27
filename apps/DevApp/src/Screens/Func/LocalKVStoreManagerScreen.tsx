@@ -5,14 +5,14 @@ import { Nav, UI, Manager } from 'framework';
  * LocalDataManager demo
  *
  * This screen demonstrates how to use LocalDataManager (useLocalData) to:
- * - Persist simple values using setItem(key, value)
- * - Read them back using getItem<T>(key)
- * - Clear all local data and re-seed defaults via clear()
+ * - Persist simple values using setItemKV(key, value)
+ * - Read them back using getItemKV<T>(key)
+ * - clearKVs all local data and re-seed defaults via clearKVs()
  *
  * All operations are async and backed directly by AsyncStorage.
  ******************************************************************************************************************/
 const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
-  const { getItem, setItem, clear } = Manager.useLocalData();
+  const { getItemKV, setItemKV, clearKVs } = Manager.useLocalKVStore();
   const { theme } = Manager.useAppTheme();
 
   /******************************************************************************************************************
@@ -32,7 +32,7 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
    * Load initial values from LocalDataManager on mount.
    *
    * Note:
-   * - getItem is async and reads directly from AsyncStorage each call.
+   * - getItemKV is async and reads directly from AsyncStorage each call.
    * - If a key has a default in localDataDefaults, it will be seeded when missing.
    ******************************************************************************************************************/
   useEffect(() => {
@@ -41,9 +41,9 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
     (async () => {
       try {
         const [storedFlag, storedCounter, storedName] = await Promise.all([
-          getItem<boolean>('demoFlag'),
-          getItem<number>('demoCounter'),
-          getItem<string>('demoName'),
+          getItemKV<boolean>('demoFlag'),
+          getItemKV<number>('demoCounter'),
+          getItemKV<string>('demoName'),
         ]);
 
         if (!isActive) return;
@@ -61,7 +61,7 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
     return () => {
       isActive = false;
     };
-  }, [getItem]);
+  }, [getItemKV]);
 
   /******************************************************************************************************************
    * Handlers
@@ -69,26 +69,26 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
   const handleToggleFlag = async () => {
     const next = !demoFlag;
     setDemoFlag(next);
-    setItem('demoFlag', next);
+    setItemKV('demoFlag', next);
   };
 
   const handleIncrementCounter = async () => {
     const next = demoCounter + 1;
     setDemoCounter(next);
-    setItem('demoCounter', next);
+    setItemKV('demoCounter', next);
   };
 
   const handleSaveName = async () => {
-    setItem('demoName', demoName);
+    setItemKV('demoName', demoName);
   };
 
   const handleReload = async () => {
     setIsLoading(true);
     try {
       const [storedFlag, storedCounter, storedName] = await Promise.all([
-        getItem<boolean>('demoFlag'),
-        getItem<number>('demoCounter'),
-        getItem<string>('demoName'),
+        getItemKV<boolean>('demoFlag'),
+        getItemKV<number>('demoCounter'),
+        getItemKV<string>('demoName'),
       ]);
 
       setDemoFlag(!!storedFlag);
@@ -99,8 +99,8 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
     }
   };
 
-  const handleClearAll = async () => {
-    clear();
+  const handleclearKVsAll = async () => {
+    clearKVs();
     // local mirrors reset to "empty" values
     setDemoFlag(false);
     setDemoCounter(0);
@@ -116,7 +116,7 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
 
         {/* Header */}
         <UI.Text variant='bodyMedium'>
-          LocalDataManager provides simple getItem / setItem / clear APIs.
+          LocalDataManager provides simple getItemKV / setItemKV / clearKVs APIs.
           Values are loaded on demand from storage.
         </UI.Text>
 
@@ -209,12 +209,12 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
           </UI.Text>
         </UI.Box>
 
-        {/* Reload & clear */}
+        {/* Reload & clearKVs */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Reload &amp; clear</UI.Text>
+        <UI.Text variant='titleMedium'>Reload &amp; clearKVs</UI.Text>
 
         <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
-          Reload reads from storage again; Clear removes all keys and re-seeds defaults.
+          Reload reads from storage again; clearKVs removes all keys and re-seeds defaults.
         </UI.Text>
 
         <UI.Box mt={2}>
@@ -229,9 +229,9 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
         <UI.Box mt={1} mb={4}>
           <UI.Button
             mode='text'
-            onPress={handleClearAll}
+            onPress={handleclearKVsAll}
           >
-            Clear all local data (and re-seed defaults)
+            clearKVs all local data (and re-seed defaults)
           </UI.Button>
         </UI.Box>
 

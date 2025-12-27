@@ -1,4 +1,4 @@
 export * from '../Manager/Firebase/Auth/FirebaseAuthManager';
-export * from '../Manager/AppSettingsManager';
-export * from '../Manager/AppThemeManager';
-export * from '../Manager/LocalDataManager';
+export * from '../Manager/App/AppSettingsManager';
+export * from '../Manager/App/AppThemeManager';
+export * from '../Manager/LocalData/LocalKVStoreManager';
