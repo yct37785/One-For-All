@@ -36,7 +36,7 @@ export type TabRouteProps = {
 export type TabsSceneMap<T extends string = string> = Record<T, React.ComponentType<unknown>>;
 
 /******************************************************************************************************************
- * TabsContainer props.
+ * A container for managing tabbed navigation where content changes based on the selected tab.
  * 
  * @property routes         - Array of tab definitions (see TabRouteProps)
  * @property sceneMap       - Function that renders a scene for a given route (see TabsSceneMap)
@@ -54,22 +54,21 @@ export type TabsContainerProps = {
   style?: StyleProp<ViewStyle>;
 };
 
-/******************************************************************************************************************
- * A container for managing tabbed navigation where content changes based on the selected tab.
- ******************************************************************************************************************/
 export const TabsContainer: React.FC<TabsContainerProps> = memo(
   ({ routes, sceneMap, tabIndex, onTabIdxChange, position, style }) => {
     const { theme } = useAppTheme();
-
-    // memoized scene map
+    
+    /**
+     * Memoized scene map
+     */
     const renderScene = useMemo(() => SceneMap(sceneMap as any), [sceneMap]);
 
     const ripple = theme.dark ? theme.design.rippleColorForDark : theme.design.rippleColorForLight;
     const onSurface = theme.colors.onSurface;
 
-    /**************************************************************************************************************
-     * lazy placeholder
-     **************************************************************************************************************/
+    /**
+     * Lazy placeholder
+     */
     const renderLazyPlaceholder = () => <View style={{ flex: 1 }} />;
 
     /**************************************************************************************************************

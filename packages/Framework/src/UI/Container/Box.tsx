@@ -4,6 +4,10 @@ import { PadSpacingValue } from '../../Types';
 import { useAppTheme } from '../../Manager/App/AppThemeManager';
 
 /******************************************************************************************************************
+ * A drawable container, it holds content and applies styling, but does not decide spatial arrangement of siblings.
+ *  - Think of it as an element in a layout.
+ *  - Use to wrap singular child UI components.
+ * 
  * @property bgColor?  - Background color of the container
  * @property flex?     - Flex value to control layout behavior
  * @property dir?      - Flex direction
@@ -31,6 +35,13 @@ import { useAppTheme } from '../../Manager/App/AppThemeManager';
  * 
  * @property style?         - Optional container style
  * @property children       - Content
+ * 
+ * @usage
+ * ```tsx
+ * <Box p={2} ph={3} bgColor="#eee">
+ *   <Text>Content with padding</Text>
+ * </Box>
+ * ```
  ******************************************************************************************************************/
 export type BoxProps = {
   bgColor?: string;
@@ -62,18 +73,6 @@ export type BoxProps = {
   children?: React.ReactNode;
 };
 
-/******************************************************************************************************************
- * A drawable container, it holds content and applies styling, but does not decide spatial arrangement of siblings.
- *  - Think of it as an element in a layout.
- *  - Use to wrap singular child UI components.
- * 
- * @usage
- * ```tsx
- * <Box p={2} ph={3} bgColor="#eee">
- *   <Text>Content with padding</Text>
- * </Box>
- * ```
- ******************************************************************************************************************/
 export const Box: React.FC<BoxProps> = memo(
   ({
     bgColor = 'transparent',
