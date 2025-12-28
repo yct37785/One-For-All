@@ -149,8 +149,8 @@ const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps,
  ******************************************************************************************************************/
 const AppEntry: React.FC<RootProps> = (props) => {
   return (
-    <FirebaseAuthProvider>
-      <LocalKVStoreProvider>
+    <LocalKVStoreProvider>
+      <FirebaseAuthProvider>
         <AppSettingsProvider>
           <SafeAreaProvider>
             <KeyboardProvider>
@@ -158,8 +158,8 @@ const AppEntry: React.FC<RootProps> = (props) => {
             </KeyboardProvider>
           </SafeAreaProvider>
         </AppSettingsProvider>
-      </LocalKVStoreProvider>
-    </FirebaseAuthProvider>
+      </FirebaseAuthProvider>
+    </LocalKVStoreProvider>
   );
 };
 
