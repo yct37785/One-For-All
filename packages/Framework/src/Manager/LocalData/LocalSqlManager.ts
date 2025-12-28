@@ -7,24 +7,33 @@ let dbPromise: Promise<SQLite.SQLiteDatabase> | null = null;
 
 /******************************************************************************************************************
  * [ASYNC] Get or open the SQLite DB instance.
+ * 
+ * Notes:
+ * - A single shared DB instance is used for the app (defaultDB).
+ * - The DB is opened lazily on first access and cached for reuse.
+ * - Subsequent calls return the same DB instance.
  ******************************************************************************************************************/
-async function getDb(dbName: string = LOCAL_DATA_DEFAULTS.defaultDB): Promise<SQLite.SQLiteDatabase> {
+async function getDbSQL(): Promise<SQLite.SQLiteDatabase> {
   if (!dbPromise) {
-    dbPromise = SQLite.openDatabaseAsync(dbName);
+    dbPromise = SQLite.openDatabaseAsync(LOCAL_DATA_DEFAULTS.defaultDB);
   }
   return dbPromise;
 }
 
 /******************************************************************************************************************
  * [ASYNC] Run a write query (INSERT / UPDATE / DELETE).
+ *
+ * @param sql    - SQL statement with placeholders (e.g. ?, $id)
+ * @param params - Values bound to the SQL placeholders (array or object)
+ *
+ * @return - Result containing affected row count and last insert ID (if applicable)
  ******************************************************************************************************************/
-export async function runAsync(
+export async function runQuerySQL(
   sql: string,
-  params?: any[] | Record<string, any>,
-  dbName?: string
+  params?: any[] | Record<string, any>
 ): Promise<SQLite.SQLiteRunResult> {
   try {
-    const db = await getDb(dbName);
+    const db = await getDbSQL();
 
     // arr params -> positional bindings (?, ?)
     if (Array.isArray(params)) return await db.runAsync(sql, params);
@@ -41,15 +50,19 @@ export async function runAsync(
 }
 
 /******************************************************************************************************************
- * [ASYNC] Read a single row (or null).
+ * [ASYNC] Run a read query and return the first matching row.
+ *
+ * @param sql    - SQL SELECT statement with placeholders
+ * @param params - Values bound to the SQL placeholders
+ *
+ * @return - First row object or undefined if no results
  ******************************************************************************************************************/
-export async function readSingleRow<T = any>(
+export async function readSingleRowSQL<T = any>(
   sql: string,
-  params?: any[] | Record<string, any>,
-  dbName?: string
+  params?: any[] | Record<string, any>
 ): Promise<T | null> {
   try {
-    const db = await getDb(dbName);
+    const db = await getDbSQL();
 
     // arr params -> positional bindings
     if (Array.isArray(params)) return (await db.getFirstAsync<T>(sql, params)) ?? null;
@@ -65,15 +78,19 @@ export async function readSingleRow<T = any>(
 }
 
 /******************************************************************************************************************
- * [ASYNC] Read all rows into an array.
+ * [ASYNC] Run a read query and return all matching rows.
+ *
+ * @param sql    - SQL SELECT statement with placeholders
+ * @param params - Values bound to the SQL placeholders
+ *
+ * @return - Array of row objects (empty if no results)
  ******************************************************************************************************************/
-export async function readAllRows<T = any>(
+export async function readAllRowsSQL<T = any>(
   sql: string,
-  params?: any[] | Record<string, any>,
-  dbName?: string
+  params?: any[] | Record<string, any>
 ): Promise<T[]> {
   try {
-    const db = await getDb(dbName);
+    const db = await getDbSQL();
 
     // arr params -> positional bindings
     if (Array.isArray(params)) return (await db.getAllAsync<T>(sql, params)) ?? [];
@@ -89,15 +106,19 @@ export async function readAllRows<T = any>(
 }
 
 /******************************************************************************************************************
- * [ASYNC] Cursor iterator over rows (streaming).
+ * [ASYNC] Run a read query and return an async cursor over matching rows.
+ *
+ * @param sql    - SQL SELECT statement with placeholders
+ * @param params - Values bound to the SQL placeholders
+ *
+ * @return - Async iterable yielding rows one by one
  ******************************************************************************************************************/
-export async function* cursor<T = any>(
+export async function* cursorSQL<T = any>(
   sql: string,
-  params?: any[] | Record<string, any>,
-  dbName?: string
+  params?: any[] | Record<string, any>
 ): AsyncGenerator<T, void, void> {
   try {
-    const db = await getDb(dbName);
+    const db = await getDbSQL();
 
     // arr params -> positional bindings
     if (Array.isArray(params)) {
@@ -125,9 +146,9 @@ export async function* cursor<T = any>(
  * - SQLite DB files persist automatically on disk
  * - You almost never need create/delete DB in production
  ******************************************************************************************************************/
-export async function resetDb(dbName: string = LOCAL_DATA_DEFAULTS.defaultDB): Promise<void> {
+export async function resetDbSQL(): Promise<void> {
   try {
-    const db = await getDb(dbName);
+    const db = await getDbSQL();
     await db.closeAsync();
     dbPromise = null;
   } catch (e) {
