@@ -4,7 +4,8 @@
 export const LOCAL_DATA_DEFAULTS = {
   isDarkMode: false,
   language: 'en',
-  authLastProviderId: ''
+  authLastProviderId: '',
+  defaultDB: 'app.db',
 };
 
 /******************************************************************************************************************
