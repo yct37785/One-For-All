@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { doLog, doErrLog } from '../Util/General';
-import { useLocalData } from './LocalDataManager';
+import { doLog, doErrLog } from '../../Util/General';
+import { getItemKV, setItemKV } from '../LocalData/LocalKVStoreManager';
 
 /******************************************************************************************************************
  * Settings API.
@@ -23,11 +23,9 @@ const AppSettingsContext = createContext<AppSettingsContextType>({
  *
  * Central app settings manager:
  * - Loads persisted values on mount
- * - Exposes setters that update state + persist to LocalDataManager
+ * - Exposes setters that update state + persist to LocalKVStoreManager
  ******************************************************************************************************************/
 export const AppSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { getItem, setItem } = useLocalData();
-
   const [isDarkMode, setIsDarkModeState] = useState<boolean>(false);
 
   /****************************************************************************************************************
@@ -36,7 +34,7 @@ export const AppSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ c
   useEffect(() => {
     (async () => {
       try {
-        const stored = await getItem<boolean>('isDarkMode');
+        const stored = getItemKV<boolean>('isDarkMode');
         setIsDarkModeState(!!stored);
       } catch (err) {
         doErrLog('AppSettings', 'load', `Failed to load settings: ${err}`);
@@ -44,7 +42,7 @@ export const AppSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ c
         doLog('AppSettings', 'load', 'App settings loaded');
       }
     })();
-  }, [getItem]);
+  }, [getItemKV]);
 
   /****************************************************************************************************************
    * Persisted setter: dark mode.
@@ -55,7 +53,7 @@ export const AppSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ c
     setIsDarkModeState(prev => (prev === val ? prev : val));
 
     try {
-      await setItem('isDarkMode', val);
+      setItemKV('isDarkMode', val);
     } catch (err) {
       doErrLog('AppSettings', 'setIsDarkMode', `Failed to persist isDarkMode: ${err}`);
     }

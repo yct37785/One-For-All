@@ -8,7 +8,7 @@ import {
   TouchableNativeFeedback,
   TouchableNativeFeedbackProps
 } from 'react-native';
-import { useAppTheme } from '../../Manager/AppThemeManager';
+import { useAppTheme } from '../../Manager/App/AppThemeManager';
 
 /******************************************************************************************************************
  * TouchableProps

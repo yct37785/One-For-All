@@ -30,11 +30,6 @@ const BoxScreen: Nav.ScreenType = ({ navigate }) => {
     <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
-        <UI.Text variant='bodyMedium'>Test nested Navigator please remove</UI.Text>
-        <UI.Button onPress={() => navigate('nested_collapsibles')}>ui_collapsibles</UI.Button>
-        <UI.Button onPress={() => navigate('nested_tabs')}>ui_tabs</UI.Button>
-        <UI.Divider spacing={1} />
-
         {/* Header */}
         <UI.Text variant='bodyMedium'>
           Box is a drawable container that wraps content and applies flex layout, alignment, and spacing. It

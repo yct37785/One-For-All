@@ -1,24 +1,11 @@
-/******************************************************************************************************************
- * AppThemeManager
- *
- * Theme workflow:
- * - Client app supplies initial MyTheme tokens to Root.
- * - AppThemeManager merges client tokens with runtime overrides (e.g. settings changes).
- * - Resulting theme is provided to the framework via a single hook: useAppTheme().
- *
- * Notes:
- * - This manager exists so we can expose theme update APIs in the same hook.
- * - All token merging is delegated to Theme.ts (deepMerge) so we avoid duplicated merge logic here.
- * - PaperProvider should still be used in Root; this manager only owns the resolved theme + update logic.
- ******************************************************************************************************************/
 import React, { createContext, memo, useCallback, useContext, useMemo, useState, useEffect } from 'react';
-import type { MyTheme } from '../Theme/Theme.types';
-import type { AppTheme } from '../Theme/Theme';
-import { buildTheme } from '../Theme/Theme';
-import { deepMerge } from '../Util/General';
+import type { MyTheme } from '../../Theme/Theme.types';
+import type { AppTheme } from '../../Theme/Theme';
+import { buildTheme } from '../../Theme/Theme';
+import { deepMerge } from '../../Util/General';
 
 /******************************************************************************************************************
- * AppThemeContextType shape.
+ * AppThemeManager API.
  * 
  * @property theme        - Resolved AppTheme for the current mode
  * @property updateTheme  - Merge partial theme tokens into runtime overrides
@@ -30,9 +17,6 @@ type AppThemeContextType = {
   isLoaded: boolean;
 };
 
-/******************************************************************************************************************
- * Default (safe) context value.
- ******************************************************************************************************************/
 const AppThemeContext = createContext<AppThemeContextType>({
   theme: undefined as unknown as AppTheme,
   updateTheme: () => { },
@@ -57,12 +41,10 @@ export type AppThemeProviderProps = {
  *
  * Owns runtime theme overrides so screens (e.g. Settings) can update theme tokens on the fly.
  *
- * @usage
- * ```tsx
- * <AppThemeProvider>
- *   <App />
- * </AppThemeProvider>
- * ```
+ * Theme workflow:
+ * - Client app supplies initial MyTheme tokens to Root.
+ * - AppThemeManager merges client tokens with runtime overrides (e.g. settings changes).
+ * - Resulting theme is provided to the framework via a single hook: useAppTheme().
  ******************************************************************************************************************/
 export const AppThemeProvider: React.FC<AppThemeProviderProps> = memo(
   ({ isDarkMode, myTheme, children }) => {
@@ -94,22 +76,19 @@ export const AppThemeProvider: React.FC<AppThemeProviderProps> = memo(
     /**************************************************************************************************************
      * Merges a partial `MyTheme` object into the current runtime theme tokens.
      * 
+     * @param tokens - Partial theme tokens to merge into the runtime theme
+     * 
      * @usage
      * ```tsx
      * updateTheme({
      *   colorsLight: { primary: '#00ff00' },
      * });
      * ```
-     *
-     * @param tokens - Partial theme tokens to merge into the runtime theme
      **************************************************************************************************************/
     const updateTheme = useCallback((tokens: MyTheme) => {
       setRuntimeTokens(prev => deepMerge(prev ?? {}, tokens ?? {}) as MyTheme);
     }, []);
 
-    /**************************************************************************************************************
-     * AppThemeContext value
-     **************************************************************************************************************/
     const value = useMemo<AppThemeContextType>(
       () => ({ theme, updateTheme, isLoaded }),
       [theme, updateTheme, isLoaded]
@@ -123,14 +102,6 @@ export const AppThemeProvider: React.FC<AppThemeProviderProps> = memo(
   }
 );
 
-/******************************************************************************************************************
- * Primary theme hook for framework + client apps.
- *
- * @usage
- * ```tsx
- * const { theme, updateTheme } = useAppTheme();
- * ```
- ******************************************************************************************************************/
 export function useAppTheme() {
   return useContext(AppThemeContext);
 }

@@ -4,7 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { AppBar } from './AppBar';
 import { PadSpacingValue } from '../Types';
-import { useAppTheme } from '../Manager/AppThemeManager';
+import { useAppTheme } from '../Manager/App/AppThemeManager';
 
 /******************************************************************************************************************
  * Screen layout defaults context.

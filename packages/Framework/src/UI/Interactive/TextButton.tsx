@@ -2,7 +2,7 @@ import React, { memo, useMemo } from 'react';
 import { StyleSheet, ViewStyle, StyleProp } from 'react-native';
 import { Touchable } from '../Interactive/Touchable';
 import { Text, TextProps } from '../Text/Text';
-import { useAppTheme } from '../../Manager/AppThemeManager';
+import { useAppTheme } from '../../Manager/App/AppThemeManager';
 
 /******************************************************************************************************************
  * TextButton props.

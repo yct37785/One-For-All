@@ -10,7 +10,7 @@ import { View, StatusBar, Platform, LogBox, StyleSheet } from 'react-native';
 // theme
 import { Provider as PaperProvider, adaptNavigationTheme } from 'react-native-paper';
 import { MyTheme } from '../Theme/Theme.types';
-import { AppThemeProvider, useAppTheme } from '../Manager/AppThemeManager';
+import { AppThemeProvider, useAppTheme } from '../Manager/App/AppThemeManager';
 // UI & layout
 import { MenuProvider } from 'react-native-popup-menu';
 import * as NavigationBar from 'expo-navigation-bar';
@@ -22,12 +22,11 @@ import {
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
 } from '@react-navigation/native';
-// data storage
-import { LocalDataProvider } from '../Manager/LocalDataManager';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
-// managers
-import { AppSettingsProvider, useAppSettings } from '../Manager/AppSettingsManager';
+import { FirebaseAuthProvider } from '../Manager/Firebase/Auth/FirebaseAuthManager';
+// app settings
+import { AppSettingsProvider, useAppSettings } from '../Manager/App/AppSettingsManager';
 // utils
 import { doLog } from '../Util/General';
 import { logColors } from '../Defaults';
@@ -148,15 +147,15 @@ const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps,
  ******************************************************************************************************************/
 const AppEntry: React.FC<RootProps> = (props) => {
   return (
-    <SafeAreaProvider>
-      <KeyboardProvider>
-        <LocalDataProvider>
-          <AppSettingsProvider>
+    <FirebaseAuthProvider>
+      <AppSettingsProvider>
+        <SafeAreaProvider>
+          <KeyboardProvider>
             <RootApp {...props} />
-          </AppSettingsProvider>
-        </LocalDataProvider>
-      </KeyboardProvider>
-    </SafeAreaProvider>
+          </KeyboardProvider>
+        </SafeAreaProvider>
+      </AppSettingsProvider>
+    </FirebaseAuthProvider>
   );
 };
 
