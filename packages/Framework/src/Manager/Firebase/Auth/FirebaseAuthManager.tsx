@@ -9,7 +9,7 @@ import {
 } from '@react-native-firebase/auth';
 import { startAuthObservers, verifyCurrentUser } from './FirebaseAuthHelpers';
 import { configureGoogleSignIn, signInGoogle, signOutGoogle } from './GoogleAuth';
-import { useLocalKVStore } from '../../LocalData/LocalKVStoreManager';
+import { setItemKV, getItemKV, removeItemKV } from '../../LocalData/LocalKVStoreManager';
 import { doErrLog } from '../../../Util/General';
 import { LOCAL_DATA_DEFAULTS } from '../../../Defaults';
 
@@ -55,8 +55,6 @@ const AuthContext = createContext<AuthContextType>({
  ******************************************************************************************************************/
 export const FirebaseAuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
-
-  const { setItemKV, getItemKV, removeItemKV } = useLocalKVStore();
 
   // guards
   const startedRef = useRef(false);

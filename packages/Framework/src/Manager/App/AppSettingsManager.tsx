@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { doLog, doErrLog } from '../../Util/General';
-import { useLocalKVStore } from '../LocalData/LocalKVStoreManager';
+import { getItemKV, setItemKV } from '../LocalData/LocalKVStoreManager';
 
 /******************************************************************************************************************
  * Settings API.
@@ -26,7 +26,6 @@ const AppSettingsContext = createContext<AppSettingsContextType>({
  * - Exposes setters that update state + persist to LocalKVStoreManager
  ******************************************************************************************************************/
 export const AppSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { getItemKV, setItemKV } = useLocalKVStore();
   const [isDarkMode, setIsDarkModeState] = useState<boolean>(false);
 
   /****************************************************************************************************************

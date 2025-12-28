@@ -22,8 +22,6 @@ import {
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
 } from '@react-navigation/native';
-// data storage
-import { LocalKVStoreProvider } from '../Manager/LocalData/LocalKVStoreManager';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
 import { FirebaseAuthProvider } from '../Manager/Firebase/Auth/FirebaseAuthManager';
@@ -149,17 +147,15 @@ const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps,
  ******************************************************************************************************************/
 const AppEntry: React.FC<RootProps> = (props) => {
   return (
-    <LocalKVStoreProvider>
-      <FirebaseAuthProvider>
-        <AppSettingsProvider>
-          <SafeAreaProvider>
-            <KeyboardProvider>
-              <RootApp {...props} />
-            </KeyboardProvider>
-          </SafeAreaProvider>
-        </AppSettingsProvider>
-      </FirebaseAuthProvider>
-    </LocalKVStoreProvider>
+    <FirebaseAuthProvider>
+      <AppSettingsProvider>
+        <SafeAreaProvider>
+          <KeyboardProvider>
+            <RootApp {...props} />
+          </KeyboardProvider>
+        </SafeAreaProvider>
+      </AppSettingsProvider>
+    </FirebaseAuthProvider>
   );
 };
 
