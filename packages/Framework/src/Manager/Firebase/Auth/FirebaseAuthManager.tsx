@@ -11,9 +11,7 @@ import { startAuthObservers, verifyCurrentUser } from './FirebaseAuthHelpers';
 import { configureGoogleSignIn, signInGoogle, signOutGoogle } from './GoogleAuth';
 import { doErrLog } from '../../../Util/General';
 
-/******************************************************************************************************************
- * User provider.
- ******************************************************************************************************************/
+// provider types
 export enum ProviderIdType {
   None = 'none',
   Google = 'google.com',
@@ -21,7 +19,7 @@ export enum ProviderIdType {
 };
 
 /******************************************************************************************************************
- * Context shape.
+ * FirebaseAuthManager API.
  * 
  * @property user     - Current Firebase user or null
  * @property signIn   - Launch sign-in and authenticate with Firebase (optionally link if already signed in)
@@ -33,9 +31,6 @@ type AuthContextType = {
   signOut: () => Promise<void>;
 };
 
-/******************************************************************************************************************
- * Default (safe) context value.
- ******************************************************************************************************************/
 const AuthContext = createContext<AuthContextType>({
   user: null,
   signIn: async () => doErrLog('auth', 'AuthContext', 'AuthProvider not mounted'),
@@ -43,7 +38,7 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 /******************************************************************************************************************
- * Singleton auth provider that surfaces Firebase Authentication state and Google Sign-In flows to the app.
+ * Singleton auth provider that surfaces Firebase Authentication state and various sign-in flows to the app.
  *
  * @usage
  * ```tsx
@@ -213,7 +208,10 @@ export const FirebaseAuthProvider: React.FC<{ children: React.ReactNode }> = ({ 
     return ProviderIdType.None;
   };
 
-  const value = { user, signIn, signOut };  // do not memo in case stale
+  const value = useMemo<AuthContextType>(
+    () => ({ user, signIn, signOut }),
+    [user, signIn, signOut]
+  );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 

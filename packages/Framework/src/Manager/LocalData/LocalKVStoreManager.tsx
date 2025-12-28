@@ -1,10 +1,3 @@
-/******************************************************************************************************************
- * Generic local kv store provider built on expo-sqlite/kv-store (SQLite-backed key/value storage).
- *
- * Features:
- * - Ensures reserved default keys (isDarkMode, language, etc.) always exist.
- * - Does NOT keep an in-memory snapshot; reads/writes storage per call.
- ******************************************************************************************************************/
 import React, { createContext, useContext, useMemo, useCallback } from 'react';
 import Storage from 'expo-sqlite/kv-store';
 import { LOCAL_DATA_DEFAULTS } from '../../Defaults';
@@ -47,7 +40,11 @@ function tryParse(value: string): unknown {
 }
 
 /******************************************************************************************************************
- * Provide local key/value helpers backed by SQLite storage, enforce reserved defaults.
+ * Generic local kv store provider built on expo-sqlite/kv-store (SQLite-backed key/value storage).
+ *
+ * Features:
+ * - Ensures reserved default keys (isDarkMode, language, etc.) always exist.
+ * - Does NOT keep an in-memory snapshot; reads/writes storage per call.
  ******************************************************************************************************************/
 export const LocalKVStoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
@@ -85,11 +82,7 @@ export const LocalKVStoreProvider: React.FC<{ children: React.ReactNode }> = ({ 
         // fallback to default (lazy)
         if (Object.prototype.hasOwnProperty.call(LOCAL_DATA_DEFAULTS, key)) {
           const defValue = (LOCAL_DATA_DEFAULTS as LocalData)[key] as T;
-          try {
-            storage.setItemSync(key, JSON.stringify(defValue));
-          } catch {
-            // ignore persist failure, still return default for caller
-          }
+          storage.setItemSync(key, JSON.stringify(defValue));
           return defValue;
         }
 
@@ -124,9 +117,6 @@ export const LocalKVStoreProvider: React.FC<{ children: React.ReactNode }> = ({ 
     }
   }, []);
 
-  /****************************************************************************************************************
-   * LocalKVStoreContextType values.
-   ****************************************************************************************************************/
   const value = useMemo<LocalKVStoreContextType>(
     () => ({
       setItemKV,

@@ -23,11 +23,10 @@ const AppSettingsContext = createContext<AppSettingsContextType>({
  *
  * Central app settings manager:
  * - Loads persisted values on mount
- * - Exposes setters that update state + persist to LocalDataManager
+ * - Exposes setters that update state + persist to LocalKVStoreManager
  ******************************************************************************************************************/
 export const AppSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { getItemKV, setItemKV } = useLocalKVStore();
-
   const [isDarkMode, setIsDarkModeState] = useState<boolean>(false);
 
   /****************************************************************************************************************
