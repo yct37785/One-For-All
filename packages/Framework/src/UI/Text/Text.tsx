@@ -8,18 +8,6 @@ import { useAppTheme } from '../../Manager/App/AppThemeManager';
  ******************************************************************************************************************/
 export type TextVariant = React.ComponentProps<typeof PaperText>['variant'];
 
-/******************************************************************************************************************
- * Text props.
- * 
- * @property variant          - MD3 text role; defaults to 'bodyMedium'
- * @property color?           - Font color
- * @property highlightColor?  - Highlight color
- * @property bold?            - Bolded text
- * @property numberOfLines?   - Fixed num of lines if provided
- * @property underline?       - Underline the text
- * @property topPx?           - Margin top (px) for line space
- * @property onPress?         - Press handler for clickable text
- ******************************************************************************************************************/
 export interface TextProps {
   variant?: TextVariant;
   color?: string;
@@ -34,7 +22,15 @@ export interface TextProps {
 /******************************************************************************************************************
  * A theme-aware text component supporting typography variants defined by the Material Design 3 spec.
  * 
- * @property children? - Text content
+ * @param variant          - MD3 text role; defaults to 'bodyMedium'
+ * @param color?           - Font color
+ * @param highlightColor?  - Highlight color
+ * @param bold?            - Bolded text
+ * @param numberOfLines?   - Fixed num of lines if provided
+ * @param underline?       - Underline the text
+ * @param topPx?           - Margin top (px) for line space
+ * @param onPress?         - Press handler for clickable text
+ * @param children?        - Text content
  * 
  * @usage
  * ```tsx

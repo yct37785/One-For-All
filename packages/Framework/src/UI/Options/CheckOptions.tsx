@@ -11,13 +11,13 @@ import {
 } from './BaseOptions';
 
 /******************************************************************************************************************
- * CheckOptions props.
- * 
- * @property schema     - Immutable options tree (labels + hierarchy)
- * @property value      - Mutable option state tree (mirrors schema structure)
- * @property onChange   - State setter
- * @property style?     - Optional wrapper style
+ * Simple container that just renders its children.
+ * BaseOptions uses this as <OptionsContainer>{children}</OptionsContainer>.
  ******************************************************************************************************************/
+const OptionsContainer: React.FC<{ children: ReactNode }> = ({ children }) => (
+  <>{children}</>
+);
+
 export type CheckOptionCompProps = {
   schema: OptionSchema;
   value: OptionValue;
@@ -26,17 +26,12 @@ export type CheckOptionCompProps = {
 };
 
 /******************************************************************************************************************
- * Simple container that just renders its children.
- * BaseOptions uses this as <OptionsContainer>{children}</OptionsContainer>.
- ******************************************************************************************************************/
-const OptionsContainer: React.FC<{ children: ReactNode }> = ({ children }) => (
-  <>{children}</>
-);
-
-/******************************************************************************************************************
- * CheckOptions
- *
  * Renders a nested tree of checkbox options backed by BaseOptions.
+ * 
+ * @param schema     - Immutable options tree (labels + hierarchy)
+ * @param value      - Mutable option state tree (mirrors schema structure)
+ * @param onChange   - State setter
+ * @param style?     - Optional wrapper style
  ******************************************************************************************************************/
 export const CheckOptions: React.FC<CheckOptionCompProps> = memo(
   ({ schema, value, onChange, style }) => {

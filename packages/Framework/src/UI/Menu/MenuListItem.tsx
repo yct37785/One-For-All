@@ -8,12 +8,12 @@ import { Touchable } from '../Interactive/Touchable';
 /******************************************************************************************************************
  * Declarative description of a single menu action row.
  *
- * @property value       - Opaque value emitted on selection (e.g. route name, action key)
- * @property text        - Preferred text label
- * @property textOpts    - Optional text props (variant, color, bold, style, …)
- * @property icon        - Optional leading icon
- * @property iconOpts    - Optional icon props (variant, color, size, style, …)
- * @property disabled    - When true, the row is non-interactive and dimmed
+ * @param value       - Opaque value emitted on selection (e.g. route name, action key)
+ * @param text        - Preferred text label
+ * @param textOpts    - Optional text props (variant, color, bold, style, …)
+ * @param icon        - Optional leading icon
+ * @param iconOpts    - Optional icon props (variant, color, size, style, …)
+ * @param disabled    - When true, the row is non-interactive and dimmed
  ******************************************************************************************************************/
 export type MenuOption = {
   value: string;
@@ -24,14 +24,6 @@ export type MenuOption = {
   disabled?: boolean;
 };
 
-/******************************************************************************************************************
- * MenuListItem props.
- *
- * @property option      - The option to render
- * @property onPress     - Invoked with the option's value when pressed (no-op if disabled)
- * @property dense?      - Compact row density
- * @property align?      - Alignment of content
- ******************************************************************************************************************/
 export type MenuListItemProps = {
   option: MenuOption;
   onPress: (value: string) => void;
@@ -41,6 +33,11 @@ export type MenuListItemProps = {
 
 /******************************************************************************************************************
  * A single interactive row within a menu list.
+ * 
+ * @param option      - The option to render
+ * @param onPress     - Invoked with the option's value when pressed (no-op if disabled)
+ * @param dense?      - Compact row density
+ * @param align?      - Alignment of content
  *
  * @usage
  * ```tsx

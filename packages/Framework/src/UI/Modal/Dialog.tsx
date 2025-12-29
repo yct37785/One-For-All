@@ -3,20 +3,6 @@ import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Text, Modal, Button, Card, Portal } from 'react-native-paper';
 import { useAppTheme } from '../../Manager/App/AppThemeManager';
 
-/******************************************************************************************************************
- * Dialog props.
- * 
- * @property title        - Title text displayed at the top
- * @property subtitle     - Optional subtitle text displayed below the title
- * @property children?    - Body content of the dialog
- * @property isVisible    - Whether the dialog is visible
- * @property onSubmit?    - Callback for confirm/submit action
- * @property onClose?     - Callback for close/cancel action
- * @property dismissable? - Whether tapping outside dismisses the dialog
- * @property submitText?  - Custom text for the submit button (default: 'Confirm')
- * @property closeText?   - Custom text for the close button (default: 'Close')
- * @property style?       - Optional style for the dialog container
- ******************************************************************************************************************/
 export type DialogProps = {
   title: string;
   subtitle?: string;
@@ -32,6 +18,17 @@ export type DialogProps = {
 
 /******************************************************************************************************************
  * A modal dialog surface for confirmations and focused decisions.
+ * 
+ * @param title        - Title text displayed at the top
+ * @param subtitle     - Optional subtitle text displayed below the title
+ * @param children?    - Body content of the dialog
+ * @param isVisible    - Whether the dialog is visible
+ * @param onSubmit?    - Callback for confirm/submit action
+ * @param onClose?     - Callback for close/cancel action
+ * @param dismissable? - Whether tapping outside dismisses the dialog
+ * @param submitText?  - Custom text for the submit button (default: 'Confirm')
+ * @param closeText?   - Custom text for the close button (default: 'Close')
+ * @param style?       - Optional style for the dialog container
  ******************************************************************************************************************/
 export const Dialog: React.FC<DialogProps> = memo(
   ({

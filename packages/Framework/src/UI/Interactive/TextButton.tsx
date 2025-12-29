@@ -4,15 +4,6 @@ import { Touchable } from '../Interactive/Touchable';
 import { Text, TextProps } from '../Text/Text';
 import { useAppTheme } from '../../Manager/App/AppThemeManager';
 
-/******************************************************************************************************************
- * TextButton props.
- *
- * @property children?       - Button label/content
- * @property textOpts?       - Additional props passed to the internal Text component
- * @property style?          - Style applied to the button container
- * @property disabled?       - Disable press handling
- * @property onPress?        - Press callback
- ******************************************************************************************************************/
 export interface TextButtonProps {
   children?: React.ReactNode;
   textOpts?: TextProps;
@@ -22,13 +13,17 @@ export interface TextButtonProps {
 }
 
 /******************************************************************************************************************
- * TextButton
- *
  * A lightweight text-only button with:
  * - Your Touchable for proper press feedback (opacity/ripple)
  * - Rounded rectangle background
  * - Padding for tap target
  * - Uses base Text for variant, color, bold, etc.
+ * 
+ * @param children?       - Button label/content
+ * @param textOpts?       - Additional props passed to the internal Text component
+ * @param style?          - Style applied to the button container
+ * @param disabled?       - Disable press handling
+ * @param onPress?        - Press callback
  *
  * @usage
  * ```tsx

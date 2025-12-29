@@ -2,12 +2,6 @@ import React, { memo, ReactNode } from 'react';
 import { useAppTheme } from '../../Manager/App/AppThemeManager';
 import { Text, TextProps } from './Text';
 
-/******************************************************************************************************************
- * HyperlinkText props.
- * 
- * @property onPress        - Callback fired when text is pressed
- * @property children?      - Text content
- ******************************************************************************************************************/
 export interface HyperlinkTextProps extends TextProps {
   onPress?: () => void;
   children?: string | ReactNode;
@@ -20,6 +14,10 @@ export interface HyperlinkTextProps extends TextProps {
  * - Always appears as a hyperlink (primary color + underline)
  * - Uses the Text UI component internally for variants/colors
  * - Relies on Text's onPress so it can be safely nested inside Text blocks
+ * 
+ * @param TextProps     - Extended from TextProps
+ * @param onPress       - Callback fired when text is pressed
+ * @param children?     - Text content
  *
  * @usage
  * ```tsx

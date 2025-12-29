@@ -65,31 +65,6 @@ const getAutoCorrectForType = (type: InputKind): boolean => {
   }
 };
 
-/******************************************************************************************************************
- * TextInput props.
- *
- * @property type           - Input preset (text, numeric, password, search, email, phone)
- * @property label          - Label text displayed above the input
- * @property variant        - Visual style: 'flat' or 'outline'
- * @property value          - Controlled input value
- * @property placeholder    - Placeholder text shown when empty
- * @property onChange       - Called on text change
- * @property onFocus        - Called when the input gains focus
- * @property onBlur         - Called when the input loses focus
- * @property style          - Optional container style
- * @property autoFocus      - Automatically focuses on mount
- * @property maxLength      - Maximum input length
- * @property multiline      - Enables multiline input
- * @property numberOfLines  - Number of visible lines when multiline is enabled
- * @property editable       - When false, makes field read-only
- * @property leadingIcon    - Icon displayed on the left
- * @property trailingIcon   - Icon displayed on the right
- * @property onPressTrailingIcon - Callback when trailing icon is pressed
- * @property required       - Shows '*' and triggers required validation on blur
- * @property error          - External error flag (overrides required)
- * @property errorText      - Message shown when error is true
- * @property helperText     - Informational text shown under the field
- ******************************************************************************************************************/
 export type TextInputProps = {
   type?: InputKind;
   label?: string;
@@ -116,6 +91,28 @@ export type TextInputProps = {
 
 /******************************************************************************************************************
  * A controlled text field for user input.
+ *
+ * @param type           - Input preset (text, numeric, password, search, email, phone)
+ * @param label          - Label text displayed above the input
+ * @param variant        - Visual style: 'flat' or 'outline'
+ * @param value          - Controlled input value
+ * @param placeholder    - Placeholder text shown when empty
+ * @param onChange       - Called on text change
+ * @param onFocus        - Called when the input gains focus
+ * @param onBlur         - Called when the input loses focus
+ * @param style          - Optional container style
+ * @param autoFocus      - Automatically focuses on mount
+ * @param maxLength      - Maximum input length
+ * @param multiline      - Enables multiline input
+ * @param numberOfLines  - Number of visible lines when multiline is enabled
+ * @param editable       - When false, makes field read-only
+ * @param leadingIcon    - Icon displayed on the left
+ * @param trailingIcon   - Icon displayed on the right
+ * @param onPressTrailingIcon - Callback when trailing icon is pressed
+ * @param required       - Shows '*' and triggers required validation on blur
+ * @param error          - External error flag (overrides required)
+ * @param errorText      - Message shown when error is true
+ * @param helperText     - Informational text shown under the field
  ******************************************************************************************************************/
 export const TextInput: React.FC<TextInputProps> = memo(
   ({

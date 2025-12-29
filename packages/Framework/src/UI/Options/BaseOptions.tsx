@@ -72,17 +72,6 @@ export type OptionProps = {
   state: OptionState;
 };
 
-/******************************************************************************************************************
- * BaseOptions props.
- * 
- * @property schema           - Immutable options tree describing labels and nesting
- * @property value            - Mutable state tree mirroring the schema structure
- * @property onChange         - State setter invoked after mutations
- * @property optionsContainer - Wrapper component for child groups
- * @property renderOption     - Renderer for a single option row
- * @property depthPadding?    - Additional padding applied per hierarchy depth
- * @property style?           - Optional style for the root container
- ******************************************************************************************************************/
 export type BaseOptionsProps = {
   schema: OptionSchema;
   value: OptionValue;
@@ -99,6 +88,14 @@ export type BaseOptionsProps = {
  *
  * Toggles a node, cascades to children, and recomputes ancestor states.
  *
+ * @param schema           - Immutable options tree describing labels and nesting
+ * @param value            - Mutable state tree mirroring the schema structure
+ * @param onChange         - State setter invoked after mutations
+ * @param optionsContainer - Wrapper component for child groups
+ * @param renderOption     - Renderer for a single option row
+ * @param depthPadding?    - Additional padding applied per hierarchy depth
+ * @param style?           - Optional style for the root container
+ * 
  * @usage
  * ```tsx
  * <BaseOptions

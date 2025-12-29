@@ -2,37 +2,8 @@ import React, { memo } from 'react';
 import type { GestureResponderEvent, StyleProp, ViewStyle, TextStyle, ColorValue } from 'react-native';
 import { Button as PaperButton } from 'react-native-paper';
 
-/******************************************************************************************************************
- * Button mode.
- *
- * @property text             - flat button without background or outline
- * @property outlined         - button with an outline without background
- * @property contained        - button with a background color
- * @property elevated         - button with a background color and elevation
- * @property contained-tonal  - button with a secondary background color
- ******************************************************************************************************************/
 export type ButtonMode = 'text' | 'outlined' | 'contained' | 'elevated' | 'contained-tonal';
 
-/******************************************************************************************************************
- * Button props.
- *
- * @property mode?             - Visual style variant (MD3)
- * @property compact?          - Slightly reduce paddings/min-height for dense layouts
- * @property disabled?         - Disable interactions and apply disabled styles
- * @property loading?          - Show a small busy indicator and reduce label opacity
- * @property buttonColor?      - Background color override (enabled state)
- * @property textColor?        - Label color override (enabled state)
- * @property contentStyle?     - Style for inner content container (e.g., height, padding, direction)
- * @property labelStyle?       - Style for the button text
- * @property style?            - Style for the outer button container (background/border)
- * @property onPress?          - Press handler
- * @property onPressIn?        - Called on pointer/touch in
- * @property onPressOut?       - Called on pointer/touch out
- * @property onLongPress?      - Long-press handler
- * @property delayLongPress?   - Milliseconds before long-press fires
- * 
- * @property children          - Button label (text) or a custom node
- ******************************************************************************************************************/
 export type ButtonProps = {
   mode?: ButtonMode;
   compact?: boolean;
@@ -53,6 +24,22 @@ export type ButtonProps = {
 
 /******************************************************************************************************************
  * A pressable control that triggers an action or event, supporting multiple visual modes.
+ * 
+ * @param mode?             - Visual style variant (MD3)
+ * @param compact?          - Slightly reduce paddings/min-height for dense layouts
+ * @param disabled?         - Disable interactions and apply disabled styles
+ * @param loading?          - Show a small busy indicator and reduce label opacity
+ * @param buttonColor?      - Background color override (enabled state)
+ * @param textColor?        - Label color override (enabled state)
+ * @param contentStyle?     - Style for inner content container (e.g., height, padding, direction)
+ * @param labelStyle?       - Style for the button text
+ * @param style?            - Style for the outer button container (background/border)
+ * @param onPress?          - Press handler
+ * @param onPressIn?        - Called on pointer/touch in
+ * @param onPressOut?       - Called on pointer/touch out
+ * @param onLongPress?      - Long-press handler
+ * @param delayLongPress?   - Milliseconds before long-press fires
+ * @param children          - Button label (text) or a custom node
  * 
  * @usage
  * ```tsx

@@ -3,14 +3,6 @@ import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Switch as PaperSwitch } from 'react-native-paper';
 import { useFocusEffect } from '@react-navigation/native';
 
-/******************************************************************************************************************
- * Switch props.
- *
- * @property value             - Current on/off value
- * @property onValueChange     - Callback fired when the value changes
- * @property disabled?         - Disable interaction
- * @property color?            - Active color (Paper Switch color)
- ******************************************************************************************************************/
 export type SwitchProps = {
   value: boolean;
   onValueChange: (val: boolean) => void;
@@ -27,6 +19,11 @@ export type SwitchProps = {
  * Note:
  * - remountOnFocus assumes this component is rendered inside a React Navigation screen.
  * - https://github.com/react-navigation/react-navigation/issues/8658
+ * 
+ * @param value             - Current on/off value
+ * @param onValueChange     - Callback fired when the value changes
+ * @param disabled?         - Disable interaction
+ * @param color?            - Active color (Paper Switch color)
  ******************************************************************************************************************/
 export const Switch: React.FC<SwitchProps> = memo(
   ({
