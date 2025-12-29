@@ -3,35 +3,6 @@ import { View, StyleProp, ViewStyle, FlexStyle } from 'react-native';
 import { PadSpacingValue } from '../../Types';
 import { useAppTheme } from '../../Manager/App/AppThemeManager';
 
-/******************************************************************************************************************
- * @property bgColor?  - Background color of the container
- * @property flex?     - Flex value to control layout behavior
- * @property dir?      - Flex direction
- * @property align?    - Align items
- * @property justify?  - Justify content
- * @property self?     - Align self (cross-axis alignment)
- * 
- * @property p?   - Uniform padding
- * @property m?   - Uniform margin
- * 
- * @property ph?  - Horizontal padding (left + right)
- * @property pv?  - Vertical padding (top + bottom)
- * @property mh?  - Horizontal margin  (left + right)
- * @property mv?  - Vertical margin    (top + bottom)
- * 
- * @property pt?  - Padding top
- * @property pr?  - Padding right
- * @property pb?  - Padding bottom
- * @property pl?  - Padding left
- * 
- * @property mt?  - Margin top
- * @property mr?  - Margin right
- * @property mb?  - Margin bottom
- * @property ml?  - Margin left
- * 
- * @property style?         - Optional container style
- * @property children       - Content
- ******************************************************************************************************************/
 export type BoxProps = {
   bgColor?: string;
   flex?: number;
@@ -66,6 +37,34 @@ export type BoxProps = {
  * A drawable container, it holds content and applies styling, but does not decide spatial arrangement of siblings.
  *  - Think of it as an element in a layout.
  *  - Use to wrap singular child UI components.
+ * 
+ * @param bgColor?  - Background color of the container
+ * @param flex?     - Flex value to control layout behavior
+ * @param dir?      - Flex direction
+ * @param align?    - Align items
+ * @param justify?  - Justify content
+ * @param self?     - Align self (cross-axis alignment)
+ * 
+ * @param p?   - Uniform padding
+ * @param m?   - Uniform margin
+ * 
+ * @param ph?  - Horizontal padding (left + right)
+ * @param pv?  - Vertical padding (top + bottom)
+ * @param mh?  - Horizontal margin  (left + right)
+ * @param mv?  - Vertical margin    (top + bottom)
+ * 
+ * @param pt?  - Padding top
+ * @param pr?  - Padding right
+ * @param pb?  - Padding bottom
+ * @param pl?  - Padding left
+ * 
+ * @param mt?  - Margin top
+ * @param mr?  - Margin right
+ * @param mb?  - Margin bottom
+ * @param ml?  - Margin left
+ * 
+ * @param style?         - Optional container style
+ * @param children       - Content
  * 
  * @usage
  * ```tsx

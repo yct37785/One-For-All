@@ -4,15 +4,6 @@ import { Divider as PaperDivider } from 'react-native-paper';
 import { useAppTheme } from '../../Manager/App/AppThemeManager';
 import { PadSpacingValue } from '../../Types';
 
-/******************************************************************************************************************
- * Divider props.
- *
- * @property orientation  - Line orientation ('horizontal' | 'vertical'), default: 'horizontal'
- * @property spacing?     - Margin applied before/after the line (dp). Vertical margin for horizontal dividers,
- *                          horizontal margin for vertical dividers.
- * @property margin?      - Margin applied along the axis (defaults 0)
- * @property style?       - Additional style for the divider
- ******************************************************************************************************************/
 export type DividerProps = {
   orientation?: 'horizontal' | 'vertical';
   spacing?: PadSpacingValue;
@@ -22,6 +13,12 @@ export type DividerProps = {
 
 /******************************************************************************************************************
  * A thin visual separator used to group or divide related UI content.
+ * 
+ * @param orientation  - Line orientation ('horizontal' | 'vertical'), default: 'horizontal'
+ * @param spacing?     - Margin applied before/after the line (dp). Vertical margin for horizontal dividers,
+ *                          horizontal margin for vertical dividers.
+ * @param margin?      - Margin applied along the axis (defaults 0)
+ * @param style?       - Additional style for the divider
  * 
  * @usage
  * ```tsx

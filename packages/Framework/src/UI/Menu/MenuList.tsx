@@ -3,15 +3,6 @@ import { View } from 'react-native';
 import { MenuOption, MenuListItem } from './MenuListItem';
 import { Divider } from '../Decorators/Divider';
 
-/******************************************************************************************************************
- * MenuList props.
- * 
- * @property options          - Array of MenuOption rows to display (order preserved)
- * @property onSelect         - Callback invoked with the clicked option's `value`
- * @property showDividers?    - When true, draws a Divider between items
- * @property dense?           - When true, renders compact rows
- * @property align?           - Alignment of menu list item content
- ******************************************************************************************************************/
 export type MenuListProps = {
   options: MenuOption[];
   onSelect: (value: string) => void;
@@ -23,6 +14,12 @@ export type MenuListProps = {
 /******************************************************************************************************************
  * A structured list of selectable menu items, often used within dropdowns or popups.
  *
+ * @param options          - Array of MenuOption rows to display (order preserved)
+ * @param onSelect         - Callback invoked with the clicked option's `value`
+ * @param showDividers?    - When true, draws a Divider between items
+ * @param dense?           - When true, renders compact rows
+ * @param align?           - Alignment of menu list item content
+ * 
  * @usage
  * ```tsx
  * <MenuList

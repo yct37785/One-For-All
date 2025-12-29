@@ -7,14 +7,6 @@ function escapeRegExp(s: string) {
 
 const defaultHighlightColor = 'rgba(255, 235, 59, 0.4)';
 
-/******************************************************************************************************************
- * Highlight text props.
- * 
- * @property query                - Substring to highlight
- * @property caseSensitive?       - Match case (default: false)
- * @property queryColor?          - Queried text color
- * @property queryHighlightColor? - Queried text highlight color
- ******************************************************************************************************************/
 export interface HighlightTextProps extends TextProps {
   query: string;
   caseSensitive?: boolean;
@@ -25,6 +17,12 @@ export interface HighlightTextProps extends TextProps {
 
 /******************************************************************************************************************
  * A text component that visually emphasizes substrings matching a search or filter query.
+ * 
+ * @param TextProps            - Extended from TextProps
+ * @param query                - Substring to highlight
+ * @param caseSensitive?       - Match case (default: false)
+ * @param queryColor?          - Queried text color
+ * @param queryHighlightColor? - Queried text highlight color
  * 
  * @usage
  * ```tsx

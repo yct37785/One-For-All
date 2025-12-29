@@ -18,13 +18,6 @@ export const iconVariantSizeMap: Record<IconVariant, number> = {
   xl: 40,
 };
 
-/******************************************************************************************************************
- * Icon props.
- *
- * @property variant?        - Prefixed size variant ('xs'|'sm'|'md'|'lg'|'xl'), defaults to 'md'
- * @property color?          - Icon color
- * @property style?          - Container style for outer wrapper
- ******************************************************************************************************************/
 export type IconProps = {
   variant?: IconVariant;
   color?: string;
@@ -37,7 +30,10 @@ export type IconProps = {
  * 
  * Icon names here: https://pictogrammers.com/library/mdi/
  * 
- * @property source - Icon source (dependent on icon source under the hood)
+ * @param variant?    - Prefixed size variant ('xs'|'sm'|'md'|'lg'|'xl'), defaults to 'md'
+ * @param color?      - Icon color
+ * @param style?      - Container style for outer wrapper
+ * @param source      - Icon source (dependent on icon source under the hood)
  * 
  * @usage
  * ```tsx

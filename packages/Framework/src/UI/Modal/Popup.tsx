@@ -4,15 +4,6 @@ import { Menu, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useAppTheme } from '../../Manager/App/AppThemeManager';
 import { Touchable } from '../Interactive/Touchable';
 
-/******************************************************************************************************************
- * Popup props.
- *
- * @property triggerComp    - Element that triggers the popup (do not attach onPress here).
- * @property disabled?      - Whether the trigger is disabled.
- * @property triggerContainerStyle? - Optional style for the trigger element used by the trigger.
- * @property style?         - Optional container style passed to <Menu>.
- * @property children       - Content of the popup menu (e.g., <MenuOption/> items).
- ******************************************************************************************************************/
 export type PopupProps = {
   triggerComp: ReactNode;
   disabled?: boolean;
@@ -23,6 +14,12 @@ export type PopupProps = {
 
 /******************************************************************************************************************
  * A contextual floating menu or overlay triggered by a user action such as a button press.
+ * 
+ * @param triggerComp    - Element that triggers the popup (do not attach onPress here).
+ * @param disabled?      - Whether the trigger is disabled.
+ * @param triggerContainerStyle? - Optional style for the trigger element used by the trigger.
+ * @param style?         - Optional container style passed to <Menu>.
+ * @param children       - Content of the popup menu (e.g., <MenuOption/> items).
  ******************************************************************************************************************/
 export const Popup: React.FC<PopupProps> = memo(
   ({ triggerComp, disabled = false, triggerContainerStyle, style, children }) => {

@@ -3,14 +3,6 @@ import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Chip } from '../Data/Chip';
 import { useAppTheme } from '../../Manager/App/AppThemeManager';
 
-/******************************************************************************************************************
- * ChipOptions props.
- * 
- * @property schema       - Available chip labels
- * @property onSelected   - Callback receiving updated selection
- * @property resetSignal? - Monotonically changing value that triggers a reset when it changes
- * @property style?       - Optional wrapper style
- ******************************************************************************************************************/
 export type ChipOptionsProps = {
   schema: Set<string>;
   onSelected: (selectedValues: Set<string>) => void;
@@ -23,6 +15,11 @@ export type ChipOptionsProps = {
  * - Maintains local selection state and notifies parent of updates.
  * - Exposes a reset hook via `resetSignal` so the parent can clear selection.
  *
+ * @param schema       - Available chip labels
+ * @param onSelected   - Callback receiving updated selection
+ * @param resetSignal? - Monotonically changing value that triggers a reset when it changes
+ * @param style?       - Optional wrapper style 
+ * 
  * @usage
  * ```tsx
  * const [resetSignal, setResetSignal] = useState(0);

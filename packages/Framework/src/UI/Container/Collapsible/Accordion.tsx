@@ -1,67 +1,11 @@
 import React, { useState, memo, useEffect, useRef, useCallback, ReactNode } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
 import { useAppTheme } from '../../../Manager/App/AppThemeManager';
 import { Touchable } from '../../Interactive/Touchable';
 import type { TextProps } from '../../Text/Text';
 import type { IconProps } from '../../Text/Icon';
 import { KeepMountedDuringClose, ToggleHeader } from './CollapsibleUtils';
-
-/******************************************************************************************************************
- * CollapsibleContainer props.
- * 
- * @property text?             - Main header label (preferred)
- * @property textOpts?         - Text styling options for the header label
- * @property icon?             - Optional leading icon in the header
- * @property iconOpts?         - Styling options for the leading icon
- * @property toggleHeaderText? - Deprecated: legacy header label (used if `text` is not provided)
- * @property style?            - Optional container style
- * @property children          - Content rendered inside the collapsible body
- ******************************************************************************************************************/
-export type CollapsibleContainerProps = {
-  text?: string;
-  textOpts?: TextProps;
-  icon?: string;
-  iconOpts?: IconProps;
-  style?: StyleProp<ViewStyle>;
-  children: ReactNode;
-};
-
-/******************************************************************************************************************
- * A container that can expand or collapse its content vertically, typically used for toggling visibility of sections.
- *
- * @usage
- * ```tsx
- * <CollapsibleContainer text='details'>
- *   <Text>hidden content</Text>
- * </CollapsibleContainer>
- * ```
- ******************************************************************************************************************/
-export const CollapsibleContainer: React.FC<CollapsibleContainerProps> = memo(
-  ({ text, textOpts, icon, iconOpts, style, children }) => {
-    const [isCollapsed, setIsCollapsed] = useState(true);
-
-    const toggleCollapse = () => {
-      setIsCollapsed(prev => !prev);
-    };
-
-    return (
-      <View style={style}>
-        <Touchable onPress={toggleCollapse}>
-          <ToggleHeader
-            text={text}
-            textOpts={textOpts}
-            icon={icon}
-            iconOpts={iconOpts}
-            isCollapsed={isCollapsed}
-          />
-        </Touchable>
-        <Collapsible collapsed={isCollapsed}>{children}</Collapsible>
-      </View>
-    );
-  }
-);
 
 /******************************************************************************************************************
  * Accordion section header config.
@@ -78,6 +22,12 @@ export type AccordionSectionHeader = {
   iconOpts?: IconProps;
 };
 
+/******************************************************************************************************************
+ * Accordion section config.
+ *
+ * @property header?     - Dropdown header
+ * @property content?    - Collapsible content
+ ******************************************************************************************************************/
 type Section = {
   header: AccordionSectionHeader;
   content: React.ReactNode;
@@ -151,13 +101,6 @@ const AccordionOption = React.memo(function AccordionOption({
   );
 });
 
-/******************************************************************************************************************
- * AccordionContainer props.
- * 
- * @property sections  - Header config for each section in order
- * @property style?    - Optional container style
- * @property children  - Content nodes matched 1:1 with sections
- ******************************************************************************************************************/
 export type AccordionContainerProps = {
   sections: AccordionSectionHeader[];
   style?: StyleProp<ViewStyle>;
@@ -166,9 +109,11 @@ export type AccordionContainerProps = {
 
 /******************************************************************************************************************
  * A vertically stacked set of collapsible panels where only one section can be expanded at a time.
- *
- * @param props - Refer to AccordionContainerProps
- *
+ * 
+ * @param sections  - Header config for each section in order
+ * @param style?    - Optional container style
+ * @param children  - Content nodes matched 1:1 with sections
+ * 
  * @throws {Error} when the number of sections does not match the number of children
  *
  * @usage

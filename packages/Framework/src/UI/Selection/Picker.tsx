@@ -22,14 +22,6 @@ export type PickerOption = {
   value: string;
 };
 
-/******************************************************************************************************************
- * Picker props.
- * 
- * @property value      - Current selected value
- * @property options    - Array of options to display
- * @property onChange   - Callback fired when selection changes
- * @property style?     - Optional style override for the picker
- ******************************************************************************************************************/
 export type PickerProps = {
   value: string;
   options: PickerOption[];
@@ -39,6 +31,11 @@ export type PickerProps = {
 
 /******************************************************************************************************************
  * A dropdown selector allowing the user to choose one value from a list.
+ * 
+ * @param value      - Current selected value
+ * @param options    - Array of options to display
+ * @param onChange   - Callback fired when selection changes
+ * @param style?     - Optional style override for the picker
  * 
  * @usage
  * ```tsx

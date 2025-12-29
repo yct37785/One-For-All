@@ -35,16 +35,6 @@ export type TabRouteProps = {
  ******************************************************************************************************************/
 export type TabsSceneMap<T extends string = string> = Record<T, React.ComponentType<unknown>>;
 
-/******************************************************************************************************************
- * TabsContainer props.
- * 
- * @property routes         - Array of tab definitions (see TabRouteProps)
- * @property sceneMap       - Function that renders a scene for a given route (see TabsSceneMap)
- * @property tabIndex       - Index of the active tab
- * @property onTabIdxChange - Callback when the active tab changes
- * @property position       - Tab bar position
- * @property style?         - Optional wrapper style for the tab view
- ******************************************************************************************************************/
 export type TabsContainerProps = {
   routes: TabRouteProps[];
   sceneMap: TabsSceneMap;
@@ -56,20 +46,29 @@ export type TabsContainerProps = {
 
 /******************************************************************************************************************
  * A container for managing tabbed navigation where content changes based on the selected tab.
+ * 
+ * @param routes         - Array of tab definitions (see TabRouteProps)
+ * @param sceneMap       - Function that renders a scene for a given route (see TabsSceneMap)
+ * @param tabIndex       - Index of the active tab
+ * @param onTabIdxChange - Callback when the active tab changes
+ * @param position       - Tab bar position
+ * @param style?         - Optional wrapper style for the tab view
  ******************************************************************************************************************/
 export const TabsContainer: React.FC<TabsContainerProps> = memo(
   ({ routes, sceneMap, tabIndex, onTabIdxChange, position, style }) => {
     const { theme } = useAppTheme();
-
-    // memoized scene map
+    
+    /**
+     * Memoized scene map
+     */
     const renderScene = useMemo(() => SceneMap(sceneMap as any), [sceneMap]);
 
     const ripple = theme.dark ? theme.design.rippleColorForDark : theme.design.rippleColorForLight;
     const onSurface = theme.colors.onSurface;
 
-    /**************************************************************************************************************
-     * lazy placeholder
-     **************************************************************************************************************/
+    /**
+     * Lazy placeholder
+     */
     const renderLazyPlaceholder = () => <View style={{ flex: 1 }} />;
 
     /**************************************************************************************************************

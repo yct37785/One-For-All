@@ -62,17 +62,6 @@ export type ListFilterMap = {
  ******************************************************************************************************************/
 export type renderListItemFunc = (item: ListItem, index: number) => React.ReactNode;
 
-/******************************************************************************************************************
- * List props.
- * 
- * @property dataArr                - Input dataset to render
- * @property query                  - Case-insensitive search query applied to searchable values
- * @property filterMap              - Active filters applied to filterable keys
- * @property renderItem             - Function that renders a row for a given item
- * @property ListType               - Underlying list implementation (default flashlist)
- * @property emptyComponent         - Custom view when no results
- * @property style?                 - Optional wrapper style
- ******************************************************************************************************************/
 export type ListProps = {
   dataArr: ListItem[];
   query: string;
@@ -91,6 +80,14 @@ export type ListProps = {
  * - Filtering via `filterMap` (Set-based per category)
  * - Pluggable list engine (FlashList / FlatList)
  * - Optional empty state component
+ * 
+ * @param dataArr                - Input dataset to render
+ * @param query                  - Case-insensitive search query applied to searchable values
+ * @param filterMap              - Active filters applied to filterable keys
+ * @param renderItem             - Function that renders a row for a given item
+ * @param ListType               - Underlying list implementation (default flashlist)
+ * @param emptyComponent         - Custom view when no results
+ * @param style?                 - Optional wrapper style
  * 
  * @usage
  * ```tsx

@@ -2,38 +2,13 @@ import React, { memo } from 'react';
 import type {
   GestureResponderEvent,
   StyleProp,
-  ViewStyle,
-  ColorValue,
+  ViewStyle
 } from 'react-native';
 import { IconButton as PaperIconButton } from 'react-native-paper';
 import { IconVariant, iconVariantSizeMap } from '../Text/Icon';
 
-/******************************************************************************************************************
- * Icon button mode.
- *
- * @property outlined        - button with an outline and transparent background
- * @property contained       - button with a filled background
- * @property contained-tonal - button with a secondary/tonal background
- ******************************************************************************************************************/
 export type IconButtonMode = 'outlined' | 'contained' | 'contained-tonal';
 
-/******************************************************************************************************************
- * IconButton props.
- *
- * @property icon                 - Icon name (Material Community Icons), e.g. 'heart', 'cog'
- * @property mode?                - Visual style variant (MD3)
- * @property size?                - Icon preset size
- * @property disabled?            - Disable interactions and apply disabled styles
- * @property selected?            - Selected state for toggle-style icon buttons
- * @property buttonColor?         - Background color override (containerColor under the hood)
- * @property iconColor?           - Icon color override
- * @property style?               - Style for the outer button container (background/border)
- * @property onPress?             - Press handler
- * @property onPressIn?           - Called on pointer/touch in
- * @property onPressOut?          - Called on pointer/touch out
- * @property onLongPress?         - Long-press handler
- * @property delayLongPress?      - Milliseconds before long-press fires
- ******************************************************************************************************************/
 export type IconButtonProps = {
   icon: string;
   mode?: IconButtonMode;
@@ -53,6 +28,20 @@ export type IconButtonProps = {
 /******************************************************************************************************************
  * A compact icon-only button, commonly used for secondary actions like favorite, settings, or close.
  *
+ * @param icon                 - Icon name (Material Community Icons), e.g. 'heart', 'cog'
+ * @param mode?                - Visual style variant (MD3)
+ * @param size?                - Icon preset size
+ * @param disabled?            - Disable interactions and apply disabled styles
+ * @param selected?            - Selected state for toggle-style icon buttons
+ * @param buttonColor?         - Background color override (containerColor under the hood)
+ * @param iconColor?           - Icon color override
+ * @param style?               - Style for the outer button container (background/border)
+ * @param onPress?             - Press handler
+ * @param onPressIn?           - Called on pointer/touch in
+ * @param onPressOut?          - Called on pointer/touch out
+ * @param onLongPress?         - Long-press handler
+ * @param delayLongPress?      - Milliseconds before long-press fires
+ * 
  * @usage
  * ```tsx
  * <IconButton icon="heart-outline" onPress={toggleLike} />

@@ -4,9 +4,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useAppTheme } from '../../Manager/App/AppThemeManager';
 import { PadSpacingValue } from '../../Types';
 
-/******************************************************************************************************************
- * Utils and types.
- ******************************************************************************************************************/
 type FlexWrap = 'wrap' | 'nowrap' | 'wrap-reverse';
 
 // lock flexgrow/shrink when flex = 0
@@ -17,20 +14,6 @@ const lockWhenZeroFlex = (flex?: number) =>
 const lockWhenFixedHeight = (height?: number) =>
   height != null ? { height, flexGrow: 0, flexShrink: 0 } : {};
 
-/******************************************************************************************************************
- * Base layout props.
- * 
- * @property dir?             - Flex direction
- * @property reverse?         - Whether to render children in reverse order
- * @property constraint?      - Layout constraint mode
- * @property flex?            - Flex grow/shrink value for container
- * @property padding?         - Spacing around children
- * @property gap?             - Spacing between children
- * @property height?          - Fixed height for the container
- * @property bgColor?         - Background color
- * @property align?           - Cross-axis alignment
- * @property children         - Elements rendered inside
- ******************************************************************************************************************/
 export type LayoutProps = {
   dir?: 'row' | 'column';
   reverse?: boolean;
@@ -52,6 +35,17 @@ export type LayoutProps = {
  * Notes:
  *  - If neither height nor flex is provided, the layout defaults to flex: 1 and fills available space.
  *  - If a fixed height is provided, the layout will no longer flex unless flex={...} is explicitly specified.
+ * 
+ * @param dir?             - Flex direction
+ * @param reverse?         - Whether to render children in reverse order
+ * @param constraint?      - Layout constraint mode
+ * @param flex?            - Flex grow/shrink value for container
+ * @param padding?         - Spacing around children
+ * @param gap?             - Spacing between children
+ * @param height?          - Fixed height for the container
+ * @param bgColor?         - Background color
+ * @param align?           - Cross-axis alignment
+ * @param children         - Elements rendered inside
  ******************************************************************************************************************/
 const Layout: React.FC<LayoutProps> = ({
   dir = 'column',

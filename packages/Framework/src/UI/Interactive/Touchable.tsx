@@ -10,21 +10,6 @@ import {
 } from 'react-native';
 import { useAppTheme } from '../../Manager/App/AppThemeManager';
 
-/******************************************************************************************************************
- * TouchableProps
- *
- * @property feedback              - Press feedback style ('opacity' | 'none'). Default: 'opacity'
- *                                   • 'opacity': Android ripple (native) + iOS opacity (pressed)
- *                                   • 'none'   : No visual feedback
- * @property disabled              - Disables press handling & visual feedback
- * @property onPress               - Called when the press gesture ends successfully
- * @property onPressIn             - Called when the press gesture starts
- * @property onPressOut            - Called when the press gesture ends (canceled or completed)
- * @property onLongPress           - Called when the user presses and holds for longer than the delay
- * @property delayLongPress        - Time (ms) before onLongPress fires
- * @property style                 - Style(s) applied to the root container
- * @property children              - React children rendered inside the touchable
- ******************************************************************************************************************/
 export interface TouchableProps {
   feedback?: 'opacity' | 'none';
   disabled?: boolean;
@@ -38,7 +23,19 @@ export interface TouchableProps {
 }
 
 /******************************************************************************************************************
- * Touchable
+ * Touchable: unstyled box component with ripple feedback.
+ * 
+ * @param feedback              - Press feedback style ('opacity' | 'none'). Default: 'opacity'
+ *                                   • 'opacity': Android ripple (native) + iOS opacity (pressed)
+ *                                   • 'none'   : No visual feedback
+ * @param disabled              - Disables press handling & visual feedback
+ * @param onPress               - Called when the press gesture ends successfully
+ * @param onPressIn             - Called when the press gesture starts
+ * @param onPressOut            - Called when the press gesture ends (canceled or completed)
+ * @param onLongPress           - Called when the user presses and holds for longer than the delay
+ * @param delayLongPress        - Time (ms) before onLongPress fires
+ * @param style                 - Style(s) applied to the root container
+ * @param children              - React children rendered inside the touchable
  ******************************************************************************************************************/
 export const Touchable: React.FC<TouchableProps> = memo(
   ({
