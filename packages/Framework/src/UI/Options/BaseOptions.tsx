@@ -245,8 +245,8 @@ export const BaseOptions: React.FC<BaseOptionsProps> = memo(
  * Helper: build initial value tree from schema:
  * - All nodes are initialised to Unselected and mirror the structure of the schema.
  * 
- * @prop schema       - The schema defined
- * @prop initialState - Intitial state of all options
+ * @param schema       - The schema defined
+ * @param initialState - Intitial state of all options
  * 
  * @return - Option value with same tree structure as schema
  ******************************************************************************************************************/

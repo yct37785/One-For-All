@@ -34,7 +34,7 @@ export type MenuListItemProps = {
 /******************************************************************************************************************
  * A single interactive row within a menu list.
  * 
- * @param option      - The option to render
+ * @param option      - MenuOption for given list item
  * @param onPress     - Invoked with the option's value when pressed (no-op if disabled)
  * @param dense?      - Compact row density
  * @param align?      - Alignment of content
