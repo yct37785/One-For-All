@@ -37,6 +37,20 @@ export type ThemeDesign = {
   pressOutDurationMS: number;
 
   animDuration: number;
+
+  input: {
+    height: number;
+    paddingX: number;
+    paddingY: number;
+    radius: number;
+    outlineBorderWidth: number;
+    labelFontSize: number;
+    fontSize: number;
+    helperFontSize: number;
+    labelSpacing: number;
+    helperSpacing: number;
+    iconMarginX: number;
+  }
 };
 
 /******************************************************************************************************************
