@@ -35,6 +35,15 @@ export type TabRouteProps = {
  ******************************************************************************************************************/
 export type TabsSceneMap<T extends string = string> = Record<T, React.ComponentType<unknown>>;
 
+export type TabsContainerProps = {
+  routes: TabRouteProps[];
+  sceneMap: TabsSceneMap;
+  tabIndex: number;
+  onTabIdxChange: (index: number) => void;
+  position: 'top' | 'bottom';
+  style?: StyleProp<ViewStyle>;
+};
+
 /******************************************************************************************************************
  * A container for managing tabbed navigation where content changes based on the selected tab.
  * 
@@ -45,15 +54,6 @@ export type TabsSceneMap<T extends string = string> = Record<T, React.ComponentT
  * @property position       - Tab bar position
  * @property style?         - Optional wrapper style for the tab view
  ******************************************************************************************************************/
-export type TabsContainerProps = {
-  routes: TabRouteProps[];
-  sceneMap: TabsSceneMap;
-  tabIndex: number;
-  onTabIdxChange: (index: number) => void;
-  position: 'top' | 'bottom';
-  style?: StyleProp<ViewStyle>;
-};
-
 export const TabsContainer: React.FC<TabsContainerProps> = memo(
   ({ routes, sceneMap, tabIndex, onTabIdxChange, position, style }) => {
     const { theme } = useAppTheme();

@@ -3,6 +3,36 @@ import { View, StyleProp, ViewStyle, FlexStyle } from 'react-native';
 import { PadSpacingValue } from '../../Types';
 import { useAppTheme } from '../../Manager/App/AppThemeManager';
 
+export type BoxProps = {
+  bgColor?: string;
+  flex?: number;
+  dir?: FlexStyle['flexDirection'];
+  align?: ViewStyle['alignItems'];
+  justify?: ViewStyle['justifyContent'];
+  self?: ViewStyle['alignSelf'];
+
+  p?: PadSpacingValue;
+  m?: PadSpacingValue;
+
+  ph?: PadSpacingValue;
+  pv?: PadSpacingValue;
+  mh?: PadSpacingValue;
+  mv?: PadSpacingValue;
+
+  pt?: PadSpacingValue;
+  pr?: PadSpacingValue;
+  pb?: PadSpacingValue;
+  pl?: PadSpacingValue;
+
+  mt?: PadSpacingValue;
+  mr?: PadSpacingValue;
+  mb?: PadSpacingValue;
+  ml?: PadSpacingValue;
+
+  style?: StyleProp<ViewStyle>;
+  children?: React.ReactNode;
+};
+
 /******************************************************************************************************************
  * A drawable container, it holds content and applies styling, but does not decide spatial arrangement of siblings.
  *  - Think of it as an element in a layout.
@@ -43,36 +73,6 @@ import { useAppTheme } from '../../Manager/App/AppThemeManager';
  * </Box>
  * ```
  ******************************************************************************************************************/
-export type BoxProps = {
-  bgColor?: string;
-  flex?: number;
-  dir?: FlexStyle['flexDirection'];
-  align?: ViewStyle['alignItems'];
-  justify?: ViewStyle['justifyContent'];
-  self?: ViewStyle['alignSelf'];
-
-  p?: PadSpacingValue;
-  m?: PadSpacingValue;
-
-  ph?: PadSpacingValue;
-  pv?: PadSpacingValue;
-  mh?: PadSpacingValue;
-  mv?: PadSpacingValue;
-
-  pt?: PadSpacingValue;
-  pr?: PadSpacingValue;
-  pb?: PadSpacingValue;
-  pl?: PadSpacingValue;
-
-  mt?: PadSpacingValue;
-  mr?: PadSpacingValue;
-  mb?: PadSpacingValue;
-  ml?: PadSpacingValue;
-
-  style?: StyleProp<ViewStyle>;
-  children?: React.ReactNode;
-};
-
 export const Box: React.FC<BoxProps> = memo(
   ({
     bgColor = 'transparent',

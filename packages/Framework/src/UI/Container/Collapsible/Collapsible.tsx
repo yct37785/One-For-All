@@ -8,6 +8,15 @@ import type { TextProps } from '../../Text/Text';
 import type { IconProps } from '../../Text/Icon';
 import { KeepMountedDuringClose, ToggleHeader } from './CollapsibleUtils';
 
+export type CollapsibleContainerProps = {
+  text?: string;
+  textOpts?: TextProps;
+  icon?: string;
+  iconOpts?: IconProps;
+  style?: StyleProp<ViewStyle>;
+  children: ReactNode;
+};
+
 /******************************************************************************************************************
  * A container that can expand or collapse its content vertically, typically used for toggling visibility of sections.
  * 
@@ -26,15 +35,6 @@ import { KeepMountedDuringClose, ToggleHeader } from './CollapsibleUtils';
  * </CollapsibleContainer>
  * ```
  ******************************************************************************************************************/
-export type CollapsibleContainerProps = {
-  text?: string;
-  textOpts?: TextProps;
-  icon?: string;
-  iconOpts?: IconProps;
-  style?: StyleProp<ViewStyle>;
-  children: ReactNode;
-};
-
 export const CollapsibleContainer: React.FC<CollapsibleContainerProps> = memo(
   ({ text, textOpts, icon, iconOpts, style, children }) => {
     const [isCollapsed, setIsCollapsed] = useState(true);
@@ -75,6 +75,12 @@ export type AccordionSectionHeader = {
   iconOpts?: IconProps;
 };
 
+/******************************************************************************************************************
+ * Accordion section config.
+ *
+ * @property header?     - Dropdown header
+ * @property content?    - Collapsible content
+ ******************************************************************************************************************/
 type Section = {
   header: AccordionSectionHeader;
   content: React.ReactNode;
@@ -148,6 +154,12 @@ const AccordionOption = React.memo(function AccordionOption({
   );
 });
 
+export type AccordionContainerProps = {
+  sections: AccordionSectionHeader[];
+  style?: StyleProp<ViewStyle>;
+  children: ReactNode[];
+};
+
 /******************************************************************************************************************
  * A vertically stacked set of collapsible panels where only one section can be expanded at a time.
  * 
@@ -170,12 +182,6 @@ const AccordionOption = React.memo(function AccordionOption({
  * </AccordionContainer>
  * ```
  ******************************************************************************************************************/
-export type AccordionContainerProps = {
-  sections: AccordionSectionHeader[];
-  style?: StyleProp<ViewStyle>;
-  children: ReactNode[];
-};
-
 export const AccordionContainer: React.FC<AccordionContainerProps> = memo(
   ({ sections, style, children }) => {
     const childArray = React.Children.toArray(children);

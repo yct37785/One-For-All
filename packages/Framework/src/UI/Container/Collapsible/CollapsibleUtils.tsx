@@ -38,6 +38,14 @@ export const KeepMountedDuringClose: React.FC<{
   return render ? <>{children}</> : null;
 };
 
+export type ToggleHeaderProps = {
+  text?: string;
+  textOpts?: TextProps;
+  icon?: string;
+  iconOpts?: IconProps;
+  isCollapsed: boolean;
+};
+
 /******************************************************************************************************************
  * Render a compact header with optional icon + title and a chevron that reflects collapse state.
  *
@@ -47,14 +55,6 @@ export const KeepMountedDuringClose: React.FC<{
  * @property iconOpts    - Leading icon styling options
  * @property isCollapsed - Whether the section is currently collapsed
  ******************************************************************************************************************/
-export type ToggleHeaderProps = {
-  text?: string;
-  textOpts?: TextProps;
-  icon?: string;
-  iconOpts?: IconProps;
-  isCollapsed: boolean;
-};
-
 export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
   ({ text, textOpts, icon, iconOpts, isCollapsed }) => {
     const { theme } = useAppTheme();
