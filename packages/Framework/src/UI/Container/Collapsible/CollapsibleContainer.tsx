@@ -18,13 +18,13 @@ export type CollapsibleContainerProps = {
 /******************************************************************************************************************
  * A container that can expand or collapse its content vertically, typically used for toggling visibility of sections.
  * 
- * @property text?             - Main header label (preferred)
- * @property textOpts?         - Text styling options for the header label
- * @property icon?             - Optional leading icon in the header
- * @property iconOpts?         - Styling options for the leading icon
- * @property toggleHeaderText? - Deprecated: legacy header label (used if `text` is not provided)
- * @property style?            - Optional container style
- * @property children          - Content rendered inside the collapsible body
+ * @param text?             - Main header label (preferred)
+ * @param textOpts?         - Text styling options for the header label
+ * @param icon?             - Optional leading icon in the header
+ * @param iconOpts?         - Styling options for the leading icon
+ * @param toggleHeaderText? - Deprecated: legacy header label (used if `text` is not provided)
+ * @param style?            - Optional container style
+ * @param children          - Content rendered inside the collapsible body
  * 
  * @usage
  * ```tsx

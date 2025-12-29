@@ -49,11 +49,11 @@ export type ToggleHeaderProps = {
 /******************************************************************************************************************
  * Render a compact header with optional icon + title and a chevron that reflects collapse state.
  *
- * @property text        - Text label displayed in the header
- * @property textOpts    - Text styling options
- * @property icon        - Optional leading icon
- * @property iconOpts    - Leading icon styling options
- * @property isCollapsed - Whether the section is currently collapsed
+ * @param text        - Text label displayed in the header
+ * @param textOpts    - Text styling options
+ * @param icon        - Optional leading icon
+ * @param iconOpts    - Leading icon styling options
+ * @param isCollapsed - Whether the section is currently collapsed
  ******************************************************************************************************************/
 export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
   ({ text, textOpts, icon, iconOpts, isCollapsed }) => {

@@ -10,17 +10,6 @@ import { Text } from '../Text/Text';
 import { Touchable } from '../Interactive/Touchable';
 import { Icon } from '../Text/Icon';
 
-/******************************************************************************************************************
- * Chip props.
- *
- * @property label           - Text shown inside the chip
- * @property selected?       - Selected state; affects colors
- * @property disabled?       - Disabled state; prevents interaction and dims visuals
- * @property leadingIcon?    - Optional leading icon name (e.g. 'tag', 'filter')
- * @property isClose?        - If true, shows trailing "X" and treats onPress as a close/remove action
- * @property onPress?        - Called when the chip is pressed (for close chips, this is the close logic)
- * @property style?          - Extra style(s) for the chip container
- ******************************************************************************************************************/
 export type ChipProps = {
   label: string;
   selected?: boolean;
@@ -45,6 +34,14 @@ const CHIP_RADIUS = 999;
  * Behaviour:
  * - If isClose is true, a trailing "X" is shown and pressing anywhere on the chip calls onPress.
  *
+ * @param label           - Text shown inside the chip
+ * @param selected?       - Selected state; affects colors
+ * @param disabled?       - Disabled state; prevents interaction and dims visuals
+ * @param leadingIcon?    - Optional leading icon name (e.g. 'tag', 'filter')
+ * @param isClose?        - If true, shows trailing "X" and treats onPress as a close/remove action
+ * @param onPress?        - Called when the chip is pressed (for close chips, this is the close logic)
+ * @param style?          - Extra style(s) for the chip container
+ * 
  * @usage
  * ```tsx
  * <Chip label="All items" selected onPress={...} />

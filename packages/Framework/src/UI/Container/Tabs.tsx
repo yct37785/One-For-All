@@ -47,12 +47,12 @@ export type TabsContainerProps = {
 /******************************************************************************************************************
  * A container for managing tabbed navigation where content changes based on the selected tab.
  * 
- * @property routes         - Array of tab definitions (see TabRouteProps)
- * @property sceneMap       - Function that renders a scene for a given route (see TabsSceneMap)
- * @property tabIndex       - Index of the active tab
- * @property onTabIdxChange - Callback when the active tab changes
- * @property position       - Tab bar position
- * @property style?         - Optional wrapper style for the tab view
+ * @param routes         - Array of tab definitions (see TabRouteProps)
+ * @param sceneMap       - Function that renders a scene for a given route (see TabsSceneMap)
+ * @param tabIndex       - Index of the active tab
+ * @param onTabIdxChange - Callback when the active tab changes
+ * @param position       - Tab bar position
+ * @param style?         - Optional wrapper style for the tab view
  ******************************************************************************************************************/
 export const TabsContainer: React.FC<TabsContainerProps> = memo(
   ({ routes, sceneMap, tabIndex, onTabIdxChange, position, style }) => {

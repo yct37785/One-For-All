@@ -110,9 +110,9 @@ export type AccordionContainerProps = {
 /******************************************************************************************************************
  * A vertically stacked set of collapsible panels where only one section can be expanded at a time.
  * 
- * @property sections  - Header config for each section in order
- * @property style?    - Optional container style
- * @property children  - Content nodes matched 1:1 with sections
+ * @param sections  - Header config for each section in order
+ * @param style?    - Optional container style
+ * @param children  - Content nodes matched 1:1 with sections
  * 
  * @throws {Error} when the number of sections does not match the number of children
  *

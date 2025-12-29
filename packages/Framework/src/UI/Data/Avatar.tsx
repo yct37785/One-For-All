@@ -23,18 +23,18 @@ export type AvatarProps = {
 /******************************************************************************************************************
  * A circular image or label representing a user or entity, typically used in lists or headers.
  *
- * @property uri?           - Remote/local image URI
- * @property label?         - Fallback text (e.g., initials) when no image is available
- * @property size?          - Pixel size OR preset token ('sm' | 'md' | 'lg'), default: 'md'
- * @property shape?         - 'circle' | 'rounded', default: 'circle'
- * @property bgColor?       - Custom background color for label avatars (overrides theme surface)
- * @property textColor?     - Custom text color for label avatars
- * @property badgeColor?    - Optional small status dot color
- * @property badgeSize?     - Radius of the status badge (defaults to size-based)
- * @property badgePosition? - Badge anchor position: 'top-right' | 'bottom-right' (default: 'bottom-right')
- * @property style?         - Extra style(s) for the outer container
- * @property imageStyle?    - Extra style(s) for the Image element
- * @property onPress?       - Optional press handler to make the avatar interactive
+ * @param uri?           - Remote/local image URI
+ * @param label?         - Fallback text (e.g., initials) when no image is available
+ * @param size?          - Pixel size OR preset token ('sm' | 'md' | 'lg'), default: 'md'
+ * @param shape?         - 'circle' | 'rounded', default: 'circle'
+ * @param bgColor?       - Custom background color for label avatars (overrides theme surface)
+ * @param textColor?     - Custom text color for label avatars
+ * @param badgeColor?    - Optional small status dot color
+ * @param badgeSize?     - Radius of the status badge (defaults to size-based)
+ * @param badgePosition? - Badge anchor position: 'top-right' | 'bottom-right' (default: 'bottom-right')
+ * @param style?         - Extra style(s) for the outer container
+ * @param imageStyle?    - Extra style(s) for the Image element
+ * @param onPress?       - Optional press handler to make the avatar interactive
  * 
  * @usage
  * ```tsx
