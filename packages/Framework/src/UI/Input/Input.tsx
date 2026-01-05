@@ -210,10 +210,14 @@ export const TextInput: React.FC<TextInputProps> = memo(
      ******************************************************************************************************************/
     const containerBase: StyleProp<ViewStyle> = [
       styles.containerBase,
+      {
+        paddingHorizontal: theme.design.input.paddingX,
+        minHeight: theme.design.input.height,
+      },
       variant === 'outline'
         ? {
-            borderWidth: 1,
-            borderRadius: 8,
+            borderWidth: theme.design.input.outlineBorderWidth,
+            borderRadius: theme.design.input.radius,
             borderColor: hasError
               ? theme.colors.error
               : isFocused
@@ -222,24 +226,24 @@ export const TextInput: React.FC<TextInputProps> = memo(
             backgroundColor: theme.colors.surface,
           }
         : {
-            borderRadius: 8,
+            borderRadius: theme.design.input.radius,
             backgroundColor: theme.colors.surfaceVariant,
-            borderWidth: hasError ? 1 : 0,
+            borderWidth: hasError ? theme.design.input.outlineBorderWidth : 0,
             borderColor: hasError ? theme.colors.error : 'transparent',
           },
       style as ViewStyle,
     ];
 
     const labelStyle: TextStyle = {
-      marginBottom: 4,
+      marginBottom: theme.design.input.labelSpacing,
       color: hasError ? theme.colors.error : theme.colors.onSurfaceVariant,
-      fontSize: 12,
+      fontSize: theme.design.input.labelFontSize,
     };
 
     const inputStyle: TextStyle = {
       flex: 1,
-      paddingVertical: 6,
-      fontSize: 16,
+      paddingVertical: theme.design.input.paddingY,
+      fontSize: theme.design.input.fontSize,
       color: theme.colors.onSurface,
     };
 
@@ -263,8 +267,8 @@ export const TextInput: React.FC<TextInputProps> = memo(
     }
 
     const helperStyle: TextStyle = {
-      marginTop: 4,
-      fontSize: 12,
+      marginTop: theme.design.input.helperSpacing,
+      fontSize: theme.design.input.helperFontSize,
       color: hasError ? theme.colors.error : theme.colors.onSurfaceVariant,
     };
 
@@ -285,7 +289,7 @@ export const TextInput: React.FC<TextInputProps> = memo(
         <View style={containerBase}>
           {/* Leading icon */}
           {resolvedLeading ? (
-            <View style={styles.icon}>
+            <View style={[styles.icon, { marginHorizontal: theme.design.input.iconMarginX }]}>
               <Icon source={resolvedLeading} variant='sm' />
             </View>
           ) : null}
@@ -320,7 +324,7 @@ export const TextInput: React.FC<TextInputProps> = memo(
 
           {/* Trailing icon */}
           {resolvedTrailing ? (
-            <TouchableOpacity style={styles.icon} onPress={handleTrailingPress}>
+            <TouchableOpacity style={[styles.icon, { marginHorizontal: theme.design.input.iconMarginX }]} onPress={handleTrailingPress}>
               <Icon source={resolvedTrailing} variant='sm' />
             </TouchableOpacity>
           ) : null}
@@ -340,10 +344,6 @@ const styles = StyleSheet.create({
   containerBase: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 10,
-    minHeight: 44,
   },
-  icon: {
-    marginHorizontal: 6,
-  },
+  icon: {},
 });
