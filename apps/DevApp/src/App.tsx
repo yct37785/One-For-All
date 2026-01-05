@@ -3,28 +3,11 @@ import { Root, Nav } from 'framework';
 // screens
 import TestbedScreen from './Screens/TestbedScreen';
 import SettingsScreen from './Screens/SettingsScreen';
-// registries
-import { uiScreenRoutes, uiScreenRegistry } from './Screens/UI/UIElemRegistry';
-import { funcScreenRoutes, funcScreenRegistry } from './Screens/Func/FuncRegistry';
+// navigators
+import { UIStackNavigator } from './Screens/UI/UIElemsNavigator';
+import { FuncStackNavigator } from './Screens/Func/FuncNavigator';
 // layout
 import { DefaultLeftContent, DefaultRightContent } from './ScreenLayout';
-
-/******************************************************************************************************************
- * Stacks
- ******************************************************************************************************************/
-const UIStackNavigator: React.FC = () => (
-  <Nav.StackNavigator
-    initialRouteName={uiScreenRoutes.home}
-    navNodeMap={uiScreenRegistry}
-  />
-);
-
-const FuncStackNavigator: React.FC = () => (
-  <Nav.StackNavigator
-    initialRouteName={funcScreenRoutes.home}
-    navNodeMap={funcScreenRegistry}
-  />
-);
 
 /******************************************************************************************************************
  * Root bottom tabs
