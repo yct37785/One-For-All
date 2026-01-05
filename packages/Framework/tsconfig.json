@@ -1,9 +1,0 @@
-{
-  "extends": "../../templates/tsconfig.base.json",
-  "compilerOptions": {
-    "module": "ESNext",
-    "rootDir": "src",
-    "baseUrl": "src"
-  },
-  "include": ["src"],
-}
