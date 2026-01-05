@@ -48,6 +48,20 @@ const defaultDesign: ThemeDesign = {
   pressOutDurationMS: 160,
 
   animDuration: 300,
+
+  input: {
+    height: 44,
+    paddingX: 10,
+    paddingY: 6,
+    radius: 8,
+    outlineBorderWidth: 1,
+    labelFontSize: 12,
+    fontSize: 16,
+    helperFontSize: 12,
+    labelSpacing: 4,
+    helperSpacing: 4,
+    iconMarginX: 6,
+  }
 };
 
 /******************************************************************************************************************
