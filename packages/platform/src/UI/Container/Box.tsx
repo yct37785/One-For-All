@@ -1,0 +1,132 @@
+import React, { memo } from 'react';
+import { View, StyleProp, ViewStyle, FlexStyle } from 'react-native';
+import { PadSpacingValue } from '../../Types';
+import { useAppTheme } from '../../Manager/App/AppThemeManager';
+
+export type BoxProps = {
+  bgColor?: string;
+  flex?: number;
+  dir?: FlexStyle['flexDirection'];
+  align?: ViewStyle['alignItems'];
+  justify?: ViewStyle['justifyContent'];
+  self?: ViewStyle['alignSelf'];
+
+  p?: PadSpacingValue;
+  m?: PadSpacingValue;
+
+  ph?: PadSpacingValue;
+  pv?: PadSpacingValue;
+  mh?: PadSpacingValue;
+  mv?: PadSpacingValue;
+
+  pt?: PadSpacingValue;
+  pr?: PadSpacingValue;
+  pb?: PadSpacingValue;
+  pl?: PadSpacingValue;
+
+  mt?: PadSpacingValue;
+  mr?: PadSpacingValue;
+  mb?: PadSpacingValue;
+  ml?: PadSpacingValue;
+
+  style?: StyleProp<ViewStyle>;
+  children?: React.ReactNode;
+};
+
+/******************************************************************************************************************
+ * A drawable container, it holds content and applies styling, but does not decide spatial arrangement of siblings.
+ *  - Think of it as an element in a layout.
+ *  - Use to wrap singular child UI components.
+ * 
+ * @param bgColor?  - Background color of the container
+ * @param flex?     - Flex value to control layout behavior
+ * @param dir?      - Flex direction
+ * @param align?    - Align items
+ * @param justify?  - Justify content
+ * @param self?     - Align self (cross-axis alignment)
+ * 
+ * @param p?   - Uniform padding
+ * @param m?   - Uniform margin
+ * 
+ * @param ph?  - Horizontal padding (left + right)
+ * @param pv?  - Vertical padding (top + bottom)
+ * @param mh?  - Horizontal margin  (left + right)
+ * @param mv?  - Vertical margin    (top + bottom)
+ * 
+ * @param pt?  - Padding top
+ * @param pr?  - Padding right
+ * @param pb?  - Padding bottom
+ * @param pl?  - Padding left
+ * 
+ * @param mt?  - Margin top
+ * @param mr?  - Margin right
+ * @param mb?  - Margin bottom
+ * @param ml?  - Margin left
+ * 
+ * @param style?         - Optional container style
+ * @param children       - Content
+ * 
+ * @usage
+ * ```tsx
+ * <Box p={2} ph={3} bgColor="#eee">
+ *   <Text>Content with padding</Text>
+ * </Box>
+ * ```
+ ******************************************************************************************************************/
+export const Box: React.FC<BoxProps> = memo(
+  ({
+    bgColor = 'transparent',
+    flex,
+    dir,
+    align,
+    justify,
+    self,
+    p, m,
+    pv, ph, mv, mh,
+    pt, pr, pb, pl,
+    mt, mr, mb, ml,
+    style,
+    children,
+  }) => {
+    const { theme } = useAppTheme();
+    const padSize = theme.design.padSize;
+
+    const spacing = (units?: number) =>
+      units === undefined ? undefined : units * padSize;
+
+    /**
+     * style
+     */
+    const resolvedStyle = [
+      {
+        backgroundColor: bgColor,
+        flex,
+        flexDirection: dir,
+        alignItems: align,
+        justifyContent: justify,
+        alignSelf: self,
+
+        // padding
+        padding: spacing(p),
+        paddingVertical: spacing(pv),
+        paddingHorizontal: spacing(ph),
+        paddingTop: spacing(pt),
+        paddingRight: spacing(pr),
+        paddingBottom: spacing(pb),
+        paddingLeft: spacing(pl),
+
+        // margin
+        margin: spacing(m),
+        marginVertical: spacing(mv),
+        marginHorizontal: spacing(mh),
+        marginTop: spacing(mt),
+        marginRight: spacing(mr),
+        marginBottom: spacing(mb),
+        marginLeft: spacing(ml),
+      },
+      style,
+    ];
+
+    return <View style={resolvedStyle}>{children}</View>;
+  }
+);

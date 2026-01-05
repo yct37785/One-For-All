@@ -1,0 +1,11 @@
+{
+  "extends": "../../templates/tsconfig.base.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "isolatedModules": true,
+    "noEmit": true
+  },
+  "references": [{ "path": "../../packages/platform" }],
+  "include": ["src"]
+}
