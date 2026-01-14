@@ -25,4 +25,5 @@ export * from '../UI/Selection/Switch';
 export * from '../UI/Text/HighlightText';
 export * from '../UI/Text/HyperlinkText';
 export * from '../UI/Text/Icon';
+export * from '../UI/Text/LabelText';
 export * from '../UI/Text/Text';
