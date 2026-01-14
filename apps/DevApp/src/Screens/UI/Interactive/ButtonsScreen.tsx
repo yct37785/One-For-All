@@ -242,10 +242,10 @@ const ButtonScreen: Nav.ScreenType = ({}) => {
         {/* TextButton · lightweight text-only button */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>TextButton</UI.Text>
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           A text-forward button alternative. Unlike Button mode="text", which has a fixed
           visual style, TextButton fully inherits Text props.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.TextButton onPress={onBtnClick}>

@@ -43,9 +43,9 @@ const SelectionsScreen: Nav.ScreenType = ({}) => {
         {/* Picker */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Picker</UI.Text>
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           A dropdown selector for choosing a single value from a list.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.Picker
@@ -64,9 +64,9 @@ const SelectionsScreen: Nav.ScreenType = ({}) => {
         {/* RadioGroup */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>RadioGroup</UI.Text>
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           A set of radio buttons for visible, side-by-side single selection.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.RadioGroup
@@ -85,9 +85,9 @@ const SelectionsScreen: Nav.ScreenType = ({}) => {
         {/* Switch */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Switch</UI.Text>
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           A binary toggle for enabling/disabling a preference.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.Switch

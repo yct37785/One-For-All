@@ -70,9 +70,9 @@ const ChipScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>States</UI.Text>
         <UI.Box>
-          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+          <UI.LabelText>
             Selected chips appear filled; disabled chips are dimmed and non-interactive.
-          </UI.Text>
+          </UI.LabelText>
         </UI.Box>
 
         <UI.Box mt={1}>
@@ -99,10 +99,10 @@ const ChipScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Closable chips</UI.Text>
         <UI.Box>
-          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+          <UI.LabelText>
             Set isClose to true to show a trailing "X". Pressing the chip calls onPress, allowing the parent to
             remove or update the chip.
-          </UI.Text>
+          </UI.LabelText>
         </UI.Box>
 
         <UI.Box mt={1}>
@@ -134,9 +134,9 @@ const ChipScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Filter chips</UI.Text>
         <UI.Box>
-          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+          <UI.LabelText>
             Tap chips to toggle filters. Parent state manages which filters are active.
-          </UI.Text>
+          </UI.LabelText>
         </UI.Box>
 
         <UI.Box mt={1}>

@@ -28,10 +28,10 @@ const DecoratorsScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Divider</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           A thin separator used to divide related sections. Dividers help break
           content into logical groups for better readability.
-        </UI.Text>
+        </UI.LabelText>
 
         {/* Horizontal divider demo */}
         <UI.Box mt={2}>
@@ -42,9 +42,9 @@ const DecoratorsScreen: Nav.ScreenType = ({}) => {
 
         {/* Vertical divider demo */}
         <UI.Box mt={3}>
-          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+          <UI.LabelText>
             Vertical divider inside a row
-          </UI.Text>
+          </UI.LabelText>
 
           <UI.Box mt={2}>
             <UI.HorizontalLayout dir='row' align='center' gap={2}>

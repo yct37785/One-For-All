@@ -93,9 +93,9 @@ const NestedOptionsScreen: Nav.ScreenType = ({}) => {
         {/* CheckOptions */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>CheckOptions</UI.Text>
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Checkbox-based UI built on the generic nested option tree.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.CheckOptions

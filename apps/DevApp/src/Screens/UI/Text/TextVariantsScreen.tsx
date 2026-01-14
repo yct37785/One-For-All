@@ -28,10 +28,10 @@ const TextVariantsScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>HighlightText</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Highlights parts of the text that match a query, with optional
           case-sensitivity and custom highlight colors.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
@@ -78,10 +78,10 @@ const TextVariantsScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>HyperlinkText</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           A dedicated hyperlink component that always uses primary color +
           underline and calls onPress when tapped.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.Text variant='bodySmall'>

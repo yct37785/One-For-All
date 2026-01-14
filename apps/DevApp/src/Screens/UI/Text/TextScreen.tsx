@@ -28,9 +28,9 @@ const TextScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Variants</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Commonly used text roles.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.Text variant='displaySmall'>Display Small</UI.Text>
@@ -50,9 +50,9 @@ const TextScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Colors</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Use semantic colors to match the requirements.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.Text color={theme.colors.onSurface}>Default color</UI.Text>
@@ -67,9 +67,9 @@ const TextScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Highlighting</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           highlightColor applies a background behind the text.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.Text highlightColor='rgba(255, 235, 59, 0.4)'>
@@ -81,9 +81,9 @@ const TextScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Bold & underline</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Use bold and underline helpers for lightweight emphasis.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.Text bold>
@@ -101,9 +101,9 @@ const TextScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Truncation (numberOfLines)</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Use numberOfLines to clamp text and show ellipsis when content is too long.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.Text numberOfLines={1}>

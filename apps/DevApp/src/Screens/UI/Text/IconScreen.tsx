@@ -26,9 +26,9 @@ const IconScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Size variants</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Use the variant prop to pick predefined icon sizes.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.HorizontalLayout dir='row' gap={2} align='center'>
@@ -44,9 +44,9 @@ const IconScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Colors</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Supply color via theme color tokens or raw color string.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.HorizontalLayout dir='row' gap={2} align='center'>
@@ -69,9 +69,9 @@ const IconScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Icons inside containers</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Icons can be composed with Box to create simple decorated blocks.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.HorizontalLayout dir='row' gap={2} align='center'>
@@ -93,9 +93,9 @@ const IconScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Practical examples</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Combine icons with text or actions to give clearer meaning.
-        </UI.Text>
+        </UI.LabelText>
 
         {/* Icon + label row */}
         <UI.Box mt={2}>

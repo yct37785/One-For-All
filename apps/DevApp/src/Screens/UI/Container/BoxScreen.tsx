@@ -40,17 +40,17 @@ const BoxScreen: Nav.ScreenType = ({ navigate }) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Basic usage</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Drop-in replacement of View.
-        </UI.Text>
+        </UI.LabelText>
         <UI.Box bgColor={colors.greenStrong} p={1} m={1}>
           <UI.Text color={theme.colors.surface}>Use Box like a View</UI.Text>
         </UI.Box>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           As a tiny wrapper around a single element just to add spacing, without
           changing layout flow.
-        </UI.Text>
+        </UI.LabelText>
         <UI.Box m={1}>
           <UI.Box bgColor={colors.neutralAlt} p={1}>
             <UI.Text variant='labelSmall'>
@@ -85,9 +85,9 @@ const BoxScreen: Nav.ScreenType = ({ navigate }) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Flex, direction & alignment</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Row layout with different flex values
-        </UI.Text>
+        </UI.LabelText>
         <UI.Box dir='row' bgColor={colors.neutralAlt} p={1} mv={1}>
           <UI.Box flex={1} bgColor={colors.greenSoft}>
             <UI.Text variant='labelSmall'>flex=1</UI.Text>
@@ -100,18 +100,18 @@ const BoxScreen: Nav.ScreenType = ({ navigate }) => {
           </UI.Box>
         </UI.Box>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Row · justify="space-between"
-        </UI.Text>
+        </UI.LabelText>
         <UI.Box dir='row' bgColor={colors.orangeBg} p={1} justify='space-between' mv={1}>
           <UI.Text variant='labelSmall'>Item A</UI.Text>
           <UI.Text variant='labelSmall'>Item B</UI.Text>
           <UI.Text variant='labelSmall'>Item C</UI.Text>
         </UI.Box>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Column · justify="center" (vertical center) with fixed height
-        </UI.Text>
+        </UI.LabelText>
         <UI.Box
           dir='column'
           justify='center'
@@ -125,9 +125,9 @@ const BoxScreen: Nav.ScreenType = ({ navigate }) => {
           </UI.Text>
         </UI.Box>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Row · align="center" (cross-axis alignment)
-        </UI.Text>
+        </UI.LabelText>
         <UI.Box
           dir='row'
           align='center'
@@ -148,11 +148,11 @@ const BoxScreen: Nav.ScreenType = ({ navigate }) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Self alignment</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           A child can control its own cross-axis alignment. This also fixes
           cases where a component stretches full width by default, self lets it size to
           content instead.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box bgColor={colors.cyanBg} p={1} mv={1} style={{ height: 140 }}>
           <UI.Box bgColor={colors.cyanA} p={1} self='flex-start' mt={1}>

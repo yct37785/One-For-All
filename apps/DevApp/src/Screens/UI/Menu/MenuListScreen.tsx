@@ -27,9 +27,9 @@ const MenuListScreen: Nav.ScreenType = ({}) => {
         </UI.Text>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+          <UI.LabelText>
             Last selected: {lastSelected}
-          </UI.Text>
+          </UI.LabelText>
         </UI.Box>
 
         {/* MenuList · basic */}
