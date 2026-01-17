@@ -88,12 +88,11 @@ const UIElemsScreen: Nav.ScreenType = ({ navigate }) => {
    * Render
    ******************************************************************************************************************/
   return (
-    <Nav.ScreenLayout title='UI elements'>
+    <Nav.ScreenLayout title='UI Elements'>
       <UI.VerticalLayout constraint='scroll' gap={1}>
 
         <UI.Box p={1}>
-          <UI.Text variant='titleLarge'>UI Elements Showcase</UI.Text>
-          <UI.Text variant='bodyMedium' top={1}>
+          <UI.Text variant='bodyMedium'>
             Reusable UI primitive elements, including layout, text, inputs etc.
           </UI.Text>
         </UI.Box>

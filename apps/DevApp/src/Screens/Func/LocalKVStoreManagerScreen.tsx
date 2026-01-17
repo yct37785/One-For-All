@@ -110,12 +110,12 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
    * Render
    ******************************************************************************************************************/
   return (
-    <Nav.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle title='Local KV Store'>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
         {/* Header */}
         <UI.Text variant='bodyMedium'>
-          LocalDataManager provides simple getItemKV / setItemKV / clearKVs APIs.
+          LocalDataManager provides simple CRUD APIs.
           Values are loaded on demand from storage.
         </UI.Text>
 
@@ -132,7 +132,7 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
         <UI.Text variant='titleMedium'>Boolean flag</UI.Text>
 
         <UI.LabelText>
-          Toggles a boolean stored under the key &apos;demoFlag&apos;.
+          Toggles a boolean.
         </UI.LabelText>
 
         <UI.Box mt={2}>
@@ -156,7 +156,7 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
         <UI.Text variant='titleMedium'>Counter</UI.Text>
 
         <UI.LabelText>
-          Increments a numeric value stored under &apos;demoCounter&apos;.
+          Increments a numeric value.
         </UI.LabelText>
 
         <UI.Box mt={2}>
@@ -180,7 +180,7 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
         <UI.Text variant='titleMedium'>Text value</UI.Text>
 
         <UI.LabelText>
-          Stores a short text string under &apos;demoName&apos;.
+          Stores a short text string.
         </UI.LabelText>
 
         <UI.Box mt={2}>
@@ -213,7 +213,7 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
         <UI.Text variant='titleMedium'>Reload &amp; clearKVs</UI.Text>
 
         <UI.LabelText>
-          Reload reads from storage again; clearKVs removes all keys and re-seeds defaults.
+          Reload reads from storage again, removes all keys and re-seeds defaults.
         </UI.LabelText>
 
         <UI.Box mt={2}>

@@ -29,12 +29,11 @@ const FuncScreen: Nav.ScreenType = ({ navigate }) => {
    * Render
    ******************************************************************************************************************/
   return (
-    <Nav.ScreenLayout>
+    <Nav.ScreenLayout title='Functionality'>
       <UI.VerticalLayout constraint='scroll' gap={1}>
 
         <UI.Box p={1}>
-          <UI.Text variant='titleLarge'>Functionality Showcase</UI.Text>
-          <UI.Text variant='bodyMedium' topPx={2}>
+          <UI.Text variant='bodyMedium'>
             Managers and application flows like data storage, authentication, or synchronization logic etc.
           </UI.Text>
         </UI.Box>
