@@ -1,5 +1,5 @@
 import React, { memo, useMemo, useState } from 'react';
-import { Image, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View, Image } from 'react-native';
 import { Nav, UI, Manager } from 'framework';
 import { faker } from '@faker-js/faker';
 import { getDemoColors } from '../../demoColors';
@@ -12,16 +12,25 @@ type DemoListItem = {
 
 const CATEGORIES = ['Electronics', 'Clothing', 'Home', 'Books', 'Sports', 'Toys', 'Outdoors'];
 
+// Stable demo thumbnails (more reliable than random image URLs)
+const THUMBNAILS = [
+  'https://picsum.photos/id/1025/120/120',
+  'https://picsum.photos/id/1062/120/120',
+  'https://picsum.photos/id/1074/120/120',
+  'https://picsum.photos/id/1084/120/120',
+  'https://picsum.photos/id/1080/120/120',
+];
+
 /******************************************************************************************************************
  * List demo
  *
- * This screen demonstrates:
- * - UI.List: searchable + filterable list (FlashList under the hood).
- * - UI.TextInput: search bar in the custom header.
- * - UI.ChipOptions: category filters in a horizontal scroll row.
- * - UI.HighlightText: inline highlighting of the search term within each list item.
+ * Demonstrates:
+ * - UI.List: searchable + filterable list (FlashList under the hood)
+ * - Text search via item.searchable
+ * - Category filters via item.filterable + filterMap
+ * - UI.HighlightText: highlights query matches inside rows
  ******************************************************************************************************************/
-const ListScreen: Nav.ScreenType = ({}) => {
+const ListScreen: Nav.ScreenType = () => {
   const { isDarkMode } = Manager.useAppSettings();
   const { theme } = Manager.useAppTheme();
   const colors = getDemoColors(isDarkMode);
@@ -30,15 +39,20 @@ const ListScreen: Nav.ScreenType = ({}) => {
   const [selectedCategories, setSelectedCategories] = useState<Set<string>>(() => new Set());
   const [chipResetSignal, setChipResetSignal] = useState(0);
 
-  // generate a large dataset once using Faker
+  /**
+   * Generate a dataset once (demo only)
+   */
   const items: DemoListItem[] = useMemo(() => {
     const arr: DemoListItem[] = [];
-    for (let i = 0; i < 1200; i++) {
+
+    for (let i = 0; i < 800; i++) {
       const category = faker.helpers.arrayElement(CATEGORIES);
       const name = faker.commerce.productName();
       const desc = faker.commerce.productDescription();
       const price = faker.commerce.price({ min: 10, max: 500 });
-      const imageUrl = faker.image.url(); // generic image URL
+
+      // pick stable thumbnail (fast + consistent)
+      const imageUrl = THUMBNAILS[i % THUMBNAILS.length];
 
       arr.push({
         searchable: {
@@ -55,6 +69,7 @@ const ListScreen: Nav.ScreenType = ({}) => {
         },
       });
     }
+
     return arr;
   }, []);
 
@@ -64,26 +79,29 @@ const ListScreen: Nav.ScreenType = ({}) => {
 
   const onResetFilters = () => {
     setSelectedCategories(new Set());
-    setChipResetSignal((prev) => prev + 1);
+    setChipResetSignal(prev => prev + 1);
   };
 
   const filterMap = {
     category: selectedCategories,
   };
 
-  // row renderer for List (with image + highlighted text)
+  /**
+   * Row renderer
+   */
   const renderItem = (item: DemoListItem, index: number) => {
     const { name, desc } = item.searchable;
     const { category } = item.filterable;
     const { price, imageUrl } = item.none;
 
-    const bg = index % 2 === 0 ? colors.listRowA : colors.listRowB;
+    // Alternating row background for readability (demo-only)
+    const bg = index % 2 === 0 ? colors.neutral_1 : colors.neutral_2;
 
     return (
       <UI.Box bgColor={bg} p={1}>
         <View style={styles.itemRow}>
-          {/* Thumbnail */}
-          <UI.Box bgColor={colors.listThumbBg} style={styles.thumbContainer}>
+          {/* Thumbnail (stable background so layout looks good even while loading) */}
+          <UI.Box bgColor={colors.cyan_1} style={styles.thumbContainer}>
             <Image source={{ uri: imageUrl }} style={styles.thumbnail} />
           </UI.Box>
 
@@ -106,14 +124,16 @@ const ListScreen: Nav.ScreenType = ({}) => {
     );
   };
 
-  // custom header: description + search bar + horizontal chips
+  /**
+   * Header: search bar
+   */
   const LeftContent = (
     <UI.Box p={2}>
       <UI.TextInput
         type='search'
         variant='outline'
         value={query}
-        placeholder='Search...'
+        placeholder='Search products...'
         onChange={setQuery}
       />
     </UI.Box>
@@ -122,14 +142,14 @@ const ListScreen: Nav.ScreenType = ({}) => {
   return (
     <Nav.ScreenLayout showTitle={false} LeftContent={LeftContent} RightContent={null}>
 
-      {/* Header */}
+      {/* Header text */}
       <UI.Box ph={2} pt={2}>
         <UI.Text variant='bodyMedium'>
-          List renders large datasets with text search, category filters, and inline highlighting.
+          List renders large datasets efficiently, with optional search and Set-based filters.
         </UI.Text>
       </UI.Box>
 
-      {/* Chips filter */}
+      {/* Category filters */}
       <UI.Divider spacing={1} />
       <UI.Box p={1}>
         <ScrollView
@@ -144,7 +164,7 @@ const ListScreen: Nav.ScreenType = ({}) => {
           />
         </ScrollView>
 
-        {/* Reset filters */}
+        {/* Reset */}
         <UI.Box mt={1} self='flex-start'>
           <UI.TextButton
             onPress={onResetFilters}
@@ -156,14 +176,21 @@ const ListScreen: Nav.ScreenType = ({}) => {
         </UI.Box>
       </UI.Box>
 
-      {/* List as the main scrollable content */}
-      <UI.Box flex={1} mt={0}>
+      {/* List */}
+      <UI.Box flex={1}>
         <UI.List
           dataArr={items}
           query={query}
           filterMap={filterMap}
           renderItem={renderItem}
           listType={UI.ListType.flashlist}
+          emptyComponent={
+            <UI.Box p={2}>
+              <UI.Text variant='bodySmall' color={theme.colors.onSurfaceVariant}>
+                No results. Try clearing the search or filters.
+              </UI.Text>
+            </UI.Box>
+          }
         />
       </UI.Box>
 
@@ -177,7 +204,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
 
-  // container behind the Image so list looks stable during image loading/failures
+  // container behind the image so the layout is stable while loading
   thumbContainer: {
     width: 52,
     height: 52,
