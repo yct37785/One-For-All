@@ -81,7 +81,6 @@ const ButtonsScreen: Nav.ScreenType = () => {
               mode='contained'
               icon='cloud-upload'
               loading={btnLoading}
-              disabled={btnLoading}
               onPress={triggerBtnLoading}
             >
               {btnLoading ? 'Loading' : 'Press to load'}
@@ -185,7 +184,6 @@ const ButtonsScreen: Nav.ScreenType = () => {
             <UI.IconButton
               icon='download'
               loading={iconLoading}
-              disabled={iconLoading}
               onPress={triggerIconLoading}
             />
 
