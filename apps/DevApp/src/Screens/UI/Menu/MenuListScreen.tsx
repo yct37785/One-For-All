@@ -1,40 +1,42 @@
 import React, { memo, useState } from 'react';
 import { Nav, UI, Manager } from 'framework';
+import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
  * MenuList demo
  *
- * This screen demonstrates:
- * - UI.MenuList: a structured list of selectable menu options.
- * - UI.MenuListItem: support for text/icon options and dense/centered rows.
+ * MenuList renders a vertical list of actions (often used in popovers, context menus, and overflow menus).
+ * - options: rows (text/icon/disabled)
+ * - showDividers: separators between rows
+ * - dense: compact row height
+ * - align: start | center
  ******************************************************************************************************************/
-const MenuListScreen: Nav.ScreenType = ({}) => {
-  const { theme } = Manager.useAppTheme();
-  const [lastSelected, setLastSelected] = useState<string | null>(null);
+const MenuListScreen: Nav.ScreenType = () => {
+  const { isDarkMode } = Manager.useAppSettings();
+  const colors = getDemoColors(isDarkMode);
 
-  const handleSelect = (value: string) => {
+  const [lastSelected, setLastSelected] = useState<string>('—');
+
+  const onSelect = (value: string) => {
     setLastSelected(value);
   };
 
   return (
-    <Nav.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle title='MenuList'>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
-        {/* Header */}
+        {/* Intro */}
         <UI.Text variant='bodyMedium'>
-          MenuList renders a vertical list of touchable rows, often used for overflow menus, context menus, or
-          action sheets.
+          MenuList is a simple list of tappable actions.
         </UI.Text>
 
         <UI.Box mt={1}>
-          <UI.LabelText>
-            Last selected: {lastSelected}
-          </UI.LabelText>
+          <UI.LabelText>Last selected: {lastSelected}</UI.LabelText>
         </UI.Box>
 
-        {/* MenuList · basic */}
+        {/* Basic */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>MenuList · basic</UI.Text>
+        <UI.Text variant='titleMedium'>Basic</UI.Text>
 
         <UI.Box mt={1}>
           <UI.MenuList
@@ -44,42 +46,30 @@ const MenuListScreen: Nav.ScreenType = ({}) => {
               { value: 'save', text: 'Save' },
               { value: 'delete', text: 'Delete', disabled: true },
             ]}
-            onSelect={handleSelect}
+            onSelect={onSelect}
             showDividers
           />
         </UI.Box>
 
-        {/* MenuList · with icons */}
+        {/* With icons */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>MenuList · with icons</UI.Text>
+        <UI.Text variant='titleMedium'>With icons</UI.Text>
 
         <UI.Box mt={1}>
           <UI.MenuList
             options={[
-              {
-                value: 'profile',
-                text: 'Profile',
-                icon: 'account-circle',
-              },
-              {
-                value: 'settings',
-                text: 'Settings',
-                icon: 'cog',
-              },
-              {
-                value: 'logout',
-                text: 'Log out',
-                icon: 'logout',
-              },
+              { value: 'profile', text: 'Profile', icon: 'account-circle' },
+              { value: 'settings', text: 'Settings', icon: 'cog' },
+              { value: 'logout', text: 'Log out', icon: 'logout' },
             ]}
-            onSelect={handleSelect}
+            onSelect={onSelect}
             showDividers
           />
         </UI.Box>
 
-        {/* MenuList · styled text & icons */}
+        {/* Styled rows (demo-only) */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>MenuList · styled text & icons</UI.Text>
+        <UI.Text variant='titleMedium'>Styled rows</UI.Text>
 
         <UI.Box mt={1}>
           <UI.MenuList
@@ -88,43 +78,39 @@ const MenuListScreen: Nav.ScreenType = ({}) => {
                 value: 'info',
                 text: 'Info',
                 icon: 'information-outline',
-                textOpts: { variant: 'labelMedium', color: theme.colors.primary },
-                iconOpts: { color: theme.colors.primary },
+                textOpts: { variant: 'labelMedium', color: colors.cyan_3 },
+                iconOpts: { color: colors.cyan_3 },
               },
               {
                 value: 'warning',
                 text: 'Warning',
                 icon: 'alert-outline',
-                textOpts: {
-                  variant: 'labelMedium',
-                  color: '#fb8c00',
-                  bold: true,
-                },
-                iconOpts: { color: '#fb8c00' },
+                textOpts: { variant: 'labelMedium', color: colors.amber_3, bold: true },
+                iconOpts: { color: colors.amber_3 },
               },
               {
                 value: 'success',
                 text: 'Success',
                 icon: 'check-circle-outline',
-                textOpts: { variant: 'labelMedium', color: '#2e7d32' },
-                iconOpts: { color: '#2e7d32' },
+                textOpts: { variant: 'labelMedium', color: colors.green_3 },
+                iconOpts: { color: colors.green_3 },
               },
               {
                 value: 'danger',
                 text: 'Danger',
                 icon: 'alert-circle-outline',
-                textOpts: { variant: 'labelMedium', color: theme.colors.error },
-                iconOpts: { color: theme.colors.error },
+                textOpts: { variant: 'labelMedium', color: colors.red_3 },
+                iconOpts: { color: colors.red_3 },
               },
             ]}
-            onSelect={handleSelect}
+            onSelect={onSelect}
             showDividers
           />
         </UI.Box>
 
-        {/* MenuList · dense */}
+        {/* Dense */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>MenuList · dense</UI.Text>
+        <UI.Text variant='titleMedium'>Dense</UI.Text>
 
         <UI.Box mt={1}>
           <UI.MenuList
@@ -135,38 +121,24 @@ const MenuListScreen: Nav.ScreenType = ({}) => {
               { value: 'copy', text: 'Copy', icon: 'content-copy' },
               { value: 'paste', text: 'Paste', icon: 'content-paste' },
             ]}
-            onSelect={handleSelect}
+            onSelect={onSelect}
             dense
             showDividers
           />
         </UI.Box>
 
-        {/* MenuList · custom alignment */}
+        {/* Center align */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>MenuList · custom alignment</UI.Text>
-        <UI.Box mt={1}>
-          <UI.Text variant='bodySmall'>
-            Centered align and no dividers.
-          </UI.Text>
-        </UI.Box>
+        <UI.Text variant='titleMedium'>Center align</UI.Text>
 
         <UI.Box mt={1}>
           <UI.MenuList
             options={[
-              {
-                value: 'share',
-                text: 'Share'
-              },
-              {
-                value: 'favorite',
-                text: 'Favorite'
-              },
-              {
-                value: 'download',
-                text: 'Download'
-              },
+              { value: 'share', text: 'Share' },
+              { value: 'favorite', text: 'Favorite' },
+              { value: 'download', text: 'Download' },
             ]}
-            onSelect={handleSelect}
+            onSelect={onSelect}
             align='center'
           />
         </UI.Box>

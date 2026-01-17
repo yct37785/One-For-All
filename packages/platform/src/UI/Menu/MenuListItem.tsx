@@ -34,41 +34,23 @@ export type MenuListItemProps = {
 /******************************************************************************************************************
  * A single interactive row within a menu list.
  * 
- * @param option      - MenuOption for given list item
- * @param onPress     - Invoked with the option's value when pressed (no-op if disabled)
- * @param dense?      - Compact row density
- * @param align?      - Alignment of content
- *
- * @usage
- * ```tsx
- * <MenuListItem
- *   option={{ text: 'Settings', value: 'settings', icon: 'cog' }}
- *   onPress={(v) => console.log('pressed', v)}
- * />
- * ```
+ * @param option    - Defined MenuOption
+ * @param onPress   - Triggerred when this list item is click
+ * @param dense     - Dense mode
+ * @param align     - Child alignment (start or centered)
  ******************************************************************************************************************/
 export const MenuListItem: React.FC<MenuListItemProps> = memo(
   ({ option, onPress, dense = false, align = 'start' }) => {
     const { theme } = useAppTheme();
-    const paddingY = dense ? theme.design.padSize : theme.design.padSize * 2;
     const disabled = !!option.disabled;
 
-    /**
-     * style
-     */
+    const paddingY = dense
+      ? theme.design.padSize
+      : theme.design.padSize * 2;
+
     const styles = useMemo(
       () =>
         StyleSheet.create({
-          iconMarginDense: {
-            marginRight: theme.design.padSize,
-          },
-          iconMarginRegular: {
-            marginRight: theme.design.padSize * 2,
-          },
-          // smaller, balanced spacing for centered layout
-          iconCenteredMargin: {
-            marginRight: theme.design.padSize,
-          },
           wrapper: {
             paddingHorizontal: theme.design.padSize,
             paddingVertical: paddingY,
@@ -76,23 +58,47 @@ export const MenuListItem: React.FC<MenuListItemProps> = memo(
             alignItems: 'center',
             justifyContent: align === 'center' ? 'center' : 'flex-start',
           },
+          iconMarginDense: {
+            marginRight: theme.design.padSize,
+          },
+          iconMarginRegular: {
+            marginRight: theme.design.padSize * 2,
+          },
+          iconCenteredMargin: {
+            marginRight: theme.design.padSize,
+          },
         }),
-      [theme]
+      [theme, paddingY, align]
     );
 
-    const iconMargin = dense
-      ? styles.iconMarginDense
-      : styles.iconMarginRegular;
+    const iconMargin =
+      align === 'center'
+        ? styles.iconCenteredMargin
+        : dense
+        ? styles.iconMarginDense
+        : styles.iconMarginRegular;
 
-    const iconOverride = option.iconOpts?.style;
-    const { style: _remove, ...restIconOpts } = option.iconOpts ?? {};
+    // Disabled color always wins
+    const disabledColor = theme.colors.onSurfaceDisabled;
 
-    const text = option.text ?? '';
+    const resolvedTextOpts: TextProps | undefined = option.text
+      ? {
+          ...option.textOpts,
+          color: disabled ? disabledColor : option.textOpts?.color,
+        }
+      : undefined;
+
+    const resolvedIconOpts: IconProps | undefined = option.icon
+      ? {
+          ...option.iconOpts,
+          color: disabled ? disabledColor : option.iconOpts?.color,
+        }
+      : undefined;
 
     return (
       <Touchable
-        onPress={() => !disabled && onPress(option.value)}
         disabled={disabled}
+        onPress={() => !disabled && onPress(option.value)}
         style={styles.wrapper}
       >
         <>
@@ -100,22 +106,17 @@ export const MenuListItem: React.FC<MenuListItemProps> = memo(
             <Icon
               source={option.icon}
               variant={dense ? 'sm' : 'md'}
-              color={disabled ? 'disabled' : 'default'}
-              style={[
-                align === 'center' ? styles.iconCenteredMargin : iconMargin,
-                iconOverride,
-              ]}
-              {...restIconOpts}
+              style={iconMargin}
+              {...resolvedIconOpts}
             />
           ) : null}
 
-          {text ? (
+          {option.text ? (
             <Text
               variant={dense ? 'labelSmall' : 'labelMedium'}
-              color={disabled ? 'disabled' : 'default'}
-              {...option.textOpts}
+              {...resolvedTextOpts}
             >
-              {text}
+              {option.text}
             </Text>
           ) : null}
         </>
