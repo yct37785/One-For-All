@@ -18,9 +18,6 @@ const FlatOptionsScreen: Nav.ScreenType = () => {
   const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
   const [resetTagsSignal, setResetTagsSignal] = useState(0);
 
-  const [selectedFilters, setSelectedFilters] = useState<Set<string>>(new Set());
-  const [resetFiltersSignal, setResetFiltersSignal] = useState(0);
-
   const tagSchema = new Set([
     'Design',
     'Frontend',
@@ -30,16 +27,6 @@ const FlatOptionsScreen: Nav.ScreenType = () => {
     'Docs',
     'Refactor',
     'Bugfix',
-  ]);
-
-  const filterSchema = new Set([
-    'Electronics',
-    'Clothing',
-    'Home',
-    'Books',
-    'Sports',
-    'Toys',
-    'Outdoors',
   ]);
 
   return (

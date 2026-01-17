@@ -33,11 +33,9 @@ const SelectionsScreen: Nav.ScreenType = ({}) => {
     <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
-        {/* Header */}
+        {/* Intro */}
         <UI.Text variant='bodyMedium'>
-          Selections represent mutually exclusive choices where only one option
-          can be active at a time. Use these components for “pick one” scenarios
-          such as category, mode, or preference selection.
+          Selection components help users pick a value or toggle a preference.
         </UI.Text>
 
         {/* Picker */}
@@ -47,7 +45,7 @@ const SelectionsScreen: Nav.ScreenType = ({}) => {
           A dropdown selector for choosing a single value from a list.
         </UI.LabelText>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.Picker
             value={pickerValue}
             options={pickerOptions}
@@ -68,7 +66,7 @@ const SelectionsScreen: Nav.ScreenType = ({}) => {
           A set of radio buttons for visible, side-by-side single selection.
         </UI.LabelText>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.RadioGroup
             options={radioOptions}
             value={radioValue}
@@ -89,7 +87,7 @@ const SelectionsScreen: Nav.ScreenType = ({}) => {
           A binary toggle for enabling/disabling a preference.
         </UI.LabelText>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.Switch
             value={switchValue}
             onValueChange={setSwitchValue}
