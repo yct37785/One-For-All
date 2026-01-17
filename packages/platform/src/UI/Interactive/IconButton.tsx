@@ -1,11 +1,9 @@
 import React, { memo } from 'react';
-import type {
-  GestureResponderEvent,
-  StyleProp,
-  ViewStyle
-} from 'react-native';
+import type { GestureResponderEvent, StyleProp, ViewStyle } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { IconButton as PaperIconButton } from 'react-native-paper';
 import { IconVariant, iconVariantSizeMap } from '../Text/Icon';
+import { useAppTheme } from '../../Manager/App/AppThemeManager';
 
 export type IconButtonMode = 'outlined' | 'contained' | 'contained-tonal';
 
@@ -14,6 +12,7 @@ export type IconButtonProps = {
   mode?: IconButtonMode;
   size?: IconVariant;
   disabled?: boolean;
+  loading?: boolean;
   selected?: boolean;
   buttonColor?: string;
   iconColor?: string;
@@ -47,8 +46,6 @@ export type IconButtonProps = {
  * <IconButton icon="heart-outline" onPress={toggleLike} />
  * <IconButton icon="cog" mode="outlined" onPress={openSettings} />
  * <IconButton icon="delete" mode="contained" buttonColor="#e53935" iconColor="#fff" />
- * <IconButton icon="star" selected onPress={toggleStarred} />
- * <IconButton icon="plus" size="lg" />
  * ```
  ******************************************************************************************************************/
 export const IconButton: React.FC<IconButtonProps> = memo(
@@ -57,6 +54,7 @@ export const IconButton: React.FC<IconButtonProps> = memo(
     mode = 'contained',
     size = 'md',
     disabled,
+    loading,
     selected,
     buttonColor,
     iconColor,
@@ -67,19 +65,35 @@ export const IconButton: React.FC<IconButtonProps> = memo(
     onLongPress,
     delayLongPress,
   }) => {
+    const { theme } = useAppTheme();
+
     const resolvedSize =
       typeof size === 'number' ? size : iconVariantSizeMap[size];
 
+    const isDisabledLike = Boolean(disabled || loading);
+
+    const spinnerColor =
+      iconColor ?? theme.colors.primary;
+
     return (
       <PaperIconButton
-        icon={icon}
+        icon={
+          loading
+            ? () => (
+                <ActivityIndicator
+                  size={Math.max(14, Math.round(resolvedSize * 0.6))}
+                  color={spinnerColor}
+                />
+              )
+            : icon
+        }
         mode={mode}
         size={resolvedSize}
-        disabled={disabled}
+        disabled={isDisabledLike}
         selected={selected}
         containerColor={buttonColor}
-        iconColor={iconColor}
-        style={style}
+        iconColor={loading ? spinnerColor : iconColor}
+        style={[style, loading ? { opacity: 0.6 } : null]}
         onPress={onPress}
         onPressIn={onPressIn}
         onPressOut={onPressOut}

@@ -7,6 +7,7 @@ export type ButtonMode = 'text' | 'outlined' | 'contained' | 'elevated' | 'conta
 export type ButtonProps = {
   mode?: ButtonMode;
   compact?: boolean;
+  icon?: string;
   disabled?: boolean;
   loading?: boolean;
   buttonColor?: string;
@@ -27,6 +28,7 @@ export type ButtonProps = {
  * 
  * @param mode?             - Visual style variant (MD3)
  * @param compact?          - Slightly reduce paddings/min-height for dense layouts
+ * @param icon?             - Leading icon
  * @param disabled?         - Disable interactions and apply disabled styles
  * @param loading?          - Show a small busy indicator and reduce label opacity
  * @param buttonColor?      - Background color override (enabled state)
@@ -46,15 +48,26 @@ export type ButtonProps = {
  * <Button mode="text" onPress={handlePress}>Text</Button>
  * <Button mode="outlined" icon="cog" onPress={openSettings}>Settings</Button>
  * <Button mode="contained" loading>Saving…</Button>
- * <Button mode="contained-tonal" buttonColor="#6750A4">Tonal</Button>
- * <Button mode="elevated" disabled>Disabled</Button>
- * <Button mode="contained" compact contentStyle={{ minHeight: 36 }}>Compact</Button>
- * <Button mode="text" labelStyle={{ textTransform: 'none' }}>No Caps</Button>
  * ```
  ******************************************************************************************************************/
-export const Button: React.FC<ButtonProps> = memo(({ mode = 'contained', children, ...rest }) => {
+export const Button: React.FC<ButtonProps> = memo(({ mode = 'contained', children, labelStyle, loading, ...rest }) => {
+  /**
+   * Centralized visual rule:
+   * - If loading, keep the label color but make it more subdued.
+   * - We apply this after user labelStyle so it always takes effect.
+   */
+  const resolvedLabelStyle: StyleProp<TextStyle> = [
+    labelStyle,
+    loading ? { opacity: 0.6 } : null,
+  ];
+
   return (
-    <PaperButton mode={mode} {...rest}>
+    <PaperButton
+      mode={mode}
+      labelStyle={resolvedLabelStyle}
+      loading={loading}
+      {...rest}
+    >
       {children}
     </PaperButton>
   );

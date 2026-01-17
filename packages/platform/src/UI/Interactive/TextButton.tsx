@@ -5,11 +5,11 @@ import { Text, TextProps } from '../Text/Text';
 import { useAppTheme } from '../../Manager/App/AppThemeManager';
 
 export interface TextButtonProps {
-  children?: React.ReactNode;
   textOpts?: TextProps;
   style?: StyleProp<ViewStyle>;
   disabled?: boolean;
   onPress?: () => void;
+  children?: React.ReactNode;
 }
 
 /******************************************************************************************************************
@@ -19,11 +19,11 @@ export interface TextButtonProps {
  * - Padding for tap target
  * - Uses base Text for variant, color, bold, etc.
  * 
- * @param children?       - Button label/content
  * @param textOpts?       - Additional props passed to the internal Text component
  * @param style?          - Style applied to the button container
  * @param disabled?       - Disable press handling
  * @param onPress?        - Press callback
+ * @param children?       - Button label/content
  *
  * @usage
  * ```tsx
@@ -44,9 +44,6 @@ export const TextButton: React.FC<TextButtonProps> = memo(
   }) => {
     const { theme } = useAppTheme();
 
-    /**
-     * style
-     */
     const styles = useMemo(
       () =>
         StyleSheet.create({
@@ -56,10 +53,18 @@ export const TextButton: React.FC<TextButtonProps> = memo(
             borderRadius: theme.design.radiusMedium,
             alignSelf: 'flex-start',
             justifyContent: 'center',
+            opacity: disabled ? 0.6 : 1,
           },
         }),
-      [theme]
+      [theme, disabled]
     );
+
+    // ensure disabled styling always wins (don’t let textOpts override it)
+    const resolvedTextOpts: TextProps = {
+      ...textOpts,
+      variant: textOpts?.variant ?? 'labelLarge',
+      color: disabled ? 'disabled' : (textOpts?.color ?? 'primary'),
+    };
 
     return (
       <Touchable
@@ -67,11 +72,7 @@ export const TextButton: React.FC<TextButtonProps> = memo(
         disabled={disabled}
         style={[styles.button, style]}
       >
-        <Text
-          variant='labelLarge'
-          color={disabled ? 'disabled' : 'primary'}
-          {...textOpts}
-        >
+        <Text {...resolvedTextOpts}>
           {children}
         </Text>
       </Touchable>
