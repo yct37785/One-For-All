@@ -5,11 +5,15 @@ import { useAppTheme } from '../../Manager/App/AppThemeManager';
 
 export type BoxProps = {
   bgColor?: string;
+
   flex?: number;
   dir?: FlexStyle['flexDirection'];
   align?: ViewStyle['alignItems'];
   justify?: ViewStyle['justifyContent'];
   self?: ViewStyle['alignSelf'];
+
+  w?: ViewStyle['width'];
+  h?: ViewStyle['height'];
 
   p?: PadSpacingValue;
   m?: PadSpacingValue;
@@ -39,11 +43,15 @@ export type BoxProps = {
  *  - Use to wrap singular child UI components.
  * 
  * @param bgColor?  - Background color of the container
+ * 
  * @param flex?     - Flex value to control layout behavior
  * @param dir?      - Flex direction
  * @param align?    - Align items
  * @param justify?  - Justify content
  * @param self?     - Align self (cross-axis alignment)
+ * 
+ * @param w?   - Width
+ * @param h?   - Height
  * 
  * @param p?   - Uniform padding
  * @param m?   - Uniform margin
@@ -81,6 +89,7 @@ export const Box: React.FC<BoxProps> = memo(
     align,
     justify,
     self,
+    w, h,
     p, m,
     pv, ph, mv, mh,
     pt, pr, pb, pl,
@@ -105,6 +114,10 @@ export const Box: React.FC<BoxProps> = memo(
         alignItems: align,
         justifyContent: justify,
         alignSelf: self,
+
+        // dimens
+        width: w,
+        height: h,
 
         // padding
         padding: spacing(p),
