@@ -56,12 +56,12 @@ const UIElemsScreen: Nav.ScreenType = ({ navigate }) => {
   ];
 
   const UI_selectionsOptions = [
-    { value: uiScreenRoutes.selections, text: 'Selections & toggles' },
+    { value: uiScreenRoutes.selections, text: 'Selections and toggles' },
   ];
 
   const UI_textOptions = [
     { value: uiScreenRoutes.text, text: 'Text' },
-    { value: uiScreenRoutes.textVariants, text: 'Highlight / Hyperlink' },
+    { value: uiScreenRoutes.textVariants, text: 'Text variants' },
     { value: uiScreenRoutes.icon, text: 'Icon' },
   ];
 

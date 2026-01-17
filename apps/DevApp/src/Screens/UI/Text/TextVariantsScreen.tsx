@@ -1,48 +1,60 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import { Nav, UI, Manager } from 'framework';
 
 /******************************************************************************************************************
  * Text variants demo
  *
- * This screen demonstrates specialized variants built on top of the base Text
- * component:
- * - HighlightText: emphasizes substrings that match a query
- * - HyperlinkText: dedicated hyperlink styling that calls onPress when tapped
+ * Specialized helpers built on top of Text:
+ * - LabelText: subtle label styling (onSurfaceVariant)
+ * - HighlightText: emphasize a query within a string
+ * - HyperlinkText: hyperlink styling + click handler
  ******************************************************************************************************************/
-const TextVariantsScreen: Nav.ScreenType = ({}) => {
+const TextVariantsScreen: Nav.ScreenType = () => {
   const { theme } = Manager.useAppTheme();
+
   const [query, setQuery] = useState('hero');
   const [tosClicks, setTosClicks] = useState(0);
   const [privacyClicks, setPrivacyClicks] = useState(0);
 
+  const sampleText = useMemo(
+    () =>
+      `Hero is a title reserved for those who perform truly great feats.
+Too many are undeserving—just money worshipers playing hero.
+Until this society wakes up and rectifies itself, I will continue to do my work.`,
+    []
+  );
+
   return (
-    <Nav.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle title='Text variants'>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
-        {/* Header */}
+        {/* Intro */}
         <UI.Text variant='bodyMedium'>
-          This screen showcases variants of Text that add focused behavior.
+          Helpers that add small behavior on top of Text.
         </UI.Text>
+
+        {/* LabelText */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>LabelText</UI.Text>
+
+        <UI.Box mt={1}>
+          <UI.LabelText>Subtle label color (onSurfaceVariant).</UI.LabelText>
+          <UI.LabelText variant='labelSmall'>Smaller label.</UI.LabelText>
+          <UI.LabelText variant='labelLarge'>Larger label.</UI.LabelText>
+        </UI.Box>
 
         {/* HighlightText */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>HighlightText</UI.Text>
 
         <UI.LabelText>
-          Highlights parts of the text that match a query, with optional
-          case-sensitivity and custom highlight colors.
+          Highlights matching substrings in a plain string.
         </UI.LabelText>
-
-        <UI.Box mt={2}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
-            Try changing the query to see different parts highlighted.
-          </UI.Text>
-        </UI.Box>
 
         <UI.Box mt={1}>
           <UI.TextInput
             type='search'
-            placeholder='Search phrase…'
+            placeholder='Type a query…'
             value={query}
             onChange={setQuery}
           />
@@ -54,10 +66,7 @@ const TextVariantsScreen: Nav.ScreenType = ({}) => {
             variant='bodyMedium'
             queryHighlightColor='rgba(255, 235, 59, 0.5)'
           >
-            Hero is a title reserved for those who perform truly great feats.
-            Too many are undeserving—just money worshipers playing hero. Until
-            this society wakes up and rectifies itself, I will continue to do my
-            work.
+            {sampleText}
           </UI.HighlightText>
         </UI.Box>
 
@@ -66,11 +75,10 @@ const TextVariantsScreen: Nav.ScreenType = ({}) => {
             query={query}
             variant='bodySmall'
             caseSensitive
-            queryColor='#d32f2f'
+            queryColor={theme.colors.error}
             queryHighlightColor='rgba(255, 205, 210, 0.8)'
           >
-            Case-sensitive matching: type Hero with a capital H to match only
-            exact case.
+            Case-sensitive: type Hero with a capital H to match only exact case.
           </UI.HighlightText>
         </UI.Box>
 
@@ -79,8 +87,7 @@ const TextVariantsScreen: Nav.ScreenType = ({}) => {
         <UI.Text variant='titleMedium'>HyperlinkText</UI.Text>
 
         <UI.LabelText>
-          A dedicated hyperlink component that always uses primary color +
-          underline and calls onPress when tapped.
+          Primary color + underline, built on Text so it can be inline.
         </UI.LabelText>
 
         <UI.Box mt={2}>
@@ -100,13 +107,6 @@ const TextVariantsScreen: Nav.ScreenType = ({}) => {
         <UI.Box mt={1}>
           <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
             Terms clicked: {tosClicks} · Privacy clicked: {privacyClicks}
-          </UI.Text>
-        </UI.Box>
-
-        <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
-            HyperlinkText can be used inline with regular Text to build richer
-            paragraphs with tappable sections.
           </UI.Text>
         </UI.Box>
 
