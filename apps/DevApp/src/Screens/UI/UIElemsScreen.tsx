@@ -87,7 +87,7 @@ const UIElemsScreen: Nav.ScreenType = ({ navigate }) => {
    * Render
    ******************************************************************************************************************/
   return (
-    <Nav.ScreenLayout>
+    <Nav.ScreenLayout title='UI elements'>
       <UI.VerticalLayout constraint='scroll' gap={1}>
 
         <UI.Box p={1}>
