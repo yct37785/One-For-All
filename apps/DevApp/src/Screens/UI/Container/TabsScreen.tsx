@@ -136,10 +136,6 @@ const TabsScreen: Nav.ScreenType = () => {
           TabsContainer renders a tab bar and switches scenes based on the active tab index.
         </UI.Text>
 
-        <UI.Text variant='bodySmall'>
-          This component is controlled: you store the index in state and pass it into tabIndex.
-        </UI.Text>
-
         {/* Basic (top) */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Basic tabs</UI.Text>

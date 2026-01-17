@@ -4,40 +4,41 @@ import { Nav, UI, Manager } from 'framework';
 /******************************************************************************************************************
  * Avatar demo
  *
- * This screen demonstrates:
- * - UI.Avatar: label and image avatars with size, shape, badge, color, and press handling.
+ * Avatar represents a user/entity with either:
+ * - an image (uri), or
+ * - a fallback label (initials)
+ *
+ * Common options:
+ * - size: 'sm' | 'md' | 'lg' | number
+ * - shape: 'circle' | 'rounded'
+ * - badgeColor / badgeSize / badgePosition
+ * - bgColor / textColor (for label avatars)
+ * - onPress (makes it interactive)
  ******************************************************************************************************************/
-const AvatarScreen: Nav.ScreenType = ({}) => {
+const AvatarScreen: Nav.ScreenType = () => {
   const { theme } = Manager.useAppTheme();
   const [pressCount, setPressCount] = useState(0);
 
   return (
-    <Nav.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle title='Avatar'>
       <UI.VerticalLayout constraint='scroll' padding={2}>
-        {/* Header */}
+
+        {/* Intro */}
         <UI.Text variant='bodyMedium'>
-          Avatar represents a user or entity using either an image URI or fallback label, with optional size, shape,
-          badge, and custom colors.
+          Avatar displays an image or fallback initials, with optional sizing, shape, and status badge.
         </UI.Text>
 
-        {/* Avatar · basic label */}
+        {/* Label avatars + sizes */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Avatar · basic</UI.Text>
+        <UI.Text variant='titleMedium'>Label avatars</UI.Text>
+
+        <UI.LabelText>
+          If no uri is provided, Avatar renders a label (commonly initials). Size can be a preset or a number.
+        </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2}>
+          <UI.HorizontalLayout gap={2} align='center'>
             <UI.Avatar label='AB' />
-            <UI.Avatar label='CD' />
-            <UI.Avatar label='EF' />
-          </UI.HorizontalLayout>
-        </UI.Box>
-
-        {/* Avatar · sizes */}
-        <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Avatar · sizes</UI.Text>
-
-        <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2}>
             <UI.Avatar label='SM' size='sm' />
             <UI.Avatar label='MD' size='md' />
             <UI.Avatar label='LG' size='lg' />
@@ -45,103 +46,106 @@ const AvatarScreen: Nav.ScreenType = ({}) => {
           </UI.HorizontalLayout>
         </UI.Box>
 
-        {/* Avatar · shapes */}
+        {/* Shapes */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Avatar · shapes</UI.Text>
+        <UI.Text variant='titleMedium'>Shape</UI.Text>
+
+        <UI.LabelText>
+          circle is the default. rounded is useful for “brand tiles” and non-human entities.
+        </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2}>
+          <UI.HorizontalLayout gap={2} align='center'>
             <UI.Avatar label='C' size='lg' shape='circle' />
             <UI.Avatar label='R' size='lg' shape='rounded' />
           </UI.HorizontalLayout>
         </UI.Box>
 
-        {/* Avatar · with image */}
+        {/* Images + fallback */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Avatar · with image</UI.Text>
+        <UI.Text variant='titleMedium'>Image and fallback</UI.Text>
+
+        <UI.LabelText>
+          If uri is provided, Avatar shows the image. Otherwise it falls back to the label.
+        </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2}>
+          <UI.HorizontalLayout gap={2} align='center'>
             <UI.Avatar uri='https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg' size='lg' />
             <UI.Avatar uri='https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg' size='lg' />
-            <UI.Avatar uri='https://images.pexels.com/photos/712513/pexels-photo-712513.jpeg' size='lg' />
+            <UI.Avatar label='??' size='lg' />
           </UI.HorizontalLayout>
         </UI.Box>
 
-        {/* Avatar · badges */}
+        {/* Badges */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Avatar · badges</UI.Text>
+        <UI.Text variant='titleMedium'>Status badges</UI.Text>
+
+        <UI.LabelText>
+          badgeColor shows a small dot. You can also control its size and position.
+        </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2}>
-            <UI.Avatar label='ON' size='lg' badgeColor='#2e7d32' />
-            <UI.Avatar label='ID' size='lg' badgeColor='#fb8c00' />
-            <UI.Avatar label='OFF' size='lg' badgeColor='#b0bec5' />
+          <UI.HorizontalLayout gap={2} align='center'>
+            <UI.Avatar label='ON' size='lg' badgeColor={theme.colors.secondary} />
+            <UI.Avatar label='AFK' size='lg' badgeColor={theme.colors.tertiary} />
+            <UI.Avatar label='OFF' size='lg' badgeColor={theme.colors.outlineVariant} />
           </UI.HorizontalLayout>
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2}>
+          <UI.HorizontalLayout gap={2} align='center'>
             <UI.Avatar
               label='TR'
               size='lg'
-              badgeColor='#1e88e5'
+              badgeColor={theme.colors.primary}
               badgePosition='top-right'
             />
             <UI.Avatar
               label='BS'
               size='lg'
-              badgeColor='#e53935'
+              badgeColor={theme.colors.error}
               badgeSize={14}
             />
           </UI.HorizontalLayout>
         </UI.Box>
 
-        {/* Avatar · custom colors */}
+        {/* Custom colors */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Avatar · custom colors</UI.Text>
+        <UI.Text variant='titleMedium'>Custom label colors</UI.Text>
+
+        <UI.LabelText>
+          bgColor and textColor are useful when you want deterministic colors (e.g., team labels).
+        </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2}>
-            <UI.Avatar
-              label='A'
-              size='lg'
-              bgColor='#1e88e5'
-              textColor='#ffffff'
-            />
-            <UI.Avatar
-              label='B'
-              size='lg'
-              bgColor='#f4511e'
-              textColor='#ffffff'
-            />
-            <UI.Avatar
-              label='C'
-              size='lg'
-              bgColor='#ffeb3b'
-              textColor='#000000'
-            />
+          <UI.HorizontalLayout gap={2} align='center'>
+            <UI.Avatar label='A' size='lg' bgColor={theme.colors.primary} textColor={theme.colors.onPrimary} />
+            <UI.Avatar label='B' size='lg' bgColor={theme.colors.secondary} textColor={theme.colors.onSecondary} />
+            <UI.Avatar label='C' size='lg' bgColor={theme.colors.tertiary} textColor={theme.colors.onTertiary} />
           </UI.HorizontalLayout>
         </UI.Box>
 
-        {/* Avatar · interactive */}
+        {/* Interactive */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Avatar · interactive</UI.Text>
+        <UI.Text variant='titleMedium'>Interactive</UI.Text>
+
+        <UI.LabelText>
+          Passing onPress makes the avatar tappable (wrapped in Touchable).
+        </UI.LabelText>
 
         <UI.Box mt={1}>
           <UI.HorizontalLayout gap={2} align='center'>
             <UI.Avatar
               label='ME'
               size='lg'
-              bgColor='#6200ee'
-              textColor='#ffffff'
-              badgeColor='#2e7d32'
+              bgColor={theme.colors.primary}
+              textColor={theme.colors.onPrimary}
+              badgeColor={theme.colors.secondary}
               onPress={() => setPressCount(c => c + 1)}
             />
             <UI.Box>
-              <UI.Text variant='bodySmall'>
-                Tap the avatar to increment a counter.
-              </UI.Text>
+              <UI.Text variant='bodySmall'>Tap the avatar to increment a counter.</UI.Text>
               <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
                 Press count: {pressCount}
               </UI.Text>
