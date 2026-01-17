@@ -70,34 +70,40 @@ export const IconButton: React.FC<IconButtonProps> = memo(
     const resolvedSize =
       typeof size === 'number' ? size : iconVariantSizeMap[size];
 
-    const isDisabledLike = Boolean(disabled || loading);
+    const spinnerColor = iconColor ?? theme.colors.primary;
+    
+    const resolvedIconColor = loading
+      ? spinnerColor
+      : (iconColor ?? undefined);
 
-    const spinnerColor =
-      iconColor ?? theme.colors.primary;
+    const resolvedOnPress = loading ? undefined : onPress;
+    const resolvedOnPressIn = loading ? undefined : onPressIn;
+    const resolvedOnPressOut = loading ? undefined : onPressOut;
+    const resolvedOnLongPress = loading ? undefined : onLongPress;
 
     return (
       <PaperIconButton
         icon={
           loading
             ? () => (
-                <ActivityIndicator
-                  size={Math.max(14, Math.round(resolvedSize * 0.6))}
-                  color={spinnerColor}
-                />
-              )
+              <ActivityIndicator
+                size={Math.max(14, Math.round(resolvedSize * 0.6))}
+                color={spinnerColor}
+              />
+            )
             : icon
         }
         mode={mode}
         size={resolvedSize}
-        disabled={isDisabledLike}
+        disabled={disabled}
         selected={selected}
         containerColor={buttonColor}
-        iconColor={iconColor}
-        style={[style, loading ? { opacity: theme.design.loadingOpacity } : null]}
-        onPress={onPress}
-        onPressIn={onPressIn}
-        onPressOut={onPressOut}
-        onLongPress={onLongPress}
+        iconColor={resolvedIconColor}
+        style={style}
+        onPress={resolvedOnPress}
+        onPressIn={resolvedOnPressIn}
+        onPressOut={resolvedOnPressOut}
+        onLongPress={resolvedOnLongPress}
         delayLongPress={delayLongPress}
       />
     );

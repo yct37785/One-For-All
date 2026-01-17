@@ -51,27 +51,39 @@ export type ButtonProps = {
  * <Button mode="contained" loading>Saving…</Button>
  * ```
  ******************************************************************************************************************/
-export const Button: React.FC<ButtonProps> = memo(({ mode = 'contained', children, labelStyle, loading, ...rest }) => {
-  const { theme } = useAppTheme();
+export const Button: React.FC<ButtonProps> = memo(
+  ({ mode = 'contained', children, labelStyle, loading, onPress, disabled, ...rest }) => {
+    const { theme } = useAppTheme();
 
-  /**
-   * Centralized visual rule:
-   * - If loading, keep the label color but make it more subdued.
-   * - We apply this after user labelStyle so it always takes effect.
-   */
-  const resolvedLabelStyle: StyleProp<TextStyle> = [
-    labelStyle,
-    loading ? { opacity: theme.design.loadingOpacity } : null,
-  ];
+    /**
+     * Centralized visual rule:
+     * - If loading, keep the label color but make it more subdued.
+     * - We apply this after user labelStyle so it always takes effect.
+     */
+    const resolvedLabelStyle: StyleProp<TextStyle> = [
+      labelStyle,
+      loading ? { opacity: theme.design.loadingOpacity } : null,
+    ];
 
-  return (
-    <PaperButton
-      mode={mode}
-      labelStyle={resolvedLabelStyle}
-      loading={loading}
-      {...rest}
-    >
-      {children}
-    </PaperButton>
-  );
-});
+    const resolvedOnPress = loading ? undefined : onPress;
+    const resolvedOnPressIn = loading ? undefined : rest.onPressIn;
+    const resolvedOnPressOut = loading ? undefined : rest.onPressOut;
+    const resolvedOnLongPress = loading ? undefined : rest.onLongPress;
+
+    return (
+      <PaperButton
+        mode={mode}
+        labelStyle={resolvedLabelStyle}
+        loading={loading}
+        disabled={disabled}
+        onPress={resolvedOnPress}
+        onPressIn={resolvedOnPressIn}
+        onPressOut={resolvedOnPressOut}
+        onLongPress={resolvedOnLongPress}
+        {...rest}
+      >
+        {children}
+      </PaperButton>
+    );
+  }
+);
