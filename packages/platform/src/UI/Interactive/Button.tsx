@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import type { GestureResponderEvent, StyleProp, ViewStyle, TextStyle, ColorValue } from 'react-native';
+import { useAppTheme } from '../../Manager/App/AppThemeManager';
 import { Button as PaperButton } from 'react-native-paper';
 
 export type ButtonMode = 'text' | 'outlined' | 'contained' | 'elevated' | 'contained-tonal';
@@ -51,6 +52,8 @@ export type ButtonProps = {
  * ```
  ******************************************************************************************************************/
 export const Button: React.FC<ButtonProps> = memo(({ mode = 'contained', children, labelStyle, loading, ...rest }) => {
+  const { theme } = useAppTheme();
+
   /**
    * Centralized visual rule:
    * - If loading, keep the label color but make it more subdued.
@@ -58,7 +61,7 @@ export const Button: React.FC<ButtonProps> = memo(({ mode = 'contained', childre
    */
   const resolvedLabelStyle: StyleProp<TextStyle> = [
     labelStyle,
-    loading ? { opacity: 0.6 } : null,
+    loading ? { opacity: theme.design.loadingOpacity } : null,
   ];
 
   return (

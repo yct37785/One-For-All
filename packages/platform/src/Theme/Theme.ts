@@ -37,6 +37,7 @@ const defaultDesign: ThemeDesign = {
 
   textOpacityHEmphasis: 0.87,
   textOpacityMEmphasis: 0.6,
+  loadingOpacity: 0.6,
 
   iconSizeSmall: 20,
   iconSizeMedium: 30,
