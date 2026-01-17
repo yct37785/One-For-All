@@ -1,5 +1,8 @@
 /**
- * Demo color palette
+ * DEMO-ONLY COLORS
+ *
+ * These colors are intentionally non-semantic and are used exclusively
+ * for visual contrast in component demos and documentation screens.
  *
  * Each color family has 3 tiers:
  *  _1 → light / background
