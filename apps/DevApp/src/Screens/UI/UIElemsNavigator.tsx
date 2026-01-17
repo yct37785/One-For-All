@@ -24,6 +24,7 @@ import MenuListScreen from './Menu/MenuListScreen';
 import DialogScreen from './Modal/DialogScreen';
 import PopupScreen from './Modal/PopupScreen';
 // options
+import FlatOptionsScreen from './Options/FlatOptionsScreen';
 import NestedOptionsScreen from './Options/NestedOptionsScreen';
 // selections
 import SelectionsScreen from './Selections/SelectionsScreen';
@@ -52,6 +53,7 @@ const uiScreenRegistry: Nav.NavNodeMap = {
   [uiScreenRoutes.menulist]: { component: MenuListScreen },
   [uiScreenRoutes.dialog]: { component: DialogScreen },
   [uiScreenRoutes.popup]: { component: PopupScreen },
+  [uiScreenRoutes.flatOptions]: { component: FlatOptionsScreen },
   [uiScreenRoutes.nestedOptions]: { component: NestedOptionsScreen },
   [uiScreenRoutes.selections]: { component: SelectionsScreen },
   [uiScreenRoutes.icon]: { component: IconScreen },
