@@ -12,16 +12,14 @@ import { Nav, UI, Manager } from 'framework';
  * - Divider: a thin separator for grouping related sections
  ******************************************************************************************************************/
 const DecoratorsScreen: Nav.ScreenType = ({}) => {
-  const { theme } = Manager.useAppTheme();
+  
   return (
-    <Nav.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle title='Decorators'>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
         {/* Header */}
         <UI.Text variant='bodyMedium'>
-          Decorators enhance structure and clarity in your UI. They do not hold
-          content or affect layout directly. Instead, they support the surrounding
-          components by providing visual separation.
+          Decorators add visual separation and grouping. They just help the UI read better.
         </UI.Text>
 
         {/* Divider */}
@@ -29,8 +27,7 @@ const DecoratorsScreen: Nav.ScreenType = ({}) => {
         <UI.Text variant='titleMedium'>Divider</UI.Text>
 
         <UI.LabelText>
-          A thin separator used to divide related sections. Dividers help break
-          content into logical groups for better readability.
+          Dividers help break content into logical groups for better readability.
         </UI.LabelText>
 
         {/* Horizontal divider demo */}
