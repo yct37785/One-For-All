@@ -1,65 +1,72 @@
 import React, { memo, useState } from 'react';
-import { StyleSheet } from 'react-native';
 import { Nav, UI, Manager } from 'framework';
 import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
- * Interactive demo
+ * Touchable demo
  *
- * This screen demonstrates:
- * - Touchable: generic pressable wrapper for custom interactive regions.
+ * Touchable is an unstyled pressable wrapper for custom interactive regions.
+ * - Android: native ripple (TouchableNativeFeedback)
+ * - iOS: opacity feedback (Pressable)
  ******************************************************************************************************************/
-const TouchableScreen: Nav.ScreenType = ({}) => {
+const TouchableScreen: Nav.ScreenType = () => {
   const { isDarkMode } = Manager.useAppSettings();
   const { theme } = Manager.useAppTheme();
   const colors = getDemoColors(isDarkMode);
-  const [touchableClicks, setTouchableClicks] = useState(0);
 
-  const onTouchableClick = () => setTouchableClicks(c => c + 1);
+  const [taps, setTaps] = useState(0);
+  const onTap = () => setTaps(c => c + 1);
 
   return (
-    <Nav.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle title='Touchable'>
       <UI.VerticalLayout constraint='scroll' padding={2}>
-        {/* Header */}
+
+        {/* Intro */}
         <UI.Text variant='bodyMedium'>
-          Touchable provides the core interactive surfaces in the UI. Use
-          Touchable when you need a flexible pressable wrapper around custom content.
+          Touchable is the base building block for custom pressable UI.
         </UI.Text>
 
-        {/* Touchable · basic opacity feedback */}
-        <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Touchable · basic</UI.Text>
-
-        <UI.Box mt={2}>
-          <UI.Touchable
-            onPress={onTouchableClick}
-            style={{
-              paddingVertical: 10,
-              paddingHorizontal: 16
-            }}
-          >
-            <UI.Text variant='bodyMedium'>Tap me (opacity + ripple)</UI.Text>
-          </UI.Touchable>
-        </UI.Box>
+        <UI.Text variant='bodySmall' color={theme.colors.onSurfaceVariant}>
+          Android uses a native ripple. iOS uses pressed opacity. Rounded ripples clip when the container has
+          borderRadius + overflow: 'hidden'.
+        </UI.Text>
 
         <UI.Box mt={1}>
           <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
-            Touchable taps: {touchableClicks}
+            Taps: {taps}
           </UI.Text>
         </UI.Box>
 
-        {/* Touchable · custom content */}
+        {/* Basic */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Touchable · custom style</UI.Text>
+        <UI.Text variant='titleMedium'>Basic</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.Touchable
-            onPress={onTouchableClick}
+            onPress={onTap}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 16,
+              borderRadius: 10,
+              backgroundColor: colors.neutral_2,
+            }}
+          >
+            <UI.Text variant='bodyMedium'>Tap me</UI.Text>
+          </UI.Touchable>
+        </UI.Box>
+
+        {/* Custom content */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>Custom content</UI.Text>
+
+        <UI.Box mt={1}>
+          <UI.Touchable
+            onPress={onTap}
             style={{
               paddingVertical: 10,
               paddingHorizontal: 16,
               borderRadius: 999,
-              backgroundColor: colors.amber,
+              backgroundColor: colors.amber_2,
               flexDirection: 'row',
               alignItems: 'center',
             }}
@@ -71,45 +78,92 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
           </UI.Touchable>
         </UI.Box>
 
+        {/* Custom content · row item */}
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
-            Touchable taps: {touchableClicks}
-          </UI.Text>
-        </UI.Box>
-
-        {/* Touchable · radius & shapes */}
-        <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Touchable · radius & shapes</UI.Text>
-
-        <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
-            These examples demonstrate ripple clipping with rounded / custom shapes.
-          </UI.Text>
-        </UI.Box>
-
-        {/* pill */}
-        <UI.Box mt={2}>
           <UI.Touchable
-            onPress={onTouchableClick}
+            onPress={onTap}
+            style={{
+              paddingVertical: 12,
+              paddingHorizontal: 16,
+              borderRadius: 12,
+              backgroundColor: colors.neutral_1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <UI.Box dir='row' align='center'>
+              <UI.Icon source='account' variant='sm' />
+              <UI.Box ml={1}>
+                <UI.Text variant='bodyMedium'>Profile</UI.Text>
+                <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+                  View and edit your profile
+                </UI.Text>
+              </UI.Box>
+            </UI.Box>
+
+            <UI.Icon source='chevron-right' variant='sm' />
+          </UI.Touchable>
+        </UI.Box>
+
+        {/* Custom content · card */}
+        <UI.Box mt={1}>
+          <UI.Touchable
+            onPress={onTap}
+            style={{
+              padding: 16,
+              borderRadius: 16,
+              backgroundColor: colors.cyan_1,
+            }}
+          >
+            <UI.Text variant='titleSmall'>Card title</UI.Text>
+
+            <UI.Text
+              variant='bodySmall'
+              color={theme.colors.onSurfaceVariant}
+              topPx={16}
+            >
+              Touchable can wrap complex layouts like cards, tiles, and list rows.
+            </UI.Text>
+
+            <UI.Box mt={1} dir='row' align='center'>
+              <UI.Icon source='information-outline' variant='xs' />
+              <UI.Box ml={1}>
+                <UI.Text variant='labelSmall'>Tap to learn more</UI.Text>
+              </UI.Box>
+            </UI.Box>
+          </UI.Touchable>
+        </UI.Box>
+
+        {/* Ripple clipping */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>Ripple clipping</UI.Text>
+
+        <UI.LabelText>
+          Rounded shapes clip ripples when overflow is hidden (handled in Touchable).
+        </UI.LabelText>
+
+        <UI.Box mt={1}>
+          <UI.Touchable
+            onPress={onTap}
             style={{
               paddingVertical: 12,
               paddingHorizontal: 18,
               borderRadius: 999,
-              backgroundColor: colors.greenStrong,
+              backgroundColor: colors.green_3,
             }}
           >
-            <UI.Text variant='bodyMedium'>Pill (borderRadius: 999)</UI.Text>
+            <UI.Text variant='bodyMedium'>Pill</UI.Text>
           </UI.Touchable>
         </UI.Box>
 
-        {/* asymmetric radius */}
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.Touchable
-            onPress={onTouchableClick}
+            onPress={onTap}
             style={{
               paddingVertical: 12,
               paddingHorizontal: 18,
-              backgroundColor: colors.purpleBg,
+              backgroundColor: colors.purple_2,
               borderTopLeftRadius: 18,
               borderTopRightRadius: 4,
               borderBottomLeftRadius: 4,
@@ -120,55 +174,43 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
           </UI.Touchable>
         </UI.Box>
 
-        {/* card-like */}
-        <UI.Box mt={2}>
-          <UI.Touchable
-            onPress={onTouchableClick}
-            style={{
-              paddingVertical: 14,
-              paddingHorizontal: 16,
-              backgroundColor: colors.neutralAlt,
-              borderRadius: 14,
-            }}
-          >
-            <UI.Text variant='bodyMedium'>Card radius (14)</UI.Text>
-            <UI.Box mt={1}>
-              <UI.Text variant='bodySmall' color={theme.colors.onSurfaceVariant}>
-                Ripple should stay inside the rounded container.
-              </UI.Text>
-            </UI.Box>
-          </UI.Touchable>
-        </UI.Box>
+        {/* No feedback */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>No feedback</UI.Text>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
-            Touchable taps: {touchableClicks}
-          </UI.Text>
-        </UI.Box>
-
-        {/* Touchable · no feedback */}
-        <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Touchable · no feedback</UI.Text>
-
-        <UI.Box mt={2}>
           <UI.Touchable
-            onPress={onTouchableClick}
+            onPress={onTap}
             feedback='none'
             style={{
               paddingVertical: 10,
               paddingHorizontal: 16,
-              borderRadius: 8,
-              backgroundColor: colors.greenStrong,
+              borderRadius: 10,
+              backgroundColor: colors.cyan_2,
             }}
           >
             <UI.Text variant='bodyMedium'>No visual feedback</UI.Text>
           </UI.Touchable>
         </UI.Box>
 
+        {/* Disabled */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>Disabled</UI.Text>
+
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
-            Touchable taps: {touchableClicks}
-          </UI.Text>
+          <UI.Touchable
+            onPress={onTap}
+            disabled
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 16,
+              borderRadius: 10,
+              backgroundColor: colors.neutral_2,
+              opacity: 0.6,
+            }}
+          >
+            <UI.Text variant='bodyMedium'>Disabled</UI.Text>
+          </UI.Touchable>
         </UI.Box>
 
       </UI.VerticalLayout>
@@ -177,5 +219,3 @@ const TouchableScreen: Nav.ScreenType = ({}) => {
 };
 
 export default memo(TouchableScreen);
-
-const styles = StyleSheet.create({});
