@@ -42,7 +42,7 @@ const DialogScreen: Nav.ScreenType = () => {
 
         <UI.Dialog
           title='Delete item'
-          subtitle='This can’t be undone.'
+          subtitle="This can't be undone."
           isVisible={basicVisible}
           closeText='Cancel'
           submitText='Delete'

@@ -1,78 +1,114 @@
 import React, { memo, useState } from 'react';
 import { Nav, UI, Manager } from 'framework';
+import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
- * Popups demo
+ * Popup demo
  *
- * This screen demonstrates:
- * - UI.Popup: contextual floating menus triggered by a button or icon.
+ * Popup shows a contextual floating menu anchored to a trigger component.
+ * Most commonly: overflow menus, quick actions, small settings menus.
  ******************************************************************************************************************/
-const PopupsScreen: Nav.ScreenType = ({}) => {
+const PopupScreen: Nav.ScreenType = () => {
   const { theme } = Manager.useAppTheme();
-  const [lastPopupAction, setLastPopupAction] = useState<string | null>(null);
+  const { isDarkMode } = Manager.useAppSettings();
+  const colors = getDemoColors(isDarkMode);
+
+  const [lastAction, setLastAction] = useState<string | null>(null);
+
+  const onSelect = (value: string) => {
+    setLastAction(value);
+  };
 
   return (
-    <Nav.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle title='Popup'>
       <UI.VerticalLayout constraint='scroll' padding={2}>
-        {/* Header */}
+
+        {/* Intro */}
         <UI.Text variant='bodyMedium'>
-          Popup provides a contextual menu overlay for quick actions. This demo uses MenuList as popup content.
+          Popup is a small anchored overlay for quick actions.
         </UI.Text>
 
-        {/* Last action */}
-        {lastPopupAction && (
-          <UI.Box mt={1}>
-            <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
-              Last popup action: {lastPopupAction}
-            </UI.Text>
-          </UI.Box>
-        )}
+        <UI.Box mt={1}>
+          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+            Last action: {lastAction}
+          </UI.Text>
+        </UI.Box>
 
-        {/* Popup · basic menu */}
+        {/* Basic */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Popup · basic menu</UI.Text>
+        <UI.Text variant='titleMedium'>Basic</UI.Text>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.Popup
-            triggerComp={
-              <UI.Button mode='outlined'>
-                Open menu
-              </UI.Button>
-            }
+            triggerComp={<UI.Button mode='outlined' icon='menu'>Open menu</UI.Button>}
           >
             <UI.MenuList
               options={[
-                { value: 'New file', text: 'New file' },
-                { value: 'Open…', text: 'Open…' },
-                { value: 'Save', text: 'Save' },
-                { value: 'Duplicate', text: 'Duplicate' },
+                { value: 'New file', text: 'New file', icon: 'file-plus-outline' },
+                { value: 'Open…', text: 'Open…', icon: 'folder-open-outline' },
+                { value: 'Save', text: 'Save', icon: 'content-save-outline' },
+                { value: 'Duplicate', text: 'Duplicate', icon: 'content-duplicate' },
               ]}
-              onSelect={(value) => setLastPopupAction(value)}
+              onSelect={onSelect}
               showDividers
               dense
             />
           </UI.Popup>
         </UI.Box>
 
-        {/* Popup · icon trigger */}
+        {/* Icon trigger */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Popup · icon trigger</UI.Text>
+        <UI.Text variant='titleMedium'>Icon trigger</UI.Text>
 
-        <UI.Box mt={2} mb={4}>
+        <UI.Box mt={1}>
           <UI.Popup
             triggerComp={
-              <UI.IconButton icon='dots-vertical' mode='contained-tonal' />
+              <UI.IconButton
+                icon='dots-vertical'
+                mode='contained-tonal'
+                buttonColor={colors.cyan_1}
+                iconColor={colors.cyan_3}
+              />
             }
           >
             <UI.MenuList
               options={[
                 { value: 'Share', text: 'Share', icon: 'share-variant' },
                 { value: 'Rename', text: 'Rename', icon: 'pencil' },
-                { value: 'Move to trash', text: 'Move to trash', icon: 'trash-can-outline' },
+                {
+                  value: 'Move to trash',
+                  text: 'Move to trash',
+                  icon: 'trash-can-outline',
+                  textOpts: { color: colors.red_3, bold: true },
+                  iconOpts: { color: colors.red_3 },
+                },
               ]}
-              onSelect={(value) => setLastPopupAction(value)}
+              onSelect={onSelect}
               showDividers
               dense
+            />
+          </UI.Popup>
+        </UI.Box>
+
+        {/* Disabled */}
+        <UI.Divider spacing={1} />
+        <UI.Text variant='titleMedium'>Disabled</UI.Text>
+
+        <UI.Box mt={1}>
+          <UI.Popup
+            disabled
+            triggerComp={
+              <UI.Button mode='contained' disabled>
+                Disabled trigger
+              </UI.Button>
+            }
+          >
+            {/* Popup content won't open when disabled; keep it simple anyway */}
+            <UI.MenuList
+              options={[
+                { value: 'Hidden', text: 'Hidden' },
+              ]}
+              onSelect={onSelect}
             />
           </UI.Popup>
         </UI.Box>
@@ -82,4 +118,4 @@ const PopupsScreen: Nav.ScreenType = ({}) => {
   );
 };
 
-export default memo(PopupsScreen);
+export default memo(PopupScreen);
