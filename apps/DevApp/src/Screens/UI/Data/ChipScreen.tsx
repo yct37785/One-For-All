@@ -98,9 +98,9 @@ const ChipScreen: Nav.ScreenType = () => {
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+          <UI.LabelText variant='labelSmall'>
             Active filters: {Array.from(selectedFilters).join(', ')}
-          </UI.Text>
+          </UI.LabelText>
         </UI.Box>
 
         {/* Closable chips */}
@@ -124,9 +124,9 @@ const ChipScreen: Nav.ScreenType = () => {
             ))}
 
             {activeTags.length === 0 ? (
-              <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+              <UI.LabelText variant='labelSmall'>
                 No tags left. Reset to restore.
-              </UI.Text>
+              </UI.LabelText>
             ) : null}
           </UI.HorizontalLayout>
         </UI.Box>

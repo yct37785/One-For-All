@@ -120,9 +120,9 @@ const TextScreen: Nav.ScreenType = () => {
           </UI.Text>
 
           <UI.Box mt={2}>
-            <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+            <UI.LabelText variant='labelSmall'>
               Clicks: {clicks}
-            </UI.Text>
+            </UI.LabelText>
           </UI.Box>
         </UI.Box>
 

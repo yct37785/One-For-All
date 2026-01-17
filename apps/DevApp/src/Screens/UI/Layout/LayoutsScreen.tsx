@@ -24,9 +24,9 @@ const BlockBox: React.FC<{
       w={w}
       h={h}
     >
-      <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+      <UI.LabelText variant='labelSmall'>
         {i}
-      </UI.Text>
+      </UI.LabelText>
     </UI.Box>
   );
 };

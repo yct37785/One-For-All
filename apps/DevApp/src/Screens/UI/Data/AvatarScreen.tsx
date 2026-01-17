@@ -146,9 +146,9 @@ const AvatarScreen: Nav.ScreenType = () => {
             />
             <UI.Box>
               <UI.Text variant='bodySmall'>Tap the avatar to increment a counter.</UI.Text>
-              <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+              <UI.LabelText variant='labelSmall'>
                 Press count: {pressCount}
-              </UI.Text>
+              </UI.LabelText>
             </UI.Box>
           </UI.HorizontalLayout>
         </UI.Box>

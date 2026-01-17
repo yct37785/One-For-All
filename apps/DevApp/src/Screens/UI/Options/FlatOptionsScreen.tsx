@@ -55,12 +55,12 @@ const FlatOptionsScreen: Nav.ScreenType = () => {
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+          <UI.LabelText variant='labelSmall'>
             Selected tags:{' '}
             {selectedTags.size > 0
               ? Array.from(selectedTags).join(', ')
               : 'None'}
-          </UI.Text>
+          </UI.LabelText>
         </UI.Box>
 
         <UI.Box mt={1} self='flex-start'>

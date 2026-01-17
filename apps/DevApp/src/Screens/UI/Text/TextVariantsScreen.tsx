@@ -105,9 +105,9 @@ Until this society wakes up and rectifies itself, I will continue to do my work.
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+          <UI.LabelText variant='labelSmall'>
             Terms clicked: {tosClicks} · Privacy clicked: {privacyClicks}
-          </UI.Text>
+          </UI.LabelText>
         </UI.Box>
 
       </UI.VerticalLayout>

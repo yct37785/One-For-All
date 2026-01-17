@@ -121,9 +121,9 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
 
         {isLoading && (
           <UI.Box mt={1}>
-            <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+            <UI.LabelText variant='labelSmall'>
               Loading demo values from local storage...
-            </UI.Text>
+            </UI.LabelText>
           </UI.Box>
         )}
 
@@ -203,9 +203,9 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+          <UI.LabelText variant='labelSmall'>
             Stored value (local mirror): {demoName || '(empty)'}
-          </UI.Text>
+          </UI.LabelText>
         </UI.Box>
 
         {/* Reload & clearKVs */}

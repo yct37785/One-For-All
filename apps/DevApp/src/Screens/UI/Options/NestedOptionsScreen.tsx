@@ -131,12 +131,12 @@ const NestedOptionsScreen: Nav.ScreenType = () => {
 
         {/* Summary */}
         <UI.Box mt={2} mb={4}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+          <UI.LabelText variant='labelSmall'>
             Selected leaf options:{' '}
             {selectedLeafLabels.length > 0
               ? selectedLeafLabels.join(', ')
               : 'None'}
-          </UI.Text>
+          </UI.LabelText>
         </UI.Box>
 
       </UI.VerticalLayout>

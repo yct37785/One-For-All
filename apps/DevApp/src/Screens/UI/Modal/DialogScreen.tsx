@@ -25,9 +25,9 @@ const DialogScreen: Nav.ScreenType = () => {
         </UI.Text>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+          <UI.LabelText variant='labelSmall'>
             Last action: {lastAction}
-          </UI.Text>
+          </UI.LabelText>
         </UI.Box>
 
         {/* Basic confirm/cancel */}

@@ -56,9 +56,9 @@ const IconScreen: Nav.ScreenType = () => {
         <UI.Box mt={1}>
           <UI.HorizontalLayout gap={1} align='center'>
             <UI.Icon source='palette' color={colors.purple_3} />
-            <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+            <UI.LabelText variant='labelSmall'>
               Custom color (demoColors)
-            </UI.Text>
+            </UI.LabelText>
           </UI.HorizontalLayout>
         </UI.Box>
 

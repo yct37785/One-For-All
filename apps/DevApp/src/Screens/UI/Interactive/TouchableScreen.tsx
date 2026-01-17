@@ -31,9 +31,9 @@ const TouchableScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+          <UI.LabelText variant='labelSmall'>
             Taps: {taps}
-          </UI.Text>
+          </UI.LabelText>
         </UI.Box>
 
         {/* Basic */}
@@ -95,9 +95,9 @@ const TouchableScreen: Nav.ScreenType = () => {
               <UI.Icon source='account' variant='sm' />
               <UI.Box ml={1}>
                 <UI.Text variant='bodyMedium'>Profile</UI.Text>
-                <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+                <UI.LabelText variant='labelSmall'>
                   View and edit your profile
-                </UI.Text>
+                </UI.LabelText>
               </UI.Box>
             </UI.Box>
 
