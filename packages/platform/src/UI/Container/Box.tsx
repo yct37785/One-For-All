@@ -15,6 +15,12 @@ export type BoxProps = {
   w?: ViewStyle['width'];
   h?: ViewStyle['height'];
 
+  br?: number;
+  brtl?: number;
+  brtr?: number;
+  brbl?: number;
+  brbr?: number;
+
   p?: PadSpacingValue;
   m?: PadSpacingValue;
 
@@ -53,6 +59,12 @@ export type BoxProps = {
  * @param w?   - Width
  * @param h?   - Height
  * 
+ * @param br?  - Uniform border radius
+ * @param brtl?  - Border radius top left
+ * @param brtr?  - Border radius top right
+ * @param brbl?  - Border radius bottom left
+ * @param brbr?  - Border radius bottom left
+ * 
  * @param p?   - Uniform padding
  * @param m?   - Uniform margin
  * 
@@ -90,6 +102,9 @@ export const Box: React.FC<BoxProps> = memo(
     justify,
     self,
     w, h,
+    br,
+    brtl, brtr,
+    brbl, brbr,
     p, m,
     pv, ph, mv, mh,
     pt, pr, pb, pl,
@@ -118,6 +133,13 @@ export const Box: React.FC<BoxProps> = memo(
         // dimens
         width: w,
         height: h,
+
+        // border radius
+        borderRadius: br,
+        borderTopLeftRadius: brtl,
+        borderTopRightRadius: brtr,
+        borderBottomLeftRadius: brbl,
+        borderBottomRightRadius: brbr,
 
         // padding
         padding: spacing(p),
