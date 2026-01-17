@@ -2,118 +2,119 @@ import React, { memo, useState } from 'react';
 import { Nav, UI, Manager } from 'framework';
 
 /******************************************************************************************************************
- * Dialogs demo
+ * Dialog demo
  *
- * This screen demonstrates:
- * - UI.Dialog: focused modal surfaces for confirmation and decisions.
+ * Dialog is a focused modal surface for confirmations and short decisions.
  ******************************************************************************************************************/
-const DialogsScreen: Nav.ScreenType = ({}) => {
+const DialogScreen: Nav.ScreenType = () => {
   const { theme } = Manager.useAppTheme();
-  const [basicDialogVisible, setBasicDialogVisible] = useState(false);
-  const [customDialogVisible, setCustomDialogVisible] = useState(false);
-  const [dismissDialogVisible, setDismissDialogVisible] = useState(false);
-  const [lastDialogAction, setLastDialogAction] = useState<string | null>(null);
+
+  const [basicVisible, setBasicVisible] = useState(false);
+  const [customVisible, setCustomVisible] = useState(false);
+  const [dismissVisible, setDismissVisible] = useState(false);
+
+  const [lastAction, setLastAction] = useState<string | null>(null);
 
   return (
-    <Nav.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle title='Dialog'>
       <UI.VerticalLayout constraint='scroll' padding={2}>
-        {/* Header */}
+
+        {/* Intro */}
         <UI.Text variant='bodyMedium'>
-          Dialog provides a focused modal surface for confirmations, decisions, and important actions.
+          Dialog blocks the screen to focus attention on a choice.
         </UI.Text>
 
-        {/* Last action */}
-        {lastDialogAction && (
-          <UI.Box mt={1}>
-            <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
-              Last dialog action: {lastDialogAction}
-            </UI.Text>
-          </UI.Box>
-        )}
+        <UI.Box mt={1}>
+          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+            Last action: {lastAction}
+          </UI.Text>
+        </UI.Box>
 
-        {/* Dialog · basic */}
+        {/* Basic confirm/cancel */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Dialog · basic</UI.Text>
+        <UI.Text variant='titleMedium'>Confirm</UI.Text>
 
-        <UI.Box mt={2}>
-          <UI.Button mode='contained' onPress={() => setBasicDialogVisible(true)}>
-            Open basic dialog
+        <UI.Box mt={1}>
+          <UI.Button mode='contained' icon='trash-can-outline' onPress={() => setBasicVisible(true)}>
+            Delete item
           </UI.Button>
         </UI.Box>
 
         <UI.Dialog
           title='Delete item'
-          subtitle='Are you sure you want to delete this item? This action cannot be undone.'
-          isVisible={basicDialogVisible}
+          subtitle='This can’t be undone.'
+          isVisible={basicVisible}
+          closeText='Cancel'
+          submitText='Delete'
           onClose={() => {
-            setLastDialogAction('Cancelled delete');
-            setBasicDialogVisible(false);
+            setLastAction('Cancelled delete');
+            setBasicVisible(false);
           }}
           onSubmit={() => {
-            setLastDialogAction('Confirmed delete');
-            setBasicDialogVisible(false);
+            setLastAction('Confirmed delete');
+            setBasicVisible(false);
           }}
         />
 
-        {/* Dialog · with custom content */}
+        {/* Custom content */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Dialog · with custom content</UI.Text>
+        <UI.Text variant='titleMedium'>Custom content</UI.Text>
 
-        <UI.Box mt={2}>
-          <UI.Button mode='outlined' onPress={() => setCustomDialogVisible(true)}>
-            Open custom dialog
+        <UI.Box mt={1}>
+          <UI.Button mode='outlined' icon='logout' onPress={() => setCustomVisible(true)}>
+            Sign out
           </UI.Button>
         </UI.Box>
 
         <UI.Dialog
           title='Sign out'
-          subtitle='You can sign back in at any time.'
-          isVisible={customDialogVisible}
+          subtitle='You can sign back in anytime.'
+          isVisible={customVisible}
+          closeText='Cancel'
+          submitText='Sign out'
           onClose={() => {
-            setLastDialogAction('Dismissed sign-out dialog');
-            setCustomDialogVisible(false);
+            setLastAction('Cancelled sign out');
+            setCustomVisible(false);
           }}
           onSubmit={() => {
-            setLastDialogAction('Signed out');
-            setCustomDialogVisible(false);
+            setLastAction('Signed out');
+            setCustomVisible(false);
           }}
-          submitText='Sign out'
-          closeText='Cancel'
         >
           <UI.VerticalLayout padding={2} gap={1}>
             <UI.Text variant='bodySmall'>
-              You are about to sign out from this device. Any unsaved changes may be lost.
+              Signing out will remove your session from this device.
             </UI.Text>
             <UI.Text variant='bodySmall' color={theme.colors.onSurfaceVariant}>
-              Are you sure you want to continue?
+              Continue?
             </UI.Text>
           </UI.VerticalLayout>
         </UI.Dialog>
 
-        {/* Dialog · dismissable */}
+        {/* Dismissable info */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Dialog · dismissable</UI.Text>
+        <UI.Text variant='titleMedium'>Dismissable</UI.Text>
 
-        <UI.Box mt={2}>
-          <UI.Button mode='text' onPress={() => setDismissDialogVisible(true)}>
-            Open dismissable dialog
+        <UI.Box mt={1}>
+          <UI.Button mode='text' icon='information-outline' onPress={() => setDismissVisible(true)}>
+            Tips
           </UI.Button>
         </UI.Box>
 
         <UI.Dialog
           title='Tips'
-          subtitle='Tap outside to dismiss this dialog.'
-          isVisible={dismissDialogVisible}
+          subtitle='Tap outside to dismiss.'
+          isVisible={dismissVisible}
           dismissable
-          onClose={() => {
-            setLastDialogAction('Closed tips dialog');
-            setDismissDialogVisible(false);
-          }}
           closeText='Got it'
+          onClose={() => {
+            setLastAction('Closed tips');
+            setDismissVisible(false);
+          }}
         >
           <UI.VerticalLayout padding={2} gap={1}>
             <UI.Text variant='bodySmall'>
-              Use dismissable dialogs for low-risk information that does not require a strict decision.
+              Use dismissable dialogs for low-risk info that doesn’t require a strict decision.
             </UI.Text>
           </UI.VerticalLayout>
         </UI.Dialog>
@@ -123,4 +124,4 @@ const DialogsScreen: Nav.ScreenType = ({}) => {
   );
 };
 
-export default memo(DialogsScreen);
+export default memo(DialogScreen);
