@@ -33,7 +33,7 @@ const AvatarScreen: Nav.ScreenType = () => {
         <UI.Text variant='titleMedium'>Label avatars</UI.Text>
 
         <UI.LabelText>
-          If no uri is provided, Avatar renders a label (commonly initials). Size can be a preset or a number.
+          If no uri is provided, Avatar renders a label (commonly initials).
         </UI.LabelText>
 
         <UI.Box mt={1}>
@@ -51,7 +51,7 @@ const AvatarScreen: Nav.ScreenType = () => {
         <UI.Text variant='titleMedium'>Shape</UI.Text>
 
         <UI.LabelText>
-          circle is the default. rounded is useful for “brand tiles” and non-human entities.
+          Rounded is useful for "brand titles" and non-human entities.
         </UI.LabelText>
 
         <UI.Box mt={1}>
@@ -131,7 +131,7 @@ const AvatarScreen: Nav.ScreenType = () => {
         <UI.Text variant='titleMedium'>Interactive</UI.Text>
 
         <UI.LabelText>
-          Passing onPress makes the avatar tappable (wrapped in Touchable).
+          Passing onPress makes the avatar tappable.
         </UI.LabelText>
 
         <UI.Box mt={1}>

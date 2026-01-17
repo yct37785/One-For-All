@@ -118,7 +118,7 @@ const BoxScreen: Nav.ScreenType = () => {
         <UI.Text variant='titleMedium'>Flex grow</UI.Text>
 
         <UI.LabelText>
-          flex controls how much available space a Box consumes relative to siblings.
+          Flex controls how much available space a Box consumes relative to siblings.
         </UI.LabelText>
 
         <UI.Box mt={1}>
@@ -142,7 +142,7 @@ const BoxScreen: Nav.ScreenType = () => {
         <UI.Text variant='titleMedium'>Alignment (parent)</UI.Text>
 
         <UI.LabelText>
-          align and justify control how children are positioned inside the Box.
+          Align and justify control how children are positioned inside the Box.
         </UI.LabelText>
 
         <UI.Box
@@ -164,7 +164,7 @@ const BoxScreen: Nav.ScreenType = () => {
         <UI.Text variant='titleMedium'>Self alignment (child override)</UI.Text>
 
         <UI.LabelText>
-          self lets a child override the parent's cross-axis alignment.
+          Self lets a child override the parent's cross-axis alignment.
           This is also useful to prevent unwanted stretching.
         </UI.LabelText>
 
