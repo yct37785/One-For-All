@@ -26,10 +26,9 @@ const TouchableScreen: Nav.ScreenType = () => {
           Touchable is the base building block for custom pressable UI.
         </UI.Text>
 
-        <UI.Text variant='bodySmall' color={theme.colors.onSurfaceVariant}>
-          Android uses a native ripple. iOS uses pressed opacity. Rounded ripples clip when the container has
-          borderRadius + overflow: 'hidden'.
-        </UI.Text>
+        <UI.LabelText variant='bodySmall'>
+          * Android uses a native ripple. iOS uses pressed opacity.
+        </UI.LabelText>
 
         <UI.Box mt={1}>
           <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
@@ -121,7 +120,7 @@ const TouchableScreen: Nav.ScreenType = () => {
             <UI.Text
               variant='bodySmall'
               color={theme.colors.onSurfaceVariant}
-              topPx={16}
+              top={2}
             >
               Touchable can wrap complex layouts like cards, tiles, and list rows.
             </UI.Text>
