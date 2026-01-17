@@ -26,6 +26,7 @@ export type ThemeDesign = {
 
   textOpacityHEmphasis: number;
   textOpacityMEmphasis: number;
+  loadingOpacity: number;
 
   iconSizeSmall: number;
   iconSizeMedium: number;

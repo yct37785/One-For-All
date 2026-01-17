@@ -51,17 +51,18 @@ const UIElemsScreen: Nav.ScreenType = ({ navigate }) => {
   ];
 
   const UI_optionsOptions = [
+    { value: uiScreenRoutes.flatOptions, text: 'Flat options' },
     { value: uiScreenRoutes.nestedOptions, text: 'Nested options' },
   ];
 
   const UI_selectionsOptions = [
-    { value: uiScreenRoutes.selections, text: 'Selections & toggles' },
+    { value: uiScreenRoutes.selections, text: 'Selections and toggles' },
   ];
 
   const UI_textOptions = [
-    { value: uiScreenRoutes.text, text: 'Text' },
-    { value: uiScreenRoutes.textVariants, text: 'Highlight / Hyperlink' },
     { value: uiScreenRoutes.icon, text: 'Icon' },
+    { value: uiScreenRoutes.text, text: 'Text' },
+    { value: uiScreenRoutes.textVariants, text: 'Text variants' },
   ];
 
   /******************************************************************************************************************
@@ -92,7 +93,7 @@ const UIElemsScreen: Nav.ScreenType = ({ navigate }) => {
 
         <UI.Box p={1}>
           <UI.Text variant='titleLarge'>UI Elements Showcase</UI.Text>
-          <UI.Text variant='bodyMedium' topPx={2}>
+          <UI.Text variant='bodyMedium' top={1}>
             Reusable UI primitive elements, including layout, text, inputs etc.
           </UI.Text>
         </UI.Box>

@@ -1,8 +1,8 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import { Nav, UI, Manager } from 'framework';
 
 /******************************************************************************************************************
- * Initial nested options schema.
+ * Demo schema (static / immutable).
  ******************************************************************************************************************/
 const INITIAL_SCHEMA: UI.OptionSchema = {
   colors: {
@@ -13,8 +13,8 @@ const INITIAL_SCHEMA: UI.OptionSchema = {
       green: { label: 'Green' },
     },
   },
-  class: {
-    label: 'Class',
+  animals: {
+    label: 'Animals',
     children: {
       mammals: {
         label: 'Mammals',
@@ -36,13 +36,13 @@ const INITIAL_SCHEMA: UI.OptionSchema = {
 };
 
 /******************************************************************************************************************
- * Helper: collect labels of selected leaf options (no children).
+ * Helper: collect labels of selected leaf nodes (nodes with no children).
  ******************************************************************************************************************/
 const collectSelectedLeafLabels = (
   schema: UI.OptionSchema,
   value: UI.OptionValue
 ): string[] => {
-  const acc: string[] = [];
+  const out: string[] = [];
 
   const walk = (schemaNodeMap: UI.OptionSchema, valueNodeMap: UI.OptionValue) => {
     Object.entries(schemaNodeMap).forEach(([key, schemaNode]) => {
@@ -50,52 +50,76 @@ const collectSelectedLeafLabels = (
       const state = valueNode ? valueNode.state : UI.OptionState.Unselected;
 
       const hasChildren =
-        !!schemaNode.children && !!valueNode && !!valueNode.children &&
+        !!schemaNode.children &&
+        !!valueNode?.children &&
         Object.keys(schemaNode.children).length > 0;
 
-      if (schemaNode.children && valueNode && valueNode.children) {
+      if (schemaNode.children && valueNode?.children) {
         walk(schemaNode.children, valueNode.children);
       }
 
       if (!hasChildren && state === UI.OptionState.Selected) {
-        acc.push(schemaNode.label);
+        out.push(schemaNode.label);
       }
     });
   };
 
   walk(schema, value);
-  return acc;
+  return out;
 };
 
 /******************************************************************************************************************
  * Nested options demo
  *
- * This screen demonstrates:
- * - UI.CheckOptions: checkbox-based nested options built on BaseOptions.
+ * - UI.CheckOptions: checkbox tree built on BaseOptions
+ * - Shows propagation + indeterminate aggregation
  ******************************************************************************************************************/
-const NestedOptionsScreen: Nav.ScreenType = ({}) => {
+const NestedOptionsScreen: Nav.ScreenType = () => {
   const { theme } = Manager.useAppTheme();
+
   const [value, setValue] = useState<UI.OptionValue>(() =>
     UI.buildOptionsValueFromSchema(INITIAL_SCHEMA)
   );
 
-  const selectedLeafLabels = collectSelectedLeafLabels(INITIAL_SCHEMA, value);
+  const selectedLeafLabels = useMemo(
+    () => collectSelectedLeafLabels(INITIAL_SCHEMA, value),
+    [value]
+  );
+
+  const selectAll = () => {
+    setValue(UI.buildOptionsValueFromSchema(INITIAL_SCHEMA, UI.OptionState.Selected));
+  };
+
+  const clearAll = () => {
+    setValue(UI.buildOptionsValueFromSchema(INITIAL_SCHEMA, UI.OptionState.Unselected));
+  };
 
   return (
-    <Nav.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle title='Nested options'>
       <UI.VerticalLayout constraint='scroll' padding={2}>
-        {/* Header */}
+
+        {/* Intro */}
         <UI.Text variant='bodyMedium'>
-          A generic nested option tree with parent-child propagation and
-          indeterminate states with a given static tree structure schema.
+          A nested option tree with parent-child propagation and indeterminate state.
         </UI.Text>
+
+        {/* Quick actions */}
+        <UI.Divider spacing={1} />
+        <UI.HorizontalLayout gap={1} constraint='wrap'>
+          <UI.Button mode='outlined' icon='check-all' onPress={selectAll}>
+            Select all
+          </UI.Button>
+          <UI.Button mode='outlined' icon='close' onPress={clearAll}>
+            Clear all
+          </UI.Button>
+        </UI.HorizontalLayout>
 
         {/* CheckOptions */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>CheckOptions</UI.Text>
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
-          Checkbox-based UI built on the generic nested option tree.
-        </UI.Text>
+        <UI.LabelText>
+          Tap a parent to toggle all children. Mixed children become indeterminate.
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.CheckOptions
@@ -105,15 +129,16 @@ const NestedOptionsScreen: Nav.ScreenType = ({}) => {
           />
         </UI.Box>
 
-        {/* Selection summary */}
+        {/* Summary */}
         <UI.Box mt={2} mb={4}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+          <UI.LabelText variant='labelSmall'>
             Selected leaf options:{' '}
             {selectedLeafLabels.length > 0
               ? selectedLeafLabels.join(', ')
               : 'None'}
-          </UI.Text>
+          </UI.LabelText>
         </UI.Box>
+
       </UI.VerticalLayout>
     </Nav.ScreenLayout>
   );

@@ -4,106 +4,112 @@ import { Nav, UI, Manager } from 'framework';
 /******************************************************************************************************************
  * Chip demo
  *
- * This screen demonstrates:
- * - UI.Chip: basic tags and filters
- * - Selected / disabled states
- * - Leading icons
- * - Closable chips (isClose)
+ * Chip is a compact, rounded label used for:
+ * - quick filters (toggle selected state)
+ * - tags (static) and removable tags (isClose)
+ * - optional leading icons
+ *
+ * Note: Chip is controlled by the parent — you decide selected/disabled and what onPress does.
  ******************************************************************************************************************/
-const ChipScreen: Nav.ScreenType = ({}) => {
+const ChipScreen: Nav.ScreenType = () => {
   const { theme } = Manager.useAppTheme();
-  // simple toggle state for “filter-like” chips
+
+  /**
+   * Filter chips demo (controlled selected set)
+   */
   const [selectedFilters, setSelectedFilters] = useState<Set<string>>(
     () => new Set(['All'])
   );
 
-  // closable chips demo
-  const initialTags = ['React', 'TypeScript', 'UI Kit'];
-  const [activeTags, setActiveTags] = useState<string[]>(initialTags);
-
   const toggleFilter = (label: string) => {
     setSelectedFilters(prev => {
       const next = new Set(prev);
-      if (next.has(label)) {
-        next.delete(label);
-      } else {
-        next.add(label);
-      }
-      // always keep at least one selected in this demo
-      if (next.size === 0) {
-        next.add(label);
-      }
+
+      if (next.has(label)) next.delete(label);
+      else next.add(label);
+
+      // demo rule: keep at least one selected
+      if (next.size === 0) next.add(label);
+
       return next;
     });
   };
 
-  const handleRemoveTag = (label: string) => {
+  /**
+   * Closable chips demo (controlled list)
+   */
+  const initialTags = ['React', 'TypeScript', 'UI Kit'];
+  const [activeTags, setActiveTags] = useState<string[]>(initialTags);
+
+  const removeTag = (label: string) => {
     setActiveTags(prev => prev.filter(t => t !== label));
   };
 
-  const handleResetTags = () => {
+  const resetTags = () => {
     setActiveTags(initialTags);
   };
 
   return (
-    <Nav.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle title='Chips'>
       <UI.VerticalLayout constraint='scroll' padding={2}>
-        {/* Header */}
+
+        {/* Intro */}
         <UI.Text variant='bodyMedium'>
-          Chip provides a compact rounded label for tags and filters. It supports selected and disabled states,
-          optional leading icons, and an optional close state.
+          Chip is a compact control for tags and filters.
         </UI.Text>
-
-        {/* Basic chips */}
-        <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Basic chips</UI.Text>
-
-        <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={1}>
-            <UI.Chip label='Default' />
-            <UI.Chip label='Selected' selected />
-            <UI.Chip label='Disabled' disabled />
-          </UI.HorizontalLayout>
-        </UI.Box>
 
         {/* States */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>States</UI.Text>
-        <UI.Box>
-          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
-            Selected chips appear filled; disabled chips are dimmed and non-interactive.
-          </UI.Text>
-        </UI.Box>
+
+        <UI.LabelText>
+          Chips support selected/disabled states with leading icons.
+        </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={1}>
-            <UI.Chip label='Unread' selected />
-            <UI.Chip label='Read' />
-            <UI.Chip label='Archived' disabled />
+          <UI.HorizontalLayout gap={1} constraint='wrap'>
+            <UI.Chip label='Default' />
+            <UI.Chip label='Selected' selected />
+            <UI.Chip label='Disabled' disabled />
+            <UI.Chip label='With icon' leadingIcon='tag' />
+            <UI.Chip label='Icon + selected' leadingIcon='star' selected />
           </UI.HorizontalLayout>
         </UI.Box>
 
-        {/* Leading icons */}
+        {/* Filter chips */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Leading icons</UI.Text>
+        <UI.Text variant='titleMedium'>Filter chips</UI.Text>
+
+        <UI.LabelText>
+          Tap to toggle filters. The parent owns selected state.
+        </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={1}>
-            <UI.Chip label='Email' leadingIcon='email' />
-            <UI.Chip label='Starred' leadingIcon='star' selected />
-            <UI.Chip label='Download' leadingIcon='download' />
+          <UI.HorizontalLayout gap={1} constraint='wrap'>
+            {['All', 'Work', 'Personal', 'Pinned'].map(label => (
+              <UI.Chip
+                key={label}
+                label={label}
+                selected={selectedFilters.has(label)}
+                onPress={() => toggleFilter(label)}
+              />
+            ))}
           </UI.HorizontalLayout>
+        </UI.Box>
+
+        <UI.Box mt={1}>
+          <UI.LabelText variant='labelSmall'>
+            Active filters: {Array.from(selectedFilters).join(', ')}
+          </UI.LabelText>
         </UI.Box>
 
         {/* Closable chips */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Closable chips</UI.Text>
-        <UI.Box>
-          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
-            Set isClose to true to show a trailing "X". Pressing the chip calls onPress, allowing the parent to
-            remove or update the chip.
-          </UI.Text>
-        </UI.Box>
+        <UI.Text variant='titleMedium'>Closable tags</UI.Text>
+
+        <UI.LabelText>
+          Use isClose to show a trailing "X" for chips meant to be closed.
+        </UI.LabelText>
 
         <UI.Box mt={1}>
           <UI.HorizontalLayout gap={1} constraint='wrap'>
@@ -113,56 +119,24 @@ const ChipScreen: Nav.ScreenType = ({}) => {
                 label={tag}
                 selected
                 isClose
-                onPress={() => handleRemoveTag(tag)}
+                onPress={() => removeTag(tag)}
               />
             ))}
-            {activeTags.length === 0 && (
-              <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
-                No tags left. Use the reset button below to add them back.
-              </UI.Text>
-            )}
+
+            {activeTags.length === 0 ? (
+              <UI.LabelText variant='labelSmall'>
+                No tags left. Reset to restore.
+              </UI.LabelText>
+            ) : null}
           </UI.HorizontalLayout>
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Button mode='outlined' onPress={handleResetTags}>
+          <UI.Button mode='outlined' onPress={resetTags}>
             Reset tags
           </UI.Button>
         </UI.Box>
 
-        {/* Filter-like usage */}
-        <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Filter chips</UI.Text>
-        <UI.Box>
-          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
-            Tap chips to toggle filters. Parent state manages which filters are active.
-          </UI.Text>
-        </UI.Box>
-
-        <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={1} constraint='wrap'>
-            {['All', 'Work', 'Personal', 'Pinned'].map(label => {
-              const isSelected = selectedFilters.has(label);
-              return (
-                <UI.Chip
-                  key={label}
-                  label={label}
-                  selected={isSelected}
-                  onPress={() => toggleFilter(label)}
-                />
-              );
-            })}
-          </UI.HorizontalLayout>
-        </UI.Box>
-
-        <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
-            Active filters:{' '}
-            {selectedFilters.size > 0
-              ? Array.from(selectedFilters).join(', ')
-              : 'None'}
-          </UI.Text>
-        </UI.Box>
       </UI.VerticalLayout>
     </Nav.ScreenLayout>
   );

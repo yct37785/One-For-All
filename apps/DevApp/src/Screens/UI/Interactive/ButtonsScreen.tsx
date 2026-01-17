@@ -1,227 +1,216 @@
 import React, { memo, useState } from 'react';
 import { Nav, UI, Manager } from 'framework';
+import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
- * Button demo
+ * Buttons demo
  *
- * This screen demonstrates:
- * - UI.Button: MD3-styled buttons for primary actions.
- * - UI.IconButton: compact icon-only buttons for secondary actions and toggles.
+ * - Button: primary and secondary actions (MD3)
+ * - IconButton: compact icon-only actions
+ * - TextButton: lightweight text action
  ******************************************************************************************************************/
-const ButtonScreen: Nav.ScreenType = ({}) => {
-  const { theme } = Manager.useAppTheme();
+const ButtonsScreen: Nav.ScreenType = () => {
+  const { isDarkMode } = Manager.useAppSettings();
+  const colors = getDemoColors(isDarkMode);
+
   const [btnClicks, setBtnClicks] = useState(0);
   const [iconClicks, setIconClicks] = useState(0);
   const [favorite, setFavorite] = useState(false);
-  const [starred, setStarred] = useState(false);
 
-  const onBtnClick = () => setBtnClicks(c => c + 1);
-  const onIconClick = () => setIconClicks(c => c + 1);
+  // demo-only loading state (user-triggered)
+  const [btnLoading, setBtnLoading] = useState(false);
+  const [iconLoading, setIconLoading] = useState(false);
+
+  const bumpBtn = () => setBtnClicks(c => c + 1);
+  const bumpIcon = () => setIconClicks(c => c + 1);
+
+  const triggerBtnLoading = () => {
+    if (btnLoading) return;
+    bumpBtn();
+    setBtnLoading(true);
+    setTimeout(() => setBtnLoading(false), 1200);
+  };
+
+  const triggerIconLoading = () => {
+    if (iconLoading) return;
+    bumpIcon();
+    setIconLoading(true);
+    setTimeout(() => setIconLoading(false), 1200);
+  };
 
   return (
-    <Nav.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle title='Buttons'>
       <UI.VerticalLayout constraint='scroll' padding={2}>
-        {/* Header */}
+
+        {/* Intro */}
         <UI.Text variant='bodyMedium'>
-          Buttons represent the primary actions in the UI. Use Button for standard actions
-          with predefined layouts and typography. IconButton provides compact icon-only
-          actions. TextButton is a lightweight alternative that behaves like a button but
-          inherits full Text props.
+          Buttons trigger actions. Pick a mode based on emphasis.
         </UI.Text>
 
-        {/* Button · basic modes */}
+        {/* Button */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Button · basic modes</UI.Text>
+        <UI.Text variant='titleMedium'>Button</UI.Text>
+        
+        <UI.LabelText>
+          Use Button for primary actions.
+        </UI.LabelText>
 
-        <UI.Box mt={2}>
-          <UI.Button mode='text' onPress={onBtnClick}>
-            Text button
-          </UI.Button>
+        <UI.Box>
+          <UI.VerticalLayout gap={1}>
+            <UI.Button mode='text' onPress={bumpBtn}>Text</UI.Button>
+            <UI.Button mode='outlined' onPress={bumpBtn}>Outlined</UI.Button>
+            <UI.Button mode='contained' onPress={bumpBtn}>Contained</UI.Button>
+            <UI.Button mode='contained-tonal' onPress={bumpBtn}>Tonal</UI.Button>
+            <UI.Button mode='elevated' onPress={bumpBtn}>Elevated</UI.Button>
+          </UI.VerticalLayout>
         </UI.Box>
 
-        <UI.Box mt={1}>
-          <UI.Button mode='outlined' onPress={onBtnClick}>
-            Outlined button
-          </UI.Button>
-        </UI.Box>
+        <UI.Text variant='labelSmall'>Button clicks: {btnClicks}</UI.Text>
 
-        <UI.Box mt={1}>
-          <UI.Button mode='contained' onPress={onBtnClick}>
-            Contained button
-          </UI.Button>
-        </UI.Box>
-
-        <UI.Box mt={1}>
-          <UI.Button mode='contained-tonal' onPress={onBtnClick}>
-            Contained tonal button
-          </UI.Button>
-        </UI.Box>
-
-        <UI.Box mt={1}>
-          <UI.Button mode='elevated' onPress={onBtnClick}>
-            Elevated button
-          </UI.Button>
-        </UI.Box>
-
-        <UI.Box mt={2}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
-            Button clicks: {btnClicks}
-          </UI.Text>
-        </UI.Box>
-
-        {/* Button · compact & custom colors */}
+        {/* Button · states */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Button · compact & custom colors</UI.Text>
+        <UI.Text variant='titleMedium'>Button · states</UI.Text>
 
-        <UI.Box mt={2}>
-          <UI.Button
-            mode='contained'
-            compact
-            onPress={onBtnClick}
-            contentStyle={{ minHeight: 36 }}
-          >
-            Compact contained
-          </UI.Button>
+        <UI.LabelText>
+          Add leading icons to emphasize desired state. Loading action supported.
+        </UI.LabelText>
+
+        <UI.Box>
+          <UI.VerticalLayout gap={1}>
+            <UI.Button
+              mode='contained'
+              icon='cloud-upload'
+              loading={btnLoading}
+              onPress={triggerBtnLoading}
+            >
+              {btnLoading ? 'Loading' : 'Press to load'}
+            </UI.Button>
+
+            <UI.Button mode='contained' icon='cancel' disabled>
+              Disabled
+            </UI.Button>
+          </UI.VerticalLayout>
         </UI.Box>
 
-        <UI.Box mt={1}>
-          <UI.Button
-            mode='contained'
-            onPress={onBtnClick}
-            buttonColor='#3949ab'
-            textColor='#ffffff'
-          >
-            Custom primary
-          </UI.Button>
-        </UI.Box>
-
-        <UI.Box mt={1}>
-          <UI.Button
-            mode='outlined'
-            onPress={onBtnClick}
-            textColor='#f4511e'
-          >
-            Custom label color
-          </UI.Button>
-        </UI.Box>
-
-        {/* Button · loading & disabled */}
+        {/* Button · custom colors */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Button · loading & disabled</UI.Text>
+        <UI.Text variant='titleMedium'>Button · custom colors</UI.Text>
 
-        <UI.Box mt={2}>
-          <UI.Button mode='contained' loading>
-            Loading…
-          </UI.Button>
+        <UI.LabelText>
+          Override button and text color.
+        </UI.LabelText>
+
+        <UI.Box>
+          <UI.VerticalLayout gap={1}>
+            <UI.Button
+              mode='contained'
+              icon='star'
+              buttonColor={colors.purple_3}
+              textColor='#fff'
+              onPress={bumpBtn}
+            >
+              Custom primary
+            </UI.Button>
+
+            <UI.Button
+              mode='contained-tonal'
+              icon='tune'
+              buttonColor={colors.cyan_1}
+              textColor={colors.cyan_3}
+              onPress={bumpBtn}
+            >
+              Custom tonal
+            </UI.Button>
+
+            <UI.Button
+              mode='outlined'
+              icon='alert'
+              textColor={colors.red_3}
+              onPress={bumpBtn}
+            >
+              Destructive label
+            </UI.Button>
+          </UI.VerticalLayout>
         </UI.Box>
 
-        <UI.Box mt={1}>
-          <UI.Button mode='contained' disabled>
-            Disabled
-          </UI.Button>
-        </UI.Box>
-
-        {/* Button · custom content */}
+        {/* IconButton */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>Button · custom content</UI.Text>
+        <UI.Text variant='titleMedium'>IconButton</UI.Text>
 
-        <UI.Box mt={2}>
-          <UI.Button
-            mode='contained'
-            onPress={onBtnClick}
-            contentStyle={{ flexDirection: 'row', alignItems: 'center' }}
-          >
-            <UI.Icon source='star' variant='sm' />
-            <UI.Box ml={1}>
-              <UI.Text variant='labelLarge'>Starred</UI.Text>
-            </UI.Box>
-          </UI.Button>
-        </UI.Box>
+        <UI.LabelText>
+          Use IconButton for compact icon actions.
+        </UI.LabelText>
 
-        {/* IconButton · basic */}
-        <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>IconButton · basic</UI.Text>
-
-        <UI.Box mt={1}>
+        <UI.Box>
           <UI.HorizontalLayout gap={2}>
-            <UI.IconButton icon='dots-vertical' onPress={onIconClick} />
-            <UI.IconButton icon='cog' onPress={onIconClick} />
-            <UI.IconButton icon='magnify' onPress={onIconClick} />
+            <UI.IconButton icon='dots-vertical' onPress={bumpIcon} />
+            <UI.IconButton icon='cog' onPress={bumpIcon} />
+            <UI.IconButton icon='magnify' onPress={bumpIcon} />
           </UI.HorizontalLayout>
         </UI.Box>
 
-        <UI.Box mt={2}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
-            Button clicks: {btnClicks}
-          </UI.Text>
-        </UI.Box>
+        <UI.Text variant='labelSmall'>Icon clicks: {iconClicks}</UI.Text>
 
-        {/* IconButton · modes & colors */}
+        {/* IconButton · modes */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>IconButton · modes & colors</UI.Text>
+        <UI.Text variant='titleMedium'>IconButton · modes</UI.Text>
 
-        <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2}>
-            <UI.IconButton icon='heart-outline' mode='outlined' onPress={onIconClick} />
+        <UI.LabelText>
+          Disabled and loading action supported.
+        </UI.LabelText>
+
+        <UI.Box>
+          <UI.HorizontalLayout gap={2} constraint='wrap'>
+            <UI.IconButton icon='heart-outline' mode='outlined' onPress={bumpIcon} />
+
             <UI.IconButton
               icon='delete'
               mode='contained'
-              buttonColor='#e53935'
-              iconColor='#ffffff'
-              onPress={onIconClick}
+              buttonColor={colors.red_3}
+              iconColor='#fff'
+              onPress={bumpIcon}
             />
+
             <UI.IconButton
               icon='download'
               mode='contained-tonal'
-              buttonColor='#bbdefb'
-              iconColor='#1e88e5'
-              onPress={onIconClick}
+              buttonColor={colors.cyan_1}
+              iconColor={colors.cyan_3}
+              onPress={bumpIcon}
             />
-          </UI.HorizontalLayout>
-        </UI.Box>
 
-        {/* IconButton · disabled */}
-        <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>IconButton · disabled</UI.Text>
-
-        <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2}>
             <UI.IconButton icon='share-variant' disabled />
-            <UI.IconButton icon='content-copy' disabled />
+
+            <UI.IconButton
+              icon='download'
+              loading={iconLoading}
+              onPress={triggerIconLoading}
+            />
+
           </UI.HorizontalLayout>
         </UI.Box>
 
-        {/* IconButton · toggle / selected */}
+        {/* IconButton · toggle */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>IconButton · toggle</UI.Text>
 
-        <UI.Box mt={1}>
+        <UI.LabelText>
+          Toggle state.
+        </UI.LabelText>
+
+        <UI.Box>
           <UI.HorizontalLayout gap={2} align='center'>
             <UI.IconButton
               icon={favorite ? 'heart' : 'heart-outline'}
               mode='contained'
-              buttonColor={favorite ? '#e53935' : undefined}
-              iconColor={favorite ? '#ffffff' : undefined}
               selected={favorite}
+              buttonColor={favorite ? colors.red_3 : undefined}
+              iconColor={favorite ? '#fff' : undefined}
               onPress={() => {
                 setFavorite(v => !v);
-                onIconClick();
+                bumpIcon();
               }}
             />
-            <UI.IconButton
-              icon={starred ? 'star' : 'star-outline'}
-              mode='outlined'
-              selected={starred}
-              onPress={() => {
-                setStarred(v => !v);
-                onIconClick();
-              }}
-            />
-            <UI.Box>
-              <UI.Text variant='bodySmall'>
-                Tap icons to toggle state.
-              </UI.Text>
-            </UI.Box>
           </UI.HorizontalLayout>
         </UI.Box>
 
@@ -229,49 +218,36 @@ const ButtonScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>IconButton · sizes</UI.Text>
 
-        <UI.Box mt={1}>
+        <UI.Box>
           <UI.HorizontalLayout gap={2} constraint='wrap'>
-            <UI.IconButton icon='plus' size='xs' onPress={onIconClick} />
-            <UI.IconButton icon='plus' size='sm' onPress={onIconClick} />
-            <UI.IconButton icon='plus' size='md' onPress={onIconClick} />
-            <UI.IconButton icon='plus' size='lg' onPress={onIconClick} />
-            <UI.IconButton icon='plus' size='xl' onPress={onIconClick} />
+            <UI.IconButton icon='plus' size='xs' onPress={bumpIcon} />
+            <UI.IconButton icon='plus' size='sm' onPress={bumpIcon} />
+            <UI.IconButton icon='plus' size='md' onPress={bumpIcon} />
+            <UI.IconButton icon='plus' size='lg' onPress={bumpIcon} />
+            <UI.IconButton icon='plus' size='xl' onPress={bumpIcon} />
           </UI.HorizontalLayout>
         </UI.Box>
 
-        {/* TextButton · lightweight text-only button */}
+        {/* TextButton */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>TextButton</UI.Text>
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
-          A text-forward button alternative. Unlike Button mode="text", which has a fixed
-          visual style, TextButton fully inherits Text props.
-        </UI.Text>
 
-        <UI.Box mt={2}>
-          <UI.TextButton onPress={onBtnClick}>
-            Text button
-          </UI.TextButton>
-        </UI.Box>
+        <UI.LabelText>
+          Use TextButton when you want "tap-able text" with full text styling control.
+        </UI.LabelText>
 
-        <UI.Box mt={1}>
-          <UI.TextButton
-            onPress={onBtnClick}
-            textOpts={{ variant: 'labelLarge', bold: true }}
-          >
-            Bold large text
-          </UI.TextButton>
-        </UI.Box>
+        <UI.Box>
+          <UI.VerticalLayout gap={1}>
+            <UI.TextButton onPress={bumpBtn}>Text action</UI.TextButton>
 
-        <UI.Box mt={1}>
-          <UI.TextButton disabled>
-            Disabled text button
-          </UI.TextButton>
-        </UI.Box>
+            <UI.TextButton onPress={bumpBtn} textOpts={{ bold: true }}>
+              Emphasized text
+            </UI.TextButton>
 
-        <UI.Box mt={2}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
-            Button clicks: {btnClicks}
-          </UI.Text>
+            <UI.TextButton disabled>
+              Disabled text
+            </UI.TextButton>
+          </UI.VerticalLayout>
         </UI.Box>
 
       </UI.VerticalLayout>
@@ -279,4 +255,4 @@ const ButtonScreen: Nav.ScreenType = ({}) => {
   );
 };
 
-export default memo(ButtonScreen);
+export default memo(ButtonsScreen);

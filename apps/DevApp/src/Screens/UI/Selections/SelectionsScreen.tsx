@@ -33,21 +33,19 @@ const SelectionsScreen: Nav.ScreenType = ({}) => {
     <Nav.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
-        {/* Header */}
+        {/* Intro */}
         <UI.Text variant='bodyMedium'>
-          Selections represent mutually exclusive choices where only one option
-          can be active at a time. Use these components for “pick one” scenarios
-          such as category, mode, or preference selection.
+          Selection components help users pick a value or toggle a preference.
         </UI.Text>
 
         {/* Picker */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Picker</UI.Text>
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           A dropdown selector for choosing a single value from a list.
-        </UI.Text>
+        </UI.LabelText>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.Picker
             value={pickerValue}
             options={pickerOptions}
@@ -64,11 +62,11 @@ const SelectionsScreen: Nav.ScreenType = ({}) => {
         {/* RadioGroup */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>RadioGroup</UI.Text>
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           A set of radio buttons for visible, side-by-side single selection.
-        </UI.Text>
+        </UI.LabelText>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.RadioGroup
             options={radioOptions}
             value={radioValue}
@@ -85,11 +83,11 @@ const SelectionsScreen: Nav.ScreenType = ({}) => {
         {/* Switch */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Switch</UI.Text>
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           A binary toggle for enabling/disabling a preference.
-        </UI.Text>
+        </UI.LabelText>
 
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.Switch
             value={switchValue}
             onValueChange={setSwitchValue}

@@ -5,11 +5,21 @@ import { useAppTheme } from '../../Manager/App/AppThemeManager';
 
 export type BoxProps = {
   bgColor?: string;
+
   flex?: number;
   dir?: FlexStyle['flexDirection'];
   align?: ViewStyle['alignItems'];
   justify?: ViewStyle['justifyContent'];
   self?: ViewStyle['alignSelf'];
+
+  w?: ViewStyle['width'];
+  h?: ViewStyle['height'];
+
+  br?: number;
+  brtl?: number;
+  brtr?: number;
+  brbl?: number;
+  brbr?: number;
 
   p?: PadSpacingValue;
   m?: PadSpacingValue;
@@ -39,11 +49,21 @@ export type BoxProps = {
  *  - Use to wrap singular child UI components.
  * 
  * @param bgColor?  - Background color of the container
+ * 
  * @param flex?     - Flex value to control layout behavior
  * @param dir?      - Flex direction
  * @param align?    - Align items
  * @param justify?  - Justify content
  * @param self?     - Align self (cross-axis alignment)
+ * 
+ * @param w?   - Width
+ * @param h?   - Height
+ * 
+ * @param br?  - Uniform border radius
+ * @param brtl?  - Border radius top left
+ * @param brtr?  - Border radius top right
+ * @param brbl?  - Border radius bottom left
+ * @param brbr?  - Border radius bottom left
  * 
  * @param p?   - Uniform padding
  * @param m?   - Uniform margin
@@ -81,6 +101,10 @@ export const Box: React.FC<BoxProps> = memo(
     align,
     justify,
     self,
+    w, h,
+    br,
+    brtl, brtr,
+    brbl, brbr,
     p, m,
     pv, ph, mv, mh,
     pt, pr, pb, pl,
@@ -105,6 +129,17 @@ export const Box: React.FC<BoxProps> = memo(
         alignItems: align,
         justifyContent: justify,
         alignSelf: self,
+
+        // dimens
+        width: w,
+        height: h,
+
+        // border radius
+        borderRadius: br,
+        borderTopLeftRadius: brtl,
+        borderTopRightRadius: brtr,
+        borderBottomLeftRadius: brbl,
+        borderBottomRightRadius: brbr,
 
         // padding
         padding: spacing(p),

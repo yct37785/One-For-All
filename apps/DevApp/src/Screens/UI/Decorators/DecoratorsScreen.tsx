@@ -12,26 +12,23 @@ import { Nav, UI, Manager } from 'framework';
  * - Divider: a thin separator for grouping related sections
  ******************************************************************************************************************/
 const DecoratorsScreen: Nav.ScreenType = ({}) => {
-  const { theme } = Manager.useAppTheme();
+  
   return (
-    <Nav.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle title='Decorators'>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
         {/* Header */}
         <UI.Text variant='bodyMedium'>
-          Decorators enhance structure and clarity in your UI. They do not hold
-          content or affect layout directly. Instead, they support the surrounding
-          components by providing visual separation.
+          Decorators add visual separation and grouping. They just help the UI read better.
         </UI.Text>
 
         {/* Divider */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Divider</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
-          A thin separator used to divide related sections. Dividers help break
-          content into logical groups for better readability.
-        </UI.Text>
+        <UI.LabelText>
+          Dividers help break content into logical groups for better readability.
+        </UI.LabelText>
 
         {/* Horizontal divider demo */}
         <UI.Box mt={2}>
@@ -42,9 +39,9 @@ const DecoratorsScreen: Nav.ScreenType = ({}) => {
 
         {/* Vertical divider demo */}
         <UI.Box mt={3}>
-          <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+          <UI.LabelText>
             Vertical divider inside a row
-          </UI.Text>
+          </UI.LabelText>
 
           <UI.Box mt={2}>
             <UI.HorizontalLayout dir='row' align='center' gap={2}>

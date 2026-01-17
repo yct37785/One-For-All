@@ -13,6 +13,7 @@ export const uiScreenRoutes = {
   menulist: 'ui_menulist',
   dialog: 'ui_dialog',
   popup: 'ui_popup',
+  flatOptions: 'ui_flatOptions',
   nestedOptions: 'ui_nestedOptions',
   selections: 'ui_selections',
   icon: 'ui_icon',

@@ -1,7 +1,8 @@
 import React, { memo, ReactNode, useMemo } from 'react';
 import { TextStyle, StyleSheet } from 'react-native';
-import { Text as PaperText } from 'react-native-paper';
 import { useAppTheme } from '../../Manager/App/AppThemeManager';
+import { PadSpacingValue } from '../../Types';
+import { Text as PaperText } from 'react-native-paper';
 
 /******************************************************************************************************************
  * MD3 typography variants.
@@ -15,7 +16,7 @@ export interface TextProps {
   bold?: boolean;
   numberOfLines?: number;
   underline?: boolean;
-  topPx?: number;
+  top?: PadSpacingValue;
   onPress?: () => void;
 }
 
@@ -28,7 +29,7 @@ export interface TextProps {
  * @param bold?            - Bolded text
  * @param numberOfLines?   - Fixed num of lines if provided
  * @param underline?       - Underline the text
- * @param topPx?           - Margin top (px) for line space
+ * @param top?             - Margin top for line space
  * @param onPress?         - Press handler for clickable text
  * @param children?        - Text content
  * 
@@ -48,7 +49,7 @@ export const Text: React.FC<TextProps & { children?: string | ReactNode }> = mem
     bold,
     numberOfLines,
     underline = false,
-    topPx = 0,
+    top = 0,
     onPress,
     children
   }) => {
@@ -66,10 +67,10 @@ export const Text: React.FC<TextProps & { children?: string | ReactNode }> = mem
 
       const boldStyle: TextStyle = { fontWeight: bold ? 'bold' : 'normal' };
 
-      const topStyle: TextStyle | undefined = topPx ? { marginTop: topPx } : undefined;
+      const topStyle: TextStyle | undefined = top ? { marginTop: top * theme.design.padSize } : undefined;
 
       return [colorStyle, boldStyle, underline && styles.underline, topStyle];
-    }, [resolvedColor, highlightColor, bold, underline, topPx]);
+    }, [resolvedColor, highlightColor, bold, underline, top]);
 
     return (
       <PaperText

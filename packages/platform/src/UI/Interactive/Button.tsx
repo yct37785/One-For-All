@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import type { GestureResponderEvent, StyleProp, ViewStyle, TextStyle, ColorValue } from 'react-native';
+import { useAppTheme } from '../../Manager/App/AppThemeManager';
 import { Button as PaperButton } from 'react-native-paper';
 
 export type ButtonMode = 'text' | 'outlined' | 'contained' | 'elevated' | 'contained-tonal';
@@ -7,6 +8,7 @@ export type ButtonMode = 'text' | 'outlined' | 'contained' | 'elevated' | 'conta
 export type ButtonProps = {
   mode?: ButtonMode;
   compact?: boolean;
+  icon?: string;
   disabled?: boolean;
   loading?: boolean;
   buttonColor?: string;
@@ -27,6 +29,7 @@ export type ButtonProps = {
  * 
  * @param mode?             - Visual style variant (MD3)
  * @param compact?          - Slightly reduce paddings/min-height for dense layouts
+ * @param icon?             - Leading icon
  * @param disabled?         - Disable interactions and apply disabled styles
  * @param loading?          - Show a small busy indicator and reduce label opacity
  * @param buttonColor?      - Background color override (enabled state)
@@ -46,16 +49,41 @@ export type ButtonProps = {
  * <Button mode="text" onPress={handlePress}>Text</Button>
  * <Button mode="outlined" icon="cog" onPress={openSettings}>Settings</Button>
  * <Button mode="contained" loading>Saving…</Button>
- * <Button mode="contained-tonal" buttonColor="#6750A4">Tonal</Button>
- * <Button mode="elevated" disabled>Disabled</Button>
- * <Button mode="contained" compact contentStyle={{ minHeight: 36 }}>Compact</Button>
- * <Button mode="text" labelStyle={{ textTransform: 'none' }}>No Caps</Button>
  * ```
  ******************************************************************************************************************/
-export const Button: React.FC<ButtonProps> = memo(({ mode = 'contained', children, ...rest }) => {
-  return (
-    <PaperButton mode={mode} {...rest}>
-      {children}
-    </PaperButton>
-  );
-});
+export const Button: React.FC<ButtonProps> = memo(
+  ({ mode = 'contained', children, labelStyle, loading, onPress, disabled, ...rest }) => {
+    const { theme } = useAppTheme();
+
+    /**
+     * Centralized visual rule:
+     * - If loading, keep the label color but make it more subdued.
+     * - We apply this after user labelStyle so it always takes effect.
+     */
+    const resolvedLabelStyle: StyleProp<TextStyle> = [
+      labelStyle,
+      loading ? { opacity: theme.design.loadingOpacity } : null,
+    ];
+
+    const resolvedOnPress = loading ? undefined : onPress;
+    const resolvedOnPressIn = loading ? undefined : rest.onPressIn;
+    const resolvedOnPressOut = loading ? undefined : rest.onPressOut;
+    const resolvedOnLongPress = loading ? undefined : rest.onLongPress;
+
+    return (
+      <PaperButton
+        mode={mode}
+        labelStyle={resolvedLabelStyle}
+        loading={loading}
+        disabled={disabled}
+        onPress={resolvedOnPress}
+        onPressIn={resolvedOnPressIn}
+        onPressOut={resolvedOnPressOut}
+        onLongPress={resolvedOnLongPress}
+        {...rest}
+      >
+        {children}
+      </PaperButton>
+    );
+  }
+);

@@ -121,9 +121,9 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
 
         {isLoading && (
           <UI.Box mt={1}>
-            <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+            <UI.LabelText variant='labelSmall'>
               Loading demo values from local storage...
-            </UI.Text>
+            </UI.LabelText>
           </UI.Box>
         )}
 
@@ -131,9 +131,9 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Boolean flag</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Toggles a boolean stored under the key &apos;demoFlag&apos;.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.Text variant='bodySmall'>
@@ -155,9 +155,9 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Counter</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Increments a numeric value stored under &apos;demoCounter&apos;.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.Text variant='bodySmall'>
@@ -179,9 +179,9 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Text value</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Stores a short text string under &apos;demoName&apos;.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.TextInput
@@ -203,18 +203,18 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+          <UI.LabelText variant='labelSmall'>
             Stored value (local mirror): {demoName || '(empty)'}
-          </UI.Text>
+          </UI.LabelText>
         </UI.Box>
 
         {/* Reload & clearKVs */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Reload &amp; clearKVs</UI.Text>
 
-        <UI.Text variant='labelMedium' color={theme.colors.onSurfaceVariant}>
+        <UI.LabelText>
           Reload reads from storage again; clearKVs removes all keys and re-seeds defaults.
-        </UI.Text>
+        </UI.LabelText>
 
         <UI.Box mt={2}>
           <UI.Button

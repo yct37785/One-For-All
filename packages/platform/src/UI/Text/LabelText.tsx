@@ -2,40 +2,35 @@ import React, { memo, ReactNode } from 'react';
 import { useAppTheme } from '../../Manager/App/AppThemeManager';
 import { Text, TextProps } from './Text';
 
-export interface HyperlinkTextProps extends TextProps {
-  onPress?: () => void;
+export interface LabelTextProps extends Omit<TextProps, 'color'> {
   children?: string | ReactNode;
 }
 
 /******************************************************************************************************************
- * A dedicated hyperlink component:
- * - Always appears as a hyperlink (primary color + underline)
- * - Uses the Text UI component internally for variants/colors
- * - Relies on Text's onPress so it can be safely nested inside Text blocks
+ * Helper component for label type text:
+ * - Color fixed to onSurfaceVariant
+ * - Size default to labelMedium
  * 
  * @param TextProps     - Extended from TextProps
- * @param onPress       - Callback fired when text is pressed
  * @param children?     - Text content
  *
  * @usage
  * ```tsx
- * <HyperlinkText onPress={openTerms}>Terms of Service</HyperlinkText>
- * <HyperlinkText onPress={openPrivacy}>Privacy Policy</HyperlinkText>
+ * <LabelText>This is a label.</LabelText>
  * ```
  ******************************************************************************************************************/
-export const HyperlinkText: React.FC<HyperlinkTextProps> = memo(
+export const LabelText: React.FC<LabelTextProps> = memo(
   ({
-    onPress,
+    variant = 'labelMedium',
     children,
     ...rest
   }) => {
     const { theme } = useAppTheme();
     return (
       <Text
+        variant={variant}
         {...rest}
-        color={theme.colors.primary}
-        underline={true}
-        onPress={onPress}
+        color={theme.colors.onSurfaceVariant}
       >
         {children}
       </Text>

@@ -27,7 +27,7 @@ export type ScreenLayoutProps = {
  * Screen layout — Base view for screens.
  * - Use this in each screen to render consistent base screen layout (AppBar, SafeAreaView etc).
  * - Put all wrapper views here.
- *
+ * 
  * @property showTitle?     - To show title text for the AppBar (default: false)
  * @property title?         - Title text for the AppBar (defaults to current route name) if showTitle is true
  * @property showBack?      - Show a back button
@@ -35,7 +35,7 @@ export type ScreenLayoutProps = {
  * @property RightContent?  - Optional component rendered in the AppBar’s right slot (after LeftContent).
  * @property appbarBottomMargin?  - Margin below appbar
  * @property children?      - Screen content rendered below the AppBar inside a SafeAreaView
- * 
+ *
  * @usage
  * ```tsx
  *  return (

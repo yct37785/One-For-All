@@ -5,154 +5,148 @@ import { getDemoColors } from '../../demoColors';
 /******************************************************************************************************************
  * Collapsible & Accordion demo
  *
- * This screen demonstrates:
- * - UI.CollapsibleContainer: single header that toggles its body.
- * - UI.AccordionContainer: multiple headers where one section is open at a time.
+ * - CollapsibleContainer: one header that toggles one body.
+ * - AccordionContainer: multiple headers where only one section is open at a time.
  ******************************************************************************************************************/
-const CollapsibleScreen: Nav.ScreenType = ({}) => {
+const CollapsibleScreen: Nav.ScreenType = () => {
   const { isDarkMode } = Manager.useAppSettings();
   const { theme } = Manager.useAppTheme();
   const colors = getDemoColors(isDarkMode);
 
   return (
-    <Nav.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle title='Collapsibles'>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
-        {/* Header */}
+        {/* Intro */}
         <UI.Text variant='bodyMedium'>
-          CollapsibleContainer and AccordionContainer wrap content with tappable headers that expand or collapse
-          their children.
+          These components hide and reveal content behind a tappable header.
         </UI.Text>
 
-        {/* CollapsibleContainer · basic */}
+        {/* Collapsible · minimal */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>CollapsibleContainer · basic</UI.Text>
+        <UI.Text variant='titleMedium'>CollapsibleContainer</UI.Text>
+
+        <UI.LabelText>
+          A single toggle that expands or collapses its content.
+        </UI.LabelText>
 
         <UI.CollapsibleContainer text='Tap to toggle'>
-          <UI.Box bgColor={colors.skyBg} p={1}>
-            <UI.Text variant='bodySmall'>Simple collapsible content.</UI.Text>
+          <UI.Box bgColor={colors.neutral_2} p={1}>
+            <UI.Text variant='bodySmall'>
+              This content is hidden until the header is opened.
+            </UI.Text>
           </UI.Box>
         </UI.CollapsibleContainer>
 
-        {/* CollapsibleContainer · icon & text (expanded colors) */}
+        {/* Styled / colored headers */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>CollapsibleContainer · colored headers</UI.Text>
+        <UI.Text variant='titleMedium'>CollapsibleContainer · styled headers</UI.Text>
 
-        {/* Primary */}
-        <UI.Box mt={2}>
+        <UI.LabelText>
+          Headers can be styled with icons, colors, and text variants to convey meaning.
+        </UI.LabelText>
+
+        <UI.Box mt={1}>
+
+          {/* Info (primary) */}
           <UI.CollapsibleContainer
-            text='Profile settings'
-            icon='account-circle'
+            text='Information'
+            icon='information-outline'
             textOpts={{ variant: 'titleSmall', color: theme.colors.primary }}
             iconOpts={{ color: theme.colors.primary }}
           >
-            <UI.Box bgColor={colors.orangeBg} p={1}>
-              <UI.Text variant='bodySmall'>Primary themed header.</UI.Text>
+            <UI.Box bgColor={colors.cyan_1} p={1}>
+              <UI.Text variant='bodySmall'>
+                Informational content, tips, or helpful context.
+              </UI.Text>
             </UI.Box>
           </UI.CollapsibleContainer>
-        </UI.Box>
 
-        {/* Secondary */}
-        <UI.Box mt={2}>
+          {/* Warning (tertiary) */}
           <UI.CollapsibleContainer
-            text='Notifications'
-            icon='bell'
-            textOpts={{ variant: 'titleSmall', color: theme.colors.secondary }}
-            iconOpts={{ color: theme.colors.secondary }}
+            text='Warning'
+            icon='alert-outline'
+            textOpts={{ variant: 'titleSmall', color: theme.colors.tertiary }}
+            iconOpts={{ color: theme.colors.tertiary }}
           >
-            <UI.Box bgColor={colors.purpleBg} p={1}>
-              <UI.Text variant='bodySmall'>Secondary themed header.</UI.Text>
+            <UI.Box bgColor={colors.amber_1} p={1}>
+              <UI.Text variant='bodySmall'>
+                Warnings, edge cases, or things to be careful about.
+              </UI.Text>
             </UI.Box>
           </UI.CollapsibleContainer>
-        </UI.Box>
 
-        {/* Error */}
-        <UI.Box mt={2}>
+          {/* Danger (error) */}
           <UI.CollapsibleContainer
             text='Danger zone'
             icon='alert'
             textOpts={{ variant: 'titleSmall', color: theme.colors.error }}
             iconOpts={{ color: theme.colors.error }}
           >
-            <UI.Box bgColor={colors.red} p={1}>
-              <UI.Text variant='bodySmall'>Error themed header.</UI.Text>
+            <UI.Box bgColor={colors.red_1} p={1}>
+              <UI.Text variant='bodySmall'>
+                Destructive actions, irreversible changes, or sensitive settings.
+              </UI.Text>
             </UI.Box>
           </UI.CollapsibleContainer>
-        </UI.Box>
 
-        {/* Custom colored header */}
-        <UI.Box mt={2}>
+          {/* Custom (pure demoColors styling) */}
           <UI.CollapsibleContainer
             text='Custom color'
             icon='palette'
-            textOpts={{ variant: 'titleSmall', color: colors.cyanC }}
-            iconOpts={{ color: colors.purpleB }}
+            textOpts={{ variant: 'titleSmall', color: colors.purple_3 }}
+            iconOpts={{ color: colors.cyan_3 }}
           >
-            <UI.Box bgColor={colors.purpleBg} p={1}>
-              <UI.Text variant='bodySmall'>Header using custom hex color.</UI.Text>
+            <UI.Box bgColor={colors.purple_1} p={1}>
+              <UI.Text variant='bodySmall'>
+                Header using demoColors tiers (not tied to theme tokens).
+              </UI.Text>
             </UI.Box>
           </UI.CollapsibleContainer>
+
         </UI.Box>
 
-        {/* AccordionContainer · basic */}
+        {/* Accordion · minimal */}
         <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>AccordionContainer · basic</UI.Text>
+        <UI.Text variant='titleMedium'>AccordionContainer</UI.Text>
 
-        <UI.Box mt={2}>
-          <UI.AccordionContainer
-            sections={[
-              { text: 'First' },
-              { text: 'Second' },
-              { text: 'Third' },
-            ]}
-          >
-            <UI.Box bgColor={colors.cyanBg} p={1}>
-              <UI.Text variant='bodySmall'>First section content.</UI.Text>
-            </UI.Box>
-            <UI.Box bgColor={colors.amber} p={1}>
-              <UI.Text variant='bodySmall'>Second section content.</UI.Text>
-            </UI.Box>
-            <UI.Box bgColor={colors.neutralAlt} p={1}>
-              <UI.Text variant='bodySmall'>Third section content.</UI.Text>
-            </UI.Box>
-          </UI.AccordionContainer>
-        </UI.Box>
+        <UI.LabelText>
+          Multiple sections share one open state — opening one closes the others.
+        </UI.LabelText>
 
-        {/* AccordionContainer · styled headers */}
-        <UI.Divider spacing={1} />
-        <UI.Text variant='titleMedium'>AccordionContainer · styled headers</UI.Text>
-
-        <UI.Box mt={2}>
+        <UI.Box mt={1}>
           <UI.AccordionContainer
             sections={[
               {
                 text: 'Info',
                 icon: 'information-outline',
-                textOpts: { variant: 'titleSmall', color: theme.colors.primary },   // primary
+                textOpts: { variant: 'titleSmall', color: theme.colors.primary },
                 iconOpts: { color: theme.colors.primary },
               },
               {
                 text: 'Warning',
                 icon: 'alert-outline',
-                textOpts: { variant: 'titleSmall', color: colors.amber }, // custom orange
-                iconOpts: { color: colors.amber },
+                textOpts: { variant: 'titleSmall', color: theme.colors.tertiary },
+                iconOpts: { color: theme.colors.tertiary },
               },
               {
                 text: 'Success',
                 icon: 'check-circle-outline',
-                textOpts: { variant: 'titleSmall', color: colors.greenStrong }, // custom green
-                iconOpts: { color: colors.greenStrong },
+                textOpts: { variant: 'titleSmall', color: theme.colors.secondary },
+                iconOpts: { color: theme.colors.secondary },
               },
             ]}
           >
-            <UI.Box bgColor={colors.skyBg} p={1}>
-              <UI.Text variant='bodySmall'>Info content.</UI.Text>
+            <UI.Box bgColor={colors.cyan_1} p={1}>
+              <UI.Text variant='bodySmall'>Info content: helpful details or explanations.</UI.Text>
             </UI.Box>
-            <UI.Box bgColor={colors.orangeBg} p={1}>
-              <UI.Text variant='bodySmall'>Warning content.</UI.Text>
+
+            <UI.Box bgColor={colors.amber_1} p={1}>
+              <UI.Text variant='bodySmall'>Warning content: things to pay attention to.</UI.Text>
             </UI.Box>
-            <UI.Box bgColor={colors.neutralAlt} p={1}>
-              <UI.Text variant='bodySmall'>Success content.</UI.Text>
+
+            <UI.Box bgColor={colors.green_1} p={1}>
+              <UI.Text variant='bodySmall'>Success content: confirmations or completed steps.</UI.Text>
             </UI.Box>
           </UI.AccordionContainer>
         </UI.Box>
