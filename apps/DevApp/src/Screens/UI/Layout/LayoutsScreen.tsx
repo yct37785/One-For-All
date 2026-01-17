@@ -3,211 +3,167 @@ import { Nav, UI, Manager } from 'framework';
 import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
- * Colors and sizing helpers
+ * Visual helpers
  ******************************************************************************************************************/
 const small = 50;
 const big = 80;
 
-/******************************************************************************************************************
- * Small colored box used to visualize layouts
- ******************************************************************************************************************/
 const BlockBox: React.FC<{
   i: number;
-  width: number;
-  height: number;
+  w: number;
+  h: number;
   bgColor: string;
-}> = ({ i, width, height, bgColor }) => {
+}> = ({ i, w, h, bgColor }) => {
   const { theme } = Manager.useAppTheme();
-  return <UI.Box
-    align='center'
-    justify='center'
-    bgColor={bgColor}
-    style={{ width, height }}
-  >
-    <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
-      child {i}
-    </UI.Text>
-  </UI.Box>
+
+  return (
+    <UI.Box
+      align='center'
+      justify='center'
+      bgColor={bgColor}
+      w={w}
+      h={h}
+    >
+      <UI.Text variant='labelSmall' color={theme.colors.onSurfaceVariant}>
+        {i}
+      </UI.Text>
+    </UI.Box>
+  );
 };
 
 /******************************************************************************************************************
  * Layouts demo
  *
  * Shows:
- * - VerticalLayout / HorizontalLayout with optional reverse
- * - constraint='wrap' and constraint='scroll'
- * - gap spacing
- * - Simple nested layouts for app-like structure
+ * - VerticalLayout / HorizontalLayout (dir)
+ * - align (cross-axis)
+ * - constraint: none | wrap | scroll
+ * - gap + padding
+ * - nested layouts for simple app structure
  ******************************************************************************************************************/
-const LayoutsScreen: Nav.ScreenType = ({}) => {
+const LayoutsScreen: Nav.ScreenType = () => {
   const { isDarkMode } = Manager.useAppSettings();
   const { theme } = Manager.useAppTheme();
   const colors = getDemoColors(isDarkMode);
 
   return (
-    <Nav.ScreenLayout showTitle>
+    <Nav.ScreenLayout showTitle title='Layouts'>
       <UI.VerticalLayout constraint='scroll' padding={2}>
 
         {/* Intro */}
         <UI.Text variant='bodyMedium'>
-          Layouts arrange children in rows or columns with built-in padding, gap,
-          wrapping, and scrolling. Use them for structure and use Box for smaller
-          visual wrappers.
+          Layouts arrange children in rows or columns with padding, gap, wrapping, and optional scrolling.
         </UI.Text>
+
+        <UI.LabelText variant='bodySmall'>
+          * Use Layouts for structure. Use Box for smaller visual wrappers.
+        </UI.LabelText>
 
         {/* Direction */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Direction</UI.Text>
 
-        <UI.Box mt={1}>
-          <UI.LabelText>
-            HorizontalLayout (row)
-          </UI.LabelText>
-        </UI.Box>
-        <UI.HorizontalLayout bgColor={colors.tier1} gap={1}>
-          <BlockBox i={1} width={small} height={small} bgColor={colors.tier2} />
-          <BlockBox i={2} width={small} height={small} bgColor={colors.tier2} />
-          <BlockBox i={3} width={small} height={small} bgColor={colors.tier2} />
+        <UI.LabelText>HorizontalLayout (row)</UI.LabelText>
+        <UI.HorizontalLayout bgColor={colors.neutral_1} gap={1} padding={1}>
+          <BlockBox i={1} w={small} h={small} bgColor={colors.cyan_2} />
+          <BlockBox i={2} w={small} h={small} bgColor={colors.cyan_2} />
+          <BlockBox i={3} w={small} h={small} bgColor={colors.cyan_2} />
         </UI.HorizontalLayout>
 
         <UI.Box mt={1}>
-          <UI.LabelText>
-            VerticalLayout (column)
-          </UI.LabelText>
+          <UI.LabelText>VerticalLayout (column)</UI.LabelText>
         </UI.Box>
-        <UI.VerticalLayout bgColor={colors.tier1} gap={1}>
-          <BlockBox i={1} width={small} height={small} bgColor={colors.tier2} />
-          <BlockBox i={2} width={small} height={small} bgColor={colors.tier2} />
-          <BlockBox i={3} width={small} height={small} bgColor={colors.tier2} />
+        <UI.VerticalLayout bgColor={colors.neutral_1} gap={1} padding={1}>
+          <BlockBox i={1} w={small} h={small} bgColor={colors.cyan_2} />
+          <BlockBox i={2} w={small} h={small} bgColor={colors.cyan_2} />
+          <BlockBox i={3} w={small} h={small} bgColor={colors.cyan_2} />
         </UI.VerticalLayout>
 
         {/* Align */}
         <UI.Divider spacing={2} />
         <UI.Text variant='titleMedium'>Align</UI.Text>
-        <UI.Box>
-          <UI.LabelText>
-            align controls cross-axis alignment of children (e.g. vertical alignment in a horizontal layout).
-          </UI.LabelText>
-        </UI.Box>
+        <UI.LabelText>
+          align controls cross-axis alignment (vertical alignment in a row layout).
+        </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.LabelText>
-            HorizontalLayout (align = 'center')
-          </UI.LabelText>
+          <UI.LabelText>HorizontalLayout (align='center')</UI.LabelText>
         </UI.Box>
-        <UI.HorizontalLayout
-          bgColor={colors.tier1}
-          gap={1}
-          height={100}
-          align='center'
-        >
-          <BlockBox i={1} width={small} height={small} bgColor={colors.tier2} />
-          <BlockBox i={2} width={small} height={big} bgColor={colors.tier2} />
-          <BlockBox i={3} width={small} height={small} bgColor={colors.tier2} />
+        <UI.HorizontalLayout bgColor={colors.neutral_1} gap={1} padding={1} height={120} align='center'>
+          <BlockBox i={1} w={small} h={small} bgColor={colors.purple_2} />
+          <BlockBox i={2} w={small} h={big} bgColor={colors.purple_2} />
+          <BlockBox i={3} w={small} h={small} bgColor={colors.purple_2} />
         </UI.HorizontalLayout>
 
-        {/* Constraint wrap */}
+        {/* Wrap */}
         <UI.Divider spacing={2} />
-        <UI.Text variant='titleMedium'>Constraint wrap</UI.Text>
-        <UI.Box>
-          <UI.LabelText>
-            Wrap lets children flow onto new rows or new columns when they run out of space.
-          </UI.LabelText>
-        </UI.Box>
+        <UI.Text variant='titleMedium'>Constraint · wrap</UI.Text>
+        <UI.LabelText>
+          wrap lets children flow onto new rows/columns when space runs out.
+        </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.LabelText>
-            VerticalLayout (wrap, parent height)
-          </UI.LabelText>
+          <UI.LabelText>VerticalLayout (wrap with fixed height)</UI.LabelText>
         </UI.Box>
         <UI.VerticalLayout
           constraint='wrap'
-          bgColor={colors.tier1}
+          bgColor={colors.neutral_1}
           height={190}
           gap={1}
+          padding={1}
         >
-          <BlockBox i={1} width={small} height={small} bgColor={colors.tier2} />
-          <BlockBox i={2} width={big} height={small} bgColor={colors.tier2} />
-          <BlockBox i={3} width={big} height={small} bgColor={colors.tier2} />
-          <BlockBox i={4} width={small} height={big} bgColor={colors.tier2} />
-          <BlockBox i={5} width={big} height={big} bgColor={colors.tier2} />
-          <BlockBox i={6} width={big} height={small} bgColor={colors.tier2} />
+          <BlockBox i={1} w={small} h={small} bgColor={colors.amber_2} />
+          <BlockBox i={2} w={big} h={small} bgColor={colors.amber_2} />
+          <BlockBox i={3} w={big} h={small} bgColor={colors.amber_2} />
+          <BlockBox i={4} w={small} h={big} bgColor={colors.amber_2} />
+          <BlockBox i={5} w={big} h={big} bgColor={colors.amber_2} />
+          <BlockBox i={6} w={big} h={small} bgColor={colors.amber_2} />
         </UI.VerticalLayout>
 
         <UI.Box mt={1}>
-          <UI.LabelText>
-            HorizontalLayout (wrap, parent width)
-          </UI.LabelText>
+          <UI.LabelText>HorizontalLayout (wrap)</UI.LabelText>
         </UI.Box>
         <UI.HorizontalLayout
           constraint='wrap'
-          bgColor={colors.tier1}
+          bgColor={colors.neutral_1}
           gap={1}
+          padding={1}
         >
-          <BlockBox i={1} width={big} height={small} bgColor={colors.tier2} />
-          <BlockBox i={2} width={small} height={big} bgColor={colors.tier2} />
-          <BlockBox i={3} width={small} height={small} bgColor={colors.tier2} />
-          <BlockBox i={4} width={big} height={small} bgColor={colors.tier2} />
-          <BlockBox i={5} width={big} height={small} bgColor={colors.tier2} />
+          <BlockBox i={1} w={big} h={small} bgColor={colors.amber_2} />
+          <BlockBox i={2} w={small} h={big} bgColor={colors.amber_2} />
+          <BlockBox i={3} w={small} h={small} bgColor={colors.amber_2} />
+          <BlockBox i={4} w={big} h={small} bgColor={colors.amber_2} />
+          <BlockBox i={5} w={big} h={small} bgColor={colors.amber_2} />
         </UI.HorizontalLayout>
 
-        {/* Constraint scroll */}
+        {/* Scroll */}
         <UI.Divider spacing={2} />
-        <UI.Text variant='titleMedium'>Constraint scroll</UI.Text>
+        <UI.Text variant='titleMedium'>Constraint · scroll</UI.Text>
+        <UI.LabelText>
+          scroll enables a scroll container (horizontal for rows, vertical for columns).
+        </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.LabelText>
-            HorizontalLayout (horizontal scroll)
-          </UI.LabelText>
+          <UI.LabelText>HorizontalLayout (scroll)</UI.LabelText>
         </UI.Box>
-        <UI.HorizontalLayout constraint='scroll' bgColor={colors.tier1} gap={1}>
-          {Array.from({ length: 6 }).map((_, i) => (
-            <BlockBox
-              key={i}
-              i={i + 1}
-              width={big}
-              height={small}
-              bgColor={colors.tier2}
-            />
+        <UI.HorizontalLayout constraint='scroll' bgColor={colors.neutral_1} gap={1} padding={1}>
+          {Array.from({ length: 8 }).map((_, i) => (
+            <BlockBox key={i} i={i + 1} w={big} h={small} bgColor={colors.green_2} />
           ))}
-        </UI.HorizontalLayout>
-
-        {/* Gap */}
-        <UI.Divider spacing={2} />
-        <UI.Text variant='titleMedium'>Gap</UI.Text>
-        <UI.Box>
-          <UI.LabelText>
-            gap adds spacing between children.
-          </UI.LabelText>
-        </UI.Box>
-
-        <UI.Box mt={1}>
-          <UI.LabelText>gap = 2</UI.LabelText>
-        </UI.Box>
-        <UI.HorizontalLayout
-          bgColor={colors.tier1}
-          constraint='wrap'
-          gap={2}
-        >
-          <BlockBox i={1} width={small} height={small} bgColor={colors.tier2} />
-          <BlockBox i={2} width={small} height={small} bgColor={colors.tier2} />
-          <BlockBox i={3} width={small} height={small} bgColor={colors.tier2} />
         </UI.HorizontalLayout>
 
         {/* Nested layouts */}
         <UI.Divider spacing={2} />
         <UI.Text variant='titleMedium'>Nested layouts</UI.Text>
-        <UI.Box>
-          <UI.LabelText>
-            Combine horizontal and vertical layouts to create simple app structures like headers, sidebars,
-            and content areas.
-          </UI.LabelText>
-        </UI.Box>
+        <UI.LabelText>
+          Combine vertical + horizontal layouts to form simple app structure.
+        </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.VerticalLayout bgColor={colors.tier1} gap={1}>
+          <UI.VerticalLayout bgColor={colors.neutral_1} gap={1} padding={1}>
+
             {/* Header */}
-            <UI.HorizontalLayout bgColor={colors.tier2} gap={1}>
+            <UI.HorizontalLayout bgColor={colors.neutral_2} gap={1} padding={1} align='center'>
               <UI.Box flex={1}>
                 <UI.LabelText>Header</UI.LabelText>
               </UI.Box>
@@ -218,23 +174,25 @@ const LayoutsScreen: Nav.ScreenType = ({}) => {
               </UI.Box>
             </UI.HorizontalLayout>
 
-            {/* Content */}
-            <UI.HorizontalLayout bgColor={colors.tier2} gap={1}>
-              <UI.VerticalLayout flex={1} bgColor={colors.tier3} gap={1}>
+            {/* Body */}
+            <UI.HorizontalLayout bgColor={colors.neutral_2} gap={1} padding={1}>
+              <UI.VerticalLayout flex={1} bgColor={colors.cyan_1} gap={1} padding={1}>
                 <UI.LabelText>Sidebar</UI.LabelText>
               </UI.VerticalLayout>
-              <UI.VerticalLayout flex={2} bgColor={colors.orangeBg} gap={1}>
-                <UI.LabelText>Main content</UI.LabelText>
-                <UI.Text variant='bodySmall'>
+
+              <UI.VerticalLayout flex={2} bgColor={colors.purple_1} gap={1} padding={1}>
+                <UI.LabelText>Main</UI.LabelText>
+                <UI.Text variant='bodySmall' color={theme.colors.onSurfaceVariant}>
                   Layouts define structure; Box and other components fill in the details.
                 </UI.Text>
               </UI.VerticalLayout>
             </UI.HorizontalLayout>
 
             {/* Footer */}
-            <UI.HorizontalLayout bgColor={colors.tier2} gap={1}>
-              <UI.LabelText>Footer area</UI.LabelText>
+            <UI.HorizontalLayout bgColor={colors.neutral_2} gap={1} padding={1}>
+              <UI.LabelText>Footer</UI.LabelText>
             </UI.HorizontalLayout>
+
           </UI.VerticalLayout>
         </UI.Box>
 

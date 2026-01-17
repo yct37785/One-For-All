@@ -46,6 +46,10 @@ const BoxScreen: Nav.ScreenType = () => {
           It does not position siblings, it only styles itself.
         </UI.Text>
 
+        <UI.LabelText variant='bodySmall'>
+          * Use Layouts instead for structure.
+        </UI.LabelText>
+
         {/* Padding vs margin */}
         <UI.Divider spacing={1} />
         <UI.Text variant='titleMedium'>Padding vs margin</UI.Text>
