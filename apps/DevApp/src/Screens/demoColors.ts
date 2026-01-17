@@ -1,86 +1,80 @@
-/******************************************************************************************************************
- * Demo color swatches
+/**
+ * Demo color palette
  *
- * Hardcoded, dark-mode-safe colors for demo / showcase screens.
- * These are NOT theme colors and intentionally live in the client app.
- ******************************************************************************************************************/
-export type DemoColorSet = {
-  neutral: string;
-  neutralAlt: string;
-
-  greenStrong: string;
-  greenSoft: string;
-
-  amber: string;
-  red: string;
-
-  orangeBg: string;
-  skyBg: string;
-
-  purpleBg: string;
-  purpleA: string;
-  purpleB: string;
-
-  cyanBg: string;
-  cyanA: string;
-  cyanB: string;
-  cyanC: string;
-
-  listRowA: string;
-  listRowB: string;
-  listThumbBg: string;
-
-  tier1: string;
-  tier2: string;
-  tier3: string;
-};
-
-/******************************************************************************************************************
- * getDemoColors
+ * Each color family has 3 tiers:
+ *  _1 → light / background
+ *  _2 → medium / container
+ *  _3 → strong / emphasis
  *
- * @param isDarkMode - current app dark mode flag
- ******************************************************************************************************************/
-export function getDemoColors(isDarkMode: boolean): DemoColorSet {
+ * Dark mode colors are adjusted to maintain contrast on dark surfaces.
+ */
+
+type DemoColors = Record<string, string>;
+
+export const getDemoColors = (isDarkMode: boolean): DemoColors => {
+  if (isDarkMode) {
+    return {
+      /* Neutral */
+      neutral_1: '#1E1E1E',
+      neutral_2: '#2A2A2A',
+      neutral_3: '#3A3A3A',
+
+      /* Green */
+      green_1: '#2E4A3A',
+      green_2: '#3E6B4F',
+      green_3: '#5FAF7A',
+
+      /* Amber */
+      amber_1: '#4A3A1E',
+      amber_2: '#6B5428',
+      amber_3: '#E0A84F',
+
+      /* Purple */
+      purple_1: '#352A42',
+      purple_2: '#4B3A63',
+      purple_3: '#8B6BC1',
+
+      /* Cyan */
+      cyan_1: '#243C3F',
+      cyan_2: '#2F5A5F',
+      cyan_3: '#4FC3C7',
+
+      /* Red */
+      red_1: '#4A2323',
+      red_2: '#6B2F2F',
+      red_3: '#E57373',
+    };
+  }
+
   return {
-    // neutrals
-    neutral: isDarkMode ? '#2b2f33' : '#eeeeee',
-    neutralAlt: isDarkMode ? '#505757ff' : '#e0f2f1',
+    /* Neutral */
+    neutral_1: '#F2F2F2',
+    neutral_2: '#E0E0E0',
+    neutral_3: '#CFCFCF',
 
-    // greens
-    greenStrong: isDarkMode ? '#1f7a1f' : '#2eb82e',
-    greenSoft: isDarkMode ? '#578d00ff' : '#9de923',
+    /* Green */
+    green_1: '#E3F3EA',
+    green_2: '#BFE3CF',
+    green_3: '#4CAF7A',
 
-    // amber / yellow
-    amber: isDarkMode ? '#836900ff' : '#ffdd55',
+    /* Amber */
+    amber_1: '#FFF3E0',
+    amber_2: '#FFD8A8',
+    amber_3: '#FF9800',
 
-    // red
-    red: isDarkMode ? '#9c0000ff' : '#ff9999',
+    /* Purple */
+    purple_1: '#F1EAFE',
+    purple_2: '#D4C2F2',
+    purple_3: '#7E57C2',
 
-    // backgrounds
-    orangeBg: isDarkMode ? '#4a3320' : '#ffe0b2',
-    skyBg: isDarkMode ? '#1b3442' : '#e1f5fe',
+    /* Cyan */
+    cyan_1: '#E0F4F7',
+    cyan_2: '#B2E3EA',
+    cyan_3: '#26C6DA',
 
-    // purple
-    purpleBg: isDarkMode ? '#2f2435' : '#f3e5f5',
-    purpleA: isDarkMode ? '#4a2e5a' : '#ce93d8',
-    purpleB: isDarkMode ? '#5c3473' : '#ba68c8',
-
-    // cyan / teal
-    cyanBg: isDarkMode ? '#17363b' : '#e0f7fa',
-    cyanA: isDarkMode ? '#1f6570' : '#4dd0e1',
-    cyanB: isDarkMode ? '#1b7482' : '#26c6da',
-    cyanC: isDarkMode ? '#198291' : '#00acc1',
-
-    // list rows (subtle alternation)
-    listRowA: isDarkMode ? '#101316' : '#ffffff',
-    listRowB: isDarkMode ? '#151a1f' : '#fafafa',
-
-    // optional: used behind thumbnails if image fails / loads slowly
-    listThumbBg: isDarkMode ? '#232a31' : '#eeeeee',
-
-    // tiers
-    tier1: isDarkMode ? '#121417' : '#f0f1f5ff',
-    tier2: isDarkMode ? '#1d2227ff' : '#e0e1e6ff',
-    tier3: isDarkMode ? '#2d343bff' : '#bdc0c4ff',
+    /* Red */
+    red_1: '#FDECEA',
+    red_2: '#F5B7B1',
+    red_3: '#E53935',
   };
-}
+};
