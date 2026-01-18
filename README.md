@@ -1,18 +1,17 @@
 # One For All
 This project is a monorepo for building Expo apps with a shared framework. One framework for all apps, to be refined and improved over generations.
 
-Core functionality such as UI elements, hooks, and utilities (collectively referred to as **components**) are centralized and reused across all Expo app projects.
-
-By consolidating dependencies and common logic into a single framework, apps can be developed quickly without redefining the same building blocks.
+Apps stay thin and focused on product logic, while shared components such as UI, hooks, utilities, configuration, and dependencies live in a centralized platform package.
 
 > What is a monorepo: A monorepo is a single repository containing multiple distinct projects, with well-defined relationships.
 
-# End Goals
-- Provide a ready-to-use template for quickly building new Expo apps.
-- Maintain a shared framework of reusable components.
-- Manage dependencies centrally (monorepo philosophy).
-- Keep app projects lightweight by only adding app-specific code.
-- Support native builds (`npx expo run:android` / `npx expo run:ios`) with Metro-powered hot reloading.
+# Philosophy
+- Ready-to-use template for creating new Expo apps.
+- A single shared platform framework reused across all apps.
+- Centralized dependency version control (no version drift).
+- Apps contain only app-specific code and deps.
+- Shared configuration via composable base templates.
+- Native builds with Metro-powered hot reloading.
 
 # Project Structure
 ## Overview
@@ -20,81 +19,105 @@ The monorepo is structured as follows:
 ```bash
 root/
 ├── apps/
-│   └── DevApp/          # example Expo app consuming the framework
+│   └── DevApp/                # example Expo app consuming the platform
 │       └── ...
-├── node_modules/		 # all common deps installed here
+├── node_modules/              # single shared dependency tree
 ├── packages/
-│   └── Framework/       # core shared framework
+│   └── platform/              # shared framework (UI, hooks, utilities, deps)
 │       └── ...
-├── install.bat          # sync shared deps then install (Windows helper)
-├── scripts/		     # shared build scripts
+├── templates/                 # shared base configs (Expo, Babel, TS)
 │       └── ...
-├── templates/			 # shared config templates
-│       └── ...
-└── package.json         # root scripts + shared version pins (overrides)
+├── install.bat                # Windows helper (optional)
+├── package.json               # workspace + dependency version pins
+└── tsconfig.json              # minimal root TS config
 ```
 
-# High Level Overview
-At a high level, this repository follows a monorepo + shared framework model optimized specifically for Expo and React Native development.
+# High-Level Architecture
+This repository uses npm workspaces with a single shared `node_modules` directory at the root.
+
+All common dependencies are hoisted and resolved centrally, ensuring:
+- Consistent dependency versions across all apps
+- Faster installs
+- No version drift between projects
 
 ## root/
-The root of the repository acts as the single source of truth for the entire monorepo.
+The repository root is the single source of truth for the monorepo.
 
 It is responsible for:
-- Defining and pinning dependency versions via `overrides`
-- Managing tooling and workspace configuration
-- Hosting shared configuration templates
-- Coordinating setup and maintenance scripts
-- Declaring workspace boundaries (`apps/*`, `packages/*`)
+- Declaring npm workspaces (`apps/*`, `packages/*`)
+- Hosting shared config templates
+- Coordinating setup and tooling scripts
+- owning the shared `node_modules` directory
 
-All apps and packages inherit behavior from the root, ensuring consistency and preventing configuration or dependency drift.
+The root `package.json`:
+- Pins core dependencies Expo, React, and React Native versions centrally using `overrides`, guaranteeing they match across all apps
+- Defines monorepo-level tooling scripts (setup, type-checking, etc.)
+
+## packages/platform/
+The platform package contains shared, app-agnostic code and shared third-party dependencies used across all apps.
+
+Typical responsibilities:
+- Reusable UI components
+- Shared hooks and helpers
+- Utilities and abstractions
+- Cross-app logic
+- Declares common third-party dependencies (navigation, Firebase, UI libs, etc.)
+
+Because the platform lives inside the monorepo:
+- No publishing step is required
+- Changes are instantly available to all apps
+- Metro resolves it as a local workspace dependency
 
 ## apps/
-Each app is a thin consumer of the shared framework and infrastructure.
+Each app is a thin consumer of the shared platform.
 
 An app:
 - Focuses on app-specific UI, navigation, and business logic
-- Imports shared components, hooks, and utilities from the Framework
-- Declares what dependencies it needs, but not which versions
+- Imports shared functionality from the platform
 - Extends shared configuration instead of redefining it
+- Declares only app-specific dependencies
 
-Apps are intentionally lightweight. They should not duplicate setup, dependency versioning, or cross-app concerns unless absolutely necessary.
+Notice the re-declaration of core dependencies in your app `package.json`:
+```
+{
+  "expo": "*",
+  "react": "*",
+  "react-native": "*"
+}
+```
+This is required for Expo CLI and native build tooling to function correctly.
 
-## packages/Framework/
-The Framework package contains shared, app-agnostic code intended to be reused across all apps in the monorepo.
+Actual versions are still resolved centrally via root-level `overrides`, so no version drift occurs.
 
-Typical responsibilities include:
-- Reusable UI elements
-- Reusable components
-- Shared hooks and helpers
-- Common utilities and abstractions
-- Cross-app logic that should evolve in one place
-
-Because the Framework lives inside the monorepo:
-- No publishing step is required
-- Changes are immediately available to all apps
-- Metro resolves it as a local workspace dependency
-
-The Framework is designed to enable apps, not control them. App architecture and behavior remain app-owned.
+Apps should not duplicate setup, tooling, or cross-app concerns unless absolutely necessary.
 
 ## templates/
-The templates directory contains base configuration files shared across apps.
+The `templates` directory contains shared base configuration files that are composed, not copied.
 
-Apps import and extend these base configs rather than copying them.
-This keeps configuration consistent while still allowing per-app customization.
+This includes:
+- Expo config (`app.config.base.js`)
+- Babel config (`babel.config.base.js`)
+- TypeScript config (`tsconfig.base.json`)
 
-## scripts/
-The scripts directory contains maintenance and orchestration scripts used by the monorepo.
+Apps extend these templates and override only what is app-specific, keeping configuration consistent across the monorepo.
 
-Scripts in this directory are typically invoked from root-level npm scripts and are considered part of the monorepo's internal tooling.
+## Dependency rules
+To summarize:
+- Shared dependencies are declared once in `packages/platform`
+- Apps declare only app-specific dependencies
+- Apps must declare `expo`, `react`, and `react-native` as `"*"`
+- Do not add shared dependencies directly to apps
 
 # Prerequisite
 ## Firebase project
-All client apps are bootstrapped with Firebase support enabled, therefore requiring a corresponding Firebase project to be linked before native Android builds can succeed.
+All apps are bootstrapped with Firebase support enabled.
+
+Before running a native Android build, you must:
+1. Create a Firebase project
+2. Download `google-services.json`
+3. Place it in the root of the app folder
 
 > Refer to [Firebase → Firebase project setup](https://github.com/yct37785/One-For-All/blob/main/readmes/Firebase.md#firebase-project-setup) for detailed steps.
-
-Simply download the project's `google-services.json` and place it in the app root later.
 
 ## Initial setup
 After cloning the repository (or whenever shared dependencies are modified), run the following from the root of the project:
