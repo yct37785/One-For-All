@@ -120,50 +120,45 @@ Before running a native Android build, you must:
 > Refer to [Firebase → Firebase project setup](https://github.com/yct37785/One-For-All/blob/main/readmes/Firebase.md#firebase-project-setup) for detailed steps.
 
 ## Initial setup
-After cloning the repository (or whenever shared dependencies are modified), run the following from the root of the project:
+After cloning the repository (or after modifying shared dependencies):
 ```
 install.bat
 ```
-This script:
-- Synchronizes shared dependencies across apps
-- Regenerates the lockfile using root-pinned versions
-- Installs all workspace dependencies in a consistent state
+This installs all workspace dependencies into a single shared node_modules`.
 
-This only needs to be run on first clone or after changes to shared dependencies.
-
-## Ninja (Windows / Android Builds)
-When building Android on Windows, you may encounter the following error during native compilation (triggered by `react-native-keyboard-controller`):
+## Android (Windows) - Ninja Fix
+When building Android on Windows, you may encounter a native build failure related to Ninja, typically triggered by `react-native-keyboard-controller`.
 
 ![asdasds](https://github.com/user-attachments/assets/7cccd0db-31bb-4a4e-b44c-aeb93cc876c5)
 
-This is a known limitation of older versions of Ninja, which is bundled with the Android SDK's CMake installation. Fix:
+This is caused by an outdated Ninja binary bundled with the Android SDK.
 
-1. Download the latest `ninja.exe` from the [official releases page](https://github.com/ninja-build/ninja/releases).
+Fix:
+1. Download the latest `ninja.exe` from the [official releases page](https://github.com/ninja-build/ninja/releases)
 
-2. Locate your Android SDK CMake installation:
+2. Locate your Android SDK CMake folder:
 
 	```
 	C:\Users\<your-user>\AppData\Local\Android\Sdk\cmake\<version>\bin
 	```
 
-3. Replace the existing `ninja.exe` in that folder with the downloaded one.
+3. Replace the existing `ninja.exe`
 
 	> Use the same CMake version that is reported in the error output when the build fails.
 	(The path shown in the error log tells you exactly which <version> to target.)
 
-4. After replacing `ninja.exe`, rerun your Android build.
+4. Re-run your Android build
 
-# Getting Started
-Follow these steps to create a new Expo app using the shared framework.
+# Creating a New App
 
-## 1. Create a new app folder
-Inside the `apps/` directory, create a new folder using your app's name:
+## 1. Create app folder
 ```
 apps/MyNewApp/
 ```
 
-## 2. Copy the base app structure
-Copy the contents of `apps/DevApp` into your new app folder except for the following directories and files (if present):
+## 2. Copy the base app
+Copy everything from `apps/DevApp` except:
+
 - `.expo/`
 
 - `android/`
@@ -172,17 +167,12 @@ Copy the contents of `apps/DevApp` into your new app folder except for the follo
 
 - `.env`
 
-These files are either build artifacts or app-specific secrets and should be generated per app.
+These are app-specific or generated files.
 
 ## 3. Open the workspace
-Open the repository using the provided `vsc.code-workspace` file.
+Open the repo using the provided `vsc.code-workspace` file.
 
-This keeps the entire monorepo visible in the editor, allowing you to work on:
-- The new app
-- The shared Framework
-- Shared configuration and scripts
-
-It ignores DevApp and any other app folders under `apps/`.
+It ignores DevApp and any other app folders under `apps/` to prevent confusion.
 
 ## 4. Update app metadata
 Inside your new app folder, update the following files:
@@ -212,24 +202,24 @@ expo: {
 > Note: The Android package name must be unique across apps.
 
 ## 5. App code
-Application code lives under:
+App code lives under:
 ```
 apps/MyNewApp/src/
 ```
 
-`App.tsx` is the entry point for the app.
+`App.tsx` is the entry point.
 
 You can now modify the copied DevApp code as needed, replacing screens, logic, and assets to match your new app.
 
 ## 6. Build scripts
-For Android development, helper scripts are provided to simplify building and running the app:
+Each app includes helper scripts:
 
 ### Run without rebuilding native code
 ```
 run-android-dev.bat
 ```
 
-Use this for normal development when native dependencies and configuration have not changed.
+Use this for normal development when native dependencies and config have not changed.
 
 ### Rebuild native code and run
 ```
@@ -238,16 +228,16 @@ run-android-dev-rebuild.bat
 
 Use this when:
 - Running the app for the first time
-- Adding or updating native dependencies
-- Changing Expo or native configuration
+- Adding or changing native dependencies
+- Modifying Expo or native configuration
 - Regenerating or cleaning the Android project
 
-Both scripts launch the app with hot-reloading enabled for fast iteration.
+Both scripts support hot reloading.
 
 ## 7. Your first build
 1. Connect an Android device with USB debugging enabled.
 
-2. Place the corresponding Firebase project's `google-services.json` in app root.
+2. Place the corresponding `google-services.json` in app root.
 
 3. Run `run-android-dev-rebuild.bat`.
 
@@ -257,10 +247,12 @@ Both scripts launch the app with hot-reloading enabled for fast iteration.
 
 From this point on, you can use either script as needed.
 
-## 8. Tracking your app project
-Each app created under `apps/` is intended to be its own project, even though it lives inside the monorepo.
+## 8. App Ownership
+Each app under `apps/` is intended to be treated as an independent product, even though it lives inside the monorepo.
 
-For end users, this means tracking your app in it's own Git repository.
+For end users, this usually means:
+- Tracking the app in its own Git repository
+- Using this monorepo as the shared development foundation
 
 # Firebase
 [Refer to the Firebase section here](https://github.com/yct37785/One-For-All/blob/main/readmes/Firebase.md).
