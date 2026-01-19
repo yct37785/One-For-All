@@ -19,7 +19,7 @@ export type LayoutProps = {
   reverse?: boolean;
   constraint?: 'wrap' | 'scroll' | 'none';
   flex?: number;
-  padding?: PadSpacingValue;
+  pad?: PadSpacingValue;
   gap?: PadSpacingValue;
   height?: number;
   bgColor?: string;
@@ -40,7 +40,7 @@ export type LayoutProps = {
  * @param reverse?         - Whether to render children in reverse order
  * @param constraint?      - Layout constraint mode
  * @param flex?            - Flex grow/shrink value for container
- * @param padding?         - Spacing around children
+ * @param pad?             - Spacing around children
  * @param gap?             - Spacing between children
  * @param height?          - Fixed height for the container
  * @param bgColor?         - Background color
@@ -52,7 +52,7 @@ const Layout: React.FC<LayoutProps> = ({
   reverse = false,
   constraint = 'none',
   flex = 1,
-  padding = 1,
+  pad = 1,
   gap = 1,
   height,
   bgColor = 'transparent',
@@ -104,7 +104,7 @@ const Layout: React.FC<LayoutProps> = ({
           justifyContent: 'flex-start',
           alignItems: alignItemsValue,      // cross-axis alignment
           alignContent: alignContentValue,  // how rows stack (wrap)
-          padding: padding * theme.design.padSize,
+          padding: pad * theme.design.padSize,
           gap: gap * theme.design.padSize,
           backgroundColor: bgColor,
         },

@@ -111,7 +111,7 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
    ******************************************************************************************************************/
   return (
     <Nav.ScreenLayout showTitle title='Local KV Store'>
-      <UI.VerticalLayout constraint='scroll' padding={2}>
+      <UI.VerticalLayout constraint='scroll' pad={2}>
 
         {/* Header */}
         <UI.Text variant='bodyMedium'>

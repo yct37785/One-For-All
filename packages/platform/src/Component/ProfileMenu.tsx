@@ -4,7 +4,7 @@ import { Avatar } from '../UI/Data/Avatar';
 import { Popup } from '../UI/Modal/Popup';
 import { MenuList } from '../UI/Menu/MenuList';
 import { VerticalLayout } from '../UI/Layout/Layout';
-import { useAuth } from '../Manager/Firebase/FirebaseAuthManager';
+import { useAuth, ProviderIdType } from '../Manager/Firebase/Auth/FirebaseAuthManager';
 import type { MenuOption } from '../UI/Menu/MenuListItem';
 
 /******************************************************************************************************************
@@ -30,9 +30,9 @@ export const ProfileMenu = memo(() => {
       { text: 'Sign out', value: 'signout', icon: 'logout' },
     ];
 
-  // trigger sign-in/sign-out
+  // trigger sign-in/sign-out (hardcoded to Google for now)
   const handleSelect = async (value: string) => {
-    if (value === 'signin') await signIn();
+    if (value === 'signin') await signIn(ProviderIdType.Google);
     if (value === 'signout') await signOut();
   };
 

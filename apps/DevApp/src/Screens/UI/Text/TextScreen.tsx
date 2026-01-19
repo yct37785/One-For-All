@@ -18,7 +18,7 @@ const TextScreen: Nav.ScreenType = () => {
 
   return (
     <Nav.ScreenLayout showTitle title='Text'>
-      <UI.VerticalLayout constraint='scroll' padding={2}>
+      <UI.VerticalLayout constraint='scroll' pad={2}>
 
         {/* Intro */}
         <UI.Text variant='bodyMedium'>

@@ -40,7 +40,7 @@ const ButtonsScreen: Nav.ScreenType = () => {
 
   return (
     <Nav.ScreenLayout showTitle title='Buttons'>
-      <UI.VerticalLayout constraint='scroll' padding={2}>
+      <UI.VerticalLayout constraint='scroll' pad={2}>
 
         {/* Intro */}
         <UI.Text variant='bodyMedium'>

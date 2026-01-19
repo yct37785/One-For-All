@@ -14,7 +14,7 @@ const IconScreen: Nav.ScreenType = () => {
 
   return (
     <Nav.ScreenLayout showTitle title='Icon'>
-      <UI.VerticalLayout constraint='scroll' padding={2}>
+      <UI.VerticalLayout constraint='scroll' pad={2}>
 
         {/* Intro */}
         <UI.Text variant='bodyMedium'>
