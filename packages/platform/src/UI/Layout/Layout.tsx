@@ -24,6 +24,7 @@ export type LayoutProps = {
   height?: number;
   bgColor?: string;
   align?: 'start' | 'center' | 'end' | 'stretch';
+  justify?: 'start' | 'center' | 'end' | 'space-between' | 'space-around' | 'space-evenly';
   children: ReactNode;
 };
 
@@ -45,6 +46,7 @@ export type LayoutProps = {
  * @param height?          - Fixed height for the container
  * @param bgColor?         - Background color
  * @param align?           - Cross-axis alignment
+ * @param justify?         - Main-axis alignment
  * @param children         - Elements rendered inside
  ******************************************************************************************************************/
 const Layout: React.FC<LayoutProps> = ({
@@ -57,6 +59,7 @@ const Layout: React.FC<LayoutProps> = ({
   height,
   bgColor = 'transparent',
   align,
+  justify,
   children,
 }) => {
   const { theme } = useAppTheme();
@@ -92,6 +95,16 @@ const Layout: React.FC<LayoutProps> = ({
     return isWrap ? 'flex-start' : 'stretch';
   })();
 
+  const justifyContentValue: FlexStyle['justifyContent'] = (() => {
+    if (justify === 'start') return 'flex-start';
+    if (justify === 'center') return 'center';
+    if (justify === 'end') return 'flex-end';
+    if (justify === 'space-between') return 'space-between';
+    if (justify === 'space-around') return 'space-around';
+    if (justify === 'space-evenly') return 'space-evenly';
+    return 'flex-start';
+  })();
+
   /**
    * style
    */
@@ -99,9 +112,9 @@ const Layout: React.FC<LayoutProps> = ({
     () => ({
       flexWrap,
       flexDirection: dir,
-      justifyContent: 'flex-start',
-      alignItems: alignItemsValue,      // cross-axis alignment
-      alignContent: alignContentValue,  // how rows stack (wrap)
+      justifyContent: justifyContentValue,
+      alignItems: alignItemsValue,
+      alignContent: alignContentValue,
       padding: pad * theme.design.padSize,
       gap: gap * theme.design.padSize,
       backgroundColor: bgColor,
@@ -109,6 +122,7 @@ const Layout: React.FC<LayoutProps> = ({
     [
       flexWrap,
       dir,
+      justifyContentValue,
       alignItemsValue,
       alignContentValue,
       pad,
