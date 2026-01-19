@@ -1,5 +1,5 @@
 import React, { memo, ReactNode, useMemo } from 'react';
-import { View, ScrollView, ViewStyle, FlexStyle, StyleSheet } from 'react-native';
+import { View, ScrollView, ViewStyle, FlexStyle } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useAppTheme } from '../../Manager/App/AppThemeManager';
 import { PadSpacingValue } from '../../Types';
@@ -95,21 +95,27 @@ const Layout: React.FC<LayoutProps> = ({
   /**
    * style
    */
-  const styles = useMemo(
-    () =>
-      StyleSheet.create({
-        content: {
-          flexWrap,
-          flexDirection: dir,
-          justifyContent: 'flex-start',
-          alignItems: alignItemsValue,      // cross-axis alignment
-          alignContent: alignContentValue,  // how rows stack (wrap)
-          padding: pad * theme.design.padSize,
-          gap: gap * theme.design.padSize,
-          backgroundColor: bgColor,
-        },
-      }),
-    [theme]
+  const contentStyle = useMemo<ViewStyle>(
+    () => ({
+      flexWrap,
+      flexDirection: dir,
+      justifyContent: 'flex-start',
+      alignItems: alignItemsValue,      // cross-axis alignment
+      alignContent: alignContentValue,  // how rows stack (wrap)
+      padding: pad * theme.design.padSize,
+      gap: gap * theme.design.padSize,
+      backgroundColor: bgColor,
+    }),
+    [
+      flexWrap,
+      dir,
+      alignItemsValue,
+      alignContentValue,
+      pad,
+      gap,
+      bgColor,
+      theme.design.padSize,
+    ]
   );
 
   if (isScroll) {
@@ -119,15 +125,15 @@ const Layout: React.FC<LayoutProps> = ({
         horizontal={isRow}
         showsVerticalScrollIndicator={!isRow}
         showsHorizontalScrollIndicator={isRow}
-        style={containerDims}                   // dimensions on ScrollView
-        contentContainerStyle={styles.content}  // layout rules on inner content
+        style={containerDims}                    // dimensions on ScrollView
+        contentContainerStyle={contentStyle}     // layout rules on inner content
       >
         {content}
       </KeyboardAwareScrollView>
     );
   }
 
-  return <View style={[containerDims, styles.content]}>{content}</View>;
+  return <View style={[containerDims, contentStyle]}>{content}</View>;
 };
 
 /******************************************************************************************************************
