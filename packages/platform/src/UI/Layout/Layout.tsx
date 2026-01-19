@@ -28,7 +28,7 @@ export type LayoutProps = {
 };
 
 /******************************************************************************************************************
- * A flexible element grouping container that defines structure and spacing for contained elements.
+ * A flexible element grouping container that defines structure and spacing for contained elements:
  *  - Does not support custom styling as that is out of scope for layout.
  *  - Use to wrap multiple child UI components.
  * 

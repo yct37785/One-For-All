@@ -8,6 +8,7 @@ export * from '../UI/Data/List';
 export * from '../UI/Decorators/Divider';
 export * from '../UI/Input/Input';
 export * from '../UI/Interactive/Button';
+export * from '../UI/Interactive/FAB';
 export * from '../UI/Interactive/IconButton';
 export * from '../UI/Interactive/TextButton';
 export * from '../UI/Interactive/Touchable';
