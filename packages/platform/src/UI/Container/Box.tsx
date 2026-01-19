@@ -52,8 +52,8 @@ export type BoxProps = {
  * 
  * @param flex?     - Flex value to control layout behavior
  * @param dir?      - Flex direction
- * @param align?    - Align items
- * @param justify?  - Justify content
+ * @param align?    - Item alignment cross axis
+ * @param justify?  - Item alignment along axis
  * @param self?     - Align self (cross-axis alignment)
  * 
  * @param w?   - Width
