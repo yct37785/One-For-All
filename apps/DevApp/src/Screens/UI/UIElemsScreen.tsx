@@ -34,6 +34,7 @@ const UIElemsScreen: Nav.ScreenType = ({ navigate }) => {
 
   const UI_interactiveOptions = [
     { value: uiScreenRoutes.buttons, text: 'Buttons' },
+    { value: uiScreenRoutes.fab, text: 'FAB' },
     { value: uiScreenRoutes.touchable, text: 'Touchable' },
   ];
 
@@ -91,13 +92,11 @@ const UIElemsScreen: Nav.ScreenType = ({ navigate }) => {
     <Nav.ScreenLayout title='UI Elements'>
       <UI.VerticalLayout constraint='scroll' flex={1} pad={2} gap={1}>
 
-        <UI.Box p={1}>
-          <UI.Text variant='bodyMedium'>
-            Reusable UI primitive elements, including layout, text, inputs etc.
-          </UI.Text>
-        </UI.Box>
+        <UI.Text variant='bodyMedium'>
+          Reusable UI primitive elements, including layout, text, inputs etc.
+        </UI.Text>
 
-        <UI.Box>
+        <UI.Box mt={1}>
           <UI.AccordionContainer sections={UI_SECTIONS}>
             {UI_SECTION_CONFIG.map((section, idx) => (
               <UI.MenuList

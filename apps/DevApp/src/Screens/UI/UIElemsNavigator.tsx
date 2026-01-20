@@ -15,6 +15,7 @@ import DecoratorsScreen from './Decorators/DecoratorsScreen';
 import InputScreen from './Input/InputScreen';
 // interactive
 import ButtonsScreen from './Interactive/ButtonsScreen';
+import FABScreen from './Interactive/FABScreen';
 import TouchableScreen from './Interactive/TouchableScreen';
 // layout
 import LayoutsScreen from './Layout/LayoutsScreen';
@@ -48,6 +49,7 @@ const uiScreenRegistry: Nav.NavNodeMap = {
   [uiScreenRoutes.decorators]: { component: DecoratorsScreen },
   [uiScreenRoutes.input]: { component: InputScreen },
   [uiScreenRoutes.buttons]: { component: ButtonsScreen },
+  [uiScreenRoutes.fab]: { component: FABScreen },
   [uiScreenRoutes.touchable]: { component: TouchableScreen },
   [uiScreenRoutes.layouts]: { component: LayoutsScreen },
   [uiScreenRoutes.menulist]: { component: MenuListScreen },

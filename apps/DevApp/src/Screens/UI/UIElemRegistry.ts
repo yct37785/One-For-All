@@ -8,6 +8,7 @@ export const uiScreenRoutes = {
   decorators: 'ui_decorators',
   input: 'ui_input',
   buttons: 'ui_buttons',
+  fab: 'ui_fab',
   touchable: 'ui_touchable',
   layouts: 'ui_layouts',
   menulist: 'ui_menulist',
