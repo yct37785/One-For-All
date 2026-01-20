@@ -41,7 +41,7 @@ export const ProfileMenu = memo(() => {
       triggerComp={<Avatar uri={photoURL} label="A" size="md" />}
       triggerContainerStyle={styles.triggerContainer}
     >
-      <VerticalLayout>
+      <VerticalLayout flex={1} pad={1} gap={1}>
         <MenuList options={options} onSelect={handleSelect} dense showDividers />
       </VerticalLayout>
     </Popup>

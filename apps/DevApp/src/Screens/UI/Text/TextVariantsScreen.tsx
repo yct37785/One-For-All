@@ -26,7 +26,7 @@ Until this society wakes up and rectifies itself, I will continue to do my work.
 
   return (
     <Nav.ScreenLayout showTitle title='Text variants'>
-      <UI.VerticalLayout constraint='scroll' pad={2}>
+      <UI.VerticalLayout constraint='scroll' flex={1} pad={2} gap={1}>
 
         {/* Intro */}
         <UI.Text variant='bodyMedium'>

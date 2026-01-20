@@ -48,7 +48,7 @@ const LayoutsScreen: Nav.ScreenType = () => {
 
   return (
     <Nav.ScreenLayout showTitle title='Layouts'>
-      <UI.VerticalLayout constraint='scroll' pad={2}>
+      <UI.VerticalLayout constraint='scroll' flex={1} pad={2} gap={1}>
 
         {/* Intro */}
         <UI.Text variant='bodyMedium'>
@@ -64,7 +64,7 @@ const LayoutsScreen: Nav.ScreenType = () => {
         <UI.Text variant='titleMedium'>Direction</UI.Text>
 
         <UI.LabelText>HorizontalLayout (row)</UI.LabelText>
-        <UI.HorizontalLayout bgColor={colors.neutral_1} gap={1} pad={1}>
+        <UI.HorizontalLayout bgColor={colors.neutral_1} flex={1} pad={1} gap={1}>
           <BlockBox i={1} w={small} h={small} bgColor={colors.cyan_2} />
           <BlockBox i={2} w={small} h={small} bgColor={colors.cyan_2} />
           <BlockBox i={3} w={small} h={small} bgColor={colors.cyan_2} />
@@ -73,7 +73,7 @@ const LayoutsScreen: Nav.ScreenType = () => {
         <UI.Box mt={1}>
           <UI.LabelText>VerticalLayout (column)</UI.LabelText>
         </UI.Box>
-        <UI.VerticalLayout bgColor={colors.neutral_1} gap={1} pad={1}>
+        <UI.VerticalLayout bgColor={colors.neutral_1} flex={1} pad={1} gap={1}>
           <BlockBox i={1} w={small} h={small} bgColor={colors.cyan_2} />
           <BlockBox i={2} w={small} h={small} bgColor={colors.cyan_2} />
           <BlockBox i={3} w={small} h={small} bgColor={colors.cyan_2} />
@@ -89,7 +89,7 @@ const LayoutsScreen: Nav.ScreenType = () => {
         <UI.Box mt={1}>
           <UI.LabelText>HorizontalLayout (align='center')</UI.LabelText>
         </UI.Box>
-        <UI.HorizontalLayout bgColor={colors.neutral_1} gap={1} pad={1} height={120} align='center'>
+        <UI.HorizontalLayout bgColor={colors.neutral_1} flex={1} pad={1} gap={1} height={120} align='center'>
           <BlockBox i={1} w={small} h={small} bgColor={colors.purple_2} />
           <BlockBox i={2} w={small} h={big} bgColor={colors.purple_2} />
           <BlockBox i={3} w={small} h={small} bgColor={colors.purple_2} />
@@ -109,8 +109,7 @@ const LayoutsScreen: Nav.ScreenType = () => {
           constraint='wrap'
           bgColor={colors.neutral_1}
           height={190}
-          gap={1}
-          pad={1}
+          flex={1} pad={1} gap={1}
         >
           <BlockBox i={1} w={small} h={small} bgColor={colors.amber_2} />
           <BlockBox i={2} w={big} h={small} bgColor={colors.amber_2} />
@@ -126,8 +125,7 @@ const LayoutsScreen: Nav.ScreenType = () => {
         <UI.HorizontalLayout
           constraint='wrap'
           bgColor={colors.neutral_1}
-          gap={1}
-          pad={1}
+          flex={1} pad={1} gap={1}
         >
           <BlockBox i={1} w={big} h={small} bgColor={colors.amber_2} />
           <BlockBox i={2} w={small} h={big} bgColor={colors.amber_2} />
@@ -146,7 +144,7 @@ const LayoutsScreen: Nav.ScreenType = () => {
         <UI.Box mt={1}>
           <UI.LabelText>HorizontalLayout (scroll)</UI.LabelText>
         </UI.Box>
-        <UI.HorizontalLayout constraint='scroll' bgColor={colors.neutral_1} gap={1} pad={1}>
+        <UI.HorizontalLayout constraint='scroll' bgColor={colors.neutral_1} flex={1} pad={1} gap={1}>
           {Array.from({ length: 8 }).map((_, i) => (
             <BlockBox key={i} i={i + 1} w={big} h={small} bgColor={colors.green_2} />
           ))}
@@ -160,10 +158,10 @@ const LayoutsScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.VerticalLayout bgColor={colors.neutral_1} gap={1} pad={1}>
+          <UI.VerticalLayout bgColor={colors.neutral_1} flex={1} pad={1} gap={1}>
 
             {/* Header */}
-            <UI.HorizontalLayout bgColor={colors.neutral_2} gap={1} pad={1} align='center'>
+            <UI.HorizontalLayout bgColor={colors.neutral_2} flex={1} pad={1} gap={1} align='center'>
               <UI.Box flex={1}>
                 <UI.LabelText>Header</UI.LabelText>
               </UI.Box>
@@ -175,12 +173,12 @@ const LayoutsScreen: Nav.ScreenType = () => {
             </UI.HorizontalLayout>
 
             {/* Body */}
-            <UI.HorizontalLayout bgColor={colors.neutral_2} gap={1} pad={1}>
-              <UI.VerticalLayout flex={1} bgColor={colors.cyan_1} gap={1} pad={1}>
+            <UI.HorizontalLayout bgColor={colors.neutral_2} flex={1} pad={1} gap={1}>
+              <UI.VerticalLayout bgColor={colors.cyan_1} flex={1} pad={1} gap={1}>
                 <UI.LabelText>Sidebar</UI.LabelText>
               </UI.VerticalLayout>
 
-              <UI.VerticalLayout flex={2} bgColor={colors.purple_1} gap={1} pad={1}>
+              <UI.VerticalLayout bgColor={colors.purple_1} flex={2} pad={1} gap={1}>
                 <UI.LabelText>Main</UI.LabelText>
                 <UI.Text variant='bodySmall' color={theme.colors.onSurfaceVariant}>
                   Layouts define structure; Box and other components fill in the details.
@@ -189,7 +187,7 @@ const LayoutsScreen: Nav.ScreenType = () => {
             </UI.HorizontalLayout>
 
             {/* Footer */}
-            <UI.HorizontalLayout bgColor={colors.neutral_2} gap={1} pad={1}>
+            <UI.HorizontalLayout bgColor={colors.neutral_2} flex={1} pad={1} gap={1}>
               <UI.LabelText>Footer</UI.LabelText>
             </UI.HorizontalLayout>
 

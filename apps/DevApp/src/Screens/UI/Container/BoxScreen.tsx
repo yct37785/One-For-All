@@ -38,7 +38,7 @@ const BoxScreen: Nav.ScreenType = () => {
 
   return (
     <Nav.ScreenLayout showTitle title='Box'>
-      <UI.VerticalLayout constraint='scroll' pad={2}>
+      <UI.VerticalLayout constraint='scroll' flex={1} pad={2} gap={1}>
 
         {/* Intro */}
         <UI.Text variant='bodyMedium'>
@@ -126,7 +126,7 @@ const BoxScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout dir='row' bgColor={colors.neutral_2}>
+          <UI.HorizontalLayout dir='row' bgColor={colors.neutral_2} flex={1} pad={1} gap={1}>
             <UI.Box flex={1} bgColor={colors.green_2} p={1}>
               <UI.Text variant='labelSmall'>flex = 1</UI.Text>
             </UI.Box>

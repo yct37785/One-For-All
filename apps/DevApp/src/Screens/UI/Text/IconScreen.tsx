@@ -14,7 +14,7 @@ const IconScreen: Nav.ScreenType = () => {
 
   return (
     <Nav.ScreenLayout showTitle title='Icon'>
-      <UI.VerticalLayout constraint='scroll' pad={2}>
+      <UI.VerticalLayout constraint='scroll' flex={1} pad={2} gap={1}>
 
         {/* Intro */}
         <UI.Text variant='bodyMedium'>
@@ -26,7 +26,7 @@ const IconScreen: Nav.ScreenType = () => {
         <UI.Text variant='titleMedium'>Size variants</UI.Text>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2} align='center'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={2} align='center'>
             <UI.Icon source='star' variant='xs' />
             <UI.Icon source='star' variant='sm' />
             <UI.Icon source='star' variant='md' />
@@ -44,7 +44,7 @@ const IconScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2} align='center'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={2} align='center'>
             <UI.Icon source='heart' color={theme.colors.onSurface} />
             <UI.Icon source='heart' color={theme.colors.onSurfaceVariant} />
             <UI.Icon source='heart' color={theme.colors.primary} />
@@ -54,7 +54,7 @@ const IconScreen: Nav.ScreenType = () => {
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={1} align='center'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={1} align='center'>
             <UI.Icon source='palette' color={colors.purple_3} />
             <UI.LabelText variant='labelSmall'>
               Custom color (demoColors)
@@ -71,7 +71,7 @@ const IconScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2} align='center'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={2} align='center'>
             <UI.Box bgColor={colors.cyan_1} p={2} br={12}>
               <UI.Icon source='information' variant='lg' color={colors.cyan_3} />
             </UI.Box>
@@ -91,21 +91,21 @@ const IconScreen: Nav.ScreenType = () => {
         <UI.Text variant='titleMedium'>Practical</UI.Text>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={1} align='center'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={1} align='center'>
             <UI.Icon source='map-marker' variant='md' color={theme.colors.primary} />
             <UI.Text variant='bodyMedium'>Location label</UI.Text>
           </UI.HorizontalLayout>
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={1} align='center'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={1} align='center'>
             <UI.Icon source='check-circle' variant='sm' color={colors.green_3} />
             <UI.Text variant='labelSmall'>Active status</UI.Text>
           </UI.HorizontalLayout>
         </UI.Box>
 
         <UI.Box mt={2}>
-          <UI.HorizontalLayout gap={2} align='center'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={2} align='center'>
             <UI.Box bgColor={colors.neutral_1} p={2} br={999}>
               <UI.Icon source='thumb-up' color={theme.colors.onSurfaceVariant} />
             </UI.Box>

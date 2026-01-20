@@ -51,7 +51,7 @@ const ChipScreen: Nav.ScreenType = () => {
 
   return (
     <Nav.ScreenLayout showTitle title='Chips'>
-      <UI.VerticalLayout constraint='scroll' pad={2}>
+      <UI.VerticalLayout constraint='scroll' flex={1} pad={2} gap={1}>
 
         {/* Intro */}
         <UI.Text variant='bodyMedium'>
@@ -67,7 +67,7 @@ const ChipScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={1} constraint='wrap'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={1} constraint='wrap'>
             <UI.Chip label='Default' />
             <UI.Chip label='Selected' selected />
             <UI.Chip label='Disabled' disabled />
@@ -85,7 +85,7 @@ const ChipScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={1} constraint='wrap'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={1} constraint='wrap'>
             {['All', 'Work', 'Personal', 'Pinned'].map(label => (
               <UI.Chip
                 key={label}
@@ -112,7 +112,7 @@ const ChipScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={1} constraint='wrap'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={1} constraint='wrap'>
             {activeTags.map(tag => (
               <UI.Chip
                 key={tag}

@@ -15,7 +15,7 @@ const DecoratorsScreen: Nav.ScreenType = ({}) => {
   
   return (
     <Nav.ScreenLayout showTitle title='Decorators'>
-      <UI.VerticalLayout constraint='scroll' pad={2}>
+      <UI.VerticalLayout constraint='scroll' flex={1} pad={2} gap={1}>
 
         {/* Header */}
         <UI.Text variant='bodyMedium'>
@@ -44,7 +44,7 @@ const DecoratorsScreen: Nav.ScreenType = ({}) => {
           </UI.LabelText>
 
           <UI.Box mt={2}>
-            <UI.HorizontalLayout dir='row' align='center' gap={2}>
+            <UI.HorizontalLayout dir='row' align='center' flex={1} pad={1} gap={2}>
               <UI.Text variant='bodySmall'>Left</UI.Text>
               <UI.Divider orientation='vertical' spacing={1} />
               <UI.Text variant='bodySmall'>Right</UI.Text>

@@ -21,7 +21,7 @@ const AvatarScreen: Nav.ScreenType = () => {
 
   return (
     <Nav.ScreenLayout showTitle title='Avatar'>
-      <UI.VerticalLayout constraint='scroll' pad={2}>
+      <UI.VerticalLayout constraint='scroll' flex={1} pad={2} gap={1}>
 
         {/* Intro */}
         <UI.Text variant='bodyMedium'>
@@ -37,7 +37,7 @@ const AvatarScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2} align='center'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={2} align='center'>
             <UI.Avatar label='AB' />
             <UI.Avatar label='SM' size='sm' />
             <UI.Avatar label='MD' size='md' />
@@ -55,7 +55,7 @@ const AvatarScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2} align='center'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={2} align='center'>
             <UI.Avatar label='C' size='lg' shape='circle' />
             <UI.Avatar label='R' size='lg' shape='rounded' />
           </UI.HorizontalLayout>
@@ -70,7 +70,7 @@ const AvatarScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2} align='center'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={2} align='center'>
             <UI.Avatar uri='https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg' size='lg' />
             <UI.Avatar uri='https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg' size='lg' />
             <UI.Avatar label='??' size='lg' />
@@ -86,7 +86,7 @@ const AvatarScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2} align='center'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={2} align='center'>
             <UI.Avatar label='ON' size='lg' badgeColor={theme.colors.secondary} />
             <UI.Avatar label='AFK' size='lg' badgeColor={theme.colors.tertiary} />
             <UI.Avatar label='OFF' size='lg' badgeColor={theme.colors.outlineVariant} />
@@ -94,7 +94,7 @@ const AvatarScreen: Nav.ScreenType = () => {
         </UI.Box>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2} align='center'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={2} align='center'>
             <UI.Avatar
               label='TR'
               size='lg'
@@ -119,7 +119,7 @@ const AvatarScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2} align='center'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={2} align='center'>
             <UI.Avatar label='A' size='lg' bgColor={theme.colors.primary} textColor={theme.colors.onPrimary} />
             <UI.Avatar label='B' size='lg' bgColor={theme.colors.secondary} textColor={theme.colors.onSecondary} />
             <UI.Avatar label='C' size='lg' bgColor={theme.colors.tertiary} textColor={theme.colors.onTertiary} />
@@ -135,7 +135,7 @@ const AvatarScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout gap={2} align='center'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={2} align='center'>
             <UI.Avatar
               label='ME'
               size='lg'

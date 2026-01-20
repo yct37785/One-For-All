@@ -96,7 +96,7 @@ const NestedOptionsScreen: Nav.ScreenType = () => {
 
   return (
     <Nav.ScreenLayout showTitle title='Nested options'>
-      <UI.VerticalLayout constraint='scroll' pad={2}>
+      <UI.VerticalLayout constraint='scroll' flex={1} pad={2} gap={1}>
 
         {/* Intro */}
         <UI.Text variant='bodyMedium'>
@@ -105,7 +105,7 @@ const NestedOptionsScreen: Nav.ScreenType = () => {
 
         {/* Quick actions */}
         <UI.Divider spacing={1} />
-        <UI.HorizontalLayout gap={1} constraint='wrap'>
+        <UI.HorizontalLayout flex={1} pad={1} gap={1} constraint='wrap'>
           <UI.Button mode='outlined' icon='check-all' onPress={selectAll}>
             Select all
           </UI.Button>

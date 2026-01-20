@@ -40,7 +40,7 @@ const ButtonsScreen: Nav.ScreenType = () => {
 
   return (
     <Nav.ScreenLayout showTitle title='Buttons'>
-      <UI.VerticalLayout constraint='scroll' pad={2}>
+      <UI.VerticalLayout constraint='scroll' flex={1} pad={2} gap={1}>
 
         {/* Intro */}
         <UI.Text variant='bodyMedium'>
@@ -56,7 +56,7 @@ const ButtonsScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box>
-          <UI.VerticalLayout gap={1}>
+          <UI.VerticalLayout flex={1} pad={1} gap={1}>
             <UI.Button mode='text' onPress={bumpBtn}>Text</UI.Button>
             <UI.Button mode='outlined' onPress={bumpBtn}>Outlined</UI.Button>
             <UI.Button mode='contained' onPress={bumpBtn}>Contained</UI.Button>
@@ -76,7 +76,7 @@ const ButtonsScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box>
-          <UI.VerticalLayout gap={1}>
+          <UI.VerticalLayout flex={1} pad={1} gap={1}>
             <UI.Button
               mode='contained'
               icon='cloud-upload'
@@ -101,7 +101,7 @@ const ButtonsScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box>
-          <UI.VerticalLayout gap={1}>
+          <UI.VerticalLayout flex={1} pad={1} gap={1}>
             <UI.Button
               mode='contained'
               icon='star'
@@ -142,7 +142,7 @@ const ButtonsScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box>
-          <UI.HorizontalLayout gap={2}>
+          <UI.HorizontalLayout flex={1} pad={1} gap={2}>
             <UI.IconButton icon='dots-vertical' onPress={bumpIcon} />
             <UI.IconButton icon='cog' onPress={bumpIcon} />
             <UI.IconButton icon='magnify' onPress={bumpIcon} />
@@ -160,7 +160,7 @@ const ButtonsScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box>
-          <UI.HorizontalLayout gap={2} constraint='wrap'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={2} constraint='wrap'>
             <UI.IconButton icon='heart-outline' mode='outlined' onPress={bumpIcon} />
 
             <UI.IconButton
@@ -199,7 +199,7 @@ const ButtonsScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box>
-          <UI.HorizontalLayout gap={2} align='center'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={2} align='center'>
             <UI.IconButton
               icon={favorite ? 'heart' : 'heart-outline'}
               mode='contained'
@@ -219,7 +219,7 @@ const ButtonsScreen: Nav.ScreenType = () => {
         <UI.Text variant='titleMedium'>IconButton · sizes</UI.Text>
 
         <UI.Box>
-          <UI.HorizontalLayout gap={2} constraint='wrap'>
+          <UI.HorizontalLayout flex={1} pad={1} gap={2} constraint='wrap'>
             <UI.IconButton icon='plus' size='xs' onPress={bumpIcon} />
             <UI.IconButton icon='plus' size='sm' onPress={bumpIcon} />
             <UI.IconButton icon='plus' size='md' onPress={bumpIcon} />
@@ -237,7 +237,7 @@ const ButtonsScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box>
-          <UI.VerticalLayout gap={1}>
+          <UI.VerticalLayout flex={1} pad={1} gap={1}>
             <UI.TextButton onPress={bumpBtn}>Text action</UI.TextButton>
 
             <UI.TextButton onPress={bumpBtn} textOpts={{ bold: true }}>

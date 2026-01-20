@@ -17,7 +17,7 @@ const DialogScreen: Nav.ScreenType = () => {
 
   return (
     <Nav.ScreenLayout showTitle title='Dialog'>
-      <UI.VerticalLayout constraint='scroll' pad={2}>
+      <UI.VerticalLayout constraint='scroll' flex={1} pad={2} gap={1}>
 
         {/* Intro */}
         <UI.Text variant='bodyMedium'>
@@ -81,7 +81,7 @@ const DialogScreen: Nav.ScreenType = () => {
             setCustomVisible(false);
           }}
         >
-          <UI.VerticalLayout pad={2} gap={1}>
+          <UI.VerticalLayout flex={1} pad={2} gap={1}>
             <UI.Text variant='bodySmall'>
               Signing out will remove your session from this device.
             </UI.Text>
@@ -112,7 +112,7 @@ const DialogScreen: Nav.ScreenType = () => {
             setDismissVisible(false);
           }}
         >
-          <UI.VerticalLayout pad={2} gap={1}>
+          <UI.VerticalLayout flex={1} pad={2} gap={1}>
             <UI.Text variant='bodySmall'>
               Use dismissable dialogs for low-risk info that doesn't require a strict decision.
             </UI.Text>

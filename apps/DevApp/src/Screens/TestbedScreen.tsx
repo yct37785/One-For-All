@@ -18,7 +18,7 @@ const TestbedScreen: Nav.ScreenType = ({}) => {
   };
 
   const LeftContent = () => (
-    <UI.HorizontalLayout bgColor='green'>
+    <UI.HorizontalLayout bgColor='green' flex={1} pad={1} gap={1}>
       <View style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: 'lime' }} />
       <UI.Text variant='labelLarge'>Testbed</UI.Text>
     </UI.HorizontalLayout>
@@ -26,7 +26,7 @@ const TestbedScreen: Nav.ScreenType = ({}) => {
 
   return (
     <Nav.ScreenLayout LeftContent={<LeftContent />}>
-      <UI.VerticalLayout bgColor='red'>
+      <UI.VerticalLayout bgColor='red' flex={1} pad={2} gap={1}>
 
         <UI.MenuList options={options} onSelect={handleSelect} dense showDividers />
 

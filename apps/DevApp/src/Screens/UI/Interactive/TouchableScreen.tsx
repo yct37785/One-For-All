@@ -19,7 +19,7 @@ const TouchableScreen: Nav.ScreenType = () => {
 
   return (
     <Nav.ScreenLayout showTitle title='Touchable'>
-      <UI.VerticalLayout constraint='scroll' pad={2}>
+      <UI.VerticalLayout constraint='scroll' flex={1} pad={2} gap={1}>
 
         {/* Intro */}
         <UI.Text variant='bodyMedium'>
