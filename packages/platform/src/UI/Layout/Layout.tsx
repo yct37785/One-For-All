@@ -34,7 +34,7 @@ export type LayoutProps = {
  *  - Use to wrap multiple child UI components.
  * 
  * Notes:
- *  - If neither height nor flex is provided, the layout defaults to flex: 1 and fills available space.
+ *  - If flex is not provided, the layout sizes to its content by default.
  *  - If a fixed height is provided, the layout will no longer flex unless flex={...} is explicitly specified.
  * 
  * @param dir?             - Flex direction
@@ -53,9 +53,9 @@ const Layout: React.FC<LayoutProps> = ({
   dir = 'column',
   reverse = false,
   constraint = 'none',
-  flex = 1,
-  pad = 1,
-  gap = 1,
+  flex,
+  pad,
+  gap,
   height,
   bgColor = 'transparent',
   align,
@@ -115,8 +115,8 @@ const Layout: React.FC<LayoutProps> = ({
       justifyContent: justifyContentValue,
       alignItems: alignItemsValue,
       alignContent: alignContentValue,
-      padding: pad * theme.design.padSize,
-      gap: gap * theme.design.padSize,
+      padding: pad ? pad * theme.design.padSize : 0,
+      gap: gap ? gap * theme.design.padSize : 0,
       backgroundColor: bgColor,
     }),
     [
