@@ -87,12 +87,34 @@ const LayoutsScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.LabelText>HorizontalLayout (align='center')</UI.LabelText>
+          <UI.LabelText>align='center'</UI.LabelText>
         </UI.Box>
         <UI.HorizontalLayout bgColor={colors.neutral_1} flex={1} pad={1} gap={1} height={120} align='center'>
           <BlockBox i={1} w={small} h={small} bgColor={colors.purple_2} />
           <BlockBox i={2} w={small} h={big} bgColor={colors.purple_2} />
           <BlockBox i={3} w={small} h={small} bgColor={colors.purple_2} />
+        </UI.HorizontalLayout>
+
+        {/* Justify */}
+        <UI.Divider spacing={2} />
+        <UI.Text variant='titleMedium'>Justify (main-axis)</UI.Text>
+
+        <UI.LabelText>
+          justify controls spacing along the main axis.
+        </UI.LabelText>
+
+        <UI.Box mt={1}>
+          <UI.LabelText>justify='space-between'</UI.LabelText>
+        </UI.Box>
+        <UI.HorizontalLayout
+          bgColor={colors.neutral_1}
+          height={80}
+          pad={1}
+          justify='space-between'
+        >
+          <BlockBox i={1} w={small} h={small} bgColor={colors.green_2} />
+          <BlockBox i={2} w={big} h={small} bgColor={colors.green_2} />
+          <BlockBox i={3} w={small} h={small} bgColor={colors.green_2} />
         </UI.HorizontalLayout>
 
         {/* Wrap */}
