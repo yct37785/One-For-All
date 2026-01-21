@@ -79,6 +79,50 @@ const LayoutsScreen: Nav.ScreenType = () => {
           <BlockBox i={3} w={small} h={small} bgColor={colors.cyan_2} />
         </UI.VerticalLayout>
 
+        {/* Gap */}
+        <UI.Divider spacing={2} />
+        <UI.Text variant='titleMedium'>Gap</UI.Text>
+
+        <UI.LabelText>
+          In wrap mode, gap applies between items and between wrapped rows/columns.
+        </UI.LabelText>
+
+        <UI.Box mt={1}>
+          <UI.LabelText>Basic (wrap + gap)</UI.LabelText>
+        </UI.Box>
+        <UI.HorizontalLayout
+          constraint='wrap'
+          bgColor={colors.neutral_1}
+          flex={1}
+          pad={1}
+          gap={1}
+        >
+          <BlockBox i={1} w={big} h={small} bgColor={colors.green_2} />
+          <BlockBox i={2} w={big} h={small} bgColor={colors.green_2} />
+          <BlockBox i={3} w={big} h={small} bgColor={colors.green_2} />
+          <BlockBox i={4} w={big} h={small} bgColor={colors.green_2} />
+          <BlockBox i={5} w={big} h={small} bgColor={colors.green_2} />
+        </UI.HorizontalLayout>
+
+        <UI.Box mt={1}>
+          <UI.LabelText>To have different gaps values for rows and columns, use nested layouts.</UI.LabelText>
+        </UI.Box>
+        <UI.VerticalLayout bgColor={colors.neutral_1} flex={1} pad={1} gap={2}>
+          {/* gapV = 1 (this VerticalLayout's gap) */}
+          <UI.HorizontalLayout gap={1}>
+            {/* gapH = 1 (this HorizontalLayout's gap) */}
+            <BlockBox i={1} w={small} h={small} bgColor={colors.cyan_2} />
+            <BlockBox i={2} w={small} h={small} bgColor={colors.cyan_2} />
+            <BlockBox i={3} w={small} h={small} bgColor={colors.cyan_2} />
+          </UI.HorizontalLayout>
+
+          <UI.HorizontalLayout gap={1}>
+            <BlockBox i={4} w={small} h={small} bgColor={colors.cyan_2} />
+            <BlockBox i={5} w={small} h={small} bgColor={colors.cyan_2} />
+            <BlockBox i={6} w={small} h={small} bgColor={colors.cyan_2} />
+          </UI.HorizontalLayout>
+        </UI.VerticalLayout>
+
         {/* Align */}
         <UI.Divider spacing={2} />
         <UI.Text variant='titleMedium'>Align</UI.Text>
