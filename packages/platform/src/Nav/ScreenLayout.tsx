@@ -1,7 +1,6 @@
 import React, { memo, useContext, createContext } from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { AppBar } from './AppBar';
 import { PadSpacingValue } from '../Types';
 import { useAppTheme } from '../Manager/App/AppThemeManager';
@@ -110,13 +109,11 @@ export const ScreenLayout: React.FC<ScreenLayoutProps> = memo((props) => {
   const showBackFinal = explicitShowBack !== undefined ? explicitShowBack : canGoBack;
 
   return (
-    <KeyboardAvoidingView
+    <View
       style={[
         styles.root,
         { backgroundColor: theme.colors.background },
       ]}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      keyboardVerticalOffset={0}
     >
       <AppBar
         title={showTitle ? computedTitle : undefined}
@@ -125,7 +122,7 @@ export const ScreenLayout: React.FC<ScreenLayoutProps> = memo((props) => {
         right={RightContent}
       />
       {props.children}
-    </KeyboardAvoidingView>
+    </View>
   );
 });
 
