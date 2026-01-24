@@ -186,18 +186,31 @@ const InputScreen: Nav.ScreenType = () => {
         <UI.Text variant='titleMedium'>Multiline</UI.Text>
 
         <UI.LabelText>
-          Allows longer, multi-line input (e.g. notes, comments, descriptions).
+          Multiline inputs support longer text like notes or descriptions.
         </UI.LabelText>
 
         <UI.Box mt={1}>
           <UI.TextInput
             type='text'
             variant='outline'
-            label='Notes'
+            label='Notes (fixed height)'
             placeholder='Write a longer message...'
             multiline
-            numberOfLines={4}
-            helperText='Multiline inputs grow vertically and support line breaks.'
+            numberOfLines={3}
+            helperText='numberOfLines sets an initial fixed height.'
+            value={multilineVal}
+            onChange={setMultilineVal}
+          />
+        </UI.Box>
+
+        <UI.Box mt={2}>
+          <UI.TextInput
+            type='text'
+            variant='outline'
+            label='Notes (auto-growing)'
+            placeholder='Keep typing to add more lines...'
+            multiline
+            helperText='Omit numberOfLines to allow unlimited vertical growth.'
             value={multilineVal}
             onChange={setMultilineVal}
           />
