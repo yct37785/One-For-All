@@ -18,6 +18,7 @@ export type LayoutProps = {
   dir?: 'row' | 'column';
   reverse?: boolean;
   constraint?: 'wrap' | 'scroll' | 'none';
+  keyboardAwareScroll?: boolean;
   flex?: number;
   pad?: PadSpacingValue;
   gap?: PadSpacingValue;
@@ -32,27 +33,29 @@ export type LayoutProps = {
  * A flexible element grouping container that defines structure and spacing for contained elements:
  *  - Does not support custom styling as that is out of scope for layout.
  *  - Use to wrap multiple child UI components.
- * 
+ *
  * Notes:
  *  - If flex is not provided, the layout sizes to its content by default.
  *  - If a fixed height is provided, the layout will no longer flex unless flex={...} is explicitly specified.
- * 
- * @param dir?             - Flex direction
- * @param reverse?         - Whether to render children in reverse order
- * @param constraint?      - Layout constraint mode
- * @param flex?            - Flex grow/shrink value for container
- * @param pad?             - Spacing around children
- * @param gap?             - Spacing between children
- * @param height?          - Fixed height for the container
- * @param bgColor?         - Background color
- * @param align?           - Cross-axis alignment
- * @param justify?         - Main-axis alignment
- * @param children         - Elements rendered inside
+ *
+ * @param dir?                - Flex direction
+ * @param reverse?            - Whether to render children in reverse order
+ * @param constraint?         - Layout constraint mode
+ * @param keyboardAwareScroll - If constraint is 'scroll' and you want the scroll to react to the keyboard
+ * @param flex?               - Flex grow/shrink value for container
+ * @param pad?                - Spacing around children
+ * @param gap?                - Spacing between children
+ * @param height?             - Fixed height for the container
+ * @param bgColor?            - Background color
+ * @param align?              - Cross-axis alignment
+ * @param justify?            - Main-axis alignment
+ * @param children            - Elements rendered inside
  ******************************************************************************************************************/
 const Layout: React.FC<LayoutProps> = ({
   dir = 'column',
   reverse = false,
   constraint = 'none',
+  keyboardAwareScroll = false,
   flex,
   pad,
   gap,
@@ -63,7 +66,7 @@ const Layout: React.FC<LayoutProps> = ({
   children,
 }) => {
   const { theme } = useAppTheme();
-  
+
   // reverse children if requested
   const content = reverse
     ? React.Children.toArray(children).reverse()
@@ -133,18 +136,25 @@ const Layout: React.FC<LayoutProps> = ({
   );
 
   if (isScroll) {
-    return (
-      <KeyboardAwareScrollView
-        ScrollViewComponent={ScrollView}
-        horizontal={isRow}
-        showsVerticalScrollIndicator={!isRow}
-        showsHorizontalScrollIndicator={isRow}
-        style={containerDims}                    // dimensions on ScrollView
-        contentContainerStyle={contentStyle}     // layout rules on inner content
-      >
-        {content}
-      </KeyboardAwareScrollView>
-    );
+    const commonProps = {
+      horizontal: isRow,
+      showsVerticalScrollIndicator: !isRow,
+      showsHorizontalScrollIndicator: isRow,
+      style: containerDims,
+      contentContainerStyle: contentStyle,
+      children: content,
+    };
+
+    if (keyboardAwareScroll) {
+      return (
+        <KeyboardAwareScrollView
+          ScrollViewComponent={ScrollView}
+          {...commonProps}
+        />
+      );
+    }
+
+    return <ScrollView {...commonProps} />;
   }
 
   return <View style={[containerDims, contentStyle]}>{content}</View>;
@@ -161,7 +171,7 @@ const Layout: React.FC<LayoutProps> = ({
  * </VerticalLayout>
  * ```
  ******************************************************************************************************************/
-export const VerticalLayout: React.FC<Omit<LayoutProps, 'direction'>> = memo((props) => (
+export const VerticalLayout: React.FC<Omit<LayoutProps, 'dir'>> = memo((props) => (
   <Layout {...props} dir='column' />
 ));
 
@@ -176,6 +186,6 @@ export const VerticalLayout: React.FC<Omit<LayoutProps, 'direction'>> = memo((pr
  * </HorizontalLayout>
  * ```
  ******************************************************************************************************************/
-export const HorizontalLayout: React.FC<Omit<LayoutProps, 'direction'>> = memo((props) => (
+export const HorizontalLayout: React.FC<Omit<LayoutProps, 'dir'>> = memo((props) => (
   <Layout {...props} dir='row' />
 ));
