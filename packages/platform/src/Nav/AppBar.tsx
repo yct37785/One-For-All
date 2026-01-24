@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { Text } from 'react-native-paper';
 import { useAppTheme } from '../Manager/App/AppThemeManager';
+import { APP_BAR_H } from '../Defaults';
 
 /******************************************************************************************************************
  * AppBar props.
@@ -65,7 +66,7 @@ export const AppBar: React.FC<AppBarProps> = memo(({ title, onBack, left, right 
   );
 
   return (
-    <Appbar.Header elevated>
+    <Appbar.Header elevated style={{ height: APP_BAR_H }}>
       {/* back btn */}
       {onBack ? (
         <Appbar.BackAction onPress={onBack} />

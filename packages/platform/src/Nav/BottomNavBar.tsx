@@ -5,6 +5,7 @@ import { Touchable } from '../UI/Interactive/Touchable';
 import { Text, TextProps } from '../UI/Text/Text';
 import { Icon, IconProps } from '../UI/Text/Icon';
 import { useAppTheme } from '../Manager/App/AppThemeManager';
+import { APP_BAR_H } from '../Defaults';
 
 // defaults (can be overridden per item via iconOpts/textOpts)
 const defaultIconVariant: IconProps['variant'] = 'sm';
@@ -75,6 +76,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = memo(
           root: {
             width: '100%',
             borderTopWidth: StyleSheet.hairlineWidth,
+            height: APP_BAR_H
           },
           itemButton: {
             alignItems: 'center',
