@@ -1,6 +1,7 @@
 export * from '../UI/Container/Box';
 export * from '../UI/Container/Collapsible/Accordion';
 export * from '../UI/Container/Collapsible/CollapsibleContainer';
+export * from '../UI/Container/KeyboardStickyBox';
 export * from '../UI/Container/Tabs';
 export * from '../UI/Data/Avatar';
 export * from '../UI/Data/Chip';
