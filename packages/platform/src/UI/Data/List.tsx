@@ -1,5 +1,5 @@
 import React, { useMemo, memo, forwardRef, useImperativeHandle, useRef } from 'react';
-import { View, StyleSheet, type StyleProp, type ViewStyle } from 'react-native';
+import { View, StyleSheet, FlatList, type StyleProp, type ViewStyle } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 
 /******************************************************************************************************************
@@ -94,7 +94,8 @@ export type ListProps = {
   renderItem: renderListItemFunc;
   emptyComponent?: React.ReactNode;
   initialScrollIndex?: number;
-  startFromEnd?: boolean;
+  inverted?: boolean;
+  windowSize?: number;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -105,7 +106,9 @@ export type ListProps = {
  * - Text search across `item.searchable`
  * - Filtering via `filterMap` (Set-based per category)
  * - Optional empty state component
- * - Optional initial positioning (initialScrollIndex / startFromEnd)
+ * 
+ * Note:
+ * - Due to scrolling bug, we cannot have a start from bottom prop, only inverted, hence you are required to invert your data.
  *
  * @param dataArr            - Input dataset to render
  * @param query              - Case-insensitive search query applied to searchable values
@@ -113,7 +116,9 @@ export type ListProps = {
  * @param renderItem         - Function that renders a row for a given item
  * @param emptyComponent     - Custom view when no results
  * @param initialScrollIndex - Starts the list at a given index
- * @param startFromEnd       - Starts the list scrolled to the last item
+ * @param inverted           - First index and scroll starts at bottom
+ * @param windowSize         - The number passed here is a measurement unit where 1 is equivalent to your viewport height. 
+ *                             The default value is 21 (10 viewports above, 10 below, and one in between).
  * @param style?             - Optional wrapper style
  *
  * @usage
@@ -131,34 +136,47 @@ export type ListProps = {
  ******************************************************************************************************************/
 export const List = memo(
   forwardRef<ListHandle, ListProps>(
-    (
-      {
-        dataArr = [],
-        query = '',
-        filterMap = {},
-        renderItem,
-        emptyComponent,
-        initialScrollIndex,
-        startFromEnd,
-        style,
-      },
+    ({
+      dataArr = [],
+      query = '',
+      filterMap = {},
+      renderItem,
+      emptyComponent,
+      initialScrollIndex,
+      inverted,
+      windowSize = 5,
+      style,
+    },
       ref
     ) => {
-      /**
-       * FlashList does not expose a clean public instance type that plays nicely across versions.
-       * We only use a small stable imperative surface (scrollToIndex/End/Offset), so `any` is fine here.
-       */
-      const flashListRef = useRef<any>(null);
+      // /**
+      //  * FlashList does not expose a clean public instance type that plays nicely across versions.
+      //  * We only use a small stable imperative surface (scrollToIndex/End/Offset), so `any` is fine here.
+      //  */
+      // const flashListRef = useRef<any>(null);
+
+      // useImperativeHandle(ref, () => ({
+      //   scrollToIndex: (index: number, animated: boolean = true) => {
+      //     flashListRef.current?.scrollToIndex({ index, animated });
+      //   },
+      //   scrollToEnd: (animated: boolean = true) => {
+      //     flashListRef.current?.scrollToEnd({ animated });
+      //   },
+      //   scrollToTop: (animated: boolean = true) => {
+      //     flashListRef.current?.scrollToOffset({ offset: 0, animated });
+      //   },
+      // }));
+      const flatListRef = useRef<FlatList<ListItem>>(null);
 
       useImperativeHandle(ref, () => ({
         scrollToIndex: (index: number, animated: boolean = true) => {
-          flashListRef.current?.scrollToIndex({ index, animated });
+          flatListRef.current?.scrollToIndex({ index, animated });
         },
         scrollToEnd: (animated: boolean = true) => {
-          flashListRef.current?.scrollToEnd({ animated });
+          flatListRef.current?.scrollToEnd({ animated });
         },
         scrollToTop: (animated: boolean = true) => {
-          flashListRef.current?.scrollToOffset({ offset: 0, animated });
+          flatListRef.current?.scrollToOffset({ offset: 0, animated });
         },
       }));
 
@@ -256,17 +274,30 @@ export const List = memo(
         ListEmptyComponent,
       };
 
+      // Flashlist scroll to index/bottom is buggy, use Flatlist for now
+      // return (
+      //   <View style={[styles.container, style as StyleProp<ViewStyle>]}>
+      //     <FlashList
+      //       ref={flashListRef}
+      //       key={listKey}
+      //       {...sharedListProps}
+      //       initialScrollIndex={initialScrollIndex}
+      //       maintainVisibleContentPosition={{
+      //         startRenderingFromBottom: startFromEnd
+      //       }}
+      //       // FlashList v2: size estimates are no longer needed or read.
+      //     />
+      //   </View>
+      // );
       return (
         <View style={[styles.container, style as StyleProp<ViewStyle>]}>
-          <FlashList
-            ref={flashListRef}
+          <FlatList
+            ref={flatListRef}
             key={listKey}
             {...sharedListProps}
+            inverted={inverted}
             initialScrollIndex={initialScrollIndex}
-            maintainVisibleContentPosition={{
-              startRenderingFromBottom: startFromEnd
-            }}
-            // FlashList v2: size estimates are no longer needed or read.
+            windowSize={windowSize}
           />
         </View>
       );
