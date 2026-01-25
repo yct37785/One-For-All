@@ -4,7 +4,7 @@ import { FlashList } from '@shopify/flash-list';
 
 /******************************************************************************************************************
  * Select which list implementation to use.
- * 
+ *
  * @property flashlist  - Uses @shopify/flash-list for improved performance with large datasets
  * @property flatlist   - Uses React Native's built-in FlatList
  ******************************************************************************************************************/
@@ -112,23 +112,24 @@ export type ListProps = {
 
 /******************************************************************************************************************
  * A scrollable vertical container for presenting lists of items, searchable and filterable.
- * 
+ *
  * Features:
  * - Text search across `item.searchable`
  * - Filtering via `filterMap` (Set-based per category)
  * - Pluggable list engine (FlashList / FlatList)
  * - Optional empty state component
- * 
- * @param dataArr                - Input dataset to render
- * @param query                  - Case-insensitive search query applied to searchable values
- * @param filterMap              - Active filters applied to filterable keys
- * @param renderItem             - Function that renders a row for a given item
- * @param ListType               - Underlying list implementation (default flashlist)
- * @param emptyComponent         - Custom view when no results
- * @param initialScrollIndex     - Starts the list at a given index
- * @param startFromEnd           - Starts the list scrolled to the last item
- * @param style?                 - Optional wrapper style
- * 
+ * - Optional initial positioning (initialScrollIndex / startFromEnd)
+ *
+ * @param dataArr            - Input dataset to render
+ * @param query              - Case-insensitive search query applied to searchable values
+ * @param filterMap          - Active filters applied to filterable keys
+ * @param renderItem         - Function that renders a row for a given item
+ * @param listType           - Underlying list implementation (default flashlist)
+ * @param emptyComponent     - Custom view when no results
+ * @param initialScrollIndex - Starts the list at a given index
+ * @param startFromEnd       - Starts the list scrolled to the last item
+ * @param style?             - Optional wrapper style
+ *
  * @usage
  * ```tsx
  * <List
@@ -136,10 +137,10 @@ export type ListProps = {
  *   query={searchTerm}
  *   filterMap={{ material: new Set(['wood']) }}
  *   renderItem={(it) => <Text>{it.searchable.name}</Text>}
- *   listImplementationType={ListImplementationType.flashlist}
+ *   listType={ListType.flashlist}
  * />
  * ```
- * 
+ *
  * @TODO update screen demo with ListHandle
  ******************************************************************************************************************/
 export const List = memo(
@@ -152,12 +153,16 @@ export const List = memo(
         renderItem,
         listType = ListType.flashlist,
         emptyComponent,
-        style,
         initialScrollIndex,
-        startFromEnd
+        startFromEnd,
+        style,
       },
       ref
     ) => {
+      /**
+       * FlashList does not expose a clean public instance type that plays nicely across versions.
+       * We only use a small stable imperative surface (scrollToIndex/End/Offset), so `any` is fine here.
+       */
       const flashListRef = useRef<any>(null);
       const flatListRef = useRef<FlatList<ListItem>>(null);
 
@@ -231,15 +236,25 @@ export const List = memo(
       }, [dataArr, query, filterMap]);
 
       /**************************************************************************************************************
-       * Resolve initial scroll index:
+       * Resolve initial scroll index.
        * - startFromEnd takes precedence
        * - falls back to initialScrollIndex if provided
+       * - clamps to valid range
        **************************************************************************************************************/
       const resolvedInitialScrollIndex = useMemo(() => {
+        let idx: number | undefined;
+
         if (startFromEnd && filteredData.length > 0) {
-          return filteredData.length - 1;
+          idx = filteredData.length - 1;
+        } else if (typeof initialScrollIndex === 'number') {
+          idx = initialScrollIndex;
         }
-        return initialScrollIndex;
+
+        if (idx == null) return undefined;
+
+        // clamp to valid range
+        if (filteredData.length <= 0) return undefined;
+        return Math.max(0, Math.min(idx, filteredData.length - 1));
       }, [startFromEnd, initialScrollIndex, filteredData.length]);
 
       /**************************************************************************************************************
@@ -266,9 +281,7 @@ export const List = memo(
       }: {
         item: ListItem;
         index: number;
-      }) => (
-        <View style={styles.itemWrapper}>{renderItem(item, index)}</View>
-      );
+      }) => <View style={styles.itemWrapper}>{renderItem(item, index)}</View>;
 
       /**************************************************************************************************************
        * Prefer a stable key if the item has an "id" in searchable.
@@ -284,9 +297,7 @@ export const List = memo(
       /**************************************************************************************************************
        * Optional empty state component.
        **************************************************************************************************************/
-      const ListEmptyComponent = emptyComponent
-        ? () => <>{emptyComponent}</>
-        : undefined;
+      const ListEmptyComponent = emptyComponent ? () => <>{emptyComponent}</> : undefined;
 
       const sharedListProps = {
         data: filteredData,
@@ -303,7 +314,7 @@ export const List = memo(
               key={listKey}
               {...sharedListProps}
               initialScrollIndex={resolvedInitialScrollIndex}
-            // FlashList v2: size estimates are no longer needed or read.
+              // FlashList v2: size estimates are no longer needed or read.
             />
           );
         }
