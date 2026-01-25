@@ -144,7 +144,7 @@ export const List = memo(
       emptyComponent,
       initialScrollIndex,
       inverted,
-      windowSize = 5,
+      windowSize = 21,
       style,
     },
       ref
