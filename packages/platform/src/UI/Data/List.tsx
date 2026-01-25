@@ -1,17 +1,6 @@
 import React, { useMemo, memo, forwardRef, useImperativeHandle, useRef } from 'react';
-import { View, FlatList, StyleSheet, type StyleProp, type ViewStyle } from 'react-native';
+import { View, StyleSheet, type StyleProp, type ViewStyle } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
-
-/******************************************************************************************************************
- * Select which list implementation to use.
- *
- * @property flashlist  - Uses @shopify/flash-list for improved performance with large datasets
- * @property flatlist   - Uses React Native's built-in FlatList
- ******************************************************************************************************************/
-export enum ListType {
-  flashlist = 'flashlist',
-  flatlist = 'flatlist',
-}
 
 /******************************************************************************************************************
  * Define the structure of a single list item used for search and filter.
@@ -103,7 +92,6 @@ export type ListProps = {
   query: string;
   filterMap: ListFilterMap;
   renderItem: renderListItemFunc;
-  listType?: ListType;
   emptyComponent?: React.ReactNode;
   initialScrollIndex?: number;
   startFromEnd?: boolean;
@@ -116,7 +104,6 @@ export type ListProps = {
  * Features:
  * - Text search across `item.searchable`
  * - Filtering via `filterMap` (Set-based per category)
- * - Pluggable list engine (FlashList / FlatList)
  * - Optional empty state component
  * - Optional initial positioning (initialScrollIndex / startFromEnd)
  *
@@ -124,7 +111,6 @@ export type ListProps = {
  * @param query              - Case-insensitive search query applied to searchable values
  * @param filterMap          - Active filters applied to filterable keys
  * @param renderItem         - Function that renders a row for a given item
- * @param listType           - Underlying list implementation (default flashlist)
  * @param emptyComponent     - Custom view when no results
  * @param initialScrollIndex - Starts the list at a given index
  * @param startFromEnd       - Starts the list scrolled to the last item
@@ -151,7 +137,6 @@ export const List = memo(
         query = '',
         filterMap = {},
         renderItem,
-        listType = ListType.flashlist,
         emptyComponent,
         initialScrollIndex,
         startFromEnd,
@@ -164,29 +149,16 @@ export const List = memo(
        * We only use a small stable imperative surface (scrollToIndex/End/Offset), so `any` is fine here.
        */
       const flashListRef = useRef<any>(null);
-      const flatListRef = useRef<FlatList<ListItem>>(null);
 
       useImperativeHandle(ref, () => ({
         scrollToIndex: (index: number, animated: boolean = true) => {
-          if (listType === ListType.flashlist) {
-            flashListRef.current?.scrollToIndex({ index, animated });
-            return;
-          }
-          flatListRef.current?.scrollToIndex({ index, animated });
+          flashListRef.current?.scrollToIndex({ index, animated });
         },
         scrollToEnd: (animated: boolean = true) => {
-          if (listType === ListType.flashlist) {
-            flashListRef.current?.scrollToEnd({ animated });
-            return;
-          }
-          flatListRef.current?.scrollToEnd({ animated });
+          flashListRef.current?.scrollToEnd({ animated });
         },
         scrollToTop: (animated: boolean = true) => {
-          if (listType === ListType.flashlist) {
-            flashListRef.current?.scrollToOffset({ offset: 0, animated });
-            return;
-          }
-          flatListRef.current?.scrollToOffset({ offset: 0, animated });
+          flashListRef.current?.scrollToOffset({ offset: 0, animated });
         },
       }));
 
@@ -258,7 +230,7 @@ export const List = memo(
       }, [startFromEnd, initialScrollIndex, filteredData.length]);
 
       /**************************************************************************************************************
-       * Derive a stable key for the list so FlashList/FlatList fully remounts when
+       * Derive a stable key for the list so FlashList fully remounts when
        * the result set shrinks/grows or filters change drastically.
        **************************************************************************************************************/
       const listKey = useMemo(() => {
@@ -269,11 +241,11 @@ export const List = memo(
           })
           .join('|');
 
-        return `${listType}-${filteredData.length}-${query}-${filterKey}`;
-      }, [listType, filteredData.length, query, filterMap]);
+        return `${filteredData.length}-${query}-${filterKey}`;
+      }, [filteredData.length, query, filterMap]);
 
       /**************************************************************************************************************
-       * Adapter to wrap renderItem into FlatList/FlashList signature.
+       * Adapter to wrap renderItem into FlashList signature.
        **************************************************************************************************************/
       const renderListItem = ({
         item,
@@ -306,33 +278,15 @@ export const List = memo(
         ListEmptyComponent,
       };
 
-      const renderList = () => {
-        if (listType === ListType.flashlist) {
-          return (
-            <FlashList
-              ref={flashListRef}
-              key={listKey}
-              {...sharedListProps}
-              initialScrollIndex={resolvedInitialScrollIndex}
-              // FlashList v2: size estimates are no longer needed or read.
-            />
-          );
-        }
-
-        return (
-          <FlatList
-            ref={flatListRef}
+      return (
+        <View style={[styles.container, style as StyleProp<ViewStyle>]}>
+          <FlashList
+            ref={flashListRef}
             key={listKey}
             {...sharedListProps}
             initialScrollIndex={resolvedInitialScrollIndex}
-            windowSize={5}
+          // FlashList v2: size estimates are no longer needed or read.
           />
-        );
-      };
-
-      return (
-        <View style={[styles.container, style as StyleProp<ViewStyle>]}>
-          {renderList()}
         </View>
       );
     }

@@ -183,7 +183,6 @@ const ListScreen: Nav.ScreenType = () => {
           query={query}
           filterMap={filterMap}
           renderItem={renderItem}
-          listType={UI.ListType.flashlist}
           emptyComponent={
             <UI.Box p={2}>
               <UI.Text variant='bodySmall' color={theme.colors.onSurfaceVariant}>
