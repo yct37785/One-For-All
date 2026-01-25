@@ -208,28 +208,6 @@ export const List = memo(
       }, [dataArr, query, filterMap]);
 
       /**************************************************************************************************************
-       * Resolve initial scroll index.
-       * - startFromEnd takes precedence
-       * - falls back to initialScrollIndex if provided
-       * - clamps to valid range
-       **************************************************************************************************************/
-      const resolvedInitialScrollIndex = useMemo(() => {
-        let idx: number | undefined;
-
-        if (startFromEnd && filteredData.length > 0) {
-          idx = filteredData.length - 1;
-        } else if (typeof initialScrollIndex === 'number') {
-          idx = initialScrollIndex;
-        }
-
-        if (idx == null) return undefined;
-
-        // clamp to valid range
-        if (filteredData.length <= 0) return undefined;
-        return Math.max(0, Math.min(idx, filteredData.length - 1));
-      }, [startFromEnd, initialScrollIndex, filteredData.length]);
-
-      /**************************************************************************************************************
        * Derive a stable key for the list so FlashList fully remounts when
        * the result set shrinks/grows or filters change drastically.
        **************************************************************************************************************/
@@ -284,8 +262,11 @@ export const List = memo(
             ref={flashListRef}
             key={listKey}
             {...sharedListProps}
-            initialScrollIndex={resolvedInitialScrollIndex}
-          // FlashList v2: size estimates are no longer needed or read.
+            initialScrollIndex={initialScrollIndex}
+            maintainVisibleContentPosition={{
+              startRenderingFromBottom: startFromEnd
+            }}
+            // FlashList v2: size estimates are no longer needed or read.
           />
         </View>
       );
