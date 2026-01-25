@@ -32,7 +32,7 @@ export enum ListType {
 export type ListItem = {
   searchable: Record<string, string>;
   filterable: Record<string, string>;
-  none: Record<string, string>;
+  none: Record<string, any>;
 };
 
 /******************************************************************************************************************
