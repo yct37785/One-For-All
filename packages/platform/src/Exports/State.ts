@@ -1,2 +1,2 @@
-export * from '../State/AppSettingsManager';
-export * from '../State/AppThemeManager';
+export * from '../Logic/State/AppSettingsManager';
+export * from '../Logic/State/AppThemeManager';
