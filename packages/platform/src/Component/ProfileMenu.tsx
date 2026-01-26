@@ -4,7 +4,7 @@ import { Avatar } from '../UI/Data/Avatar';
 import { Popup } from '../UI/Modal/Popup';
 import { MenuList } from '../UI/Menu/MenuList';
 import { VerticalLayout } from '../UI/Layout/Layout';
-import { useAuth, ProviderIdType } from '../Services/Firebase/Auth/FirebaseAuthManager';
+import { FB_useAuth, FBAuth_ProviderIdType } from '../Services/Firebase/Auth/FBAuth_Service';
 import type { MenuOption } from '../UI/Menu/MenuListItem';
 
 /******************************************************************************************************************
@@ -12,7 +12,7 @@ import type { MenuOption } from '../UI/Menu/MenuListItem';
  ******************************************************************************************************************/
 export const ProfileMenu = memo(() => {
   // auth props
-  const { user, signIn, signOut } = useAuth();
+  const { user, signIn, signOut } = FB_useAuth();
   const isAnon = !!user?.isAnonymous || !user;
   const photoURL = user?.photoURL || undefined;
   const email = user?.email || '';
@@ -32,7 +32,7 @@ export const ProfileMenu = memo(() => {
 
   // trigger sign-in/sign-out (hardcoded to Google for now)
   const handleSelect = async (value: string) => {
-    if (value === 'signin') await signIn(ProviderIdType.Google);
+    if (value === 'signin') await signIn(FBAuth_ProviderIdType.Google);
     if (value === 'signout') await signOut();
   };
 

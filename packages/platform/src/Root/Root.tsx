@@ -24,7 +24,7 @@ import {
 } from '@react-navigation/native';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
-import { FirebaseAuthProvider } from '../Services/Firebase/Auth/FirebaseAuthManager';
+import { FBAuth_Provider } from '../Services/Firebase/Auth/FBAuth_Service';
 // app settings
 import { AppSettingsProvider, useAppSettings } from '../State/AppSettingsManager';
 // utils
@@ -147,7 +147,7 @@ const RootApp: React.FC<RootProps> = ({ rootNavigator, defaultScreenLayoutProps,
  ******************************************************************************************************************/
 const AppEntry: React.FC<RootProps> = (props) => {
   return (
-    <FirebaseAuthProvider>
+    <FBAuth_Provider>
       <AppSettingsProvider>
         <SafeAreaProvider>
           <KeyboardProvider>
@@ -155,7 +155,7 @@ const AppEntry: React.FC<RootProps> = (props) => {
           </KeyboardProvider>
         </SafeAreaProvider>
       </AppSettingsProvider>
-    </FirebaseAuthProvider>
+    </FBAuth_Provider>
   );
 };
 

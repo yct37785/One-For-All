@@ -7,14 +7,14 @@ import {
   FirebaseAuthTypes,
   signOut as fbSignOut,
 } from '@react-native-firebase/auth';
-import { startAuthObservers, verifyCurrentUser } from './FirebaseAuthHelpers';
+import { FBAuth_startAuthObservers, FBAuth_verifyCurrentUser } from './FBAuth_Helpers';
 import { configureGoogleSignIn, signInGoogle, signOutGoogle } from './GoogleAuth';
 import { setItemKV, getItemKV, removeItemKV } from '../../LocalData/LocalKVStoreManager';
 import { doErrLog } from '../../../Util/General';
 import { LOCAL_DATA_DEFAULTS } from '../../../Defaults';
 
 // provider types
-export enum ProviderIdType {
+export enum FBAuth_ProviderIdType {
   None = 'none',
   Google = 'google.com',
   Facebook = 'facebook.com',
@@ -27,16 +27,16 @@ export enum ProviderIdType {
  * @property signIn   - Launch sign-in and authenticate with Firebase (optionally link if already signed in)
  * @property signOut  - Sign out from Firebase & provider
  ******************************************************************************************************************/
-type AuthContextType = {
+type FBAuth_ContextType = {
   user: FirebaseAuthTypes.User | null;
-  signIn: (providerIdType: ProviderIdType) => Promise<void>;
+  signIn: (FBAuth_ProviderIdType: FBAuth_ProviderIdType) => Promise<void>;
   signOut: () => Promise<void>;
 };
 
-const AuthContext = createContext<AuthContextType>({
+const FBAuth_Context = createContext<FBAuth_ContextType>({
   user: null,
-  signIn: async () => doErrLog('auth', 'AuthContext', 'AuthProvider not mounted'),
-  signOut: async () => doErrLog('auth', 'AuthContext', 'AuthProvider not mounted'),
+  signIn: async () => doErrLog('auth', 'FBAuth_Context', 'AuthProvider not mounted'),
+  signOut: async () => doErrLog('auth', 'FBAuth_Context', 'AuthProvider not mounted'),
 });
 
 /******************************************************************************************************************
@@ -53,7 +53,7 @@ const AuthContext = createContext<AuthContextType>({
  * </FirebaseAuthProvider>
  * ```
  ******************************************************************************************************************/
-export const FirebaseAuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const FBAuth_Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
   // guards
@@ -66,18 +66,18 @@ export const FirebaseAuthProvider: React.FC<{ children: React.ReactNode }> = ({ 
    * - Prefer the locally stored "last provider" (source of truth for UX + signOut routing)
    * - Fallback to Firebase providerData when missing (best-effort)
    ****************************************************************************************************************/
-  const getSignInProviderId = useCallback((): ProviderIdType => {
+  const getSignInProviderId = useCallback((): FBAuth_ProviderIdType => {
     const stored = getItemKV<string>(LOCAL_DATA_DEFAULTS.authLastProviderId);
 
-    if (stored === ProviderIdType.Google) return ProviderIdType.Google;
-    if (stored === ProviderIdType.Facebook) return ProviderIdType.Facebook;
+    if (stored === FBAuth_ProviderIdType.Google) return FBAuth_ProviderIdType.Google;
+    if (stored === FBAuth_ProviderIdType.Facebook) return FBAuth_ProviderIdType.Facebook;
 
     // fallback best-effort (not guaranteed to represent the "active" provider)
     const pid = user?.providerData?.[0]?.providerId;
-    if (pid === ProviderIdType.Google) return ProviderIdType.Google;
-    if (pid === ProviderIdType.Facebook) return ProviderIdType.Facebook;
+    if (pid === FBAuth_ProviderIdType.Google) return FBAuth_ProviderIdType.Google;
+    if (pid === FBAuth_ProviderIdType.Facebook) return FBAuth_ProviderIdType.Facebook;
 
-    return ProviderIdType.None;
+    return FBAuth_ProviderIdType.None;
   }, [getItemKV, user]);
 
   /****************************************************************************************************************
@@ -105,9 +105,9 @@ export const FirebaseAuthProvider: React.FC<{ children: React.ReactNode }> = ({ 
       /**
        * 2) Provider sign out (best-effort)
        */
-      if (providerType === ProviderIdType.Google) {
+      if (providerType === FBAuth_ProviderIdType.Google) {
         await signOutGoogle();
-      } else if (providerType === ProviderIdType.Facebook) {
+      } else if (providerType === FBAuth_ProviderIdType.Facebook) {
         // future: Facebook sign out
       } else {
         // no op
@@ -134,7 +134,7 @@ export const FirebaseAuthProvider: React.FC<{ children: React.ReactNode }> = ({ 
    *
    * @param providerType - Auth provider type
    ****************************************************************************************************************/
-  const signIn = useCallback(async (providerType: ProviderIdType): Promise<void> => {
+  const signIn = useCallback(async (providerType: FBAuth_ProviderIdType): Promise<void> => {
     if (signingRef.current) return;
     signingRef.current = true;
 
@@ -145,9 +145,9 @@ export const FirebaseAuthProvider: React.FC<{ children: React.ReactNode }> = ({ 
       const auth = getAuth(getApp());
       let cred: any = null;
 
-      if (providerType === ProviderIdType.Google) {
+      if (providerType === FBAuth_ProviderIdType.Google) {
         cred = await signInGoogle();
-      } else if (providerType === ProviderIdType.Facebook) {
+      } else if (providerType === FBAuth_ProviderIdType.Facebook) {
         // future: Facebook sign in
       } else {
         throw new Error('Unrecognized provider');
@@ -173,7 +173,7 @@ export const FirebaseAuthProvider: React.FC<{ children: React.ReactNode }> = ({ 
       /**
        * 4) Invalidation check
        */
-      if (!(await verifyCurrentUser())) {
+      if (!(await FBAuth_verifyCurrentUser())) {
         await signOut();
         doErrLog('auth', 'signIn', 'Invalid user after sign-in, signed out');
         return;
@@ -203,7 +203,7 @@ export const FirebaseAuthProvider: React.FC<{ children: React.ReactNode }> = ({ 
     /**
      * 2) Sub to observers
      */
-    const stop = startAuthObservers({
+    const stop = FBAuth_startAuthObservers({
       onUser: setUser, // downstream state only
       onInvalidation: async () => {
         // account invalidation on Firebase side = sign out locally
@@ -219,12 +219,12 @@ export const FirebaseAuthProvider: React.FC<{ children: React.ReactNode }> = ({ 
     return stop;
   }, [signOut]);
 
-  const value = useMemo<AuthContextType>(
+  const value = useMemo<FBAuth_ContextType>(
     () => ({ user, signIn, signOut }),
     [user, signIn, signOut]
   );
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <FBAuth_Context.Provider value={value}>{children}</FBAuth_Context.Provider>;
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const FB_useAuth = () => useContext(FBAuth_Context);

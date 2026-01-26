@@ -14,7 +14,7 @@ import { doLog, doErrLog } from '../../../Util/General';
  *
  * @return - True if the user remains valid, false if disabled, deleted, or otherwise invalid
  ******************************************************************************************************************/
-export async function verifyCurrentUser(): Promise<boolean> {
+export async function FBAuth_verifyCurrentUser(): Promise<boolean> {
   const auth = getAuth(getApp());
   const u = auth.currentUser;
   if (!u) return false;
@@ -53,7 +53,7 @@ export async function verifyCurrentUser(): Promise<boolean> {
  * stop()
  * ```
  ****************************************************************************************************************/
-export function startAuthObservers(params: {
+export function FBAuth_startAuthObservers(params: {
   onUser: (u: FirebaseAuthTypes.User | null) => void;
   onInvalidation: () => Promise<void> | void;
 }) {
@@ -81,7 +81,7 @@ export function startAuthObservers(params: {
   const offToken = onIdTokenChanged(auth, async (u) => {
     if (!u) return; // skip null
     try {
-      const ok = await verifyCurrentUser();
+      const ok = await FBAuth_verifyCurrentUser();
       if (!ok) await params.onInvalidation();
     } catch {
       // ignore transient issues; will check again on next event
