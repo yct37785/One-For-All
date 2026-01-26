@@ -1,13 +1,13 @@
 import React, { memo } from 'react';
-import { Nav, State, UI } from 'framework';
+import { Nav, App, UI } from 'framework';
 import { funcScreenRoutes } from './FuncRegistry';
 
 /******************************************************************************************************************
  * Functionality showcase screen: Framework/src/Manager
  ******************************************************************************************************************/
 const FuncScreen: Nav.ScreenType = ({ navigate }) => {
-  const { isDarkMode } = State.useAppSettings();
-  const { theme } = State.useAppTheme();
+  const { isDarkMode } = App.useAppSettings();
+  const { theme } = App.useAppTheme();
 
   /******************************************************************************************************************
    * Func section (Framework/src/UI)

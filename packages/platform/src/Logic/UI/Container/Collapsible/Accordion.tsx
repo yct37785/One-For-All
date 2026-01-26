@@ -1,7 +1,7 @@
 import React, { useState, memo, useEffect, useRef, useCallback, ReactNode } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
-import { useAppTheme } from '../../../State/AppThemeManager';
+import { useAppTheme } from '../../../App/AppThemeManager';
 import { Touchable } from '../../Interactive/Touchable';
 import type { TextProps } from '../../Text/Text';
 import type { IconProps } from '../../Text/Icon';

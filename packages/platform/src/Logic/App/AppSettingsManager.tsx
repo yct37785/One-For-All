@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { doLog, doErrLog } from '../Util/General';
-import { getItemKV, setItemKV } from '../Services/LocalData/LocalKVStoreManager';
+import { getItemKV, setItemKV } from '../LocalData/LocalKVStoreManager';
 
 /******************************************************************************************************************
  * Settings API.

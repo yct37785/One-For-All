@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
-import { Nav, UI, State } from 'framework';
+import { Nav, UI, App } from 'framework';
 import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
@@ -32,8 +32,8 @@ import { getDemoColors } from '../../demoColors';
  *  4 = 4× base spacing
  ******************************************************************************************************************/
 const BoxScreen: Nav.ScreenType = () => {
-  const { isDarkMode } = State.useAppSettings();
-  const { theme } = State.useAppTheme();
+  const { isDarkMode } = App.useAppSettings();
+  const { theme } = App.useAppTheme();
   const colors = getDemoColors(isDarkMode);
 
   return (

@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState, useMemo } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Chip } from '../Data/Chip';
-import { useAppTheme } from '../../State/AppThemeManager';
+import { useAppTheme } from '../../App/AppThemeManager';
 
 export type ChipOptionsProps = {
   schema: Set<string>;

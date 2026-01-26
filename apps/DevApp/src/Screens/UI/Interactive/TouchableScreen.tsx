@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI, State } from 'framework';
+import { Nav, UI, App } from 'framework';
 import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
@@ -10,8 +10,8 @@ import { getDemoColors } from '../../demoColors';
  * - iOS: opacity feedback (Pressable)
  ******************************************************************************************************************/
 const TouchableScreen: Nav.ScreenType = () => {
-  const { isDarkMode } = State.useAppSettings();
-  const { theme } = State.useAppTheme();
+  const { isDarkMode } = App.useAppSettings();
+  const { theme } = App.useAppTheme();
   const colors = getDemoColors(isDarkMode);
 
   const [taps, setTaps] = useState(0);

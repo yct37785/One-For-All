@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI, State } from 'framework';
+import { Nav, UI, App } from 'framework';
 import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
@@ -9,8 +9,8 @@ import { getDemoColors } from '../../demoColors';
  * Most commonly: overflow menus, quick actions, small settings menus.
  ******************************************************************************************************************/
 const PopupScreen: Nav.ScreenType = () => {
-  const { theme } = State.useAppTheme();
-  const { isDarkMode } = State.useAppSettings();
+  const { theme } = App.useAppTheme();
+  const { isDarkMode } = App.useAppSettings();
   const colors = getDemoColors(isDarkMode);
 
   const [lastAction, setLastAction] = useState<string | null>(null);

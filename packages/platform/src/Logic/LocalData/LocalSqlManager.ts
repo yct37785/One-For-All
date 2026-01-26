@@ -1,6 +1,6 @@
 import * as SQLite from 'expo-sqlite';
-import { LOCAL_DATA_DEFAULTS } from '../../Defaults';
-import { doErrLog } from '../../Util/General';
+import { LOCAL_DATA_DEFAULTS } from '../Defaults';
+import { doErrLog } from '../Util/General';
 
 // DB singleton
 let dbPromise: Promise<SQLite.SQLiteDatabase> | null = null;

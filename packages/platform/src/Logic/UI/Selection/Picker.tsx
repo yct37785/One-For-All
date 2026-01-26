@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Picker as RNPicker } from '@react-native-picker/picker';
-import { useAppTheme } from '../../State/AppThemeManager';
+import { useAppTheme } from '../../App/AppThemeManager';
 
 /******************************************************************************************************************
  * Define a selectable option for the picker.

@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI, State, Util } from 'framework';
+import { Nav, UI, App, Util } from 'framework';
 
 /******************************************************************************************************************
  * TextInput demo
@@ -14,7 +14,7 @@ import { Nav, UI, State, Util } from 'framework';
  * - Behaviours: password eye toggle, clear button, search leading icon
  ******************************************************************************************************************/
 const InputScreen: Nav.ScreenType = () => {
-  const { theme } = State.useAppTheme();
+  const { theme } = App.useAppTheme();
 
   // basic
   const [name, setName] = useState('');

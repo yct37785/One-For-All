@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI, State } from 'framework';
+import { Nav, UI, App } from 'framework';
 import { getDemoColors } from '../../demoColors';
 
 const TAB_CONTENT_HEIGHT = 120;
@@ -81,7 +81,7 @@ function createTabScenes(isDarkMode: boolean) {
  * - Optional tab icons
  ******************************************************************************************************************/
 const TabsScreen: Nav.ScreenType = () => {
-  const { isDarkMode } = State.useAppSettings();
+  const { isDarkMode } = App.useAppSettings();
   const scenes = createTabScenes(isDarkMode);
 
   // controlled tab indices for each example

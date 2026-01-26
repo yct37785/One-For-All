@@ -1,7 +1,9 @@
+export * as App from './src/Exports/App';
+export * as Comp from './src/Exports/Component';
 export * as Defaults from './src/Logic/Defaults';
+export * as FB from './src/Exports/Firebase';
+export * as LocalData from './src/Exports/LocalData';
 export * as Nav from './src/Exports/Nav';
 export { default as Root } from './src/Logic/Root/Root';
-export * as Services from './src/Exports/Services';
-export * as State from './src/Exports/State';
 export * as UI from './src/Exports/UI';
 export * as Util from './src/Exports/Util';

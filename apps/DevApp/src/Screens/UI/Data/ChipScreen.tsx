@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI, State } from 'framework';
+import { Nav, UI, App } from 'framework';
 
 /******************************************************************************************************************
  * Chip demo
@@ -12,7 +12,7 @@ import { Nav, UI, State } from 'framework';
  * Note: Chip is controlled by the parent — you decide selected/disabled and what onPress does.
  ******************************************************************************************************************/
 const ChipScreen: Nav.ScreenType = () => {
-  const { theme } = State.useAppTheme();
+  const { theme } = App.useAppTheme();
 
   /**
    * Filter chips demo (controlled selected set)

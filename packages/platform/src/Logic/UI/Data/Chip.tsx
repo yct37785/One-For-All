@@ -5,7 +5,7 @@ import {
   ViewStyle,
   StyleProp,
 } from 'react-native';
-import { useAppTheme } from '../../State/AppThemeManager';
+import { useAppTheme } from '../../App/AppThemeManager';
 import { Text } from '../Text/Text';
 import { Touchable } from '../Interactive/Touchable';
 import { Icon } from '../Text/Icon';

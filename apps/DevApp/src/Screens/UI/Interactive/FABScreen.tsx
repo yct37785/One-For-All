@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI, State } from 'framework';
+import { Nav, UI, App } from 'framework';
 import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
@@ -12,7 +12,7 @@ import { getDemoColors } from '../../demoColors';
  ******************************************************************************************************************/
 const FABScreen: Nav.ScreenType = () => {
   const [loading, setLoading] = useState(false);
-  const { isDarkMode } = State.useAppSettings();
+  const { isDarkMode } = App.useAppSettings();
   const colors = getDemoColors(isDarkMode);
 
   const triggerLoading = () => {

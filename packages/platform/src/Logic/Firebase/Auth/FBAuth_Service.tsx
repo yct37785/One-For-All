@@ -10,8 +10,8 @@ import {
 import { FBAuth_startAuthObservers, FBAuth_verifyCurrentUser } from './FBAuth_Helpers';
 import { configureGoogleSignIn, signInGoogle, signOutGoogle } from './GoogleAuth';
 import { setItemKV, getItemKV, removeItemKV } from '../../LocalData/LocalKVStoreManager';
-import { doErrLog } from '../../../Util/General';
-import { LOCAL_DATA_DEFAULTS } from '../../../Defaults';
+import { doErrLog } from '../../Util/General';
+import { LOCAL_DATA_DEFAULTS } from '../../Defaults';
 
 // provider types
 export enum FBAuth_ProviderIdType {

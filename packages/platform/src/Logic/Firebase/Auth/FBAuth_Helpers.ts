@@ -1,4 +1,4 @@
-import { logColors } from '../../../Defaults';
+import { logColors } from '../../Defaults';
 import { getApp } from '@react-native-firebase/app';
 import {
   getAuth,
@@ -7,7 +7,7 @@ import {
   reload,
   type FirebaseAuthTypes,
 } from '@react-native-firebase/auth';
-import { doLog, doErrLog } from '../../../Util/General';
+import { doLog, doErrLog } from '../../Util/General';
 
 /******************************************************************************************************************
  * [ASYNC] Verify that the current Firebase user is still valid on the server.

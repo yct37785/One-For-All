@@ -1,9 +1,9 @@
 import { Platform } from 'react-native';
 import { GoogleAuthProvider, FirebaseAuthTypes } from '@react-native-firebase/auth';
 import Constants from 'expo-constants';
-import { logColors } from '../../../Defaults';
+import { logColors } from '../../Defaults';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { doLog, doErrLog, withTimeout } from '../../../Util/General';
+import { doLog, doErrLog, withTimeout } from '../../Util/General';
 
 /****************************************************************************************************************
  * [ASYNC] Force the Google account picker to appear by clearing any cached Google session.

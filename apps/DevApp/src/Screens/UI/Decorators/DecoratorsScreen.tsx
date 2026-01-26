@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Nav, UI, State } from 'framework';
+import { Nav, UI, App } from 'framework';
 
 /******************************************************************************************************************
  * Decorators demo

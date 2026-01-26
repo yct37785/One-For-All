@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI, State } from 'framework';
+import { Nav, UI, App } from 'framework';
 
 /******************************************************************************************************************
  * Avatar demo
@@ -16,7 +16,7 @@ import { Nav, UI, State } from 'framework';
  * - onPress (makes it interactive)
  ******************************************************************************************************************/
 const AvatarScreen: Nav.ScreenType = () => {
-  const { theme } = State.useAppTheme();
+  const { theme } = App.useAppTheme();
   const [pressCount, setPressCount] = useState(0);
 
   return (

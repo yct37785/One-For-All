@@ -1,6 +1,6 @@
 import React, { memo, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, View, Image } from 'react-native';
-import { Nav, UI, State } from 'framework';
+import { Nav, UI, App } from 'framework';
 import { faker } from '@faker-js/faker';
 import { getDemoColors } from '../../demoColors';
 
@@ -31,8 +31,8 @@ const THUMBNAILS = [
  * - UI.HighlightText: highlights query matches inside rows
  ******************************************************************************************************************/
 const ListScreen: Nav.ScreenType = () => {
-  const { isDarkMode } = State.useAppSettings();
-  const { theme } = State.useAppTheme();
+  const { isDarkMode } = App.useAppSettings();
+  const { theme } = App.useAppTheme();
   const colors = getDemoColors(isDarkMode);
 
   const [query, setQuery] = useState('');

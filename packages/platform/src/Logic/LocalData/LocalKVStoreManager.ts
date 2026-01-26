@@ -1,6 +1,6 @@
 import Storage from 'expo-sqlite/kv-store';
-import { LOCAL_DATA_DEFAULTS } from '../../Defaults';
-import { doErrLog } from '../../Util/General';
+import { LOCAL_DATA_DEFAULTS } from '../Defaults';
+import { doErrLog } from '../Util/General';
 
 // local data schema
 type LocalData = Record<string, any>;

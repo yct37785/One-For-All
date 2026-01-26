@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Nav, UI, State } from 'framework';
+import { Nav, UI, App } from 'framework';
 import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
@@ -9,8 +9,8 @@ import { getDemoColors } from '../../demoColors';
  * - AccordionContainer: multiple headers where only one section is open at a time.
  ******************************************************************************************************************/
 const CollapsibleScreen: Nav.ScreenType = () => {
-  const { isDarkMode } = State.useAppSettings();
-  const { theme } = State.useAppTheme();
+  const { isDarkMode } = App.useAppSettings();
+  const { theme } = App.useAppTheme();
   const colors = getDemoColors(isDarkMode);
 
   return (

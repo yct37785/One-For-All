@@ -23,9 +23,9 @@
 
 5. Click Register app.
 
-6. Download `google-services.json` when prompted and complete setup.
+6. Download `google-LocalData.json` when prompted and complete setup.
 
-7. Place the downloaded `google-services.json` in your app's root directory.
+7. Place the downloaded `google-LocalData.json` in your app's root directory.
 
 ## Firebase auth setup
 This section enables Firebase Authentication, including Anonymous and Google Sign-In, for Android builds.
@@ -55,7 +55,7 @@ Firebase requires the Android app's signing certificate fingerprint to validate 
 
 5. Enter a public-facing project name and support email, then save.
 
-6. When prompted, download the latest `google-services.json` file.
+6. When prompted, download the latest `google-LocalData.json` file.
 
 7. Place it in your app root and re-run `run-android-dev-rebuild.bat`.
 
