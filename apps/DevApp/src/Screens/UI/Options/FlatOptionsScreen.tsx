@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI, Manager } from 'framework';
+import { Nav, UI, State } from 'framework';
 import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
@@ -10,8 +10,8 @@ import { getDemoColors } from '../../demoColors';
  * and can be extended with future flat selectors.
  ******************************************************************************************************************/
 const FlatOptionsScreen: Nav.ScreenType = () => {
-  const { theme } = Manager.useAppTheme();
-  const { isDarkMode } = Manager.useAppSettings();
+  const { theme } = State.useAppTheme();
+  const { isDarkMode } = State.useAppSettings();
   const colors = getDemoColors(isDarkMode);
 
   /* ChipOptions demo state */

@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { View, StyleProp, ViewStyle, FlexStyle } from 'react-native';
 import { PadSpacingValue } from '../../Types';
-import { useAppTheme } from '../../Manager/App/AppThemeManager';
+import { useAppTheme } from '../../State/AppThemeManager';
 
 export type BoxProps = {
   bgColor?: string;

@@ -1,6 +1,7 @@
-export * as Manager from './src/Exports/Manager';
+export * as Defaults from './src/Defaults';
 export * as Nav from './src/Exports/Nav';
 export { default as Root } from './src/Root/Root';
+export * as Services from './src/Exports/Services';
+export * as State from './src/Exports/State';
 export * as UI from './src/Exports/UI';
 export * as Util from './src/Exports/Util';
-export * as Defaults from './src/Defaults';

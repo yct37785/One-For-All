@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI, Manager } from 'framework';
+import { Nav, UI, State } from 'framework';
 
 /******************************************************************************************************************
  * Dialog demo
@@ -7,7 +7,7 @@ import { Nav, UI, Manager } from 'framework';
  * Dialog is a focused modal surface for confirmations and short decisions.
  ******************************************************************************************************************/
 const DialogScreen: Nav.ScreenType = () => {
-  const { theme } = Manager.useAppTheme();
+  const { theme } = State.useAppTheme();
 
   const [basicVisible, setBasicVisible] = useState(false);
   const [customVisible, setCustomVisible] = useState(false);

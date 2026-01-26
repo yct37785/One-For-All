@@ -10,7 +10,7 @@ import { View, StatusBar, Platform, LogBox, StyleSheet } from 'react-native';
 // theme
 import { Provider as PaperProvider, adaptNavigationTheme } from 'react-native-paper';
 import { MyTheme } from '../Theme/Theme.types';
-import { AppThemeProvider, useAppTheme } from '../Manager/App/AppThemeManager';
+import { AppThemeProvider, useAppTheme } from '../State/AppThemeManager';
 // UI & layout
 import { MenuProvider } from 'react-native-popup-menu';
 import * as NavigationBar from 'expo-navigation-bar';
@@ -24,9 +24,9 @@ import {
 } from '@react-navigation/native';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
-import { FirebaseAuthProvider } from '../Manager/Firebase/Auth/FirebaseAuthManager';
+import { FirebaseAuthProvider } from '../Services/Firebase/Auth/FirebaseAuthManager';
 // app settings
-import { AppSettingsProvider, useAppSettings } from '../Manager/App/AppSettingsManager';
+import { AppSettingsProvider, useAppSettings } from '../State/AppSettingsManager';
 // utils
 import { doLog } from '../Util/General';
 import { logColors } from '../Defaults';

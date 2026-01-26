@@ -3,7 +3,7 @@ import { View, StyleSheet, Platform } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { AppBar } from './AppBar';
 import { PadSpacingValue } from '../Types';
-import { useAppTheme } from '../Manager/App/AppThemeManager';
+import { useAppTheme } from '../State/AppThemeManager';
 
 /******************************************************************************************************************
  * Screen layout defaults context.

@@ -3,7 +3,7 @@ import type { GestureResponderEvent, StyleProp, ViewStyle } from 'react-native';
 import { ActivityIndicator } from 'react-native';
 import { IconButton as PaperIconButton } from 'react-native-paper';
 import { IconVariant, iconVariantSizeMap } from '../Text/Icon';
-import { useAppTheme } from '../../Manager/App/AppThemeManager';
+import { useAppTheme } from '../../State/AppThemeManager';
 
 export type IconButtonMode = 'outlined' | 'contained' | 'contained-tonal';
 

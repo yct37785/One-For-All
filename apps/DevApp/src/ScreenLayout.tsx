@@ -1,6 +1,6 @@
 import React, { memo, useEffect } from 'react';
 import { View } from 'react-native';
-import { Nav, Manager, UI } from 'framework';
+import { Nav, State, UI } from 'framework';
 
 /******************************************************************************************************************
  * AppBar: default left content
@@ -14,7 +14,7 @@ export const DefaultLeftContent = memo(() => {
  * AppBar: default right content
  ******************************************************************************************************************/
 export const DefaultRightContent = memo(() => {
-  const { isDarkMode, setIsDarkMode } = Manager.useAppSettings();
+  const { isDarkMode, setIsDarkMode } = State.useAppSettings();
   return (<UI.Box flex={1} justify='center'>
     <UI.Switch
       value={isDarkMode}

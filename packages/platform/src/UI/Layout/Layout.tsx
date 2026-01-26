@@ -1,7 +1,7 @@
 import React, { memo, ReactNode, useMemo } from 'react';
 import { View, ScrollView, ViewStyle, FlexStyle } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
-import { useAppTheme } from '../../Manager/App/AppThemeManager';
+import { useAppTheme } from '../../State/AppThemeManager';
 import { PadSpacingValue } from '../../Types';
 
 type FlexWrap = 'wrap' | 'nowrap' | 'wrap-reverse';

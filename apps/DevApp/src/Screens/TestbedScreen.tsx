@@ -1,13 +1,13 @@
 import React, { memo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
-import { Nav, UI, Manager } from 'framework';
+import { Nav, UI, State } from 'framework';
 
 /******************************************************************************************************************
  * Testbed screen: used for development and testing of new UI elements
  ******************************************************************************************************************/
 const TestbedScreen: Nav.ScreenType = ({}) => {
-  const { theme, updateTheme } = Manager.useAppTheme();
+  const { theme, updateTheme } = State.useAppTheme();
   
   const options: UI.MenuOption[] = [
     { text: 'Sign in with Google', value: 'signin', icon: 'google' },

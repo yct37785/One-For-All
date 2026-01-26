@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import type { GestureResponderEvent, StyleProp, ViewStyle } from 'react-native';
 import { FAB as PaperFAB } from 'react-native-paper';
-import { useAppTheme } from '../../Manager/App/AppThemeManager';
+import { useAppTheme } from '../../State/AppThemeManager';
 import { PadSpacingValue } from '../../Types';
 
 export type FABPlacement =

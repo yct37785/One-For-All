@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI, Manager } from 'framework';
+import { Nav, UI, State } from 'framework';
 import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
@@ -10,7 +10,7 @@ import { getDemoColors } from '../../demoColors';
  * - TextButton: lightweight text action
  ******************************************************************************************************************/
 const ButtonsScreen: Nav.ScreenType = () => {
-  const { isDarkMode } = Manager.useAppSettings();
+  const { isDarkMode } = State.useAppSettings();
   const colors = getDemoColors(isDarkMode);
 
   const [btnClicks, setBtnClicks] = useState(0);

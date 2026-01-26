@@ -4,7 +4,7 @@ import { Avatar } from '../UI/Data/Avatar';
 import { Popup } from '../UI/Modal/Popup';
 import { MenuList } from '../UI/Menu/MenuList';
 import { VerticalLayout } from '../UI/Layout/Layout';
-import { useAuth, ProviderIdType } from '../Manager/Firebase/Auth/FirebaseAuthManager';
+import { useAuth, ProviderIdType } from '../Services/Firebase/Auth/FirebaseAuthManager';
 import type { MenuOption } from '../UI/Menu/MenuListItem';
 
 /******************************************************************************************************************

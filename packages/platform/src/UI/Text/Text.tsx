@@ -1,6 +1,6 @@
 import React, { memo, ReactNode, useMemo } from 'react';
 import { TextStyle, StyleSheet } from 'react-native';
-import { useAppTheme } from '../../Manager/App/AppThemeManager';
+import { useAppTheme } from '../../State/AppThemeManager';
 import { PadSpacingValue } from '../../Types';
 import { Text as PaperText } from 'react-native-paper';
 

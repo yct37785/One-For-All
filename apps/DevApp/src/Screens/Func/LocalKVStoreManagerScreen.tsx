@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
-import { Nav, UI, Manager } from 'framework';
+import { Nav, UI, State, Services } from 'framework';
 
 /******************************************************************************************************************
  * LocalDataManager demo
@@ -12,7 +12,7 @@ import { Nav, UI, Manager } from 'framework';
  * All operations are async and backed directly by AsyncStorage.
  ******************************************************************************************************************/
 const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
-  const { theme } = Manager.useAppTheme();
+  const { theme } = State.useAppTheme();
 
   /******************************************************************************************************************
    * Demo state
@@ -40,9 +40,9 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
     (async () => {
       try {
         const [storedFlag, storedCounter, storedName] = await Promise.all([
-          Manager.getItemKV<boolean>('demoFlag'),
-          Manager.getItemKV<number>('demoCounter'),
-          Manager.getItemKV<string>('demoName'),
+          Services.getItemKV<boolean>('demoFlag'),
+          Services.getItemKV<number>('demoCounter'),
+          Services.getItemKV<string>('demoName'),
         ]);
 
         if (!isActive) return;
@@ -68,26 +68,26 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
   const handleToggleFlag = async () => {
     const next = !demoFlag;
     setDemoFlag(next);
-    Manager.setItemKV('demoFlag', next);
+    Services.setItemKV('demoFlag', next);
   };
 
   const handleIncrementCounter = async () => {
     const next = demoCounter + 1;
     setDemoCounter(next);
-    Manager.setItemKV('demoCounter', next);
+    Services.setItemKV('demoCounter', next);
   };
 
   const handleSaveName = async () => {
-    Manager.setItemKV('demoName', demoName);
+    Services.setItemKV('demoName', demoName);
   };
 
   const handleReload = async () => {
     setIsLoading(true);
     try {
       const [storedFlag, storedCounter, storedName] = await Promise.all([
-        Manager.getItemKV<boolean>('demoFlag'),
-        Manager.getItemKV<number>('demoCounter'),
-        Manager.getItemKV<string>('demoName'),
+        Services.getItemKV<boolean>('demoFlag'),
+        Services.getItemKV<number>('demoCounter'),
+        Services.getItemKV<string>('demoName'),
       ]);
 
       setDemoFlag(!!storedFlag);
@@ -99,7 +99,7 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
   };
 
   const handleclearKVsAll = async () => {
-    Manager.clearKVs();
+    Services.clearKVs();
     // local mirrors reset to "empty" values
     setDemoFlag(false);
     setDemoCounter(0);

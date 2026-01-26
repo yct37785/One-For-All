@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Nav, UI, Manager } from 'framework';
+import { Nav, UI, State } from 'framework';
 
 /******************************************************************************************************************
  * Decorators demo
@@ -44,7 +44,7 @@ const DecoratorsScreen: Nav.ScreenType = ({}) => {
           </UI.LabelText>
 
           <UI.Box mt={2}>
-            <UI.HorizontalLayout dir='row' align='center' flex={1} pad={1} gap={2}>
+            <UI.HorizontalLayout align='center' flex={1} pad={1} gap={2}>
               <UI.Text variant='bodySmall'>Left</UI.Text>
               <UI.Divider orientation='vertical' spacing={1} />
               <UI.Text variant='bodySmall'>Right</UI.Text>

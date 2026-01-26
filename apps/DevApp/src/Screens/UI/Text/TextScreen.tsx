@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI, Manager } from 'framework';
+import { Nav, UI, State } from 'framework';
 
 /******************************************************************************************************************
  * Text demo
@@ -13,7 +13,7 @@ import { Nav, UI, Manager } from 'framework';
  * - onPress
  ******************************************************************************************************************/
 const TextScreen: Nav.ScreenType = () => {
-  const { theme } = Manager.useAppTheme();
+  const { theme } = State.useAppTheme();
   const [clicks, setClicks] = useState(0);
 
   return (
