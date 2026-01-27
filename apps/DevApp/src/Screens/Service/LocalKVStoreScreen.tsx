@@ -2,16 +2,16 @@ import React, { memo, useEffect, useState } from 'react';
 import { Nav, UI, App, LocalData } from 'framework';
 
 /******************************************************************************************************************
- * LocalDataManager demo
+ * Local KV store service demo
  *
- * This screen demonstrates how to use LocalDataManager (useLocalData) to:
+ * This screen demonstrates how to use the local KV store service to:
  * - Persist simple values using setItemKV(key, value)
  * - Read them back using getItemKV<T>(key)
  * - clearKVs all local data and re-seed defaults via clearKVs()
  *
  * All operations are async and backed directly by AsyncStorage.
  ******************************************************************************************************************/
-const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
+const LocalKVStoreScreen: Nav.ScreenType = ({}) => {
   const { theme } = App.useAppTheme();
 
   /******************************************************************************************************************
@@ -239,4 +239,4 @@ const LocalDataManagerScreen: Nav.ScreenType = ({}) => {
   );
 };
 
-export default memo(LocalDataManagerScreen);
+export default memo(LocalKVStoreScreen);

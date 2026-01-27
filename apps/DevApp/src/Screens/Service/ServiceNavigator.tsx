@@ -1,22 +1,22 @@
 import { Nav } from 'framework';
-import { funcScreenRoutes } from './FuncRegistry';
-import LocalKVStoreManagerScreen from './LocalKVStoreManagerScreen';
-import FuncScreen from './FuncScreen';
+import { serviceScreenRoutes } from './ServiceRegistry';
+import LocalKVStoreScreen from './LocalKVStoreScreen';
+import ServiceScreen from './ServiceScreen';
 
 /******************************************************************************************************************
  * Screen registry
  ******************************************************************************************************************/
-export const funcScreenRegistry: Nav.NavNodeMap = {
-  [funcScreenRoutes.localKVStoreManager]: { component: LocalKVStoreManagerScreen },
-  [funcScreenRoutes.home]: { component: FuncScreen },
+export const serviceScreenRegistry: Nav.NavNodeMap = {
+  [serviceScreenRoutes.localKVStore]: { component: LocalKVStoreScreen },
+  [serviceScreenRoutes.home]: { component: ServiceScreen },
 };
 
 /******************************************************************************************************************
  * Navigator
  ******************************************************************************************************************/
-export const FuncStackNavigator: React.FC = () => (
+export const ServiceStackNavigator: React.FC = () => (
   <Nav.StackNavigator
-    initialRouteName={funcScreenRoutes.home}
-    navNodeMap={funcScreenRegistry}
+    initialRouteName={serviceScreenRoutes.home}
+    navNodeMap={serviceScreenRegistry}
   />
 );

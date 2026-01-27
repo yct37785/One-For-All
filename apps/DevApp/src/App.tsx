@@ -5,7 +5,7 @@ import TestbedScreen from './Screens/TestbedScreen';
 import SettingsScreen from './Screens/SettingsScreen';
 // navigators
 import { UIStackNavigator } from './Screens/UI/UIElemsNavigator';
-import { FuncStackNavigator } from './Screens/Func/FuncNavigator';
+import { ServiceStackNavigator } from './Screens/Service/ServiceNavigator';
 // layout
 import { DefaultLeftContent, DefaultRightContent } from './ScreenLayout';
 
@@ -23,10 +23,10 @@ export const rootTabsNodeMap: Nav.NavNodeMap = {
     icon: 'shape',
   },
 
-  // functionality stack
+  // service stack
   func: {
-    component: FuncStackNavigator,
-    label: 'Functions',
+    component: ServiceStackNavigator,
+    label: 'Services',
     icon: 'engine',
   },
 

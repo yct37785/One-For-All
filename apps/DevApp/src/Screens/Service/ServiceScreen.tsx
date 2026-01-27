@@ -1,29 +1,29 @@
 import React, { memo } from 'react';
 import { Nav, App, UI } from 'framework';
-import { funcScreenRoutes } from './FuncRegistry';
+import { serviceScreenRoutes } from './ServiceRegistry';
 
 /******************************************************************************************************************
- * Functionality showcase screen: Framework/src/Manager
+ * Service showcase screen: Framework/src/Manager
  ******************************************************************************************************************/
-const FuncScreen: Nav.ScreenType = ({ navigate }) => {
+const ServiceScreen: Nav.ScreenType = ({ navigate }) => {
   const { isDarkMode } = App.useAppSettings();
   const { theme } = App.useAppTheme();
 
   /******************************************************************************************************************
    * Func section (Framework/src/UI)
    ******************************************************************************************************************/
-  const func_localStorageOptions = [
-    { value: funcScreenRoutes.localKVStoreManager, text: 'Local KV Store Manager' },
+  const serv_localDataOptions = [
+    { value: serviceScreenRoutes.localKVStore, text: 'Local KV Store Service' },
   ];
 
   /******************************************************************************************************************
    * UI sections + mapped options
    ******************************************************************************************************************/
-  const FUNC_SECTION_CONFIG = [
-    { header: { text: 'Local Data',      icon: 'database' },               options: func_localStorageOptions },
+  const SERV_SECTION_CONFIG = [
+    { header: { text: 'Local Data',      icon: 'database' },               options: serv_localDataOptions },
   ];
 
-  const FUNC_SECTIONS = FUNC_SECTION_CONFIG.map(s => s.header);
+  const SERV_SECTIONS = SERV_SECTION_CONFIG.map(s => s.header);
 
   /******************************************************************************************************************
    * Render
@@ -38,8 +38,8 @@ const FuncScreen: Nav.ScreenType = ({ navigate }) => {
         </UI.Box>
 
         <UI.Box>
-          <UI.AccordionContainer sections={FUNC_SECTIONS}>
-            {FUNC_SECTION_CONFIG.map((section, idx) => (
+          <UI.AccordionContainer sections={SERV_SECTIONS}>
+            {SERV_SECTION_CONFIG.map((section, idx) => (
               <UI.MenuList
                 key={section.header.text}
                 options={section.options}
@@ -56,4 +56,4 @@ const FuncScreen: Nav.ScreenType = ({ navigate }) => {
   );
 };
 
-export default memo(FuncScreen);
+export default memo(ServiceScreen);
