@@ -115,7 +115,7 @@ const LocalKVStoreScreen: Nav.ScreenType = ({}) => {
 
         {/* Header */}
         <UI.Text variant='bodyMedium'>
-          LocalDataManager provides simple CRUD APIs.
+          Local KV store service provides simple CRUD APIs.
           Values are loaded on demand from storage.
         </UI.Text>
 

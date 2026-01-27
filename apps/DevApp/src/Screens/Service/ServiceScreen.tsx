@@ -31,13 +31,12 @@ const ServiceScreen: Nav.ScreenType = ({ navigate }) => {
   return (
     <Nav.ScreenLayout title='Functionality'>
       <UI.VerticalLayout constraint='scroll' flex={1} pad={2} gap={1}>
-        <UI.Box p={1}>
-          <UI.Text variant='bodyMedium'>
-            Managers and application flows like data storage, authentication, or synchronization logic etc.
-          </UI.Text>
-        </UI.Box>
 
-        <UI.Box>
+        <UI.Text variant='bodyMedium'>
+          Application services like data storage, authentication, or synchronization logic etc.
+        </UI.Text>
+
+        <UI.Box mt={1}>
           <UI.AccordionContainer sections={SERV_SECTIONS}>
             {SERV_SECTION_CONFIG.map((section, idx) => (
               <UI.MenuList
