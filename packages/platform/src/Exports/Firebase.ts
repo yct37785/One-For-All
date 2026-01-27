@@ -1,1 +1,1 @@
-export * from '../Logic/Firebase/Auth/FBAuth_Service';
+export * from '../Logic/Firebase/Auth/FBAuthService';

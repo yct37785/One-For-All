@@ -24,7 +24,7 @@ import {
 } from '@react-navigation/native';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
-import { FBAuth_Provider } from '../Firebase/Auth/FBAuth_Service';
+import { FBAuth_Provider } from '../Firebase/Auth/FBAuthService';
 // app settings
 import { AppSettingsProvider, useAppSettings } from '../App/AppSettingsService';
 // utils

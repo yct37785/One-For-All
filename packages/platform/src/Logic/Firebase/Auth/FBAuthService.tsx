@@ -7,7 +7,7 @@ import {
   FirebaseAuthTypes,
   signOut as fbSignOut,
 } from '@react-native-firebase/auth';
-import { FBAuth_startAuthObservers, FBAuth_verifyCurrentUser } from './FBAuth_Helpers';
+import { FBAuth_startAuthObservers, FBAuth_verifyCurrentUser } from './FBAuthHelpers';
 import { configureGoogleSignIn, signInGoogle, signOutGoogle } from './GoogleAuth';
 import { setItemKV, getItemKV, removeItemKV } from '../../LocalData/LocalKVStoreService';
 import { doErrLog } from '../../Util/General';

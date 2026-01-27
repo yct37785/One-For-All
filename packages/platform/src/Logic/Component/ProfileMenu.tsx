@@ -4,7 +4,7 @@ import { Avatar } from '../UI/Data/Avatar';
 import { Popup } from '../UI/Modal/Popup';
 import { MenuList } from '../UI/Menu/MenuList';
 import { VerticalLayout } from '../UI/Layout/Layout';
-import { FB_useAuth, FBAuth_ProviderIdType } from '../Firebase/Auth/FBAuth_Service';
+import { FB_useAuth, FBAuth_ProviderIdType } from '../Firebase/Auth/FBAuthService';
 import type { MenuOption } from '../UI/Menu/MenuListItem';
 
 /******************************************************************************************************************
