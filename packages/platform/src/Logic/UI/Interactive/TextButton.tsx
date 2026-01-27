@@ -2,7 +2,7 @@ import React, { memo, useMemo } from 'react';
 import { StyleSheet, ViewStyle, StyleProp } from 'react-native';
 import { Touchable } from '../Interactive/Touchable';
 import { Text, TextProps } from '../Text/Text';
-import { useAppTheme } from '../../App/AppTheme';
+import { useAppTheme } from '../../App/AppThemeService';
 
 export interface TextButtonProps {
   textOpts?: TextProps;

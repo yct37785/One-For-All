@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Divider as PaperDivider } from 'react-native-paper';
-import { useAppTheme } from '../../App/AppTheme';
+import { useAppTheme } from '../../App/AppThemeService';
 import { PadSpacingValue } from '../../Types';
 
 export type DividerProps = {

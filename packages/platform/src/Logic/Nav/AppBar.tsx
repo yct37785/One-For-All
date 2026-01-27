@@ -2,7 +2,7 @@ import React, { memo, useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { Text } from 'react-native-paper';
-import { useAppTheme } from '../App/AppTheme';
+import { useAppTheme } from '../App/AppThemeService';
 import { APP_BAR_H } from '../Defaults';
 
 /******************************************************************************************************************

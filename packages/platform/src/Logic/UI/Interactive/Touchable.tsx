@@ -8,7 +8,7 @@ import {
   TouchableNativeFeedback,
   TouchableNativeFeedbackProps
 } from 'react-native';
-import { useAppTheme } from '../../App/AppTheme';
+import { useAppTheme } from '../../App/AppThemeService';
 
 export interface TouchableProps {
   feedback?: 'opacity' | 'none';

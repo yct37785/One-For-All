@@ -1,6 +1,6 @@
 import React, { memo, useMemo } from 'react';
 import { StyleSheet } from 'react-native';
-import { useAppTheme } from '../../App/AppTheme';
+import { useAppTheme } from '../../App/AppThemeService';
 import { Text, TextProps } from '../Text/Text';
 import { Icon, IconProps } from '../Text/Icon';
 import { Touchable } from '../Interactive/Touchable';

@@ -9,7 +9,7 @@ import {
 } from '@react-native-firebase/auth';
 import { FBAuth_startAuthObservers, FBAuth_verifyCurrentUser } from './FBAuth_Helpers';
 import { configureGoogleSignIn, signInGoogle, signOutGoogle } from './GoogleAuth';
-import { setItemKV, getItemKV, removeItemKV } from '../../LocalData/LocalKVStoreManager';
+import { setItemKV, getItemKV, removeItemKV } from '../../LocalData/LocalKVStoreService';
 import { doErrLog } from '../../Util/General';
 import { LOCAL_DATA_DEFAULTS } from '../../Defaults';
 

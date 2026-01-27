@@ -1,7 +1,7 @@
 import React, { memo, useMemo } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Text, Modal, Button, Card, Portal } from 'react-native-paper';
-import { useAppTheme } from '../../App/AppTheme';
+import { useAppTheme } from '../../App/AppThemeService';
 
 export type DialogProps = {
   title: string;

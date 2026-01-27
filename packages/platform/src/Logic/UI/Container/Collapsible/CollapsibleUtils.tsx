@@ -1,6 +1,6 @@
 import React, { useState, memo, useEffect, useRef, useMemo } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { useAppTheme } from '../../../App/AppTheme';
+import { useAppTheme } from '../../../App/AppThemeService';
 import { Text, TextProps } from '../../Text/Text';
 import { Icon, IconProps, iconVariantSizeMap } from '../../Text/Icon';
 

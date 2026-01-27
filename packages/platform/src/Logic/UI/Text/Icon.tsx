@@ -1,7 +1,7 @@
 import React, { memo, ReactNode } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Icon as PaperIcon } from 'react-native-paper';
-import { useAppTheme } from '../../App/AppTheme';
+import { useAppTheme } from '../../App/AppThemeService';
 
 /******************************************************************************************************************
  * IconVariant

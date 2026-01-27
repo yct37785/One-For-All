@@ -1,2 +1,2 @@
-export * from '../Logic/LocalData/LocalKVStoreManager';
-export * from '../Logic/LocalData/LocalSqlManager';
+export * from '../Logic/LocalData/LocalKVStoreService';
+export * from '../Logic/LocalData/LocalSqlService';

@@ -4,7 +4,7 @@ import { Box } from '../UI/Container/Box';
 import { Touchable } from '../UI/Interactive/Touchable';
 import { Text, TextProps } from '../UI/Text/Text';
 import { Icon, IconProps } from '../UI/Text/Icon';
-import { useAppTheme } from '../App/AppTheme';
+import { useAppTheme } from '../App/AppThemeService';
 import { APP_BAR_H } from '../Defaults';
 
 // defaults (can be overridden per item via iconOpts/textOpts)

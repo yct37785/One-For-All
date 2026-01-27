@@ -1,5 +1,5 @@
 import React, { memo, ReactNode } from 'react';
-import { useAppTheme } from '../../App/AppTheme';
+import { useAppTheme } from '../../App/AppThemeService';
 import { Text, TextProps } from './Text';
 
 export interface HyperlinkTextProps extends TextProps {
