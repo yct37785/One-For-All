@@ -4,6 +4,6 @@ export * as Defaults from './src/Logic/Defaults';
 export * as FB from './src/Exports/Firebase';
 export * as LocalData from './src/Exports/LocalData';
 export * as Nav from './src/Exports/Nav';
-export { default as Root } from './src/Logic/Root/Root';
+export * from './src/Exports/Root';
 export * as UI from './src/Exports/UI';
 export * as Util from './src/Exports/Util';
