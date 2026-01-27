@@ -1,5 +1,5 @@
 import React, { memo, ReactNode } from 'react';
-import { useAppTheme } from '../../App/AppThemeManager';
+import { useAppTheme } from '../../App/AppTheme';
 import { Text, TextProps } from './Text';
 
 export interface LabelTextProps extends Omit<TextProps, 'color'> {

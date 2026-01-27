@@ -1,2 +1,2 @@
-export * from '../Logic/App/AppSettingsManager';
-export * from '../Logic/App/AppThemeManager';
+export * from '../Logic/App/AppSettings';
+export * from '../Logic/App/AppTheme';

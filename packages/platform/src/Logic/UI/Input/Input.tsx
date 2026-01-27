@@ -10,7 +10,7 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
-import { useAppTheme } from '../../App/AppThemeManager';
+import { useAppTheme } from '../../App/AppTheme';
 import { Icon } from '../Text/Icon';
 
 /******************************************************************************************************************

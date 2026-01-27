@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import type { GestureResponderEvent, StyleProp, ViewStyle, TextStyle, ColorValue } from 'react-native';
-import { useAppTheme } from '../../App/AppThemeManager';
+import { useAppTheme } from '../../App/AppTheme';
 import { Button as PaperButton } from 'react-native-paper';
 
 export type ButtonMode = 'text' | 'outlined' | 'contained' | 'elevated' | 'contained-tonal';

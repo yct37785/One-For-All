@@ -5,7 +5,7 @@ import { buildTheme } from '../Theme/Theme';
 import { deepMerge } from '../Util/General';
 
 /******************************************************************************************************************
- * AppThemeManager API.
+ * AppTheme API.
  * 
  * @property theme        - Resolved AppTheme for the current mode
  * @property updateTheme  - Merge partial theme tokens into runtime overrides
@@ -26,7 +26,7 @@ const AppThemeContext = createContext<AppThemeContextType>({
 /******************************************************************************************************************
  * Provider props.
  *
- * @property isDarkMode - Current mode from AppSettingsManager
+ * @property isDarkMode - Current mode from AppSettings
  * @property myTheme?   - Client-supplied initial tokens
  * @property children   - Provider subtree
  ******************************************************************************************************************/
@@ -43,7 +43,7 @@ export type AppThemeProviderProps = {
  *
  * Theme workflow:
  * - Client app supplies initial MyTheme tokens to Root.
- * - AppThemeManager merges client tokens with runtime overrides (e.g. settings changes).
+ * - AppTheme merges client tokens with runtime overrides (e.g. settings changes).
  * - Resulting theme is provided to the framework via a single hook: useAppTheme().
  ******************************************************************************************************************/
 export const AppThemeProvider: React.FC<AppThemeProviderProps> = memo(

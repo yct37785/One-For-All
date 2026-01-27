@@ -10,7 +10,7 @@ import { View, StatusBar, Platform, LogBox, StyleSheet } from 'react-native';
 // theme
 import { Provider as PaperProvider, adaptNavigationTheme } from 'react-native-paper';
 import { MyTheme } from '../Theme/Theme.types';
-import { AppThemeProvider, useAppTheme } from '../App/AppThemeManager';
+import { AppThemeProvider, useAppTheme } from '../App/AppTheme';
 // UI & layout
 import { MenuProvider } from 'react-native-popup-menu';
 import * as NavigationBar from 'expo-navigation-bar';
@@ -26,7 +26,7 @@ import {
 import { getApp } from '@react-native-firebase/app';
 import { FBAuth_Provider } from '../Firebase/Auth/FBAuth_Service';
 // app settings
-import { AppSettingsProvider, useAppSettings } from '../App/AppSettingsManager';
+import { AppSettingsProvider, useAppSettings } from '../App/AppSettings';
 // utils
 import { doLog } from '../Util/General';
 import { logColors } from '../Defaults';
@@ -49,7 +49,7 @@ const { LightTheme: NavLight, DarkTheme: NavDark } = adaptNavigationTheme({
 /******************************************************************************************************************
  * PaperBridge
  *
- * - Bridges AppThemeManager -> PaperProvider.
+ * - Bridges AppTheme -> PaperProvider.
  * - Bridges any other nav/UI providers.
  ******************************************************************************************************************/
 const PaperBridge: React.FC<{
@@ -59,7 +59,7 @@ const PaperBridge: React.FC<{
 }> = ({ rootNavigator, defaultScreenLayoutProps, navTheme }) => {
   const { theme, isLoaded } = useAppTheme();
 
-  // gate rendering until AppThemeManager resolves the initial theme
+  // gate rendering until AppTheme resolves the initial theme
   if (!isLoaded) {
     return null;
   }

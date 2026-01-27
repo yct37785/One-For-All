@@ -1,7 +1,7 @@
 import React, { useRef, memo, ReactNode } from 'react';
 import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Menu, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
-import { useAppTheme } from '../../App/AppThemeManager';
+import { useAppTheme } from '../../App/AppTheme';
 import { Touchable } from '../Interactive/Touchable';
 
 export type PopupProps = {

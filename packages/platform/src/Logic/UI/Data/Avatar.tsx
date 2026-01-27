@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Image, View, StyleSheet, ViewStyle, ImageStyle, StyleProp } from 'react-native';
-import { useAppTheme } from '../../App/AppThemeManager';
+import { useAppTheme } from '../../App/AppTheme';
 import { TextVariant } from '../Text/Text';
 import { Text } from '../Text/Text';
 import { Touchable } from '../Interactive/Touchable';

@@ -1,6 +1,6 @@
 import React, { memo, useMemo } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
-import { useAppTheme } from '../../App/AppThemeManager';
+import { useAppTheme } from '../../App/AppTheme';
 import { Icon } from '../Text/Icon';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 
