@@ -1,13 +1,13 @@
 import React, { memo } from 'react';
-import { Nav, Manager, UI } from 'framework';
+import { Nav, App, UI } from 'framework';
 import { uiScreenRoutes } from './UIElemRegistry';
 
 /******************************************************************************************************************
  * UI elements showcase screen: Framework/src/UI
  ******************************************************************************************************************/
 const UIElemsScreen: Nav.ScreenType = ({ navigate }) => {
-  const { isDarkMode } = Manager.useAppSettings();
-  const { theme } = Manager.useAppTheme();
+  const { isDarkMode } = App.useAppSettings();
+  const { theme } = App.useAppTheme();
 
   /******************************************************************************************************************
    * UI section (Framework/src/UI)

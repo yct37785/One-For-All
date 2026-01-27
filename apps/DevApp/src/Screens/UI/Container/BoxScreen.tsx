@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
-import { Nav, UI, Manager } from 'framework';
+import { Nav, UI, App } from 'framework';
 import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
@@ -32,8 +32,8 @@ import { getDemoColors } from '../../demoColors';
  *  4 = 4× base spacing
  ******************************************************************************************************************/
 const BoxScreen: Nav.ScreenType = () => {
-  const { isDarkMode } = Manager.useAppSettings();
-  const { theme } = Manager.useAppTheme();
+  const { isDarkMode } = App.useAppSettings();
+  const { theme } = App.useAppTheme();
   const colors = getDemoColors(isDarkMode);
 
   return (
@@ -126,7 +126,7 @@ const BoxScreen: Nav.ScreenType = () => {
         </UI.LabelText>
 
         <UI.Box mt={1}>
-          <UI.HorizontalLayout dir='row' bgColor={colors.neutral_2} flex={1} pad={1} gap={1}>
+          <UI.HorizontalLayout bgColor={colors.neutral_2} flex={1} pad={1} gap={1}>
             <UI.Box flex={1} bgColor={colors.green_2} p={1}>
               <UI.Text variant='labelSmall'>flex = 1</UI.Text>
             </UI.Box>

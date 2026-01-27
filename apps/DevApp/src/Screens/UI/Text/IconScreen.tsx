@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Nav, UI, Manager } from 'framework';
+import { Nav, UI, App } from 'framework';
 import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
@@ -8,8 +8,8 @@ import { getDemoColors } from '../../demoColors';
  * Icon renders theme-aware vector icons with prefixed size variants.
  ******************************************************************************************************************/
 const IconScreen: Nav.ScreenType = () => {
-  const { theme } = Manager.useAppTheme();
-  const { isDarkMode } = Manager.useAppSettings();
+  const { theme } = App.useAppTheme();
+  const { isDarkMode } = App.useAppSettings();
   const colors = getDemoColors(isDarkMode);
 
   return (

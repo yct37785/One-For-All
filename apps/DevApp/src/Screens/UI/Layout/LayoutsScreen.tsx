@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Nav, UI, Manager } from 'framework';
+import { Nav, UI, App } from 'framework';
 import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************
@@ -14,7 +14,7 @@ const BlockBox: React.FC<{
   h: number;
   bgColor: string;
 }> = ({ i, w, h, bgColor }) => {
-  const { theme } = Manager.useAppTheme();
+  const { theme } = App.useAppTheme();
 
   return (
     <UI.Box
@@ -42,8 +42,8 @@ const BlockBox: React.FC<{
  * - nested layouts for simple app structure
  ******************************************************************************************************************/
 const LayoutsScreen: Nav.ScreenType = () => {
-  const { isDarkMode } = Manager.useAppSettings();
-  const { theme } = Manager.useAppTheme();
+  const { isDarkMode } = App.useAppSettings();
+  const { theme } = App.useAppTheme();
   const colors = getDemoColors(isDarkMode);
 
   return (

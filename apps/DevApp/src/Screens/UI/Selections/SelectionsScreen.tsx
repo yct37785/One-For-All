@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI, Manager } from 'framework';
+import { Nav, UI, App } from 'framework';
 
 /******************************************************************************************************************
  * Selections demo
@@ -12,7 +12,7 @@ import { Nav, UI, Manager } from 'framework';
  * a single preference (e.g. dark mode).
  ******************************************************************************************************************/
 const SelectionsScreen: Nav.ScreenType = ({}) => {
-  const { theme } = Manager.useAppTheme();
+  const { theme } = App.useAppTheme();
   const [pickerValue, setPickerValue] = useState<string>('red');
   const [radioValue, setRadioValue] = useState<string>('cat');
   const [switchValue, setSwitchValue] = useState<boolean>(false);

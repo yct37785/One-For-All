@@ -42,4 +42,4 @@ yarn-error.*
 /android
 
 # Google
-google-services.json
+google-LocalData.json

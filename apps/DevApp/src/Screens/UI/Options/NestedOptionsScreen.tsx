@@ -1,5 +1,5 @@
 import React, { memo, useMemo, useState } from 'react';
-import { Nav, UI, Manager } from 'framework';
+import { Nav, UI, App } from 'framework';
 
 /******************************************************************************************************************
  * Demo schema (static / immutable).
@@ -75,7 +75,7 @@ const collectSelectedLeafLabels = (
  * - Shows propagation + indeterminate aggregation
  ******************************************************************************************************************/
 const NestedOptionsScreen: Nav.ScreenType = () => {
-  const { theme } = Manager.useAppTheme();
+  const { theme } = App.useAppTheme();
 
   const [value, setValue] = useState<UI.OptionValue>(() =>
     UI.buildOptionsValueFromSchema(INITIAL_SCHEMA)

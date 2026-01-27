@@ -1,8 +1,8 @@
 import React, { memo, useCallback, useState } from 'react';
-import { UI, Manager, Nav } from 'framework';
+import { UI, App, Nav } from 'framework';
 
 const SettingsScreen: React.FC = memo(() => {
-  const { theme, updateTheme } = Manager.useAppTheme();
+  const { theme, updateTheme } = App.useAppTheme();
   return (
     <Nav.ScreenLayout title='Settings'>
       <UI.Button onPress={() => updateTheme({ colorsLight: { onSurface: '#ff0000ff' } })}>

@@ -1,5 +1,5 @@
 import React, { memo, useMemo, useState } from 'react';
-import { Nav, UI, Manager } from 'framework';
+import { Nav, UI, App } from 'framework';
 
 /******************************************************************************************************************
  * Text variants demo
@@ -10,7 +10,7 @@ import { Nav, UI, Manager } from 'framework';
  * - HyperlinkText: hyperlink styling + click handler
  ******************************************************************************************************************/
 const TextVariantsScreen: Nav.ScreenType = () => {
-  const { theme } = Manager.useAppTheme();
+  const { theme } = App.useAppTheme();
 
   const [query, setQuery] = useState('hero');
   const [tosClicks, setTosClicks] = useState(0);

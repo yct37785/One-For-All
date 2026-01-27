@@ -1,1 +1,1 @@
-export * from '../Util/General';
+export * from '../Logic/Util/General';

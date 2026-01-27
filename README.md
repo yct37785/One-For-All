@@ -114,7 +114,7 @@ All apps are bootstrapped with Firebase support enabled.
 
 Before running a native Android build, you must:
 1. Create a Firebase project
-2. Download `google-services.json`
+2. Download `google-LocalData.json`
 3. Place it in the root of the app folder
 
 > Refer to [Firebase → Firebase project setup](https://github.com/yct37785/One-For-All/blob/main/readmes/Firebase.md#firebase-project-setup) for detailed steps.
@@ -163,7 +163,7 @@ Copy everything from `apps/DevApp` except:
 
 - `android/`
 
-- `google-services.json`
+- `google-LocalData.json`
 
 - `.env`
 
@@ -237,7 +237,7 @@ Both scripts support hot reloading.
 ## 7. Your first build
 1. Connect an Android device with USB debugging enabled.
 
-2. Place the corresponding `google-services.json` in app root.
+2. Place the corresponding `google-LocalData.json` in app root.
 
 3. Run `run-android-dev-rebuild.bat`.
 

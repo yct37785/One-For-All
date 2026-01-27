@@ -1,1 +1,1 @@
-export * from '../Component/ProfileMenu';
+export * from '../Logic/Component/ProfileMenu';
