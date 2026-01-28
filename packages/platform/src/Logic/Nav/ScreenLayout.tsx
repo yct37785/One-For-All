@@ -1,9 +1,10 @@
-import React, { memo, useContext, createContext } from 'react';
+import React, { memo, useEffect, useContext, createContext } from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { AppBar } from './AppBar';
 import { PadSpacingValue } from '../Types';
 import { useAppTheme } from '../App/AppThemeService';
+import { useAppSettings } from '../App/AppSettingsService';
 
 /******************************************************************************************************************
  * Screen layout defaults context.
@@ -19,6 +20,7 @@ export type ScreenLayoutProps = {
   LeftContent?: React.ReactNode;
   RightContent?: React.ReactNode;
   appbarBottomMargin?: PadSpacingValue;
+  hideBottomNavBar?: boolean;
   children?: React.ReactNode;
 };
 
@@ -27,13 +29,14 @@ export type ScreenLayoutProps = {
  * - Use this in each screen to render consistent base screen layout (AppBar, SafeAreaView etc).
  * - Put all wrapper views here.
  * 
- * @property showTitle?     - To show title text for the AppBar (default: false)
- * @property title?         - Title text for the AppBar (defaults to current route name) if showTitle is true
- * @property showBack?      - Show a back button
- * @property LeftContent?   - Optional component rendered in the AppBar’s left slot (after back button).
- * @property RightContent?  - Optional component rendered in the AppBar’s right slot (after LeftContent).
+ * @property showTitle?           - To show title text for the AppBar (default: false)
+ * @property title?               - Title text for the AppBar (defaults to current route name) if showTitle is true
+ * @property showBack?            - Show a back button
+ * @property LeftContent?         - Optional component rendered in the AppBar’s left slot (after back button).
+ * @property RightContent?        - Optional component rendered in the AppBar’s right slot (after LeftContent).
  * @property appbarBottomMargin?  - Margin below appbar
- * @property children?      - Screen content rendered below the AppBar inside a SafeAreaView
+ * @property hideBottomNavBar?    - Hide bottom nav bar (if any)?
+ * @property children?            - Screen content rendered below the AppBar inside a SafeAreaView
  *
  * @usage
  * ```tsx
@@ -49,6 +52,7 @@ export const ScreenLayout: React.FC<ScreenLayoutProps> = memo((props) => {
   const { theme } = useAppTheme();
   const navigation = useNavigation();
   const route = useRoute();
+  const { setHideBottomNavBar } = useAppSettings();
 
   /****************************************************************************************************************
    * Merge strategy:
@@ -96,6 +100,13 @@ export const ScreenLayout: React.FC<ScreenLayoutProps> = memo((props) => {
       : defaults.appbarBottomMargin !== undefined
         ? defaults.appbarBottomMargin
         : 2;
+  
+  const hideBottomNavBar =
+    props.hideBottomNavBar !== undefined
+      ? props.hideBottomNavBar
+      : defaults.hideBottomNavBar !== undefined
+        ? defaults.hideBottomNavBar
+        : false;
 
   const computedTitle =
     title !== undefined && title !== null
@@ -108,6 +119,19 @@ export const ScreenLayout: React.FC<ScreenLayoutProps> = memo((props) => {
       : false;
   const showBackFinal = explicitShowBack !== undefined ? explicitShowBack : canGoBack;
 
+  /****************************************************************************************************************
+   * Bottom nav visibility
+   ****************************************************************************************************************/
+  useEffect(() => {
+    setHideBottomNavBar(hideBottomNavBar);
+    return () => {
+      setHideBottomNavBar(false);
+    };
+  }, [hideBottomNavBar, setHideBottomNavBar]);
+
+  /****************************************************************************************************************
+   * Render
+   ****************************************************************************************************************/
   return (
     <View
       style={[

@@ -20,7 +20,7 @@ const AvatarScreen: Nav.ScreenType = () => {
   const [pressCount, setPressCount] = useState(0);
 
   return (
-    <Nav.ScreenLayout showTitle title='Avatar'>
+    <Nav.ScreenLayout showTitle title='Avatar' hideBottomNavBar={true}>
       <UI.VerticalLayout constraint='scroll' flex={1} pad={2} gap={1}>
 
         {/* Intro */}

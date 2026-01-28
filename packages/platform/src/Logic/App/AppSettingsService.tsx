@@ -5,17 +5,23 @@ import { getItemKV, setItemKV } from '../LocalData/LocalKVStoreService';
 /******************************************************************************************************************
  * Settings API.
  *
- * @property isDarkMode     - Is theme mode dark
- * @property setIsDarkMode  - Updates dark mode flag and persists it
+ * @property isDarkMode           - Is theme mode dark
+ * @property setIsDarkMode        - Updates dark mode flag and persists it
+ * @property hideBottomNavBar     - Hide any bottom nav bar
+ * @property setHideBottomNavBar  - Updates hideBottomNavBar
  ******************************************************************************************************************/
 export type AppSettingsContextType = {
   isDarkMode: boolean;
   setIsDarkMode: (val: boolean) => Promise<void>;
+  hideBottomNavBar: boolean;
+  setHideBottomNavBar: (val: boolean) => void;
 };
 
 const AppSettingsContext = createContext<AppSettingsContextType>({
   isDarkMode: false,
   setIsDarkMode: async () => {},
+  hideBottomNavBar: false,
+  setHideBottomNavBar: () => {},
 });
 
 /******************************************************************************************************************
@@ -27,6 +33,7 @@ const AppSettingsContext = createContext<AppSettingsContextType>({
  ******************************************************************************************************************/
 export const AppSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isDarkMode, setIsDarkModeState] = useState<boolean>(false);
+  const [hideBottomNavBar, setHideBottomNavBarState] = useState<boolean>(false);
 
   /****************************************************************************************************************
    * Load settings on mount.
@@ -59,9 +66,18 @@ export const AppSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   };
 
+  /****************************************************************************************************************
+   * Toggle hide bottom nav bar.
+   *
+   * @param val - Hide/not hide
+   ****************************************************************************************************************/
+  const setHideBottomNavBar = (val: boolean) => {
+    setHideBottomNavBarState(prev => (prev === val ? prev : val));
+  };
+
   const value = useMemo(
-    () => ({ isDarkMode, setIsDarkMode }),
-    [isDarkMode]
+    () => ({ isDarkMode, setIsDarkMode, hideBottomNavBar, setHideBottomNavBar }),
+    [isDarkMode, hideBottomNavBar]
   );
 
   return (
