@@ -17,8 +17,8 @@ export default function withBaseConfig({ config }) {
       // ---- platform config that is common to all apps ----
       android: {
         ...(config?.expo?.android ?? {}),
-        // each app should place its google-LocalData.json in its own folder
-        googleServicesFile: './google-LocalData.json',
+        // each app should place its google-services.json in its own folder
+        googleServicesFile: './google-services.json',
 
         // IMPORTANT: package is app-specific; do NOT set here
         // package: 'com.mycorp.myapp'
