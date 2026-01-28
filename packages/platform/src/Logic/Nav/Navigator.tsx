@@ -6,6 +6,7 @@ import { BottomNavBar, BottomNavBarItem } from './BottomNavBar';
 import { TextProps } from '../UI/Text/Text';
 import { IconProps } from '../UI/Text/Icon';
 import { ScreenType } from './Screen';
+import { useAppSettings } from '../App/AppSettingsService';
 
 const Stack = createNativeStackNavigator<ParamListBase>();
 const Tabs = createBottomTabNavigator<ParamListBase>();
@@ -158,16 +159,21 @@ const RenderBottomNavBar: React.FC<any> = ({ state, navigation, navNodeMap }) =>
  ******************************************************************************************************************/
 export const BottomTabsNavigator: React.FC<NavigatorProps> = memo(
   ({ initialRouteName, navNodeMap, headerShown = false }) => {
+    const { hideBottomNavBar } = useAppSettings();
     return (
       <Tabs.Navigator
         initialRouteName={initialRouteName}
         screenOptions={{ headerShown }}
-        tabBar={(props) => (
-          <RenderBottomNavBar
-            {...props}
-            navNodeMap={navNodeMap}
-          />
-        )}
+        tabBar={(props) =>
+          hideBottomNavBar
+            ? null
+            : (
+              <RenderBottomNavBar
+                {...props}
+                navNodeMap={navNodeMap}
+              />
+            )
+        }
       >
         {Object.entries(navNodeMap).map(([name, item]) => (
           <Tabs.Screen name={name} key={name}>
