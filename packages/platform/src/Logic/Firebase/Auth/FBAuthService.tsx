@@ -21,7 +21,7 @@ export enum FBAuth_ProviderIdType {
 }
 
 /******************************************************************************************************************
- * FirebaseAuthManager API.
+ * Firebase auth API.
  *
  * @property user     - Current Firebase user or null
  * @property signIn   - Launch sign-in and authenticate with Firebase (optionally link if already signed in)

@@ -21,7 +21,7 @@ const AppSettingsContext = createContext<AppSettingsContextType>({
 /******************************************************************************************************************
  * AppSettingsProvider
  *
- * Central app settings manager:
+ * Central app settings service:
  * - Loads persisted values on mount
  * - Exposes setters that update state + persist to local store
  ******************************************************************************************************************/
