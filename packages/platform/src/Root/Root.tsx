@@ -3,14 +3,14 @@ import 'react-native-get-random-values';
 import 'react-native-gesture-handler';
 // screen typing and layout
 import { SafeAreaView, Edge } from 'react-native-safe-area-context';
-import { ScreenLayoutProps, ScreenLayoutContext } from '../Nav/ScreenLayout';
+import { ScreenLayoutProps, ScreenLayoutContext } from '../Logic/Nav/ScreenLayout';
 // core
 import React, { memo, useEffect, useState } from 'react';
 import { View, StatusBar, Platform, LogBox, StyleSheet } from 'react-native';
 // theme
 import { Provider as PaperProvider, adaptNavigationTheme } from 'react-native-paper';
-import { MyTheme } from '../Theme/Theme.types';
-import { AppThemeProvider, useAppTheme } from '../App/AppThemeService';
+import { MyTheme } from '../Logic/Theme/Theme.types';
+import { AppThemeProvider, useAppTheme } from '../Logic/App/AppThemeService';
 // UI & layout
 import { MenuProvider } from 'react-native-popup-menu';
 import * as NavigationBar from 'expo-navigation-bar';
@@ -24,12 +24,12 @@ import {
 } from '@react-navigation/native';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
-import { FBAuth_Provider } from '../Firebase/Auth/FBAuthService';
+import { FBAuth_Provider } from '../Logic/Firebase/Auth/FBAuthService';
 // app settings
-import { AppSettingsProvider, useAppSettings } from '../App/AppSettingsService';
+import { AppSettingsProvider, useAppSettings } from '../Logic/App/AppSettingsService';
 // utils
-import { doLog } from '../Util/General';
-import { logColors } from '../Defaults';
+import { doLog } from '../Logic/Util/General';
+import { logColors } from '../Logic/Defaults';
 
 LogBox.ignoreAllLogs();
 const SAFE_AREA_EDGES: Edge[] = ['left', 'right', 'bottom'];
