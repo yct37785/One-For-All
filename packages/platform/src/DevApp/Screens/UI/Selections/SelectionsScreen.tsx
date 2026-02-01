@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Nav, UI, App } from 'framework';
+import { Nav, UI, App } from '../../../../Logic';
 
 /******************************************************************************************************************
  * Selections demo

@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
-import { Nav, UI, App } from 'framework';
+import { Nav, UI, App } from '../../../../Logic';
 import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************

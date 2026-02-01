@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
-import { Nav, UI, App } from 'framework';
+import { Nav, UI, App } from '../../Logic';
 
 /******************************************************************************************************************
  * Testbed screen: used for development and testing of new UI elements

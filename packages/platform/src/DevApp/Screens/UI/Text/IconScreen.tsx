@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Nav, UI, App } from 'framework';
+import { Nav, UI, App } from '../../../../Logic';
 import { getDemoColors } from '../../demoColors';
 
 /******************************************************************************************************************

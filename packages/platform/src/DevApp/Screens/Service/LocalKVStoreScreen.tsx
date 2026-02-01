@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
-import { Nav, UI, App, LocalData } from 'framework';
+import { Nav, UI, App, LocalData } from '../../../Logic';
 
 /******************************************************************************************************************
  * Local KV store service demo

@@ -1,4 +1,4 @@
-import { Nav } from 'framework';
+import { Nav } from '../../../Logic';
 import { serviceScreenRoutes } from './ServiceRegistry';
 import LocalKVStoreScreen from './LocalKVStoreScreen';
 import ServiceScreen from './ServiceScreen';

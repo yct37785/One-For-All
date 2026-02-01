@@ -1,6 +1,6 @@
 import React, { memo, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, View, Image } from 'react-native';
-import { Nav, UI, App } from 'framework';
+import { Nav, UI, App } from '../../../../Logic';
 import { faker } from '@faker-js/faker';
 import { getDemoColors } from '../../demoColors';
 

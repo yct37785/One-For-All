@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Nav, App, UI } from 'framework';
+import { Nav, App, UI } from '../../../Logic';
 import { uiScreenRoutes } from './UIElemRegistry';
 
 /******************************************************************************************************************

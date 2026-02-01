@@ -1,6 +1,6 @@
 import React, { memo, useEffect } from 'react';
 import { View } from 'react-native';
-import { Nav, App, UI } from 'framework';
+import { Nav, App, UI } from '../Logic';
 
 /******************************************************************************************************************
  * AppBar: default left content

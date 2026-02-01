@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useState } from 'react';
-import { UI, App, Nav } from 'framework';
+import { UI, App, Nav } from '../../Logic';
 
 const SettingsScreen: React.FC = memo(() => {
   const { theme, updateTheme } = App.useAppTheme();

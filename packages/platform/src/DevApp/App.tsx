@@ -1,5 +1,6 @@
 import React from 'react';
-import { Root, Nav } from 'framework';
+import { Nav } from '../Logic';
+import { Root } from '../Root';
 // screens
 import TestbedScreen from './Screens/TestbedScreen';
 import SettingsScreen from './Screens/SettingsScreen';
